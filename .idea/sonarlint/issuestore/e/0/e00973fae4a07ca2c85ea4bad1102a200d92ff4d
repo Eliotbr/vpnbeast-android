@@ -1,0 +1,39 @@
+
+asquid:UselessImportCheck"3Remove this unused import 'android.graphics.Color'.(øãíòşÿÿÿÿ8º½âÃÛ+
+\squid:UselessImportCheck"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8åÓÈÛ+
+usquid:UselessImportCheck"LRemove this unused import 'cz.msebera.android.httpclient.client.HttpClient'.(ÄãŠ8ş‚¤ÆÛ+
+vsquid:UselessImportCheck"HRemove this unused import 'cz.msebera.android.httpclient.HeaderElement'.(²˜ŒÒüÿÿÿÿ8‚ÒÃÂÛ+
+Lsquid:S1068"+Remove this unused "checker" private field.(¿è…ıÿÿÿÿ8™šŸ¾Ş+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ç¶œøüÿÿÿÿ8çÑ˜ÅÛ+
+]squid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è8Í•”ÅÛ+
+‡squid:UselessImportCheck"YRemove this unused import 'cz.msebera.android.httpclient.client.ClientProtocolException'.(ÔÊÌŒÿÿÿÿÿ8İû¿ÅÛ+
+msquid:UselessImportCheck"DRemove this unused import 'de.blinkt.openvpn.core.ConnectionStatus'.(ÅóòŸ8àİÃÛ+
+xsquid:S1450"WRemove the "btnClear" field and declare it as a local variable in the relevant methods.(¢ä¡…ÿÿÿÿÿ8®»†õÚ+
+‰squid:UselessImportCheck"[Remove this unused import 'cz.msebera.android.httpclient.impl.client.BasicResponseHandler'.(¤ÏÛ‘ÿÿÿÿÿ8‚ÒÃÂÛ+
+Tsquid:UselessImportCheck"+Remove this unused import 'java.io.Reader'.(µû¨é8‚ÒÃÂÛ+
+ysquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Ş…ñ–ûÿÿÿÿ8®»†õÚ+
+tsquid:UselessImportCheck"KRemove this unused import 'com.loopj.android.http.TextHttpResponseHandler'.(×àüŠ8Ïµ“ÅÛ+
+vsquid:UselessImportCheck"HRemove this unused import 'com.b.android.openvpn60.core.OpenVPNService'.(Èï÷½şÿÿÿÿ8º½âÃÛ+
+dsquid:UselessImportCheck";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ8üñüÂÛ+
+_squid:UselessImportCheck"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ8åÓÈÛ+
+Ysquid:UselessImportCheck"0Remove this unused import 'java.io.InputStream'.(¹»º8‚ÒÃÂÛ+
+rsquid:UselessImportCheck"IRemove this unused import 'cz.msebera.android.httpclient.ParseException'.(‹´èà8‚ÒÃÂÛ+
+€squid:UselessImportCheck"RRemove this unused import 'cz.msebera.android.httpclient.client.methods.HttpPost'.(×¨¼‹ûÿÿÿÿ8ş‚¤ÆÛ+
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8ûÚíÅÛ+
+qsquid:UselessImportCheck"HRemove this unused import 'cz.msebera.android.httpclient.protocol.HTTP'.(–ä¿ 8İû¿ÅÛ+
+^squid:UselessImportCheck"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8À¨ÆÛ+
+squid:UselessImportCheck"QRemove this unused import 'cz.msebera.android.httpclient.client.ResponseHandler'.(¼Ëà´ûÿÿÿÿ8Í•”ÅÛ+
+wsquid:UselessImportCheck"NRemove this unused import 'cz.msebera.android.httpclient.entity.StringEntity'.(Ô­º”8ô€¯ÆÛ+
+†squid:UselessImportCheck"XRemove this unused import 'cz.msebera.android.httpclient.impl.client.DefaultHttpClient'.(üã˜°ùÿÿÿÿ8ş‚¤ÆÛ+
+Wsquid:UselessImportCheck")Remove this unused import 'java.net.URL'.(ñìÁ„üÿÿÿÿ8åÓÈÛ+
+Xsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8¸¥İÅÛ+
+usquid:UselessImportCheck"GRemove this unused import 'cz.msebera.android.httpclient.HttpResponse'.(ğÿôäıÿÿÿÿ8À¨ÆÛ+
+Xsquid:UselessImportCheck"/Remove this unused import 'java.util.Iterator'.(¥ÍòÕ8‚ÒÃÂÛ+
+\squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8¸¥İÅÛ+
+`squid:UselessImportCheck"7Remove this unused import 'java.net.HttpURLConnection'.(¬¬˜­8åÓÈÛ+
+jsquid:UselessImportCheck"ARemove this unused import 'com.loopj.android.http.RequestParams'.(™É©Ü8ô€¯ÆÛ+
+usquid:UselessImportCheck"LRemove this unused import 'com.loopj.android.http.AsyncHttpResponseHandler'.(‡ªû8›€×»Û+
+qsquid:UselessImportCheck"CRemove this unused import 'com.b.android.openvpn60.core.VpnStatus'.(äãå³ùÿÿÿÿ8º½âÃÛ+
+Zsquid:UselessImportCheck",Remove this unused import 'android.net.Uri'.(òêû‘ıÿÿÿÿ8Û“¯õÚ+
+{squid:UselessImportCheck"MRemove this unused import 'cz.msebera.android.httpclient.entity.ContentType'.(ÿã¹æüÿÿÿÿ8ş‘ƒÆÛ+
+jsquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(Ê¨¹8®»†õÚ+

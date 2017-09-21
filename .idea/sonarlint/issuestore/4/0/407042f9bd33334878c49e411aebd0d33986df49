@@ -1,0 +1,24 @@
+
+xsquid:S1450"WRemove the "btnClear" field and declare it as a local variable in the relevant methods.(¢ä¡…ÿÿÿÿÿ8™ù¶Ã+
+lsquid:UselessImportCheck"CRemove this unused import 'android.text.style.ForegroundColorSpan'.(¸±í8’…¸·é+
+asquid:UselessImportCheck"3Remove this unused import 'android.graphics.Color'.(øãíòşÿÿÿÿ8‹â¦Šê+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(À÷ŞÉ8º–Í¯â+
+hsquid:UselessImportCheck":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ8¸² Šê+
+ysquid:S1450"XRemove the "txtSignup" field and declare it as a local variable in the relevant methods.(ô°™úÿÿÿÿ8¯¬ÁÂÙ+
+fsquid:UselessImportCheck"8Remove this unused import 'android.widget.LinearLayout'.(çîšçúÿÿÿÿ8‹â¦Šê+
+usquid:S1192"YDefine a constant instead of duplicating this literal "bilalccaliskan@gmail.com" 3 times.(ù±şĞ8…õ­Šê+
+ksquid:CallToDeprecatedMethod"9Remove this use of "ActionBarActivity"; it is deprecated.(“åèŸıÿÿÿÿ8¿€ü¶é+
+jsquid:UselessImportCheck"<Remove this unused import 'android.content.DialogInterface'.(Š­›¨şÿÿÿÿ8‹â¦Šê+
+asquid:UselessImportCheck"3Remove this unused import 'android.text.TextUtils'.(û˜½Õøÿÿÿÿ8Óãİ‰ê+
+Zsquid:UselessImportCheck",Remove this unused import 'android.net.Uri'.(òêû‘ıÿÿÿÿ8¸² Šê+
+osquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(“åèŸıÿÿÿÿ8¿€ü¶é+
+bsquid:UselessImportCheck"9Remove this unused import 'android.text.SpannableString'.(üÒş™8’…¸·é+
+`squid:UselessImportCheck"7Remove this unused import 'android.app.ProgressDialog'.(¶ÍÔÓ8‹Â´Šê+
+Nsquid:S1068"2Remove this unused "progressDialog" private field.(§¦„œ8¯’¹Šê+
+ysquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Ş…ñ–ûÿÿÿÿ8™ù¶Ã+
+>squid:S1148"#Use a logger to log this exception.(ä÷È8Òˆ¼µŞ+
+Ksquid:S1068"/Remove this unused "emailThread" private field.(œÙÇ8ı–‘Šê+
+Ysquid:UselessImportCheck"0Remove this unused import 'java.io.InputStream'.(¹»º8¸² Šê+
+tsquid:S1450"XRemove the "txtForget" field and declare it as a local variable in the relevant methods.(ßÒ¤»8¯¬ÁÂÙ+
+vsquid:S1450"ZRemove the "emailThread" field and declare it as a local variable in the relevant methods.(œÙÇ8…õ­Šê+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8…õ­Šê+

@@ -1,0 +1,82 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="Theme.MyAppTheme.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">#37474f</item>
+        <item name="android:textColor">#388e3c</item>
+    </style>
+
+    <style name="blinkt.dialog" parent="android:Theme.DeviceDefault.Light.Dialog" />
+
+    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="colorControlNormal">#292828</item>
+        <item name="colorControlActivated">#262525</item>
+        <item name="colorControlHighlight">#2d2c2c</item>
+        <item name="android:actionBarStyle">@style/Theme.MyAppTheme.ActionBar</item>
+
+    </style>
+
+    <style name="AppThemeNew" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#b0bec5</item>
+        <item name="colorControlActivated">#b0bec5</item>
+        <item name="colorControlHighlight">#b0bec5</item>
+        <item name="android:textColor">#b0bec5</item>
+
+    </style>
+
+
+    <style name="ProgressBar" parent="@android:style/Widget.ProgressBar">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:textColor">#b0bec5</item>
+        <item name="android:background">#494747</item>
+
+        <item name="android:indeterminateDrawable">@drawable/circular_progress_bar</item>
+    </style>
+
+    <style name="Theme.App.Base.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.App.Base.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.App.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="logWindowStatusText">
+        <item name="android:paddingLeft">@dimen/paddingItemsSidebarLog</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
+    <style name="logWindowStatusTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

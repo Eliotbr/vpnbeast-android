@@ -1,0 +1,130 @@
+
+‰"squid:ClassVariableVisibilityCheck"QMake mName a static final constant or non-public and provide accessors if needed.(ÓµÛùÿÿÿÿÿ8Ğ¦®ÇÛ+
+‹"squid:ClassVariableVisibilityCheck"XMake mConnections a static final constant or non-public and provide accessors if needed.(ÊòÍ8Ğ¦®ÇÛ+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(Ñ™®ªÿÿÿÿÿ8µ×õâ+
+asquid:S2147"ECombine this catch with the one at line 942, which has the same body.(ï­£Ä8µ×õâ+
+Jsquid:S2095".Close this "FileWriter" in a "finally" clause.(ê½ †8µ×õâ+
+‘"squid:ClassVariableVisibilityCheck"^Make mx509UsernameField a static final constant or non-public and provide accessors if needed.(Ô‚ª8Ğ¦®ÇÛ+
+‘"squid:ClassVariableVisibilityCheck"YMake mX509AuthType a static final constant or non-public and provide accessors if needed.(®ÛÒçùÿÿÿÿ8Ğ¦®ÇÛ+
+Ksquid:S1066"/Merge this if statement with the enclosing one.(úó£ë8µ×õâ+
+Psquid:S1066"/Merge this if statement with the enclosing one.(õ“ğ¥üÿÿÿÿ8µ×õâ+
+†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÁØÿùÿÿÿÿ8µ×õâ+
+|squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(üŸÎçùÿÿÿÿ8Ğ¦®ÇÛ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹Ø…Ë8µ×õâ+
+"squid:ClassVariableVisibilityCheck"WMake mPersistTun a static final constant or non-public and provide accessors if needed.(Èö¥Òùÿÿÿÿ8Ğ¦®ÇÛ+
+‡"squid:ClassVariableVisibilityCheck"TMake mVersion a static final constant or non-public and provide accessors if needed.(Ô‹öÒ8Ğ¦®ÇÛ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‡´»»úÿÿÿÿ8µ×õâ+
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(ûÛúšşÿÿÿÿ8µ×õâ+
+Asquid:S2068" Remove this hard-coded password.(ƒÛÍ‘üÿÿÿÿ8üÁã­Á+
+‹"squid:ClassVariableVisibilityCheck"XMake mIPv4Address a static final constant or non-public and provide accessors if needed.(ÿ¬öÿ8Ğ¦®ÇÛ+
+ "squid:ClassVariableVisibilityCheck"hMake mAllowedAppsVpnAreDisallowed a static final constant or non-public and provide accessors if needed.(„úşºøÿÿÿÿ8Ğ¦®ÇÛ+
+‹"squid:ClassVariableVisibilityCheck"SMake mNobind a static final constant or non-public and provide accessors if needed.(“õÓ´ùÿÿÿÿ8Ğ¦®ÇÛ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8µ×õâ+
+†"squid:ClassVariableVisibilityCheck"SMake mUseUdp a static final constant or non-public and provide accessors if needed.(è–éœ8Ğ¦®ÇÛ+
+†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÁØÿùÿÿÿÿ8µ×õâ+
+"squid:ClassVariableVisibilityCheck"UMake mLastUsed a static final constant or non-public and provide accessors if needed.(¨¤©‰ùÿÿÿÿ8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"WMake mServerPort a static final constant or non-public and provide accessors if needed.(ƒ³ô’ûÿÿÿÿ8Ğ¦®ÇÛ+
+nsquid:S1192"RDefine a constant instead of duplicating this literal "verify-x509-name " 4 times.(Âå¢‚8µ×õâ+
+"squid:ClassVariableVisibilityCheck"]Make mTLSAuthDirection a static final constant or non-public and provide accessors if needed.(Ğ«á„8Ğ¦®ÇÛ+
+Jsquid:S2095".Close this "FileReader" in a "finally" clause.(³–¨¶8µ×õâ+
+Œ"squid:ClassVariableVisibilityCheck"YMake mPushPeerInfo a static final constant or non-public and provide accessors if needed.(ö¡êò8Ğ¦®ÇÛ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(£×°âûÿÿÿÿ8µ×õâ+
+“"squid:ClassVariableVisibilityCheck"[Make mCustomRoutesv6 a static final constant or non-public and provide accessors if needed.(Ï„¦‚øÿÿÿÿ8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"\Make mTLSAuthFilename a static final constant or non-public and provide accessors if needed.(ø¨İÃ8Ğ¦®ÇÛ+
+msquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(¾¤¯¸8µ×õâ+
+Msquid:S1313",Make this IP "8.8.4.4" address configurable.(­¢Äıÿÿÿÿ8üÁã­Á+
+"squid:ClassVariableVisibilityCheck"[Make mAllowedAppsVpn a static final constant or non-public and provide accessors if needed.(öèä¾8Ğ¦®ÇÛ+
+Œ"squid:ClassVariableVisibilityCheck"YMake mUserEditable a static final constant or non-public and provide accessors if needed.(šà8Ğ¦®ÇÛ+
+ƒ"squid:ClassVariableVisibilityCheck"QMake mPing a static final constant or non-public and provide accessors if needed.(”öİ8Ğ¦®ÇÛ+
+nsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô½†À8µ×õâ+
+‰"squid:ClassVariableVisibilityCheck"WMake mCaFilename a static final constant or non-public and provide accessors if needed.(òºw8Ğ¦®ÇÛ+
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ8Ğ¦®ÇÛ+
+”"squid:ClassVariableVisibilityCheck"\Make mConnectRetryMax a static final constant or non-public and provide accessors if needed.(Ä¥è’ùÿÿÿÿ8Ğ¦®ÇÛ+
+osquid:S3776"SRefactor this method to reduce its Cognitive Complexity from 107 to the 15 allowed.(º„ˆÆ8µ×õâ+
+—"squid:ClassVariableVisibilityCheck"_Make mAuthenticationType a static final constant or non-public and provide accessors if needed.(²êĞ—úÿÿÿÿ8Ğ¦®ÇÛ+
+Asquid:S2068" Remove this hard-coded password.(èºğùÿÿÿÿ8üÁã­Á+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(³å8Ğ¦®ÇÛ+
+Ssquid:S1135"2Complete the task associated to this TODO comment.(À’´‚üÿÿÿÿ8µ×õâ+
+"squid:ClassVariableVisibilityCheck"ZMake mAllowLocalLAN a static final constant or non-public and provide accessors if needed.(øöó8Ğ¦®ÇÛ+
+msquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(½ºù8µ×õâ+
+=squid:S1643"Use a StringBuilder instead.(øÓöÔıÿÿÿÿ8µ×õâ+
+]squid:S1126"AReplace this if-then-else statement by a single return statement.(šİâù8µ×õâ+
+"squid:ClassVariableVisibilityCheck"\Make mUseCustomConfig a static final constant or non-public and provide accessors if needed.(ö¾ÿ±8Ğ¦®ÇÛ+
+‘"squid:ClassVariableVisibilityCheck"YMake mRemoteRandom a static final constant or non-public and provide accessors if needed.(Çœùÿÿÿÿ8Ğ¦®ÇÛ+
+“squid:S1319"wThe type of the "mAllowedAppsVpn" object should be an interface such as "Set" rather than the implementation "HashSet".(öèä¾8üÁã­Á+
+Ksquid:S1066"/Merge this if statement with the enclosing one.(Ë«ªÑ8µ×õâ+
+Jsquid:S1172".Remove this unused method parameter "context".(îõš‰8µ×õâ+
+msquid:S1192"QDefine a constant instead of duplicating this literal "auth-user-pass\n" 4 times.(Ÿ‚Ç…8µ×õâ+
+"squid:ClassVariableVisibilityCheck"XMake mIPv6Address a static final constant or non-public and provide accessors if needed.(Ûªô×ùÿÿÿÿ8Ğ¦®ÇÛ+
+Ssquid:S1444"2Make this "public static DEFAULT_DNS2" field final(­¢Äıÿÿÿÿ8üÁã­Á+
+–"squid:ClassVariableVisibilityCheck"^Make mClientKeyFilename a static final constant or non-public and provide accessors if needed.(ıÓàúÿÿÿÿ8Ğ¦®ÇÛ+
+–"squid:ClassVariableVisibilityCheck"^Make mUseDefaultRoutev6 a static final constant or non-public and provide accessors if needed.(©Ãüÿÿÿÿ8Ğ¦®ÇÛ+
+”"squid:ClassVariableVisibilityCheck"\Make mUseDefaultRoute a static final constant or non-public and provide accessors if needed.(ÏÚÉãÿÿÿÿÿ8Ğ¦®ÇÛ+
+8squid:S1643"Use a StringBuilder instead.(³›§Œ8µ×õâ+
+ˆ"squid:ClassVariableVisibilityCheck"UMake mUseFloat a static final constant or non-public and provide accessors if needed.(†’şÉ8Ğ¦®ÇÛ+
+tsquid:S2975"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(¤„ŸÎúÿÿÿÿ8µ×õâ+
+…"squid:ClassVariableVisibilityCheck"SMake mMssFix a static final constant or non-public and provide accessors if needed.(˜ÄÔ8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"XMake mCrlFilename a static final constant or non-public and provide accessors if needed.(»³ıáûÿÿÿÿ8Ğ¦®ÇÛ+
+_squid:S1155">Use isEmpty() to check whether the collection is empty or not.(Ìá¬½øÿÿÿÿ8µ×õâ+
+gsquid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ8üÁã­Á+
+“"squid:ClassVariableVisibilityCheck"`Make mConnectRetryMaxTime a static final constant or non-public and provide accessors if needed.(ÅÀ”Ğ8Ğ¦®ÇÛ+
+]squid:S1126"AReplace this if-then-else statement by a single return statement.(Ó´›œ8µ×õâ+
+=squid:S1643"Use a StringBuilder instead.(òÛ†õøÿÿÿÿ8µ×õâ+
+"squid:ClassVariableVisibilityCheck"[Make mProfileCreator a static final constant or non-public and provide accessors if needed.(¨øç8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"[Make mPKCS12Password a static final constant or non-public and provide accessors if needed.(òêß¶8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"UMake mPassword a static final constant or non-public and provide accessors if needed.(ƒÛÍ‘üÿÿÿÿ8Ğ¦®ÇÛ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ş”È8µ×õâ+
+“"squid:ClassVariableVisibilityCheck"[Make mExcludedRoutes a static final constant or non-public and provide accessors if needed.(ú¥şØøÿÿÿÿ8Ğ¦®ÇÛ+
+8squid:S1643"Use a StringBuilder instead.(œ¤Â†8µ×õâ+
+‹"squid:ClassVariableVisibilityCheck"SMake mCipher a static final constant or non-public and provide accessors if needed.(ŒíÈîÿÿÿÿÿ8Ğ¦®ÇÛ+
+Z"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(‡‘¢ûùÿÿÿÿ8µ×õâ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¥¹øãÿÿÿÿÿ8µ×õâ+
+Š"squid:ClassVariableVisibilityCheck"WMake mServerName a static final constant or non-public and provide accessors if needed.(àôı8Àùñÿâ+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(ÂçÙÄûÿÿÿÿ8µ×õâ+
+‘"squid:ClassVariableVisibilityCheck"YMake mConnectRetry a static final constant or non-public and provide accessors if needed.(úĞÕ¥ıÿÿÿÿ8Ğ¦®ÇÛ+
+Msquid:S1313",Make this IP "8.8.8.8" address configurable.(‘ªì¯ÿÿÿÿÿ8üÁã­Á+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(šÃæüÿÿÿÿ8µ×õâ+
+squid:S1488"^Immediately return this expression instead of assigning it to the temporary variable "intent".(İìÖ¨ÿÿÿÿÿ8µ×õâ+
+Ksquid:S1066"/Merge this if statement with the enclosing one.(¢å—š8µ×õâ+
+"squid:ClassVariableVisibilityCheck"[Make mPKCS12Filename a static final constant or non-public and provide accessors if needed.(·Çöì8Ğ¦®ÇÛ+
+„"squid:ClassVariableVisibilityCheck"QMake mDNS1 a static final constant or non-public and provide accessors if needed.(õò¬‹8Ğ¦®ÇÛ+
+‹"squid:ClassVariableVisibilityCheck"XMake mOverrideDNS a static final constant or non-public and provide accessors if needed.(óµ™†8Ğ¦®ÇÛ+
+ˆ"squid:ClassVariableVisibilityCheck"UMake mUsername a static final constant or non-public and provide accessors if needed.(®¦éÂ8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"XMake mKeyPassword a static final constant or non-public and provide accessors if needed.(èºğùÿÿÿÿ8Ğ¦®ÇÛ+
+ƒ"squid:ClassVariableVisibilityCheck"RMake mAlias a static final constant or non-public and provide accessors if needed.(¹¨a8Ğ¦®ÇÛ+
+Ksquid:S1066"/Merge this if statement with the enclosing one.(Ÿû¦Ä8µ×õâ+
+—"squid:ClassVariableVisibilityCheck"_Make mClientCertFilename a static final constant or non-public and provide accessors if needed.(³Ô•Ñüÿÿÿÿ8Ğ¦®ÇÛ+
+nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(îõš‰8µ×õâ+
+Lsquid:S1172"+Remove this unused method parameter "name".(‰îÉÊıÿÿÿÿ8µ×õâ+
+lsquid:S1206"PThis class overrides "equals()" and should therefore also override "hashCode()".(ÜÑã8µ×õâ+
+"squid:ClassVariableVisibilityCheck"WMake mUseTLSAuth a static final constant or non-public and provide accessors if needed.(ş¬Ãƒûÿÿÿÿ8Ğ¦®ÇÛ+
+‰"squid:ClassVariableVisibilityCheck"QMake mVerb a static final constant or non-public and provide accessors if needed.(„õ­¤úÿÿÿÿ8Ğ¦®ÇÛ+
+xsquid:S3008"WRename this field "DEFAULT_DNS2" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­¢Äıÿÿÿÿ8üÁã­Á+
+„"squid:ClassVariableVisibilityCheck"QMake mAuth a static final constant or non-public and provide accessors if needed.(§°¾÷8Ğ¦®ÇÛ+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(ÃÏÍ¹úÿÿÿÿ8µ×õâ+
+‘"squid:ClassVariableVisibilityCheck"^Make mUseRandomHostname a static final constant or non-public and provide accessors if needed.(ºÁ¿À8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"XMake DEFAULT_DNS1 a static final constant or non-public and provide accessors if needed.(‘ªì¯ÿÿÿÿÿ8Ğ¦®ÇÛ+
+Hsquid:S1313",Make this IP "0.0.0.0" address configurable.(Ş…ù¤8µ×õâ+
+’"squid:ClassVariableVisibilityCheck"`Make mCustomConfigOptions a static final constant or non-public and provide accessors if needed.(è°…78Ğ¦®ÇÛ+
+‰"squid:ClassVariableVisibilityCheck"QMake mDNS2 a static final constant or non-public and provide accessors if needed.(¯×‰Øÿÿÿÿÿ8Ğ¦®ÇÛ+
+U"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(È¿ô“8µ×õâ+
+8squid:S1643"Use a StringBuilder instead.(¢˜ËÓ8µ×õâ+
+"squid:ClassVariableVisibilityCheck"XMake DEFAULT_DNS2 a static final constant or non-public and provide accessors if needed.(­¢Äıÿÿÿÿ8Ğ¦®ÇÛ+
+‡"squid:ClassVariableVisibilityCheck"TMake mUsePull a static final constant or non-public and provide accessors if needed.(ïğ…¶8Ğ¦®ÇÛ+
+Ssquid:S1444"2Make this "public static DEFAULT_DNS1" field final(‘ªì¯ÿÿÿÿÿ8üÁã­Á+
+"squid:ClassVariableVisibilityCheck"ZMake mExpectTLSCert a static final constant or non-public and provide accessors if needed.(óéÔÎ8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"ZMake profileDeleted a static final constant or non-public and provide accessors if needed.(Şó™•8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"]Make mExcludedRoutesv6 a static final constant or non-public and provide accessors if needed.(Åì‘]8Ğ¦®ÇÛ+
+†"squid:ClassVariableVisibilityCheck"SMake mUseLzo a static final constant or non-public and provide accessors if needed.(øÔê—8Ğ¦®ÇÛ+
+"squid:ClassVariableVisibilityCheck"UMake mRemoteCN a static final constant or non-public and provide accessors if needed.(ï¼€ëÿÿÿÿÿ8Ğ¦®ÇÛ+
+‘"squid:ClassVariableVisibilityCheck"YMake mCustomRoutes a static final constant or non-public and provide accessors if needed.(ÜÖºÎûÿÿÿÿ8Ğ¦®ÇÛ+
+ssquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“¶ÓÈùÿÿÿÿ8µ×õâ+
+_squid:S1155">Use isEmpty() to check whether the collection is empty or not.(•ÎÜÔşÿÿÿÿ8µ×õâ+
+"squid:ClassVariableVisibilityCheck"ZMake mCheckRemoteCN a static final constant or non-public and provide accessors if needed.(Šñ¾8Ğ¦®ÇÛ+
+‹"squid:ClassVariableVisibilityCheck"XMake mRoutenopull a static final constant or non-public and provide accessors if needed.(Š»™8Ğ¦®ÇÛ+
+Ksquid:S1066"/Merge this if statement with the enclosing one.(Á¸ô”8µ×õâ+
+=squid:S1643"Use a StringBuilder instead.(¹œ ûÿÿÿÿ8µ×õâ+
+xsquid:S3008"WRename this field "DEFAULT_DNS1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘ªì¯ÿÿÿÿÿ8üÁã­Á+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(÷•’øşÿÿÿÿ8µ×õâ+
+=squid:S1643"Use a StringBuilder instead.(øÓöÔıÿÿÿÿ8µ×õâ+
+8squid:S1643"Use a StringBuilder instead.(¨óóå8µ×õâ+

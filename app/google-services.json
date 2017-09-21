@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "557699062488",
+    "firebase_url": "https://openvpnclient-93aa9.firebaseio.com/",
+    "project_id": "openvpnclient-93aa9",
+    "storage_bucket": "openvpnclient-93aa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557699062488:android:6ee43ec3baf3d21f",
+        "android_client_info": {
+          "package_name": "com.b.android.openvpn60"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557699062488-89rlnr4j2v1rdctiotkm5k4hn6qvgo8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMe-32lMi9ozKtpg8mJZ_ToGadtpUR6bg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

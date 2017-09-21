@@ -1,0 +1,30 @@
+
+Zsquid:S3516"9Refactor this method to not always return the same value.(„Íßùÿÿÿÿ8‹àÏ—Ó+
+=squid:S1643"Use a StringBuilder instead.(Ë¯ôƒıÿÿÿÿ8Ò°¿õâ+
+Hsquid:S3010",Remove this assignment of "mOpenVPNService".(åáÀ­8ÔßæÜÃ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¬‚õÇüÿÿÿÿ8Ò°¿õâ+
+Ksquid:S00108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8‹àÏ—Ó+
+Nsquid:S1199"-Extract this nested code block into a method.(ß°òşÿÿÿÿ8Ò°¿õâ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(û ±Û8Ò°¿õâ+
+Ksquid:S1172"/Remove this unused method parameter "argument".(ÚÚ†Ö8ôŠ¼öâ+
+Vsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ò°¿õâ+
+lsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(¶Ø8Ò°¿õâ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ëä’üüÿÿÿÿ8Ò°¿õâ+
+msquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(Ò·µ8Ò°¿õâ+
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ûÛÁ÷8×¢»¾Â+
+gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ8Ò°¿õâ+
+jsquid:S1226"IIntroduce a new variable instead of reusing the parameter "pendingInput".(·ÀŒñÿÿÿÿÿ8Ò°¿õâ+
+Vsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ò°¿õâ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘›Œä8Ò°¿õâ+
+nsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öœ’ä8Ò°¿õâ+
+msquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(‰Í™÷8Ò°¿õâ+
+gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ8×¢»¾Â+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(îŒ•çúÿÿÿÿ8Ò°¿õâ+
+rsquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(¼Ûñÿÿÿÿÿ8Ò°¿õâ+
+dsquid:S1226"IIntroduce a new variable instead of reusing the parameter "pendingInput".(¾˜‡b8Ò°¿õâ+
+Zsquid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(ê©ó'8Ò°¿õâ+
+}squid:S1450"aRemove the "mServerSocketLocal" field and declare it as a local variable in the relevant methods.(–Ê‹8×¢»¾Â+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(áé¥ıÿÿÿÿ8Ò°¿õâ+
+Ksquid:S00108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8Ò°¿õâ+
+Nsquid:S1199"-Extract this nested code block into a method.(ÔÉÊ²øÿÿÿÿ8Ò°¿õâ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Á„Àöûÿÿÿÿ8Ò°¿õâ+

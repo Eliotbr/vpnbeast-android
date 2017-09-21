@@ -1,0 +1,16 @@
+
+gsquid:S2184"FCast one of the operands of this multiplication operation to a "long".(ËñÒ¦şÿÿÿÿ8‰ªèÀ+
+|squid:S1450"[Remove the "lastStateMsg" field and declare it as a local variable in the relevant methods.(ŞŒÁÂÿÿÿÿÿ8‰ªèÀ+
+|squid:S00116"ZRename this field "DISCONNECT_WAIT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œ¿×…ÿÿÿÿÿ8¼óçõâ+
+zsquid:S00116"XRename this field "TRAFFIC_LIMIT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ËñÒ¦şÿÿÿÿ8¼óçõâ+
+{squid:S1450"ZRemove the "lastNetwork" field and declare it as a local variable in the relevant methods.(¹Ãæ‰üÿÿÿÿ8‰ªèÀ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ùò—ò8¼óçõâ+
+Bsquid:S1170"!Make this final field static too.(ËñÒ¦şÿÿÿÿ8‰ªèÀ+
+{squid:S00116"YRename this field "TRAFFIC_WINDOW" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾‘éÙşÿÿÿÿ8¼óçõâ+
+Psquid:S1068"/Remove this unused "lastNetwork" private field.(¹Ãæ‰üÿÿÿÿ8‰ªèÀ+
+Bsquid:S1170"!Make this final field static too.(¾‘éÙşÿÿÿÿ8‰ªèÀ+
+Bsquid:S1170"!Make this final field static too.(Œ¿×…ÿÿÿÿÿ8‰ªèÀ+
+Qsquid:S1068"0Remove this unused "lastStateMsg" private field.(ŞŒÁÂÿÿÿÿÿ8‰ªèÀ+
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(š³ÿÿÿÿÿÿ8‰ªèÀ+
+nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(Ùä±8‰ªèÀ+
+Esquid:S1940")Use the opposite operator ("!=") instead.(õÚ±ş8‰ªèÀ+

@@ -1,0 +1,9 @@
+
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ž±ì8ØóýÃâ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(›Ö½³øÿÿÿÿ8ØóýÃâ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÛôŠ±8¨ªžøÛ+
+"squid:ClassVariableVisibilityCheck"UMake mProfile2 a static final constant or non-public and provide accessors if needed.(ðÆ·ùÿÿÿÿ8ØóýÃâ+
+Hsquid:S1068"-Remove this unused "mInstance" private field.(ÌÄž8ØóýÃâ+
+Tsquid:S1068"8Remove this unused "mSelectedTxtPosition" private field.(¤›…‹8ê³öÇ+
+Š"squid:ClassVariableVisibilityCheck"WMake mSelectedRB a static final constant or non-public and provide accessors if needed.(ÍÛëÔ8¨ªžøÛ+
+"squid:ClassVariableVisibilityCheck"XMake mSelectedTxt a static final constant or non-public and provide accessors if needed.(úŒÑŸþÿÿÿÿ8¨ªžøÛ+

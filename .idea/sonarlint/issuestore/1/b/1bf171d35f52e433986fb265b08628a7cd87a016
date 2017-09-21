@@ -1,0 +1,13 @@
+
+Qsquid:S2209"5Change this instance-reference to a static reference.(Ü÷â8ÕÃĞèÀ+
+bsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8ÕÃĞèÀ+
+Wsquid:S2696"6Make the enclosing method "static" or remove this set.(…¬íêùÿÿÿÿ8ÕÃĞèÀ+
+Vsquid:S2274":Remove this call to "wait" or move it into a "while" loop.(šØÓ¤8ßòû‘Â+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕÃĞèÀ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÕÃĞèÀ+
+Psquid:S2095"4Close this "DataOutputStream" in a "finally" clause.(âå Â8ÕÃĞèÀ+
+Z"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(ıŞ³‹ùÿÿÿÿ8æµöâ+
+„"squid:ClassVariableVisibilityCheck"QMake state a static final constant or non-public and provide accessors if needed.(…‰¶ò8æµöâ+
+"squid:ClassVariableVisibilityCheck"VMake logmessage a static final constant or non-public and provide accessors if needed.(Ó–©øøÿÿÿÿ8æµöâ+
+„"squid:ClassVariableVisibilityCheck"QMake level a static final constant or non-public and provide accessors if needed.(‹³¼í8æµöâ+
+ssquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ¤­Ñıÿÿÿÿ8æµöâ+

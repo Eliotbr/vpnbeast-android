@@ -1,0 +1,14 @@
+
+psquid:S00116"SRename this field "PORT_587" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô¼ä´8áï‡·é+
+qsquid:S00116"TRename this field "START_TLS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹Ñ˜8áï‡·é+
+Å%squid:RedundantThrowsDeclarationCheck"‰Remove the declaration of thrown exception 'javax.mail.internet.AddressException' which is a subclass of 'javax.mail.MessagingException'.(¹Á¾Éøÿÿÿÿ8­Ü·é+
+Bsquid:S1170"!Make this final field static too.(ı´¶üÿÿÿÿ8áï‡·é+
+ysquid:S00116"WRename this field "HOST_HOTMAIL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ–Š–øÿÿÿÿ8áï‡·é+
+vsquid:S00116"TRename this field "SMTP_AUTH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ğ¹ÿÿÿÿÿ8áï‡·é+
+Bsquid:S1170"!Make this final field static too.(ğ–Š–øÿÿÿÿ8áï‡·é+
+wsquid:S00116"URename this field "HOST_GMAIL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı´¶üÿÿÿÿ8áï‡·é+
+Qsquid:S1068"0Remove this unused "HOST_HOTMAIL" private field.(ğ–Š–øÿÿÿÿ8áï‡·é+
+À%squid:RedundantThrowsDeclarationCheck"‰Remove the declaration of thrown exception 'javax.mail.internet.AddressException' which is a subclass of 'javax.mail.MessagingException'.(†µğ8­Ü·é+
+=squid:S1170"!Make this final field static too.(ô¼ä´8áï‡·é+
+Bsquid:S1170"!Make this final field static too.(“ğ¹ÿÿÿÿÿ8áï‡·é+
+=squid:S1170"!Make this final field static too.(‹Ñ˜8áï‡·é+

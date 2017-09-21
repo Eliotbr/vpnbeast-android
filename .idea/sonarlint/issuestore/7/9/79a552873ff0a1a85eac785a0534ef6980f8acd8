@@ -1,0 +1,36 @@
+
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÉ˜“8¤Ó¥èÀ+
+Ssquid:S1135"2Complete the task associated to this TODO comment.(…Ÿùßüÿÿÿÿ8¤Ó¥èÀ+
+zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(òµË·şÿÿÿÿ8¤Ó¥èÀ+
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÉ˜“8¤Ó¥èÀ+
+y
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(”è¢Õüÿÿÿÿ8¤Ó¥èÀ+
+Ksquid:S2200"/Only the sign of the result should be examined.(  Ğó8¤Ó¥èÀ+
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÉ˜“8¤Ó¥èÀ+
+qsquid:S1206"PThis class overrides "equals()" and should therefore also override "hashCode()".(İ¢êÍıÿÿÿÿ8¤Ó¥èÀ+
+Ksquid:S2200"/Only the sign of the result should be examined.(ÓŞ—ô8¤Ó¥èÀ+
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÑĞó€8¤Ó¥èÀ+
+Ksquid:S2200"/Only the sign of the result should be examined.(¬˜°Ò8¤Ó¥èÀ+
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 62 to the 15 allowed.(ë›ÏÌùÿÿÿÿ8¤Ó¥èÀ+
+Jsquid:S2200"/Only the sign of the result should be examined.(˜³P8¤Ó¥èÀ+
+Psquid:S2200"/Only the sign of the result should be examined.(äÓ¶úÿÿÿÿ8¤Ó¥èÀ+
+Ksquid:S2200"/Only the sign of the result should be examined.(—İ•Ó8¤Ó¥èÀ+
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÉ˜“8¤Ó¥èÀ+
+nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¨½éÓ8¤Ó¥èÀ+
+zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ºûÙâøÿÿÿÿ8¤Ó¥èÀ+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(­©“æøÿÿÿÿ8‘§èõâ+
+Š"squid:ClassVariableVisibilityCheck"WMake networkMask a static final constant or non-public and provide accessors if needed.(¹íĞß8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(“ô˜îùÿÿÿÿ8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(ôë¡ûÿÿÿÿ8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(Ç»Ü•ÿÿÿÿÿ8‘§èõâ+
+[squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(ƒã¥´8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(¬òî¥øÿÿÿÿ8‘§èõâ+
+[squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(Ğ«İÀ8‘§èõâ+
+[squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(Œ€ò£8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(ÿöæ¬ıÿÿÿÿ8‘§èõâ+
+Zsquid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(˜³P8‘§èõâ+
+[squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(ÓŞ—ô8‘§èõâ+
+Zsquid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(İ¿×8‘§èõâ+
+`squid:CallToDeprecatedMethod".Remove this use of "Assert"; it is deprecated.(Â™ıÿÿÿÿ8‘§èõâ+
+jsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ñåâ‚8‘§èõâ+
+5squid:S3457"2nd argument is not used.(Ä‡Ï‡8‘§èõâ+

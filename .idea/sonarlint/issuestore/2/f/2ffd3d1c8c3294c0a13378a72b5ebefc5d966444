@@ -1,0 +1,6 @@
+
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(©´Ç8ØŞµöâ+
+squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ÊµË8ÀÁÁ‹ê+
+gsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(ÜŸ•8›ºüçÀ+
+U"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(ÜŸ•8ØŞµöâ+
+Ssquid:UnusedPrivateMethod")Remove this unused private "test" method.(¬ÊµË8ÀÁÁ‹ê+

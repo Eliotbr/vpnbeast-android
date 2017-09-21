@@ -1,0 +1,10 @@
+
+"squid:ClassVariableVisibilityCheck"UMake isEnabled a static final constant or non-public and provide accessors if needed.(€†»­ùÿÿÿÿ8á×èÿâ+
+msquid:S3457"Q%n should be used in place of \n to produce the platform-specific line separator.(´ÿÂ¦8·ëÿâ+
+nsquid:S2975"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ö‰Š78—¹Ùõâ+
+„"squid:ClassVariableVisibilityCheck"QMake isUdp a static final constant or non-public and provide accessors if needed.(—¯»ô8èüæÿâ+
+‰"squid:ClassVariableVisibilityCheck"VMake serverName a static final constant or non-public and provide accessors if needed.(ÀØ®’8şıãÿâ+
+‰"squid:ClassVariableVisibilityCheck"VMake serverPort a static final constant or non-public and provide accessors if needed.(éêˆ­8¼Áæÿâ+
+—"squid:ClassVariableVisibilityCheck"_Make customConfiguration a static final constant or non-public and provide accessors if needed.(øá¨åùÿÿÿÿ8·Øçÿâ+
+’"squid:ClassVariableVisibilityCheck"ZMake connectTimeout a static final constant or non-public and provide accessors if needed.(ıšˆåúÿÿÿÿ8“éÿâ+
+“"squid:ClassVariableVisibilityCheck"[Make useCustomConfig a static final constant or non-public and provide accessors if needed.(­øüıÿÿÿÿ8Ğ—èÿâ+
