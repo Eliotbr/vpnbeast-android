@@ -146,6 +146,21 @@
 
             />
 
+        <Button
+            android:layout_height="75dip"
+            android:layout_width="wrap_content"
+            android:id="@+id/btnTostring"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_columnWeight="0.5"
+            android:text="Tostring"
+            android:background="@color/colorDarkerGreen"
+            android:textColor="#232323"
+            android:layout_marginTop="20dip"
+
+            />
+
     </GridLayout>
 
 </RelativeLayout>

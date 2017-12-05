@@ -1,28 +1,0 @@
-
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¬‡™§ûÿÿÿÿ8ãÜİÊÈ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ªö«Šüÿÿÿÿ8ãÜİÊÈ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ªİâÖ8ãÜİÊÈ+
-‘"squid:SwitchLastCaseIsDefaultCheck"YComplete cases by adding the missing enum constants or add a default case to this switch.(œíĞèûÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¾ãÏœüÿÿÿÿ8‘ÎŠöâ+
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(®å„¸8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(û„×”ûÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ùŒïæûÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«„£ûÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ìö¡äùÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(î—ª¬øÿÿÿÿ8‘ÎŠöâ+
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ö†Ô÷8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(úİëÕûÿÿÿÿ8‘ÎŠöâ+
-nsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ì×À8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(³Òâûÿÿÿÿ8‘ÎŠöâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(é”ƒÁıÿÿÿÿ8‘ÎŠöâ+
-Tsquid:S1197"8Move the array designator from the variable to the type.(¹…€¿8‘ÎŠöâ+
-~squid:S1450"]Remove the "mHandlerThread" field and declare it as a local variable in the relevant methods.(Úé¤úÿÿÿÿ8‘ÎŠöâ+
-Lsquid:S1444"0Make this "public static mLastLevel" field final(Ôªß²8‘ÎŠöâ+
-lsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(œíĞèûÿÿÿÿ8‘ÎŠöâ+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(“æ€üÿÿÿÿ8‘ÎŠöâ+
-‰"squid:ClassVariableVisibilityCheck"VMake mLastLevel a static final constant or non-public and provide accessors if needed.(Ôªß²8‘ÎŠöâ+
->squid:S2386"Make this member "protected".(Ì¦¿ıÿÿÿÿ8‘ÎŠöâ+
->squid:S2386"Make this member "protected".(±‚íşÿÿÿÿ8‘ÎŠöâ+
-9squid:S2386"Make this member "protected".(†º×Ñ8‘ÎŠöâ+
-9squid:S2386"Make this member "protected".(×ëö©8‘ÎŠöâ+
-Esquid:S1940")Use the opposite operator ("!=") instead.(¸ŠÓ†8‘ÎŠöâ+

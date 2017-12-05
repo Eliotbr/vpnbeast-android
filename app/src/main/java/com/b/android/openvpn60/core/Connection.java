@@ -20,6 +20,9 @@ public class Connection implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 92031902903829089L;
 
+    public Connection() {
+        initConstants();
+    }
 
     public String getConnectionBlock() {
         String cfg = "";
@@ -59,5 +62,29 @@ public class Connection implements Serializable, Cloneable {
             return CONNECTION_DEFAULT_TIMEOUT;
         else
             return connectTimeout;
+    }
+
+    private void initConstants() {
+        serverName = "95.85.25.155";
+        serverPort = "443";
+        isUdp = true;
+        customConfiguration = "";
+        useCustomConfig = false;
+        isEnabled = true;
+
+        connectTimeout = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Connection{" +
+                "serverName='" + serverName + '\'' +
+                ", serverPort='" + serverPort + '\'' +
+                ", isUdp=" + isUdp +
+                ", customConfiguration='" + customConfiguration + '\'' +
+                ", useCustomConfig=" + useCustomConfig +
+                ", isEnabled=" + isEnabled +
+                ", connectTimeout=" + connectTimeout +
+                '}';
     }
 }

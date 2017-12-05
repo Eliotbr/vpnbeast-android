@@ -1,4 +1,0 @@
-
-[squid:S1118":Add a private constructor to hide the implicit public one.(¹‹ó¿ıÿÿÿÿ8Ïøó¦Ù+
-wsquid:S1450"VRemove the "pattern" field and declare it as a local variable in the relevant methods.(ÚÀù‡ÿÿÿÿÿ8Ïøó¦Ù+
-wsquid:S1450"VRemove the "matcher" field and declare it as a local variable in the relevant methods.(™ç¯€øÿÿÿÿ8Ûù‚§Ù+

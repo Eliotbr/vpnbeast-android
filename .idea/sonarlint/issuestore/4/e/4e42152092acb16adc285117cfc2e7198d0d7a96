@@ -1,122 +1,123 @@
 
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‘‹«»üÿÿÿÿ8½£àÿâ+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 65 to the 15 allowed.(×›Úã8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ë·éüûÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ĞéÖç8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Üëûˆ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ô–®Òÿÿÿÿÿ8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(õ±«8½£àÿâ+
-=squid:S1170"!Make this final field static too.(äşìŠ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¼Ôç–8½£àÿâ+
-wsquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ8½£àÿâ+
-wsquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(èŸßÉ8½£àÿâ+
-wsquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ñ¢å’8ûèßÿâ+
-Usquid:S1313"4Make this IP "255.255.255.255" address configurable.(ÕàŞØüÿÿÿÿ8½£àÿâ+
-=squid:S1643"Use a StringBuilder instead.(Ş×“ìÿÿÿÿÿ8½£àÿâ+
-Z"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(„Îıÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(³Ë¢ˆùÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‘Î“‹ıÿÿÿÿ8½£àÿâ+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¹İıï8½£àÿâ+
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅâÏ8÷öèÀ+
-zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜È‡Óÿÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ÿ©’8ûèßÿâ+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã•öÑúÿÿÿÿ8½£àÿâ+
-8squid:S1643"Use a StringBuilder instead.(‡Òó´8½£àÿâ+
-csquid:S1192"GDefine a constant instead of duplicating this literal "setenv" 3 times.(¤•ËÂ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ƒˆõŒûÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(÷Ë£©8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(îôÄê8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¦½­óùÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(÷­äı8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‡ûáíúÿÿÿÿ8½£àÿâ+
-Zsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(ıœÚ8½£àÿâ+
-zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(“ø¨Çùÿÿÿÿ8Æ†óèÀ+
-Bsquid:S2131"!Use "Character.toString" instead.(€ÛÃ–øÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(øêÀæ8½£àÿâ+
-`squid:S1854"?Remove this useless assignment to local variable "compatnames".(§¢™¨úÿÿÿÿ8ûèßÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(º˜øç8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(…ÚÖn8½£àÿâ+
-zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(½¦Öİûÿÿÿÿ8½£àÿâ+
-Jsquid:S1481".Remove this unused "remotetls" local variable.(â­§÷8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(·Ü‹•ûÿÿÿÿ8ûèßÿâ+
-Qsquid:S1481"0Remove this unused "compatnames" local variable.(§¢™¨úÿÿÿÿ8ûèßÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(›ò‚ºşÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ùœí¥øÿÿÿÿ8½£àÿâ+
-=squid:S1170"!Make this final field static too.(ùæ¤ 8½£àÿâ+
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(³…Š¡ûÿÿÿÿ8½£àÿâ+
-=squid:S1643"Use a StringBuilder instead.(€ÛÃ–øÿÿÿÿ8½£àÿâ+
-^squid:S1854"CRemove this useless assignment to local variable "nonameremapping".(ê©†S8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÔŞõ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(óÇõùÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(˜Áè¹ıÿÿÿÿ8½£àÿâ+
-Osquid:S1481"4Remove this unused "nonameremapping" local variable.(ê©†S8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ËˆâŠ8½£àÿâ+
-wsquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(°€¤ìşÿÿÿÿ8½£àÿâ+
-y
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8½£àÿâ+
-fsquid:S2147"ECombine this catch with the one at line 371, which has the same body.(à¿íúÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ËääÀ8½£àÿâ+
-Nsquid:S1481"-Remove this unused "routeopt" local variable.(Ñ¤üÑıÿÿÿÿ8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ê©†S8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(²ûÒ÷ÿÿÿÿÿ8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(±¦X8½£àÿâ+
-=squid:S1643"Use a StringBuilder instead.(–¯¬‘ùÿÿÿÿ8ûèßÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(µÌ‰8½£àÿâ+
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ä®§8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‚¤Ëµ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‡ÉŒ©ÿÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(½¦Öİûÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(×›Úã8ûèßÿâ+
-€squid:S00116"^Rename this field "auth_user_pass_file" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í™€›ÿÿÿÿÿ8Üè€éİ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ìÈ“‘ùÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÀÑ¢Î8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(â­§÷8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(éŸ²µ8½£àÿâ+
-Ksquid:S1066"/Merge this if statement with the enclosing one.(…©¼‡8½£àÿâ+
-Bsquid:S1170"!Make this final field static too.(ªÑ‰üûÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¥Ãø¨üÿÿÿÿ8½£àÿâ+
-Bsquid:S1170"!Make this final field static too.(í‰Ë”ıÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(„ı©²øÿÿÿÿ8½£àÿâ+
-Ksquid:S1066"/Merge this if statement with the enclosing one.(ÿú¯ó8½£àÿâ+
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(®ÖÉ³ùÿÿÿÿ8½£àÿâ+
-=squid:S1643"Use a StringBuilder instead.(ß½şØıÿÿÿÿ8½£àÿâ+
-Esquid:S1172")Remove this unused method parameter "np".(¯”ó¸8½£àÿâ+
-8squid:S1643"Use a StringBuilder instead.(ì¡Ùï8½£àÿâ+
-zsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(°ş¦Ñûÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(à‘ƒÙ8ûèßÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¨œúÿÿÿÿ8ûèßÿâ+
-tsquid:S3776"SRefactor this method to reduce its Cognitive Complexity from 131 to the 15 allowed.(ø•³Šıÿÿÿÿ8½£àÿâ+
-8squid:S1643"Use a StringBuilder instead.(½å×ş8ûèßÿâ+
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(€ÑÅ«8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‰¶­§ùÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ôÏ¾¶8½£àÿâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¨ª›8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¿­È8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çü·ì8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ç¤æ›ûÿÿÿÿ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(˜È‡Óÿÿÿÿÿ8½£àÿâ+
-ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ØÅ²üÿÿÿÿ8½£àÿâ+
-xsquid:S1488"\Immediately return this expression instead of assigning it to the temporary variable "conn".(­ñø˜8½£àÿâ+
-wsquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ˆÈÊÉ8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÕÇÓZ8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¸Â‘Ëÿÿÿÿÿ8½£àÿâ+
-dsquid:HiddenFieldCheck"8Rename "meta" which hides the field declared at line 24.(¿Äœÿÿÿÿÿ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Êûôé8½£àÿâ+
-8squid:S1643"Use a StringBuilder instead.(ÌÊ…8½£àÿâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(§¢™¨úÿÿÿÿ8ûèßÿâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(šÎä¼8½£àÿâ+
-Ysquid:S1854"=Remove this useless assignment to local variable "remotetls".(â­§÷8½£àÿâ+
-€squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Âã”>8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ğº†ˆ8½£àÿâ+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(­©èş8½£àÿâ+
-l
-squid:S128"LEnd this switch case with an unconditional break, return or throw statement.(µ»ïşıÿÿÿÿ8¸åşÿâ+
-l
-squid:S128"LEnd this switch case with an unconditional break, return or throw statement.(‰ÆÄÎşÿÿÿÿ8¸åşÿâ+
+6squid:S1643"Use a StringBuilder instead.(ß½şØıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(²ûÒ÷ÿÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(°€¤ìşÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã•öÑúÿÿÿÿ
+Wsquid:S1854"CRemove this useless assignment to local variable "nonameremapping".(ê©†S
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(µÌ‰
+r
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çü·ì
+Csquid:S1481".Remove this unused "remotetls" local variable.(â­§÷
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(çÔŞõ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(­©èş
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¥Ãø¨üÿÿÿÿ
+qsquid:S1488"\Immediately return this expression instead of assigning it to the temporary variable "conn".(­ñø˜
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(˜È‡Óÿÿÿÿÿ
+gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 65 to the 15 allowed.(×›Úã
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¨ª›
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ç¤æ›ûÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ƒˆõŒûÿÿÿÿ
+psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(³Ë¢ˆùÿÿÿÿ
+;squid:S1170"!Make this final field static too.(ªÑ‰üûÿÿÿÿ
+Ssquid:S1155">Use isEmpty() to check whether the collection is empty or not.(ıœÚ
+;squid:S1170"!Make this final field static too.(í‰Ë”ıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ùœí¥øÿÿÿÿ
+S"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(„Îıÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ËääÀ
+gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¹İıï
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(½¦Öİûÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(§¢™¨úÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(®ÖÉ³ùÿÿÿÿ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜È‡Óÿÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¸Â‘Ëÿÿÿÿÿ
+6squid:S1643"Use a StringBuilder instead.(Šàí¾ûÿÿÿÿ
+msquid:S3776"SRefactor this method to reduce its Cognitive Complexity from 131 to the 15 allowed.(ø•³Šıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(·Ü‹•ûÿÿÿÿ
+Dsquid:S1066"/Merge this if statement with the enclosing one.(…©¼‡
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‚¤Ëµ
+psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(×›Úã
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‡ÉŒ©ÿÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ĞéÖç
+lsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ØÅ²üÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(øêÀæ
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ôÏ¾¶
+e
+squid:S128"LEnd this switch case with an unconditional break, return or throw statement.(µ»ïşıÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ğº†ˆ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ˆÈÊÉ
+psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(€ÑÅ«
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÀÑ¢Î
+psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Èí©Æ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(éŸ²µ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Êûôé
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(±¦X
+6squid:S1170"!Make this final field static too.(ùæ¤ 
+=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(³…Š¡ûÿÿÿÿ
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Âã”>
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(½¦Öİûÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¿­È
+_squid:S2147"ECombine this catch with the one at line 371, which has the same body.(à¿íúÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(šÎä¼
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(÷­äı
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‰¶­§ùÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(îôÄê
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(÷Ë£©
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ä®§
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(â­§÷
+6squid:S1170"!Make this final field static too.(äşìŠ
+ysquid:S00116"^Rename this field "auth_user_pass_file" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í™€›ÿÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‡ûáíúÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅâÏ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(“ø¨Çùÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Üëûˆ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(º˜øç
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ìÈ“‘ùÿÿÿÿ
+e
+squid:S128"LEnd this switch case with an unconditional break, return or throw statement.(‰ÆÄÎşÿÿÿÿ
+1squid:S1643"Use a StringBuilder instead.(½å×ş
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(„ı©²øÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¨œúÿÿÿÿ
+Dsquid:S1066"/Merge this if statement with the enclosing one.(ÿú¯ó
+Rsquid:S1854"=Remove this useless assignment to local variable "remotetls".(â­§÷
+]squid:HiddenFieldCheck"8Rename "meta" which hides the field declared at line 24.(¿Äœÿÿÿÿÿ
+Ysquid:S1854"?Remove this useless assignment to local variable "compatnames".(§¢™¨úÿÿÿÿ
+\squid:S1192"GDefine a constant instead of duplicating this literal "setenv" 3 times.(¤•ËÂ
+Hsquid:S1481"4Remove this unused "nonameremapping" local variable.(ê©†S
+@squid:S1168"+Return an empty collection instead of null.(¥¹ï
+1squid:S1643"Use a StringBuilder instead.(ì¡Ùï
+@squid:S1168"+Return an empty collection instead of null.(¥¹ï
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(óÇõùÿÿÿÿ
+6squid:S1643"Use a StringBuilder instead.(€ÛÃ–øÿÿÿÿ
+1squid:S1643"Use a StringBuilder instead.(‡Òó´
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‘Î“‹ıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ô–®Òÿÿÿÿÿ
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(°ş¦Ñûÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¦½­óùÿÿÿÿ
+Nsquid:S1313"4Make this IP "255.255.255.255" address configurable.(ÕàŞØüÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¼Ôç–
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ËˆâŠ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(à‘ƒÙ
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(õ±«
+6squid:S1643"Use a StringBuilder instead.(Ş×“ìÿÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(›ò‚ºşÿÿÿÿ
+Csquid:S1172")Remove this unused method parameter "np".(¿ñŒ¥şÿÿÿÿ
+Jsquid:S1481"0Remove this unused "compatnames" local variable.(§¢™¨úÿÿÿÿ
+6squid:S1643"Use a StringBuilder instead.(–¯¬‘ùÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(˜Áè¹ıÿÿÿÿ
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ê©†S
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(…ÚÖn
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(èŸßÉ
+1squid:S1643"Use a StringBuilder instead.(ÌÊ…
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‘‹«»üÿÿÿÿ
+psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ñ¢å’
+ysquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ÕÇÓZ
+Gsquid:S1481"-Remove this unused "routeopt" local variable.(Ñ¤üÑıÿÿÿÿ
+squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ë·éüûÿÿÿÿ
+;squid:S2131"!Use "Character.toString" instead.(€ÛÃ–øÿÿÿÿ
+zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ÿ©’

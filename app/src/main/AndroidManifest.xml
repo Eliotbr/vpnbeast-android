@@ -146,7 +146,8 @@
         <activity
             android:name=".activity.MemberActivity"
             android:label="@string/title_activity_member"
-            android:theme="@style/Theme.App.Base.NoActionBar"></activity>
+            android:theme="@style/Theme.App.Base.NoActionBar" />
+        <activity android:name=".activity.ToStringActivity"></activity>
     </application>
 
 </manifest>

@@ -1,9 +1,0 @@
-
-[squid:UselessImportCheck"3Remove this unused import 'android.content.Intent'.(³ð‹G8‹×…ÈÛ+
-hsquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(úúÔûÿÿÿÿ
-ysquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Þ…ñ–ûÿÿÿÿ8îÍîÇÛ+
-xsquid:UselessImportCheck"ORemove this unused import 'android.support.design.widget.FloatingActionButton'.(„Ÿ¹¼8þ„âÇÛ+
-fsquid:UselessImportCheck">Remove this unused import 'android.support.v7.widget.Toolbar'.(à½£8þ„âÇÛ+
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØýÙ€8ñ‘ÀÈÛ+
-bsquid:UselessImportCheck"4Remove this unused import 'android.widget.TextView'.(„Ë‚ˆÿÿÿÿÿ8™ÞîÃÞ+
-ksquid:UselessImportCheck"CRemove this unused import 'android.support.design.widget.Snackbar'.( À®p8þ„âÇÛ+

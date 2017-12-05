@@ -1,18 +1,18 @@
 
-Rsquid:S2095"6Close this "ObjectOutputStream" in a "finally" clause.(€²Ë8¬¿¬õâ+
-asquid:UselessImportCheck"3Remove this unused import 'android.text.TextUtils'.(û˜½Õøÿÿÿÿ8òšïÃâ+
-gsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ8¬¿¬õâ+
-Dsquid:S1481"(Remove this unused "ver" local variable.(Ø 8¬¿¬õâ+
-Ksquid:S00108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ8¬¿¬õâ+
-Wsquid:UselessImportCheck".Remove this unused import 'java.util.Objects'.(¼¸õ›8¬¿¬õâ+
-bsquid:UselessImportCheck"9Remove this unused import 'android.annotation.TargetApi'.(¥Îì‘8¬¿¬õâ+
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(ñÃ¥ıÿÿÿÿ8¬¿¬õâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÏÜ³šıÿÿÿÿ8¬¿¬õâ+
-Xsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8¬¿¬õâ+
-hsquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¬¿¬õâ+
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(ˆş¹¶ùÿÿÿÿ8¬¿¬õâ+
-Ysquid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¬¿¬õâ+
-[squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8¬¿¬õâ+
-Ssquid:S1854"7Remove this useless assignment to local variable "ver".(Ø 8¬¿¬õâ+
-[squid:UselessImportCheck"-Remove this unused import 'android.os.Build'.(ãÇ¤Úıÿÿÿÿ8¬¿¬õâ+
-Qsquid:S2095"5Close this "ObjectInputStream" in a "finally" clause.(àßÑ‘8¬¿¬õâ+
+Dsquid:S00108")Either remove or fill this block of code.(®ûºöÿÿÿÿÿ
+Ksquid:S1854"7Remove this useless assignment to local variable "ver".(Ú³÷y
+[squid:UselessImportCheck"9Remove this unused import 'android.annotation.TargetApi'.(¥Îì‘
+`squid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(®ûºöÿÿÿÿÿ
+Ksquid:S2095"6Close this "ObjectOutputStream" in a "finally" clause.(€²Ë
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ˆş¹¶ùÿÿÿÿ
+<squid:S1481"(Remove this unused "ver" local variable.(Ú³÷y
+Qsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ñÃ¥ıÿÿÿÿ
+asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+Tsquid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ
+Psquid:UselessImportCheck".Remove this unused import 'java.util.Objects'.(¼¸õ›
+Zsquid:UselessImportCheck"3Remove this unused import 'android.text.TextUtils'.(û˜½Õøÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÏÜ³šıÿÿÿÿ
+Rsquid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+Jsquid:S2095"5Close this "ObjectInputStream" in a "finally" clause.(àßÑ‘
+Tsquid:UselessImportCheck"-Remove this unused import 'android.os.Build'.(ãÇ¤Úıÿÿÿÿ

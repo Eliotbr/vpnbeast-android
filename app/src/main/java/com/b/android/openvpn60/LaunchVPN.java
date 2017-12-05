@@ -23,8 +23,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.b.android.openvpn60.activity.ActivityStatus;
+import com.b.android.openvpn60.activity.MainActivity;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.PasswordCache;
 import com.b.android.openvpn60.core.Preferences;
@@ -50,7 +52,7 @@ public class LaunchVPN extends Activity {
     public static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
 
     private static final int START_VPN_PROFILE = 70;
-    private static final String TAG = "com.b.android.openvpn." + LaunchVPN.class.toString();
+    private static final String TAG = LaunchVPN.class.toString();
 
     private VpnProfile mSelectedProfile;
     private String mTransientAuthPW;
@@ -107,16 +109,19 @@ public class LaunchVPN extends Activity {
             String shortcutUUID = intent.getStringExtra(EXTRA_KEY);
             String shortcutName = intent.getStringExtra(EXTRA_NAME);
 
-            VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
+            VpnProfile profileToConnect = MainActivity.profile;
+            //VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
             if (shortcutName != null && profileToConnect == null)
                 profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
 
             if (profileToConnect == null) {
                 //Handle that later
+                Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 mSelectedProfile = profileToConnect;
                 launchVPN();
+                Toast.makeText(getApplicationContext(), "Launching", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -204,7 +209,8 @@ public class LaunchVPN extends Activity {
                 } else {
                     SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
                     ProfileManager.updateLRU(this, mSelectedProfile);
-                    VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
+                    VPNLaunchHelper.startOpenVpn(MainActivity.profile, getBaseContext());
+                    Log.i(TAG, "Really lauching");
                     showAfterMain();
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -260,11 +266,11 @@ public class LaunchVPN extends Activity {
     }
 
     void launchVPN() {
-        int vpnok = mSelectedProfile.checkProfile(this);
+        /*int vpnok = mSelectedProfile.checkProfile(this);
         if (vpnok != R.string.no_error_found) {
             showConfigErrorDialog(vpnok);
             return;
-        }
+        }*/
 
         Intent intent = VpnService.prepare(this);
 

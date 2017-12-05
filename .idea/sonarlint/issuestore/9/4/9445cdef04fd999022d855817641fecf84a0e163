@@ -1,33 +1,0 @@
-
-\squid:UnusedPrivateMethod"-Remove this unused private "shareLog" method.(Ò»˜ªÿÿÿÿÿ8¤ÉœÚß+
-Hsquid:S1481".Remove this unused "spanStart" local variable.(¡™‰®ıÿÿÿÿ
-›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(±ÛÈıøÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¼ôÎúÿÿÿÿ8¤ÉœÚß+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(èÌÌ¹8¤ÉœÚß+
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ş…¥£ıÿÿÿÿ
-Zsquid:UnusedPrivateMethod"1Remove this unused private "getSpanImage" method.(·ğÌV8¤ÉœÚß+
-zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(èÌÌ¹
-Z"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(ÿ«¬‹üÿÿÿÿ8¤ÉœÚß+
-‘"squid:SwitchLastCaseIsDefaultCheck"YComplete cases by adding the missing enum constants or add a default case to this switch.(€»¥¡ıÿÿÿÿ8¤ÉœÚß+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ş…¥£ıÿÿÿÿ8¤ÉœÚß+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(±ÎÇíùÿÿÿÿ8¤ÉœÚß+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.( ø¥šúÿÿÿÿ8¤ÉœÚß+
-Msquid:S1068"3Remove this unused "mTimeRadioGroup" private field.(ÜóŞÁúÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ö—´£üÿÿÿÿ8¤ÉœÚß+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ç¸—8¤ÉœÚß+
-0squid:S1643"Use a StringBuilder instead.(¾óÿY
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Ş…¥£ıÿÿÿÿ
-Osquid:S1068"5Remove this unused "mClearLogCheckBox" private field.(‡Ğşşıÿÿÿÿ
-zsquid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(»„‡ç
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(â‚çïøÿÿÿÿ8¤ÉœÚß+
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÊ¶Ş
-Wsquid:S1854"=Remove this useless assignment to local variable "spanStart".(¡™‰®ıÿÿÿÿ
-Dsquid:S1066"/Merge this if statement with the enclosing one.(›è€ç
-=squid:S1185"(Remove this method to simply inherit it.(ßìê¯
-qsquid:S1488"\Immediately return this expression instead of assigning it to the temporary variable "span".(öäˆà
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(±ÎÇíùÿÿÿÿ
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(»„‡ç8¤ÉœÚß+
-Bsquid:S1185"(Remove this method to simply inherit it.(åÓÿÃøÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.( ƒŒùÿÿÿÿ8¤ÉœÚß+
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(±ÎÇíùÿÿÿÿ
-Jsquid:S1905")Remove this unnecessary cast to "Object".(ª«½ƒüÿÿÿÿ8Õ‰ôúâ+

@@ -1,10 +1,0 @@
-
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(™Àçª8¤ÚççÀ+
-lsquid:S1206"PThis class overrides "equals()" and should therefore also override "hashCode()".(ÜÑã8¤ÚççÀ+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ˆÿõ¥8¤ÚççÀ+
-bsquid:S1192"FDefine a constant instead of duplicating this literal "UTF-8" 3 times.(î˜Š¼8¤ÚççÀ+
-bsquid:S2259"AA "NullPointerException" could be thrown; "obj" is nullable here.(òñÙÜúÿÿÿÿ8¤ÚççÀ+
-[squid:UnusedPrivateMethod"1Remove this unused private "LogItem" constructor.(ñªìë8®¤Şõâ+
-¡%squid:RedundantThrowsDeclarationCheck"kRemove the declaration of thrown exception 'java.nio.BufferOverflowException' which is a runtime exception.(ˆÿõ¥8®¤Şõâ+
-\squid:S1126"AReplace this if-then-else statement by a single return statement.(˜¼›D8®¤Şõâ+
-Fsquid:S00108")Either remove or fill this block of code.(²şëï8®¤Şõâ+

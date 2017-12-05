@@ -1,9 +1,0 @@
-
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(å¥ýßüÿÿÿÿ8àó©õâ+
-Vsquid:S1118":Add a private constructor to hide the implicit public one.(ÎÞ°Š8³ýØçÀ+
-Psquid:S2095"4Close this "FileOutputStream" in a "finally" clause.(ý‘¨Š8àó©õâ+
-Vsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8àó©õâ+
-Bsquid:S1168"&Return an empty array instead of null.(¥¹ï8àó©õâ+
-Ysquid:S1197"8Move the array designator from the variable to the type.(óø×›ÿÿÿÿÿ8àó©õâ+
-[squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8àó©õâ+
-†squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".( í—Äùÿÿÿÿ8àó©õâ+

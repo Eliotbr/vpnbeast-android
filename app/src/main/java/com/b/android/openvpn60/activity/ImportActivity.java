@@ -35,7 +35,7 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.enums.Constants;
-import com.b.android.openvpn60.fragment.FileSelectFragment;
+import com.b.android.openvpn60.fragments.FileSelectFragment;
 import com.b.android.openvpn60.VpnProfile;
 
 import java.io.File;
@@ -292,12 +292,17 @@ public class ImportActivity extends ActionBarActivity {
                     InputStream is = getContentResolver().openInputStream(mUri);
 
                     doImport(is);
+                    //mProfile = new VpnProfile("convertedProfile");
+                    ConfigParser cp = new ConfigParser();
+                    cp.checkIgnoreAndInvalidOptions(mProfile);
                     if (mProfile == null)
                         return -3;
                 } catch (FileNotFoundException |
                         SecurityException se) {
                     se.printStackTrace();
                     return -2;
+                } catch (ConfigParser.ConfigParseError configParseError) {
+                    Log.e(CLASS_TAG, Log.getStackTraceString(configParseError));
                 }
                 mProgress.dismiss();
                 return 0;
@@ -332,6 +337,8 @@ public class ImportActivity extends ActionBarActivity {
                     });
                     mBuilder.show();
                 }
+                else if (errorCode == -3)
+                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_LONG).show();
             }
 
         }.execute();
@@ -340,14 +347,16 @@ public class ImportActivity extends ActionBarActivity {
 
     private void doImport(InputStream is) {
         ConfigParser cp = new ConfigParser();
+        InputStreamReader isr = new InputStreamReader(is);
         try {
-            InputStreamReader isr = new InputStreamReader(is);
-            cp.parseConfig(isr);
             mProfile = cp.convertProfile();
-            //embedFiles(cp);
-        } catch (IOException | ConfigParser.ConfigParseError e) {
-            Log.e(CLASS_TAG, getString(R.string.state_exception) + " : ", e);
+        } catch (ConfigParser.ConfigParseError configParseError) {
+            Log.e(CLASS_TAG, Log.getStackTraceString(configParseError));
+        } catch (IOException e) {
+            Log.e(CLASS_TAG, Log.getStackTraceString(e));
         }
+
+        //embedFiles(cp);
     }
 
 

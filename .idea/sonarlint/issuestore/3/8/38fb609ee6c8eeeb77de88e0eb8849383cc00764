@@ -1,26 +1,29 @@
 
-Ksquid:S1068"/Remove this unused "USER_CHOICE" private field.(¦Ó8©ÇùïÈ+
-ysquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ğ…á€ûÿÿÿÿ8¡ŒÄÃâ+
-gsquid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ8¡ŒÄÃâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ï½ß8¡ŒÄÃâ+
-?squid:S1148"#Use a logger to log this exception.(¸ß¹8¡ŒÄÃâ+
-Isquid:S1068"-Remove this unused "USER_PASS" private field.(®Óã8©ÇùïÈ+
-Psquid:S1068"/Remove this unused "mImportTask" private field.(×Ì«°ûÿÿÿÿ8¡ŒÄÃâ+
-fsquid:CallToDeprecatedMethod"9Remove this use of "ActionBarActivity"; it is deprecated.(˜ïÿ«8§°Ûé+
-jsquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(˜ïÿ«8§°Ûé+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ8ÃÏîôâ+
->squid:S1148"#Use a logger to log this exception.(ä÷È8¡ŒÄÃâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Èö¥§8¡ŒÄÃâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Û–ÕŒ8¡ŒÄÃâ+
-{squid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(×Ì«°ûÿÿÿÿ8¡ŒÄÃâ+
-Ksquid:S1066"/Merge this if statement with the enclosing one.(€¹¿ï8¡ŒÄÃâ+
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ8¡ŒÄÃâ+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘†óäúÿÿÿÿ8¡ŒÄÃâ+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(µÑë­8¡ŒÄÃâ+
-Osquid:S1172"3Remove this unused method parameter "possibleName".(ĞÙ†‹8¡ŒÄÃâ+
-\squid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(”‘¹í8¡ŒÄÃâ+
-Nsquid:S1068"-Remove this unused "USER_NAME" private field.(Ş¢‚Ìùÿÿÿÿ8¡ŒÄÃâ+
-csquid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(ÚÿÂŸûÿÿÿÿ8¡ŒÄÃâ+
-ysquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Ş…ñ–ûÿÿÿÿ8©ÇùïÈ+
-Ksquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8¡ŒÄÃâ+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ8¡ŒÄÃâ+
+rsquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ğ…á€ûÿÿÿÿ
+7squid:S1148"#Use a logger to log this exception.(ä÷È
+Hsquid:S1172"3Remove this unused method parameter "possibleName".(ĞÙ†‹
+Dsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ï½ß
+fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(˜õÁn8òÀÕ ë+
+Dsquid:S1481"(Remove this unused "isr" local variable.(Ü¥­Ó8“´¤Ÿë+
+\squid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(”‘¹í8º¢Ÿë+
+_squid:CallToDeprecatedMethod"9Remove this use of "ActionBarActivity"; it is deprecated.(˜ïÿ«
+tsquid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(×Ì«°ûÿÿÿÿ
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘†óäúÿÿÿÿ8º¢Ÿë+
+csquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(˜ïÿ«
+Dsquid:S1066"/Merge this if statement with the enclosing one.(€¹¿ï
+csquid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(ÚÿÂŸûÿÿÿÿ8º¢Ÿë+
+Bsquid:S1068"-Remove this unused "USER_PASS" private field.(®Óã
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ
+Dsquid:S1068"/Remove this unused "USER_CHOICE" private field.(¦Ó
+Isquid:S1068"/Remove this unused "mImportTask" private field.(×Ì«°ûÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Û–ÕŒ
+Gsquid:S1068"-Remove this unused "USER_NAME" private field.(Ş¢‚Ìùÿÿÿÿ
+rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Ş…ñ–ûÿÿÿÿ
+?squid:S1148"#Use a logger to log this exception.(¸ß¹8º¢Ÿë+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(µÑë­8œ³Ö ë+
+`squid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Èö¥§8º¢Ÿë+
+Ssquid:S1854"7Remove this useless assignment to local variable "isr".(Ü¥­Ó8“´¤Ÿë+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ8º¢Ÿë+
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ

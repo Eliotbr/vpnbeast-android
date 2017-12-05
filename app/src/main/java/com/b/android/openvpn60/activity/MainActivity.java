@@ -23,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +33,7 @@ import com.b.android.openvpn60.core.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.enums.Constants;
-import com.b.android.openvpn60.fragment.ServerSelectFragment;
+import com.b.android.openvpn60.fragments.ServerSelectFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -46,7 +45,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private boolean isLocationUpdated = false;
     private LocationRequest locationRequest;
     private Intent importer;
-    private VpnProfile profile;
+    public static VpnProfile profile;
     private VpnProfile mRemovedProfile;
     private SharedPreferences mPrefs;
     private EditText edtPort;
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private String userName;
     private boolean isMember = false;
     private boolean isServerstaken = false;
-    private EditText txtProfileName;
+    private TextView txtProfileName;
     private Spinner spinner;
     private FragmentTransaction frTransaction;
     private ServerSelectFragment mFragment;
@@ -130,10 +128,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         edtHost = (EditText) this.findViewById(R.id.edtIP);
         edtUser = (EditText) this.findViewById(R.id.edtUser);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
-        txtProfileName = (EditText) this.findViewById(R.id.txtProfileName);
+        txtProfileName = (TextView) this.findViewById(R.id.txtProfileName);
         mPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         edtUser.setText(mUsername);
-        profile = (VpnProfile) intentMain.getSerializableExtra(RESULT_PROFILE);
+        profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(Constants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(Constants.TEMP_USER.toString());
         userName = getIntent().getStringExtra(USER_NAME);
         btnSelect = (Button) this.findViewById(R.id.btnSelect);
@@ -162,10 +160,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         public void run() {
                             mStatus.putExtra(RESULT_PROFILE, profile);
                             startOrStopVPN(profile);
+
                         }
                     });
 
                 }
+            }
+        });
+        Button btnTostring = (Button) this.findViewById(R.id.btnTostring);
+        btnTostring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ToStringActivity.class);
+                intent.putExtra(RESULT_PROFILE, profile);
+                MainActivity.this.startActivity(intent);
             }
         });
     }
@@ -267,8 +275,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
             btnConnect.setBackgroundColor(Color.GREEN);
             edtUser.setText(userName);
-            edtHost.setText(profile.connections[0].serverName);
-            edtPort.setText(profile.connections[0].serverPort);
+            //edtHost.setText(profile.connections[0].serverName);
+            //edtPort.setText(profile.connections[0].serverPort);
         } else {
             edtUser.setText(userName);
             btnConnect.setBackgroundColor(Color.GRAY);
