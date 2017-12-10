@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OpenVPN-Android-master-a09f505984b35c469b43b9e5f003af6268f7d33b.iml" filepath="$PROJECT_DIR$/OpenVPN-Android-master-a09f505984b35c469b43b9e5f003af6268f7d33b.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OpenVPN-Android.iml" filepath="$PROJECT_DIR$/OpenVPN-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
