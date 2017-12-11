@@ -54,7 +54,7 @@ public class ImportActivity extends ActionBarActivity {
     private static final int PERMISSION_REQUEST = 23621;
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     private boolean mBase64Encode;
-    private FileSelectFragment mFragment;
+    private com.b.android.openvpn60.fragment.FileSelectFragment mFragment;
     private FragmentManager frManager;
     private FragmentTransaction frTransaction;
     private TextView txtCert;
@@ -93,7 +93,7 @@ public class ImportActivity extends ActionBarActivity {
         pnlMain = (RelativeLayout) this.findViewById(R.id.pnl_import);
         final String mErr = getString(R.string.err_no_cert);
         frManager = getFragmentManager();
-        mFragment = new FileSelectFragment();
+        mFragment = new com.b.android.openvpn60.fragment.FileSelectFragment();
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,17 +292,12 @@ public class ImportActivity extends ActionBarActivity {
                     InputStream is = getContentResolver().openInputStream(mUri);
 
                     doImport(is);
-                    //mProfile = new VpnProfile("convertedProfile");
-                    ConfigParser cp = new ConfigParser();
-                    cp.checkIgnoreAndInvalidOptions(mProfile);
                     if (mProfile == null)
                         return -3;
                 } catch (FileNotFoundException |
                         SecurityException se) {
                     se.printStackTrace();
                     return -2;
-                } catch (ConfigParser.ConfigParseError configParseError) {
-                    Log.e(CLASS_TAG, Log.getStackTraceString(configParseError));
                 }
                 mProgress.dismiss();
                 return 0;
@@ -337,8 +332,6 @@ public class ImportActivity extends ActionBarActivity {
                     });
                     mBuilder.show();
                 }
-                else if (errorCode == -3)
-                    Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_LONG).show();
             }
 
         }.execute();
@@ -347,16 +340,14 @@ public class ImportActivity extends ActionBarActivity {
 
     private void doImport(InputStream is) {
         ConfigParser cp = new ConfigParser();
-        InputStreamReader isr = new InputStreamReader(is);
         try {
+            InputStreamReader isr = new InputStreamReader(is);
+            cp.parseConfig(isr);
             mProfile = cp.convertProfile();
-        } catch (ConfigParser.ConfigParseError configParseError) {
-            Log.e(CLASS_TAG, Log.getStackTraceString(configParseError));
-        } catch (IOException e) {
-            Log.e(CLASS_TAG, Log.getStackTraceString(e));
+            //embedFiles(cp);
+        } catch (IOException | ConfigParser.ConfigParseError e) {
+            Log.e(CLASS_TAG, getString(R.string.state_exception) + " : ", e);
         }
-
-        //embedFiles(cp);
     }
 
 

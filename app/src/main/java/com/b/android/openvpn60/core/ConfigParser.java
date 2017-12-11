@@ -788,7 +788,7 @@ public class ConfigParser {
         }
     }
 
-    public void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
+    private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
                 throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting", option));

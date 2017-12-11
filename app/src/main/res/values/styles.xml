@@ -35,7 +35,22 @@
         <item name="colorControlActivated">#b0bec5</item>
         <item name="colorControlHighlight">#b0bec5</item>
         <item name="android:textColor">#b0bec5</item>
+        <item name="android:itemBackground">@color/colorPrimary</item>
+    </style>
 
+    <style name="MyTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#b0bec5</item>
+        <item name="colorControlActivated">#b0bec5</item>
+        <item name="colorControlHighlight">#b0bec5</item>
+        <item name="android:textColor">#b0bec5</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 
@@ -78,5 +93,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

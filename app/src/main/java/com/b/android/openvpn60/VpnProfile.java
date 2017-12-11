@@ -166,106 +166,13 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
     public VpnProfile(String name) {
+        uuid = UUID.randomUUID();
         this.name = name;
-        clearDefaults();
+        profileVersion = CURRENT_PROFILE_VERSION;
+
         connections = new Connection[1];
         connections[0] = new Connection();
-        initConstants();
-    }
-
-    private void initConstants() {
-        profileDeleted = false;
-        mAuthenticationType = 3;
-        aliasName = null;
-        clientCertFilename = null;
-        tlsAuthDirection = "";
-        tlsAuthFilename = null;
-        clientKeyFilename = null;
-        String certString = "-----BEGIN CERTIFICATE-----\n" +
-                "MIIEujCCA6KgAwIBAgIJAKFMF6qMuej8MA0GCSqGSIb3DQEBCwUAMIGZMQswCQYD\n" +
-                "VQQGEwJOTDEMMAoGA1UECBMDQU1TMRIwEAYDVQQHEwlBbXN0ZXJkYW0xDjAMBgNV\n" +
-                "BAoTBVNLTFNOMRgwFgYDVQQLEw9TZWN1cml0eSBGb2JpYW4xETAPBgNVBAMTCFNL\n" +
-                "TFNOIENBMQ8wDQYDVQQpEwZmZWFub3IxGjAYBgkqhkiG9w0BCQEWC2luZm9AbXlo\n" +
-                "b3N0MB4XDTE1MDQwNDA3MDUyNVoXDTI1MDQwMTA3MDUyNVowgZkxCzAJBgNVBAYT\n" +
-                "Ak5MMQwwCgYDVQQIEwNBTVMxEjAQBgNVBAcTCUFtc3RlcmRhbTEOMAwGA1UEChMF\n" +
-                "U0tMU04xGDAWBgNVBAsTD1NlY3VyaXR5IEZvYmlhbjERMA8GA1UEAxMIU0tMU04g\n" +
-                "Q0ExDzANBgNVBCkTBmZlYW5vcjEaMBgGCSqGSIb3DQEJARYLaW5mb0BteWhvc3Qw\n" +
-                "ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDI6yO9LV8d83vOYoY9dwms\n" +
-                "oR0mumte2ySg4/W14yhHaUbyZX5sBFkp1wWcuWhH7PD/mqwTH8TJYfMerqq4RuZ2\n" +
-                "WEH1qrpjN5aJFTrItKYvZi2HmhBszbWZM8VNSamYd8gh4OS7h0fi+CiJ/YakmnzZ\n" +
-                "/3dGv6j6D/VhjxBERmxH3/wCbIyu258Q/4zNSB2JeNe9rzLoxnUBPbbLIv3MBoUC\n" +
-                "RMRILlFT7pjpOBFKjDwj7LAW4e0fgTgm/qUyMMFu5AfYzH9KI+J3VJpnMziKyj/V\n" +
-                "WOur2ko9YIEtjnxkY2PfKTc5R6GbeRGRYqnZ7kidiswQzfhkWXegECpF8H/0uzyr\n" +
-                "AgMBAAGjggEBMIH+MB0GA1UdDgQWBBSPp/QUSy10aTA5frRnMbzRvLCuoTCBzgYD\n" +
-                "VR0jBIHGMIHDgBSPp/QUSy10aTA5frRnMbzRvLCuoaGBn6SBnDCBmTELMAkGA1UE\n" +
-                "BhMCTkwxDDAKBgNVBAgTA0FNUzESMBAGA1UEBxMJQW1zdGVyZGFtMQ4wDAYDVQQK\n" +
-                "EwVTS0xTTjEYMBYGA1UECxMPU2VjdXJpdHkgRm9iaWFuMREwDwYDVQQDEwhTS0xT\n" +
-                "TiBDQTEPMA0GA1UEKRMGZmVhbm9yMRowGAYJKoZIhvcNAQkBFgtpbmZvQG15aG9z\n" +
-                "dIIJAKFMF6qMuej8MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAC26\n" +
-                "a9jHpke3FK+5wjQFp5+QZdbAaqBUgsTKX1kdna8RuCTcXTfRllxdf5cF93HP0c7K\n" +
-                "09ObKhgyqOPeVCuXJbR1xPlkCMpLYhkER7KyGyM0YxhqKDTsiybbryh2KiScZNzO\n" +
-                "ROBNwH7hURrcnq08Xn3amvorkVI/DsK9UIZfBtDfORDAGn+qed0PNdX1kQQHu2lW\n" +
-                "mQN6PD7MitUk3ojLoCqJmwx1An5BX8Y4M1h9L667IKx7IyoSxngQH53ZX7KcNoxI\n" +
-                "VjLFP6VqKIyu+Vcv/dSRoWNeERKx4YddiDPMDIespcpBPXP57C7Ic6xfwMuQ0Q0q\n" +
-                "1Lfjh4H3ZG2AKNvQkyk=\n" +
-                "-----END CERTIFICATE-----";
-        caFilename = INLINE_TAG + certString;
-        useLzo = true;
-        pkcs12Filename = null;
-        pkcs12Password = null;
-        useTLSAuth = false;
-        DNS1 = "8.8.8.8";
-        DNS2 = "8.8.4.4";
-        ipv4Address = null;
-        mIPv6Address = null;
-        overrideDNS = false;
-        useDefaultRoute = false;
-        usePull = true;
-        customRoutes = null;
-        checkRemoteCN = false;
-        expectTLSCert = false;
-        remoteCN = "";
-        mssFix = 0;
-        password = "null";
-        userName = "bilal";
-        routenopull = false;
-        useRandomHostname = false;
-        useFloat = false;
-        useCustomConfig = false;
-        customConfigOptions = "";
-        verb = "3";
-        cipher = "AES-256-CBC";
-        nobind = true;
-        useDefaultRoutev6 = false;
-        customRoutesv6 = "";
-        keyPassword = "";
-        persistTun = true;
-        connectRetry = "2";
-        connectRetryMax = "-1";
-        connectRetryMaxTime = "300";
-        userEditable = true;
-        auth = "SHA256";
-        x509AuthType = 3;
-        x509UsernameField = "null";
-        privateKey = null;
-        uuid = UUID.randomUUID();
-        allowLocalLAN = true;
-        profileVersion = 6;
-        excludedRoutes = "null";
-        excludedRoutesv6 = "null";
-        remoteRandom = false;
-        allowedAppsVpn = new HashSet<>();
-        allowedAppsVpnAreDisallowed = true;
-        crlFilename = "null";
-        profileCreator = "null";
-        ping = 0;
-        pushPeerInfo = false;
-        version = 2;
         lastUsed = System.currentTimeMillis();
-        serverName = "unknown";
-        serverPort = "1194";
-        useUdp = true;
-
     }
 
     public static String openVpnEscape(String unescaped) {
@@ -1080,73 +987,9 @@ public class VpnProfile implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "VpnProfile{" +
-                "profileDeleted=" + profileDeleted +
-                ", mAuthenticationType=" + mAuthenticationType +
-                ", name='" + name + '\'' +
-                ", aliasName='" + aliasName + '\'' +
-                ", clientCertFilename='" + clientCertFilename + '\'' +
-                ", tlsAuthDirection='" + tlsAuthDirection + '\'' +
-                ", tlsAuthFilename='" + tlsAuthFilename + '\'' +
-                ", clientKeyFilename='" + clientKeyFilename + '\'' +
-                ", caFilename='" + caFilename + '\'' +
-                ", useLzo=" + useLzo +
-                ", pkcs12Filename='" + pkcs12Filename + '\'' +
-                ", pkcs12Password='" + pkcs12Password + '\'' +
-                ", useTLSAuth=" + useTLSAuth +
-                ", DNS1='" + DNS1 + '\'' +
-                ", DNS2='" + DNS2 + '\'' +
-                ", ipv4Address='" + ipv4Address + '\'' +
-                ", mIPv6Address='" + mIPv6Address + '\'' +
-                ", overrideDNS=" + overrideDNS +
-                ", useDefaultRoute=" + useDefaultRoute +
-                ", usePull=" + usePull +
-                ", customRoutes='" + customRoutes + '\'' +
-                ", checkRemoteCN=" + checkRemoteCN +
-                ", expectTLSCert=" + expectTLSCert +
-                ", remoteCN='" + remoteCN + '\'' +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", routenopull=" + routenopull +
-                ", useRandomHostname=" + useRandomHostname +
-                ", useFloat=" + useFloat +
-                ", useCustomConfig=" + useCustomConfig +
-                ", customConfigOptions='" + customConfigOptions + '\'' +
-                ", verb='" + verb + '\'' +
-                ", cipher='" + cipher + '\'' +
-                ", nobind=" + nobind +
-                ", useDefaultRoutev6=" + useDefaultRoutev6 +
-                ", customRoutesv6='" + customRoutesv6 + '\'' +
-                ", keyPassword='" + keyPassword + '\'' +
-                ", persistTun=" + persistTun +
-                ", connectRetryMax='" + connectRetryMax + '\'' +
-                ", connectRetry='" + connectRetry + '\'' +
-                ", connectRetryMaxTime='" + connectRetryMaxTime + '\'' +
-                ", userEditable=" + userEditable +
-                ", auth='" + auth + '\'' +
-                ", x509AuthType=" + x509AuthType +
-                ", x509UsernameField='" + x509UsernameField + '\'' +
-                ", privateKey=" + privateKey +
-                ", uuid=" + uuid +
-                ", allowLocalLAN=" + allowLocalLAN +
-                ", profileVersion=" + profileVersion +
-                ", excludedRoutes='" + excludedRoutes + '\'' +
-                ", excludedRoutesv6='" + excludedRoutesv6 + '\'' +
-                ", mssFix=" + mssFix +
-                ", connections=" + Arrays.toString(connections) +
-                ", remoteRandom=" + remoteRandom +
-                ", allowedAppsVpn=" + allowedAppsVpn +
-                ", allowedAppsVpnAreDisallowed=" + allowedAppsVpnAreDisallowed +
-                ", crlFilename='" + crlFilename + '\'' +
-                ", profileCreator='" + profileCreator + '\'' +
-                ", ping=" + ping +
-                ", pushPeerInfo=" + pushPeerInfo +
-                ", version=" + version +
-                ", lastUsed=" + lastUsed +
-                ", serverName='" + serverName + '\'' +
-                ", serverPort='" + serverPort + '\'' +
-                ", useUdp=" + useUdp +
-                '}';
+        return "Server UUID: " + getUUIDString() +
+                "\nServer Name: " + connections[0].serverName +
+                "\nServer Port: " + connections[0].serverPort;
     }
 
     public String getUUIDString() {

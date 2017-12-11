@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private Spinner spinner;
     private FragmentTransaction frTransaction;
     private ServerSelectFragment mFragment;
+    private RelativeLayout pnlMain;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         txtProfileName = (TextView) this.findViewById(R.id.txtProfileName);
         mPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         edtUser.setText(mUsername);
+        pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(Constants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(Constants.TEMP_USER.toString());
         userName = getIntent().getStringExtra(USER_NAME);
@@ -275,8 +279,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
             btnConnect.setBackgroundColor(Color.GREEN);
             edtUser.setText(userName);
-            //edtHost.setText(profile.connections[0].serverName);
-            //edtPort.setText(profile.connections[0].serverPort);
+            edtHost.setText(profile.connections[0].serverName);
+            edtPort.setText(profile.connections[0].serverPort);
         } else {
             edtUser.setText(userName);
             btnConnect.setBackgroundColor(Color.GRAY);
@@ -285,14 +289,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onBackPressed() {
-        if (frTransaction != null) {
-            if (frTransaction.isEmpty())
-                Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
-            else {
-                super.onBackPressed();
-                intentMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                this.startActivity(intentMain);
-            }
+        if (frTransaction != null && getFragmentManager() != null) {
+            getFragmentManager().beginTransaction().remove(mFragment).commit();
+            updateViews();
+            pnlMain.setVisibility(View.VISIBLE);
         }
         else
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();

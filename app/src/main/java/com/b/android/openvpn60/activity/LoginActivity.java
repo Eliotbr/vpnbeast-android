@@ -1,6 +1,7 @@
 package com.b.android.openvpn60.activity;
 
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -79,6 +81,7 @@ public class LoginActivity extends ActionBarActivity {
     private boolean isConnected = false;
     private int errorCount = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +95,7 @@ public class LoginActivity extends ActionBarActivity {
             isConnected = true;
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -99,10 +103,10 @@ public class LoginActivity extends ActionBarActivity {
         if (!isNetworkAvailable(getApplicationContext())) {
             showErrorDialog();
             isConnected = false;
-        }
-        else
+        } else
             isConnected = true;
     }
+
 
     private void init() {
         edtUsername = (EditText) this.findViewById(R.id.edtUser);
@@ -194,6 +198,7 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
+
     public void invokeWS(final String userName, final String userPass) {
         AsyncHttpClient client = new AsyncHttpClient();
         final List<NameValuePair> nameValuePairs = new ArrayList<>();
@@ -250,6 +255,7 @@ public class LoginActivity extends ActionBarActivity {
         });
     }
 
+
     private void sendEmail() {
         emailThread = new AsyncTask<Void, Void, Integer>() {
             @Override
@@ -279,6 +285,7 @@ public class LoginActivity extends ActionBarActivity {
 
         }.execute();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -320,10 +327,12 @@ public class LoginActivity extends ActionBarActivity {
         return true;
     }
 
+
     public boolean isNetworkAvailable(Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
+
 
     public boolean isInternetAvailable() {
         try {
@@ -334,6 +343,7 @@ public class LoginActivity extends ActionBarActivity {
         }
         return false;
     }
+
 
     private void showErrorDialog() {
         alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_HOLO_DARK);

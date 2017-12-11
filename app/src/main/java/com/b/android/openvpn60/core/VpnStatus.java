@@ -28,7 +28,7 @@ import de.blinkt.openvpn.core.NativeUtils;
 public class VpnStatus {
 
     private static final LinkedList<LogItem> logbuffer;
-    private static Logger LOGGER;
+
     private static Vector<LogListener> logListener;
     private static Vector<StateListener> stateListener;
     private static Vector<ByteCountListener> byteCountListener;
@@ -56,11 +56,6 @@ public class VpnStatus {
             li = new LogItem(ll, R.string.unhandled_exception, e.getMessage(), sw.toString());
         }
         newLogItem(li);
-    }
-
-    public static void logException(Context context, Exception e) {
-        LOGGER = Logger.getLogger(context.getClass().toString());
-        LOGGER.log(Level.SEVERE, "Exception: ", e);
     }
 
     public static void logException(Exception e) {
