@@ -43,12 +43,14 @@ public class MemberActivity extends AppCompatActivity {
     private Button btnSubmit;
     private ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
         init();
     }
+
 
     private void init() {
         edtFirstName = (EditText) this.findViewById(R.id.edtFirstName);
@@ -63,8 +65,7 @@ public class MemberActivity extends AppCompatActivity {
                 if (Utility.validate(edtEmail.getText().toString())) {
                     invokeWSForMember(edtFirstName.getText().toString(), edtLastName.getText().toString(),
                             edtEmail.getText().toString());
-                }
-                else {
+                } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(MemberActivity.this, "Your email address format is wrong!", Toast.LENGTH_SHORT).show();
                 }
@@ -72,8 +73,8 @@ public class MemberActivity extends AppCompatActivity {
         });
     }
 
-    public void invokeWSForMember(final String firstName, final String lastName,
-                                  final String email) {
+
+    public void invokeWSForMember(final String firstName, final String lastName, final String email) {
         AsyncHttpClient client = new AsyncHttpClient();
         final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         String userName = this.getIntent().getStringExtra(USER_NAME);
@@ -84,8 +85,7 @@ public class MemberActivity extends AppCompatActivity {
         HttpEntity entity = null;
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
+        } catch (UnsupportedEncodingException a) {
             Log.e(CLASS_TAG, Log.getStackTraceString(a));
         }
 
@@ -97,38 +97,29 @@ public class MemberActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Member successfully created!", Toast.LENGTH_SHORT).show();
                         Log.i(CLASS_TAG, getString(R.string.state_member_insert));
                         MemberActivity.this.finish();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "An error occured while creating member!", Toast.LENGTH_SHORT).show();
                         edtFirstName.setText("");
                         edtLastName.setText("");
                         edtEmail.setText("");
                         MemberActivity.this.finish();
                     }
-                }
-                catch (JSONException ex) {
+                } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     Log.e(CLASS_TAG, getString(R.string.state_exception) + " : " + Log.getStackTraceString(ex));
                 }
-
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404){
+                if (statusCode == 404){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                }
-                // When Http response code is '500'
-                else if(statusCode == 500){
+                } else if (statusCode == 500){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                }
-                // When Http response code other than 404, 500
-                else{
+                } else{
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
                 }
             }
-
-
         });
     }
 }
