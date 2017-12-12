@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final String SHARED_PREFS = Constants.SHARED_PREFS.toString();
     private static final String USER_NAME = Constants.USER_NAME.toString();
     private static final String MEMBER_NAME = Constants.MEMBER_NAME.toString();
-
     private static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
     private static final String SERVICE_URL_PUT = Constants.URL_PUT.toString();
     private static final String SERVICE_URL_GET = Constants.URL_CHECK_MEMBERS.toString();
@@ -156,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     Toast.makeText(MainActivity.this, mErr, Toast.LENGTH_LONG).show();
                 } else {
                     dlgProgress = new ProgressDialog(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
-
                     dlgProgress.setTitle(R.string.state_importing);
                     final Intent mStatus = new Intent(MainActivity.this, ActivityStatus.class);
                     MainActivity.this.runOnUiThread(new Runnable() {
@@ -164,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         public void run() {
                             mStatus.putExtra(RESULT_PROFILE, profile);
                             startOrStopVPN(profile);
-
                         }
                     });
 
@@ -182,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
+
     private ProfileManager getPM() {
         return ProfileManager.getInstance(this);
     }
-
 
 
     private void checkPermission() {
@@ -197,10 +194,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         isAvailable = true;
     }
 
+
     private void prepareService() {
         invokeWS();
         isUserAMember();
     }
+
 
     public void invokeWS() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -209,12 +208,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         HttpEntity entity = null;
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
+        } catch (UnsupportedEncodingException a) {
             Log.e(CLASS_TAG, Log.getStackTraceString(a));
         }
-
-        client.put(getApplicationContext(), SERVICE_URL_PUT, entity, "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+        client.put(getApplicationContext(), SERVICE_URL_PUT, entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -226,12 +224,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         Toast.makeText(getApplicationContext(), getString(R.string.err_state_register), Toast.LENGTH_SHORT).show();
                         Log.i(CLASS_TAG, "Update last login date = " + "Failed");
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     Log.e(CLASS_TAG, getString(R.string.state_exception) + Log.getStackTraceString(ex));
                 }
-
             }
 
             @Override
@@ -252,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
+
     @Override
     protected void onResume() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
@@ -261,17 +258,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onResume();
     }
 
+
     private void startOrStopVPN(VpnProfile profile) {
         startVPN(profile);
     }
+
 
     private void updateProfiles() {
         profiles = getProfiles();
     }
 
+
     private ArrayList<VpnProfile> getProfiles() {
         return new ArrayList<>(getPM().getProfiles());
     }
+
 
     public void updateViews() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
@@ -287,17 +288,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+
     @Override
     public void onBackPressed() {
         if (frTransaction != null && getFragmentManager() != null) {
             getFragmentManager().beginTransaction().remove(mFragment).commit();
             updateViews();
             pnlMain.setVisibility(View.VISIBLE);
-        }
-        else
+        } else
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
-
     }
+
 
     private void startVPN(VpnProfile profile) {
         getPM().saveProfile(this, profile);
@@ -307,9 +308,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(intent);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuItem itm1 = menu.add(getString(R.string.prompt_import));
         itm1.setNumericShortcut('1');
         itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -320,7 +321,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return false;
             }
         });
-
         MenuItem itm2 = menu.add(getString(R.string.prompt_remove_profile));
         itm2.setNumericShortcut('2');
         itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -329,7 +329,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public boolean onMenuItemClick(MenuItem item) {
                 if (profiles.isEmpty())
                     Toast.makeText(MainActivity.this, R.string.err_profile_removed, Toast.LENGTH_LONG).show();
-
                 else {
                     final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
                     mBuilder.setTitle(getString(R.string.prompt_remove_profile));
@@ -363,7 +362,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             }
                         }
                     });
-
                     mBuilder.setNegativeButton(android.R.string.cancel, null);
                     mBuilder.setAdapter(mAdapter, null);
                     mBuilder.show();
@@ -371,9 +369,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return false;
             }
         });
-
-
-
         MenuItem itm3 = menu.add("Premium");
         itm3.setNumericShortcut('3');
         itm3.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -382,8 +377,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public boolean onMenuItemClick(MenuItem item) {
                 if (isMember) {
                     Toast.makeText(MainActivity.this, "You are already a valid member!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, MemberActivity.class);
                     intent.putExtra(USER_NAME, userName);
                     MainActivity.this.startActivity(intent);
@@ -391,7 +385,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return false;
             }
         });
-
         MenuItem itm4 = menu.add(getString(R.string.prompt_sort));
         itm4.setNumericShortcut('3');
         itm4.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -399,7 +392,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 dlgProgress = new ProgressDialog(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
-
                 dlgProgress.setTitle(getString(R.string.sorting_profiles));
                 dlgProgress.setMessage(getString(R.string.sorting_profiles_msg));
                 dlgProgress.setCancelable(false);
@@ -415,14 +407,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             profile.ping = time;
                         }
                         sortBySpeed();
-
                     }
                 });
                 mThread.start();
                 return false;
             }
         });
-
         MenuItem itm5 = menu.add(getString(R.string.prompt_displayLocation));
         itm5.setNumericShortcut('4');
         itm5.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -433,8 +423,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return false;
             }
         });
-
-
         MenuItem itm6 = menu.add(getString(R.string.prompt_logout));
         itm6.setNumericShortcut('5');
         itm6.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -449,28 +437,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
+
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Map<String, Long> longMap = new HashMap<>();
                 ArrayList<VpnProfile> profilesSorted = new ArrayList<>();
-
                 for (VpnProfile tempProfile : profiles) {
                     longMap.put(tempProfile.connections[0].serverName,
                             tempProfile.ping);
                 }
-
                 ArrayList<Long> longList = new ArrayList<>(longMap.values());
                 Collections.sort(longList);
                 ArrayList<String> nameList = new ArrayList<>();
-
                 for (int i = 0; i < longMap.size(); i++) {
                     String key = getKeyByValue(longMap, longList.get(i));
                     nameList.add(key);
                 }
-
-
                 for (String value : nameList) {
                     for (int i = 0; i < profiles.size(); i++) {
                         if (profiles.get(i).connections[0].serverName.equals(value)) {
@@ -478,14 +462,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         }
                     }
                 }
-
                 profiles = profilesSorted;
                 dlgProgress.dismiss();
                 Toast.makeText(MainActivity.this, getString(R.string.state_sorted_profiles), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
@@ -521,10 +504,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return false;
     }
 
+
     @Override
     public void onConnected(Bundle arg0) {
         displayLocation();
     }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     private synchronized void displayLocation() {
@@ -595,14 +580,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }.execute();
     }
 
+
     @Override
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
 
+
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(CLASS_TAG, "Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
     }
+
 
     private void isUserAMember(){
         RequestParams params = new RequestParams();
@@ -619,12 +607,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     else if (response.getInt("status") == 0) {
                         Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
                     }
-                }
-                catch (JSONException ex) {
+                } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     Log.e(CLASS_TAG, getString(R.string.state_exception) + Log.getStackTraceString(ex));
                 }
-
             }
 
             @Override
@@ -636,16 +622,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 else if(statusCode == 500){
                     Log.e(CLASS_TAG, getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else{
                     Log.e(CLASS_TAG, getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
                 }
             }
-
-
         });
     }
+
 
     private ArrayList<VpnProfile> getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -665,7 +649,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             tempProfile.password = userName;
                             profiles.add(tempProfile);
                         }
-
                         isServerstaken = true;
                         if (!profiles.isEmpty()) {
                             profile = profiles.get(0);
@@ -673,9 +656,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         updateViews();
                         Log.i(CLASS_TAG, getString(R.string.state_sorted_profiles));
                     }
-                }
-
-                catch (JSONException ex) {
+                } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     Log.e(CLASS_TAG, Log.getStackTraceString(ex));
                 }
@@ -698,8 +679,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     Log.e(CLASS_TAG, getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
                 }
             }
-
-
         });
         return (ArrayList<VpnProfile>) profiles;
     }

@@ -1,23 +1,14 @@
 package com.b.android.openvpn60.activity;
 
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.SpannableString;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,16 +25,14 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.GmailSender;
 import com.b.android.openvpn60.core.User;
 import com.b.android.openvpn60.enums.Constants;
+import com.b.android.openvpn60.util.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -80,6 +68,7 @@ public class LoginActivity extends ActionBarActivity {
     private AsyncTask<Void, Void, Integer> emailThread;
     private boolean isConnected = false;
     private int errorCount = 0;
+    private LogHelper logHelper;
 
 
     @Override
@@ -109,6 +98,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     private void init() {
+        logHelper = new LogHelper(this);
         edtUsername = (EditText) this.findViewById(R.id.edtUser);
         edtPass = (EditText) this.findViewById(R.id.edtPass);
         chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
@@ -151,7 +141,7 @@ public class LoginActivity extends ActionBarActivity {
                 if (isConnected) {
                     SharedPreferences.Editor editor;
                     progressBar.setVisibility(View.VISIBLE);
-
+                    logHelper.logInfo("THIS IS FIRST LOG MESSAGE");
                     if (chkRemember.isChecked()) {
                         editor = sharedPreferences.edit();
                         editor.putString(USER_NAME, edtUsername.getText().toString());
@@ -209,7 +199,7 @@ public class LoginActivity extends ActionBarActivity {
             entity = new UrlEncodedFormEntity(nameValuePairs);
         }
         catch (UnsupportedEncodingException a) {
-            a.printStackTrace();
+            logHelper.logException(a);
         }
         client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
             @Override
@@ -233,7 +223,7 @@ public class LoginActivity extends ActionBarActivity {
                 }
                 catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, "Exception: " + Log.getStackTraceString(ex));
+                    logHelper.logException(ex);
                 }
             }
 
@@ -270,7 +260,7 @@ public class LoginActivity extends ActionBarActivity {
                     sender.sendMail("Reset Password", "This email will contain reset password link",
                             "bilalccaliskan@gmail.com", "bilalccaliskan@gmail.com", "");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logHelper.logException(e);
                 }
                 return 0;
             }
@@ -339,7 +329,7 @@ public class LoginActivity extends ActionBarActivity {
             final InetAddress address = InetAddress.getByName("www.google.com");
             return !address.equals("");
         } catch (UnknownHostException e) {
-            Log.e(CLASS_TAG, getString(R.string.state_exception) + " : " + Log.getStackTraceString(e));
+            logHelper.logException(e);
         }
         return false;
     }
