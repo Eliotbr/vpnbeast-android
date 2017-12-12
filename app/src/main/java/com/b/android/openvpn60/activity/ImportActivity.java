@@ -34,8 +34,7 @@ import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
-import com.b.android.openvpn60.enums.Constants;
-import com.b.android.openvpn60.fragments.FileSelectFragment;
+import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.VpnProfile;
 
 import java.io.File;

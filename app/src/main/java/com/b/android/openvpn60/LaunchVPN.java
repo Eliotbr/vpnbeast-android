@@ -18,22 +18,19 @@ import android.os.RemoteException;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.b.android.openvpn60.activity.ActivityStatus;
-import com.b.android.openvpn60.activity.MainActivity;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.PasswordCache;
 import com.b.android.openvpn60.core.Preferences;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VPNLaunchHelper;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.enums.Constants;
+import com.b.android.openvpn60.util.Constants;
 
 import java.io.IOException;
 

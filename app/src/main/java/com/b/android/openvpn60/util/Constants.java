@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.enums;
+package com.b.android.openvpn60.util;
 
 /**
  * Created by b on 8/16/17.

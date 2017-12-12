@@ -1,9 +1,7 @@
 package com.b.android.openvpn60.activity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,31 +10,23 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.VpnService;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.core.OpenVPNManagement;
-import com.b.android.openvpn60.core.OpenVPNManagementThread;
 import com.b.android.openvpn60.core.OpenVPNService;
-import com.b.android.openvpn60.core.OpenVPNThread;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.enums.Constants;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.b.android.openvpn60.util.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

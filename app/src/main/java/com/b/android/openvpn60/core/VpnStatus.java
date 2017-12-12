@@ -6,7 +6,6 @@ import android.os.HandlerThread;
 import android.os.Message;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.enums.Constants;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -14,8 +13,6 @@ import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.LogItem;

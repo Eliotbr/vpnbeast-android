@@ -33,7 +33,7 @@ import com.b.android.openvpn60.adapter.CustomAdapter;
 import com.b.android.openvpn60.core.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.enums.Constants;
+import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.fragments.ServerSelectFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;

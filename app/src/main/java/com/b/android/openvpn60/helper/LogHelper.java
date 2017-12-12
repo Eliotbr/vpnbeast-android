@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.util;
+package com.b.android.openvpn60.helper;
 
 import android.content.Context;
 

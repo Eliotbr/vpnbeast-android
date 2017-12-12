@@ -1,6 +1,5 @@
 package com.b.android.openvpn60.activity;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,31 +18,26 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.b.android.openvpn60.R;
-
 import com.b.android.openvpn60.core.GmailSender;
 import com.b.android.openvpn60.core.User;
-import com.b.android.openvpn60.enums.Constants;
-import com.b.android.openvpn60.util.LogHelper;
+import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
+
 
 public class LoginActivity extends ActionBarActivity {
     private static final String SHARED_PREFS = Constants.SHARED_PREFS.toString();
@@ -79,8 +73,7 @@ public class LoginActivity extends ActionBarActivity {
         if (!isNetworkAvailable(getApplicationContext())) {
             showErrorDialog();
             errorCount++;
-        }
-        else
+        } else
             isConnected = true;
     }
 
