@@ -25,4 +25,9 @@ public class LogHelper {
     public void logInfo(String message) {
         logger.log(Level.INFO, message);
     }
+
+
+    public void logWarning(String warning) {
+        logger.log(Level.WARNING, warning);
+    }
 }

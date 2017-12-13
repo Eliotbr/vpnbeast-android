@@ -26,6 +26,7 @@ import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.core.VpnStatus;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.Constants;
 
 import java.text.SimpleDateFormat;
@@ -71,6 +72,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
     private String lastStatus = "";
     private boolean isDestroyed = false;
     private OpenVPNService instance;
+    private LogHelper logHelper;
 
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -121,7 +123,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         edtBytesOut = (EditText) this.findViewById(R.id.edtBytesOut);
         edtUser.setText(sharedPrefs.getString(Constants.USER_NAME.toString(), null));
         intent = new Intent(this, MainActivity.class);
-
+        logHelper = new LogHelper(ActivityStatus.this);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -330,7 +332,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
                         serviceInternal.stopVPN(false);
                         VpnStatus.mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
                     } catch (RemoteException e) {
-                        VpnStatus.logException(e);
+                        logHelper.logException(e);
                     }
                 }
                 return 0;

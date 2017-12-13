@@ -34,6 +34,7 @@ import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.VpnProfile;
 
@@ -71,6 +72,7 @@ public class ImportActivity extends ActionBarActivity {
     private Uri mUri;
     private File mFile;
     private RelativeLayout pnlMain;
+    private LogHelper logHelper;
 
 
     @Override
@@ -79,6 +81,7 @@ public class ImportActivity extends ActionBarActivity {
         this.setContentView(R.layout.activity_import);
         init();
         checkPermission();
+        logHelper = new LogHelper(ImportActivity.this);
     }
 
 
@@ -156,7 +159,6 @@ public class ImportActivity extends ActionBarActivity {
                 dlg.setNegativeButton(android.R.string.ok, null);
                 dlg.setPositiveButton(android.R.string.cancel, null);
                 dlg.show();
-
                 return false;
             }
         });
@@ -171,7 +173,6 @@ public class ImportActivity extends ActionBarActivity {
                 dlg.setMessage("This is the place where we put some sort of messages.");
                 dlg.setPositiveButton(android.R.string.ok, null);
                 dlg.setNegativeButton(android.R.string.cancel, null);
-
                 dlg.show();
                 return false;
             }
@@ -200,7 +201,6 @@ public class ImportActivity extends ActionBarActivity {
                 data += Base64.encodeToString(fileData, Base64.DEFAULT);
             else
                 data += new String(fileData);
-
             mData = data;
             txtDesc.setText(mData);
             txtDesc.setVisibility(View.VISIBLE);
@@ -210,7 +210,7 @@ public class ImportActivity extends ActionBarActivity {
             txtCert.setText(mTitle);
             txtDesc.setText(mData);
         } catch (Exception e) {
-            fe = e;
+            logHelper.logException(e);
         }
         if (fe != null) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
@@ -237,7 +237,7 @@ public class ImportActivity extends ActionBarActivity {
     }
 
 
-    private static byte[] readBytesFromFile(File file) {
+    private byte[] readBytesFromFile(File file) {
         byte[] bytes = null;
         InputStream input = null;
         try {
@@ -256,7 +256,7 @@ public class ImportActivity extends ActionBarActivity {
                 offset += bytesRead;
             }
         } catch (IOException a) {
-            a.printStackTrace();
+            logHelper.logException(a);
         }
         finally {
             if (input != null) {
@@ -264,7 +264,7 @@ public class ImportActivity extends ActionBarActivity {
                     input.close();
                 }
                 catch (IOException e) {
-                    Log.e(CLASS_TAG, "readBytesFromFile: ", e);
+                    logHelper.logException(e);
                 }
             }
         }
@@ -293,9 +293,8 @@ public class ImportActivity extends ActionBarActivity {
                     doImport(is);
                     if (mProfile == null)
                         return -3;
-                } catch (FileNotFoundException |
-                        SecurityException se) {
-                    se.printStackTrace();
+                } catch (FileNotFoundException | SecurityException se) {
+                    logHelper.logException(se);
                     return -2;
                 }
                 mProgress.dismiss();
@@ -345,7 +344,7 @@ public class ImportActivity extends ActionBarActivity {
             mProfile = cp.convertProfile();
             //embedFiles(cp);
         } catch (IOException | ConfigParser.ConfigParseError e) {
-            Log.e(CLASS_TAG, getString(R.string.state_exception) + " : ", e);
+            logHelper.logException(e);
         }
     }
 
@@ -356,15 +355,11 @@ public class ImportActivity extends ActionBarActivity {
         inputMethodManager.toggleSoftInputFromWindow(
                 pnlMain.getApplicationWindowToken(),
                 InputMethodManager.SHOW_FORCED, 0);
-
-
     }
+
 
     private void closeKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(pnlMain.getApplicationWindowToken(), 0);
     }
-
-
-
 }

@@ -33,6 +33,7 @@ import com.b.android.openvpn60.adapter.CustomAdapter;
 import com.b.android.openvpn60.core.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.fragments.ServerSelectFragment;
 import com.google.android.gms.common.ConnectionResult;
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private FragmentTransaction frTransaction;
     private ServerSelectFragment mFragment;
     private RelativeLayout pnlMain;
+    private LogHelper logHelper;
 
 
     @Override
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private void init() {
         //profiles = getProfileInfos();
         profiles = new ArrayList<>(getPM().getProfiles());
+        logHelper = new LogHelper(MainActivity.this);
         btnConnect = (Button) this.findViewById(R.id.btnConnect);
         intentMain = this.getIntent();
         importer = new Intent(this, ImportActivity.class);
@@ -209,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
         } catch (UnsupportedEncodingException a) {
-            Log.e(CLASS_TAG, Log.getStackTraceString(a));
+            logHelper.logException(a);
         }
         client.put(getApplicationContext(), SERVICE_URL_PUT, entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
@@ -218,15 +221,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response.getBoolean("status")) {
-                        Log.i(CLASS_TAG, "Update last login date = " + "OK");
+                        logHelper.logInfo("Update last login date = " + "OK");
                     }
                     else{
                         Toast.makeText(getApplicationContext(), getString(R.string.err_state_register), Toast.LENGTH_SHORT).show();
-                        Log.i(CLASS_TAG, "Update last login date = " + "Failed");
+                        logHelper.logInfo("Update last login date = " + "Failed");
                     }
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.state_exception) + Log.getStackTraceString(ex));
+                    logHelper.logException(ex);
                 }
             }
 
@@ -234,15 +237,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 if (statusCode == 404){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                    Log.w(CLASS_TAG, getString(R.string.state_error_occured) + statusCode);
+                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
                 else if (statusCode == 500){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                    Log.w(CLASS_TAG, getString(R.string.state_error_occured) + statusCode);
+                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
                 else{
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
-                    Log.w(CLASS_TAG, getString(R.string.state_error_occured) + statusCode);
+                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
             }
         });
@@ -481,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
-    public static boolean executeCmd(String cmd, boolean sudo) {
+    public boolean executeCmd(String cmd, boolean sudo) {
         try {
             java.lang.Process p;
             if (!sudo)
@@ -495,11 +498,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             while ((s = stdInput.readLine()) != null) {
                 res += s + "\n";
             }
-            Log.i("executeCmd", res);
+            logHelper.logInfo("executeCmd " + res);
             int exitValue = p.waitFor();
             return (exitValue == 0);
         } catch (Exception e) {
-            e.printStackTrace();
+            logHelper.logException(e);
         }
         return false;
     }
@@ -534,7 +537,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             try {
                                 lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
                             } catch (SecurityException a) {
-                                Log.e(CLASS_TAG, "run: ", a);
+                                logHelper.logException(a);
 
                             }
                         }
@@ -551,7 +554,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     threadTwo.start();
                     threadTwo.join();
                 }catch( Exception e) {
-                    Log.e(getString(R.string.state_interrupted), " " + Log.getStackTraceString(e));
+                    logHelper.logException(e);
                     return -1;
                 }
 
@@ -566,17 +569,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         double longitude = lastLocation.getLongitude();
 
                         Toast.makeText(MainActivity.this, getString(R.string.state_displayLocation) + String.valueOf(latitude) + ", " + String.valueOf(longitude), Toast.LENGTH_SHORT).show();
-                        Log.i(CLASS_TAG, "Location received = " + String.valueOf(latitude) + ", " + String.valueOf(longitude));
+                        logHelper.logInfo("Location received = " + String.valueOf(latitude) + ", " +
+                                String.valueOf(longitude));
 
                     } else {
-
                         Toast.makeText(MainActivity.this, getString(R.string.prompt_displayLocation), Toast.LENGTH_SHORT).show();
-
                     }
                 }
             }
-
-
         }.execute();
     }
 
@@ -588,7 +588,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     public void onConnectionFailed(ConnectionResult result) {
-        Log.i(CLASS_TAG, "Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
+        logHelper.logInfo("Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
     }
 
 
@@ -602,28 +602,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 try {
                     if (response.getInt("status") == 1) {
                         isMember = true;
-                        Log.i(CLASS_TAG, "Member validation = OK");
+                        logHelper.logInfo("Member validation = OK");
                     }
                     else if (response.getInt("status") == 0) {
                         Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.state_exception) + Log.getStackTraceString(ex));
+                    logHelper.logException(ex);
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 if(statusCode == 404){
-                    Log.e(CLASS_TAG, getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
                 }
                 else if(statusCode == 500){
-                    Log.e(CLASS_TAG, getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
                 } else{
-                    Log.e(CLASS_TAG, getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -654,11 +654,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             profile = profiles.get(0);
                         }
                         updateViews();
-                        Log.i(CLASS_TAG, getString(R.string.state_sorted_profiles));
+                        logHelper.logInfo(getString(R.string.state_sorted_profiles));
                     }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, Log.getStackTraceString(ex));
+                    logHelper.logException(ex);
                 }
             }
 
@@ -666,17 +666,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 if(statusCode == 404){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
                 }
                 // When Http response code is '500'
                 else if(statusCode == 500){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
                 }
                 // When Http response code other than 404, 500
                 else{
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
+                    logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
                 }
             }
         });
