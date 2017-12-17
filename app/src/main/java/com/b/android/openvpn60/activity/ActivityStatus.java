@@ -82,7 +82,6 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         }
     };
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -92,9 +91,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         VpnStatus.addByteCountListener(this);
         Intent intent = new Intent(ActivityStatus.this, OpenVPNService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
-
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +101,6 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         updateViews();
         runnable.run();
     }
-
 
     private void init() {
         progressDialog = new ProgressDialog(ActivityStatus.this, AlertDialog.THEME_HOLO_DARK);
@@ -138,7 +134,6 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
                     public void onServiceDisconnected(ComponentName arg0) {
                         serviceInternal = null;
                     }
-
                 };
             }
         };
@@ -150,9 +145,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         });
     }
 
-
     private void updateViews() {
-
         checker = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected void onPreExecute() {
@@ -195,12 +188,10 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         }.execute();
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
 
     private String humanReadableByteCount(long bytes, boolean mbit) {
         if (mbit)
@@ -231,7 +222,6 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
 
     }
 
-
     @Override
     protected void onDestroy() {
         //disconnectOnDestroy();
@@ -260,9 +250,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true);
         final String mOut = humanReadableByteCount(out, false);
         final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true);
-
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
-
             ActivityStatus.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -273,10 +261,8 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         }
     }
 
-
     private void updateDuration() {
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
-
             Timer timer = new Timer();
             timer.schedule(new TimerTask()
             {
@@ -301,18 +287,15 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         }
     }
 
-
     private void updateByteTexts(String in, String ins, String out, String outs) {
         edtBytesIn.setText(ins + " / " + in);
         edtBytesOut.setText(outs + " / " + out);
     }
 
-
     private void disconnect() {
         logHelper.logInfo("Disconnect Thread is starting...");
         disconnectVpn();
     }
-
 
     private void disconnectVpn() {
         checker = new AsyncTask<Void, Void, Integer>() {
@@ -365,12 +348,10 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         }.execute();
     }
 
-
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
 
     }
-
 
     @Override
     public void setConnectedVPN(String uuid) {

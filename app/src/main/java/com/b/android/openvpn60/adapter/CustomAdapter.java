@@ -19,7 +19,6 @@ import java.util.List;
  */
 
 public class CustomAdapter extends ArrayAdapter<VpnProfile> {
-
     private int mResourceId = 0;
     private LayoutInflater mLayoutInflater;
     public RadioButton mSelectedRB;
@@ -31,6 +30,7 @@ public class CustomAdapter extends ArrayAdapter<VpnProfile> {
     private CustomAdapter mInstance;
     //private VpnProfile mSelected;
 
+
     public CustomAdapter(Context context, int resource, int textViewResourceId, List<VpnProfile> objects) {
         super(context, resource, textViewResourceId, objects);
         mResourceId = resource;
@@ -39,84 +39,58 @@ public class CustomAdapter extends ArrayAdapter<VpnProfile> {
         mInstance = this;
     }
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         final ViewHolder holder;
-
-
-        if(view == null){
-
+        if(view == null) {
             view = mLayoutInflater.inflate(mResourceId, parent, false);
             holder = new ViewHolder();
-
-            holder.name = (TextView)view.findViewById(R.id.name);
-
-            holder.radioBtn = (RadioButton)view.findViewById(R.id.radio);
-
+            holder.name = view.findViewById(R.id.name);
+            holder.radioBtn = view.findViewById(R.id.radio);
             view.setTag(holder);
-        }else{
+        } else
             holder = (ViewHolder)view.getTag();
-        }
-
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position != mSelectedPosition && mSelectedRB != null){
+                if(position != mSelectedPosition && mSelectedRB != null)
                     mSelectedRB.setChecked(false);
-                }
                 else if (mSelectedRB != null)
                     mSelectedRB.setChecked(true);
-
                 mSelectedPosition = position;
                 mSelectedRB = holder.radioBtn;
                 mSelectedTxt = (TextView)v;
             }
         });
-
-
-
         holder.radioBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-                if(position != mSelectedPosition && mSelectedRB != null){
+                if(position != mSelectedPosition && mSelectedRB != null)
                     mSelectedRB.setChecked(false);
-                }
-
                 mSelectedPosition = position;
                 mSelectedRB = (RadioButton)v;
                 //mSelected = mSelectedPosition
             }
         });
-
-
-
-        if(mSelectedPosition != position){
+        if(mSelectedPosition != position)
             holder.radioBtn.setChecked(false);
-        }else{
+        else {
             holder.radioBtn.setChecked(true);
-            if(mSelectedRB != null && holder.radioBtn != mSelectedRB){
+            if(mSelectedRB != null && holder.radioBtn != mSelectedRB)
                 mSelectedRB = holder.radioBtn;
-            }
         }
-
         holder.name.setText(profiles.get(position).getName());
         holder.name.setTextColor(Color.WHITE);
         //this.mProfile2 = CustomAdapter.this.getItem(position);
         mProfile2 = profiles.get(position);
-
         //holder.name.setText(getItem(position).getName());
-
-
         return view;
     }
 
     public class ViewHolder {
         TextView        name;
         RadioButton     radioBtn;
-
     }
 }

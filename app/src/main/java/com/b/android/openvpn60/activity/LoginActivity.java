@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.GmailSender;
 import com.b.android.openvpn60.core.User;
+import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.crashlytics.android.Crashlytics;
@@ -29,8 +30,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -63,10 +62,10 @@ public class LoginActivity extends ActionBarActivity {
     private TextView txtForget;
     private TextView txtSignup;
     private ProgressBar progressBar;
-    private AsyncTask<Void, Void, Integer> emailThread;
     private boolean isConnected = false;
     private int errorCount = 0;
     private LogHelper logHelper;
+    private EmailHelper emailHelper;
 
 
     @Override
@@ -81,7 +80,6 @@ public class LoginActivity extends ActionBarActivity {
             isConnected = true;
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -92,7 +90,6 @@ public class LoginActivity extends ActionBarActivity {
         } else
             isConnected = true;
     }
-
 
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
@@ -129,6 +126,7 @@ public class LoginActivity extends ActionBarActivity {
                 /*edtUsername.setText("");
                 edtPass.setText("");
                 chkRemember.setChecked(false);*/
+                // Crashlytics test crash
                 Crashlytics.getInstance().crash();
                 Crashlytics.log("Crash occured");
             }
@@ -158,16 +156,14 @@ public class LoginActivity extends ActionBarActivity {
                         editor.apply();
                         editor.commit();
                     }
-
                     final String userName = edtUsername.getText().toString();
                     final String password = edtPass.getText().toString();
-
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
-                    /*RequestParams params = new RequestParams();
-                    params.put(USER_NAME, userName);
-                    params.put(USER_PASS, password);
-                    // Invoke RESTful Web Service with Http parameters
-                    invokeWS(userName, password);*/
+                        /*RequestParams params = new RequestParams();
+                        params.put(USER_NAME, userName);
+                        params.put(USER_PASS, password);
+                        // Invoke RESTful Web Service with Http parameters
+                        invokeWS(userName, password);*/
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(Constants.TEMP_USER.toString(), userName);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
@@ -184,14 +180,12 @@ public class LoginActivity extends ActionBarActivity {
 
             }
         });
-
         if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
             edtUsername.setText(sharedPreferences.getString(USER_NAME, null));
             edtPass.setText(sharedPreferences.getString(USER_PASS, null));
             chkRemember.setChecked(true);
         }
     }
-
 
     public void invokeWS(final String userName, final String userPass) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -251,39 +245,10 @@ public class LoginActivity extends ActionBarActivity {
         });
     }
 
-
     private void sendEmail() {
-        emailThread = new AsyncTask<Void, Void, Integer>() {
-            @Override
-            protected void onPreExecute() {
-                logHelper.logInfo("Preparing to send email...");
-                progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            protected Integer doInBackground(Void... params) {
-                GmailSender sender = new GmailSender("bilalccaliskan@gmail.com","piranha93");
-                try {
-                    sender.sendMail("Reset Password", "This email will contain reset password link",
-                            "bilalccaliskan@gmail.com", "bilalccaliskan@gmail.com", "");
-                } catch (Exception e) {
-                    logHelper.logException(e);
-                }
-                return 0;
-            }
-
-            @Override
-            protected void onPostExecute(Integer errorCode) {
-                if (errorCode == 0) {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                    logHelper.logInfo("Email successfully sended...");
-                }
-            }
-
-        }.execute();
+        emailHelper = new EmailHelper(this, "bilalccaliskan@gmail.com", "piranha93");
+        emailHelper.execute();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -322,12 +287,10 @@ public class LoginActivity extends ActionBarActivity {
         return true;
     }
 
-
     public boolean isNetworkAvailable(Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
-
 
     public boolean isInternetAvailable() {
         try {
@@ -338,7 +301,6 @@ public class LoginActivity extends ActionBarActivity {
         }
         return false;
     }
-
 
     private void showErrorDialog() {
         alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_HOLO_DARK);

@@ -1,7 +1,11 @@
 package com.b.android.openvpn60.core;
 
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
+
+import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -34,15 +38,16 @@ public class GmailSender extends javax.mail.Authenticator {
     private String user;
     private String password;
     private Session session;
+    private LogHelper logHelper;
 
     static {
         Security.addProvider(new JSEEProvider());
     }
 
-    public GmailSender(String user, String password) {
+    public GmailSender(Context context, String user, String password) {
         this.user = user;
         this.password = password;
-
+        logHelper = LogHelper.getLogHelper(context);
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
@@ -53,15 +58,25 @@ public class GmailSender extends javax.mail.Authenticator {
                 "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.quitwait", "false");
-
         session = Session.getDefaultInstance(props, this);
+    }
+
+    public boolean sendEmail() {
+        try {
+            sendMail("Reset Password", "This email will contain reset password link",
+                    "bilalccaliskan@gmail.com", "bilalccaliskan@gmail.com", "");
+            return true;
+        } catch (Exception e) {
+            logHelper.logException(e);
+        }
+        return false;
     }
 
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body,
+    private synchronized void sendMail(String subject, String body,
                                       String sender, String recipients) throws Exception {
         try {
             MimeMessage message = new MimeMessage(session);
@@ -82,7 +97,7 @@ public class GmailSender extends javax.mail.Authenticator {
         }
     }
 
-    public synchronized void sendMail(String subject, String body,
+    private synchronized void sendMail(String subject, String body,
                                       String senderEmail, String recipients, String filePath,
                                       String logFilePath) throws Exception {
         boolean fileExists = new File(filePath).exists();
@@ -132,7 +147,7 @@ public class GmailSender extends javax.mail.Authenticator {
         }
     }
 
-    public synchronized void sendMail(String subject, String body,
+    private synchronized void sendMail(String subject, String body,
                                       String senderEmail, String recipients, String logFilePath)
             throws Exception {
 

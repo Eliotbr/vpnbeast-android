@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final String SERVICE_URL_GET = Constants.URL_CHECK_MEMBERS.toString();
     private static final String SERVICE_URL_GET_PROFILES = Constants.URL_GET_PROFILES.toString();
     private static final String SELECTED_PROFILE = Constants.SELECTED_PROFILE.toString();
-
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FATEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 10; // 10 meters
@@ -179,27 +178,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-
     private ProfileManager getPM() {
         return ProfileManager.getInstance(this);
     }
 
-
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST);
-            }
         }
         isAvailable = true;
     }
-
 
     private void prepareService() {
         invokeWS();
         isUserAMember();
     }
-
 
     public void invokeWS() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -253,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-
     @Override
     protected void onResume() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
@@ -263,21 +256,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onResume();
     }
 
-
     private void startOrStopVPN(VpnProfile profile) {
         startVPN(profile);
     }
-
 
     private void updateProfiles() {
         profiles = getProfiles();
     }
 
-
     private ArrayList<VpnProfile> getProfiles() {
         return new ArrayList<>(getPM().getProfiles());
     }
-
 
     public void updateViews() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
@@ -293,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-
     @Override
     public void onBackPressed() {
         if (frTransaction != null && getFragmentManager() != null) {
@@ -304,7 +292,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
     }
 
-
     private void startVPN(VpnProfile profile) {
         getPM().saveProfile(this, profile);
         Intent intent = new Intent(this, LaunchVPN.class);
@@ -312,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -366,7 +352,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                     edtPort.setText("");
                                     edtHost.setText("");
                                 }
-
                             }
                         }
                     });
@@ -446,7 +431,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
-
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
             @Override
@@ -479,7 +463,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -490,21 +473,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return null;
     }
 
-
     public boolean executeCmd(String cmd, boolean sudo) {
         try {
             java.lang.Process p;
             if (!sudo)
                 p = Runtime.getRuntime().exec(cmd);
-            else {
+            else
                 p = Runtime.getRuntime().exec(new String[]{"su", "-c", cmd});
-            }
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String s;
             String res = "";
-            while ((s = stdInput.readLine()) != null) {
+            while ((s = stdInput.readLine()) != null)
                 res += s + "\n";
-            }
             logHelper.logInfo("executeCmd " + res);
             int exitValue = p.waitFor();
             return (exitValue == 0);
@@ -514,12 +494,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return false;
     }
 
-
     @Override
     public void onConnected(Bundle arg0) {
         displayLocation();
     }
-
 
     @TargetApi(Build.VERSION_CODES.M)
     private synchronized void displayLocation() {
@@ -587,17 +565,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }.execute();
     }
 
-
     @Override
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
 
-
     public void onConnectionFailed(ConnectionResult result) {
         logHelper.logInfo("Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
     }
-
 
     private void isUserAMember(){
         RequestParams params = new RequestParams();
@@ -611,9 +586,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         isMember = true;
                         logHelper.logInfo("Member validation = OK");
                     }
-                    else if (response.getInt("status") == 0) {
+                    else if (response.getInt("status") == 0)
                         Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
-                    }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     logHelper.logException(ex);
@@ -622,21 +596,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404){
+                if(statusCode == 404) {
                     logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
                 }
-                else if(statusCode == 500){
+                else if(statusCode == 500) {
                     logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                } else{
+                } else {
                     logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
 
     private ArrayList<VpnProfile> getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -675,12 +648,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
                 }
-                // When Http response code is '500'
                 else if(statusCode == 500){
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
                 }
-                // When Http response code other than 404, 500
                 else{
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));

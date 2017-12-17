@@ -83,12 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 userName = edtUsername.getText().toString();
                 if (!username.equals("") && !password.equals("") && !password2.equals("")) {
-                    if (password.length() < 6 && password.equals(password2)) {
+                    if (password.length() < 6 && password.equals(password2))
                         Toast.makeText(getApplicationContext(), getString(R.string.err_password),
                                 Toast.LENGTH_SHORT).show();
-                    } else {
+                    else
                         invokeWS(userName, password);
-                    }
                 }
                 }
             });
@@ -109,7 +108,6 @@ public class RegisterActivity extends AppCompatActivity {
         catch (UnsupportedEncodingException a) {
             logHelper.logException(a);
         }
-
         client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
             @Override

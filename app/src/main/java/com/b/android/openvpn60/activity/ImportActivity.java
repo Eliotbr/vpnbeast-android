@@ -83,7 +83,6 @@ public class ImportActivity extends ActionBarActivity {
         checkPermission();
     }
 
-
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
         txtCert = (TextView) this.findViewById(R.id.file_title);
@@ -100,14 +99,11 @@ public class ImportActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (mPath == null) //change it with mProfile
-                {
                     Toast.makeText(ImportActivity.this, mErr, Toast.LENGTH_SHORT).show();
-                }
                 else {
                     mUri = Uri.fromFile(mFile);
                     startImportTask(mUri, mTitle);
                 }
-
             }
         });
         btnSelect.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +128,6 @@ public class ImportActivity extends ActionBarActivity {
         });
     }
 
-
     private void saveProfile() {
         Intent result = new Intent();
         ProfileManager vpl = ProfileManager.getInstance(this);
@@ -143,7 +138,6 @@ public class ImportActivity extends ActionBarActivity {
         setResult(Activity.RESULT_OK, result);
         //finish();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,7 +184,6 @@ public class ImportActivity extends ActionBarActivity {
         return true;
     }
 
-
     public void importFile(String path) {
         mFile = new File(path);
         Exception fe = null;
@@ -222,11 +215,9 @@ public class ImportActivity extends ActionBarActivity {
         mUri = Uri.parse(mFile.getPath());
     }
 
-
     public String getSelectPath() {
         return Environment.getExternalStorageDirectory().getPath();
     }
-
 
     public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -236,7 +227,6 @@ public class ImportActivity extends ActionBarActivity {
         }
     }
 
-
     private byte[] readBytesFromFile(File file) {
         byte[] bytes = null;
         InputStream input = null;
@@ -245,7 +235,6 @@ public class ImportActivity extends ActionBarActivity {
             long len = file.length();
             if (len > MAX_EMBED_FILE_SIZE)
                 throw new IOException("selected file size too big to embed into profile");
-
             // Create the byte array to hold the data
             bytes = new byte[(int) len];
             // Read in the bytes
@@ -270,7 +259,6 @@ public class ImportActivity extends ActionBarActivity {
         }
         return bytes;
     }
-
 
     private void startImportTask(final Uri mUri, final String possibleName) {
         mImportTask = new AsyncTask<Void, Void, Integer>() {
@@ -335,7 +323,6 @@ public class ImportActivity extends ActionBarActivity {
         }.execute();
     }
 
-
     private void doImport(InputStream is) {
         ConfigParser cp = new ConfigParser();
         try {
@@ -348,7 +335,6 @@ public class ImportActivity extends ActionBarActivity {
         }
     }
 
-
     private void displayKeyboard() {
         InputMethodManager inputMethodManager =
                 (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -356,7 +342,6 @@ public class ImportActivity extends ActionBarActivity {
                 pnlMain.getApplicationWindowToken(),
                 InputMethodManager.SHOW_FORCED, 0);
     }
-
 
     private void closeKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

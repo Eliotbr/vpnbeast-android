@@ -53,7 +53,6 @@ public class MemberActivity extends AppCompatActivity {
         init();
     }
 
-
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
         edtFirstName = (EditText) this.findViewById(R.id.edtFirstName);
@@ -65,10 +64,10 @@ public class MemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if (Utility.validate(edtEmail.getText().toString())) {
+                if (Utility.validate(edtEmail.getText().toString()))
                     invokeWSForMember(edtFirstName.getText().toString(), edtLastName.getText().toString(),
                             edtEmail.getText().toString());
-                } else {
+                    else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(MemberActivity.this, "Your email address format is wrong!",
                             Toast.LENGTH_SHORT).show();
@@ -76,7 +75,6 @@ public class MemberActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void invokeWSForMember(final String firstName, final String lastName, final String email) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -92,7 +90,6 @@ public class MemberActivity extends AppCompatActivity {
         } catch (UnsupportedEncodingException a) {
             logHelper.logException(a);
         }
-
         client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
             @Override
