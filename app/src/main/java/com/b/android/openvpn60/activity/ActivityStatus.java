@@ -123,7 +123,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         edtBytesOut = (EditText) this.findViewById(R.id.edtBytesOut);
         edtUser.setText(sharedPrefs.getString(Constants.USER_NAME.toString(), null));
         intent = new Intent(this, MainActivity.class);
-        logHelper = new LogHelper(ActivityStatus.this);
+        logHelper = LogHelper.getLogHelper(this);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -244,9 +244,10 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
         if (serviceInternal != null) {
             try {
                 serviceInternal.stopVPN(false);
+                logHelper.logInfo("Disconnection onDestroy()");
                 VpnStatus.mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
             } catch (RemoteException e) {
-                VpnStatus.logException(e);
+                logHelper.logException(e);
             }
         }
         unbindService(mConnection);
@@ -308,7 +309,7 @@ public class ActivityStatus extends AppCompatActivity implements VpnStatus.State
 
 
     private void disconnect() {
-
+        logHelper.logInfo("Disconnect Thread is starting...");
         disconnectVpn();
     }
 

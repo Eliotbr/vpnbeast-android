@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +24,13 @@ import com.b.android.openvpn60.core.GmailSender;
 import com.b.android.openvpn60.core.User;
 import com.b.android.openvpn60.util.Constants;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.crashlytics.android.Crashlytics;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -91,7 +95,7 @@ public class LoginActivity extends ActionBarActivity {
 
 
     private void init() {
-        logHelper = new LogHelper(this);
+        logHelper = LogHelper.getLogHelper(this);
         edtUsername = (EditText) this.findViewById(R.id.edtUser);
         edtPass = (EditText) this.findViewById(R.id.edtPass);
         chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
@@ -122,9 +126,11 @@ public class LoginActivity extends ActionBarActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edtUsername.setText("");
+                /*edtUsername.setText("");
                 edtPass.setText("");
-                chkRemember.setChecked(false);
+                chkRemember.setChecked(false);*/
+                Crashlytics.getInstance().crash();
+                Crashlytics.log("Crash occured");
             }
         });
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
@@ -134,7 +140,6 @@ public class LoginActivity extends ActionBarActivity {
                 if (isConnected) {
                     SharedPreferences.Editor editor;
                     progressBar.setVisibility(View.VISIBLE);
-                    logHelper.logInfo("THIS IS FIRST LOG MESSAGE");
                     if (chkRemember.isChecked()) {
                         editor = sharedPreferences.edit();
                         editor.putString(USER_NAME, edtUsername.getText().toString());
@@ -142,12 +147,14 @@ public class LoginActivity extends ActionBarActivity {
                         editor.putBoolean(USER_CHOICE, true);
                         editor.apply();
                         editor.commit();
+                        logHelper.logInfo("sharedPreferences updated with user provided values...");
                     }
                     else {
                         editor = sharedPreferences.edit();
                         editor.putString(USER_NAME, null);
                         editor.putString(USER_PASS, null);
                         editor.putBoolean(USER_CHOICE, false);
+                        logHelper.logInfo("sharedPreferences updated with default values...");
                         editor.apply();
                         editor.commit();
                     }
@@ -155,7 +162,7 @@ public class LoginActivity extends ActionBarActivity {
                     final String userName = edtUsername.getText().toString();
                     final String password = edtPass.getText().toString();
 
-                    if (userName != null && password != null) {
+                    if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
                     /*RequestParams params = new RequestParams();
                     params.put(USER_NAME, userName);
                     params.put(USER_PASS, password);
@@ -165,12 +172,16 @@ public class LoginActivity extends ActionBarActivity {
                         intent.putExtra(Constants.TEMP_USER.toString(), userName);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
                         startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_blank_login),
+                                Toast.LENGTH_SHORT).show();
+                        logHelper.logInfo("Username or password is incorrect, can not start new Activity...");
                     }
-                    else
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_blank_login), Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else {
                     showErrorDialog();
+                    logHelper.logWarning("Internet connection is a MUST for application...");
+                }
+
             }
         });
 
@@ -194,7 +205,8 @@ public class LoginActivity extends ActionBarActivity {
         catch (UnsupportedEncodingException a) {
             logHelper.logException(a);
         }
-        client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+        client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -208,31 +220,32 @@ public class LoginActivity extends ActionBarActivity {
                         intent.putExtra(Constants.TEMP_USER.toString(), user);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
                         startActivity(intent);
-                    }
-                    else{
+                    } else {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
+                                Toast.LENGTH_SHORT).show();
                     }
-                }
-                catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
+                } catch (JSONException ex) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
+                            Toast.LENGTH_SHORT).show();
                     logHelper.logException(ex);
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_LONG).show();
-                    Log.w(CLASS_TAG, getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
-                }
-                else if(statusCode == 500){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_LONG).show();
-                    Log.w(CLASS_TAG, getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_LONG).show();
-                    Log.w(CLASS_TAG, getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
+                if(statusCode == 404) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
+                            Toast.LENGTH_LONG).show();
+                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
+                } else if(statusCode == 500) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
+                            Toast.LENGTH_LONG).show();
+                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
+                            Toast.LENGTH_LONG).show();
+                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
                 }
             }
         });
@@ -243,6 +256,7 @@ public class LoginActivity extends ActionBarActivity {
         emailThread = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected void onPreExecute() {
+                logHelper.logInfo("Preparing to send email...");
                 progressBar.setVisibility(View.VISIBLE);
             }
 
@@ -263,6 +277,7 @@ public class LoginActivity extends ActionBarActivity {
                 if (errorCode == 0) {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    logHelper.logInfo("Email successfully sended...");
                 }
             }
 
@@ -274,7 +289,6 @@ public class LoginActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem itm1 = menu.add("Settings");
         itm1.setNumericShortcut('1');
-
         itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -292,7 +306,6 @@ public class LoginActivity extends ActionBarActivity {
                 dlg.setMessage("This is the place where we put some sort of messages.");
                 dlg.setPositiveButton(android.R.string.ok, null);
                 dlg.setNegativeButton(android.R.string.cancel, null);
-
                 dlg.show();
                 return false;
             }
@@ -306,7 +319,6 @@ public class LoginActivity extends ActionBarActivity {
                 return false;
             }
         });
-
         return true;
     }
 

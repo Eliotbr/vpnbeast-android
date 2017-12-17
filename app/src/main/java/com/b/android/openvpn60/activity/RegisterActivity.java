@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.User;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String SERVICE_URL = Constants.URL_REGISTER.toString();
     private static final String CLASS_TAG = RegisterActivity.class.toString();
 
+    private LogHelper logHelper;
     private EditText edtUsername;
     private EditText edtPass;
     private EditText edtPass2;
@@ -51,18 +53,18 @@ public class RegisterActivity extends AppCompatActivity {
     private String userName;
     private AsyncTask<Void, Void, Integer> checker;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        logHelper = LogHelper.getLogHelper(this);
         edtUsername = (EditText) this.findViewById(R.id.edtEmail2);
         edtPass = (EditText) this.findViewById(R.id.edtPassSignup);
         edtPass2 = (EditText) this.findViewById(R.id.edtPassSignup2);
         progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-
         intentLogin = new Intent(this, LoginActivity.class);
         btnClear = (Button) this.findViewById(R.id.btnClear2);
-
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit2);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +82,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String password2 = edtPass2.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
                 userName = edtUsername.getText().toString();
-
                 if (!username.equals("") && !password.equals("") && !password2.equals("")) {
                     if (password.length() < 6 && password.equals(password2)) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_password), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_password),
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         invokeWS(userName, password);
                     }
@@ -105,47 +107,50 @@ public class RegisterActivity extends AppCompatActivity {
             entity = new UrlEncodedFormEntity(nameValuePairs);
         }
         catch (UnsupportedEncodingException a) {
-            Log.e(CLASS_TAG, a.getLocalizedMessage());
+            logHelper.logException(a);
         }
 
-        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response.getBoolean("status")) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.state_register) , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.state_register) ,
+                                Toast.LENGTH_SHORT).show();
                         intentLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intentLogin.putExtra(Constants.TEMP_USER.toString(), user);
                         intentLogin.putExtra(USER_NAME, edtUsername.getText().toString());
                         startActivity(intentLogin);
-                    }
-                    else{
+                    } else {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register),
+                                Toast.LENGTH_SHORT).show();
                     }
+                } catch (JSONException ex) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logException(ex);
                 }
-                catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, "Exception: " + Log.getStackTraceString(ex));
-                }
-
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                }
-                else if(statusCode == 500){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
+                if(statusCode == 404) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
+                } else if(statusCode == 500) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
                 }
             }
-
-
         });
     }
 
@@ -156,7 +161,8 @@ public class RegisterActivity extends AppCompatActivity {
         itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(RegisterActivity.this, "You selected Settings", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "You selected Settings",
+                        Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -165,12 +171,12 @@ public class RegisterActivity extends AppCompatActivity {
         itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                AlertDialog.Builder dlg = new AlertDialog.Builder(RegisterActivity.this, AlertDialog.THEME_HOLO_DARK);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(RegisterActivity.this,
+                        AlertDialog.THEME_HOLO_DARK);
                 dlg.setTitle(item.getTitle());
                 dlg.setMessage("This is the place where we put some sort of messages.");
                 dlg.setPositiveButton("OK", null);
                 dlg.setNegativeButton("NOT OK", null);
-
                 dlg.show();
                 return false;
             }
@@ -184,7 +190,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         return true;
     }
 
@@ -197,5 +202,4 @@ public class RegisterActivity extends AppCompatActivity {
     public void close(){
         this.finish();
     }
-
 }

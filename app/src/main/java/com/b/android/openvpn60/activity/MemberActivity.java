@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.Utility;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,6 +43,7 @@ public class MemberActivity extends AppCompatActivity {
     private EditText edtEmail;
     private Button btnSubmit;
     private ProgressBar progressBar;
+    private LogHelper logHelper;
 
 
     @Override
@@ -53,6 +55,7 @@ public class MemberActivity extends AppCompatActivity {
 
 
     private void init() {
+        logHelper = LogHelper.getLogHelper(this);
         edtFirstName = (EditText) this.findViewById(R.id.edtFirstName);
         edtLastName = (EditText) this.findViewById(R.id.edtLastName);
         edtEmail = (EditText) this.findViewById(R.id.edtEmail2);
@@ -67,7 +70,8 @@ public class MemberActivity extends AppCompatActivity {
                             edtEmail.getText().toString());
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(MemberActivity.this, "Your email address format is wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemberActivity.this, "Your email address format is wrong!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -86,38 +90,48 @@ public class MemberActivity extends AppCompatActivity {
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
         } catch (UnsupportedEncodingException a) {
-            Log.e(CLASS_TAG, Log.getStackTraceString(a));
+            logHelper.logException(a);
         }
 
-        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response.getBoolean("status")) {
-                        Toast.makeText(getApplicationContext(), "Member successfully created!", Toast.LENGTH_SHORT).show();
-                        Log.i(CLASS_TAG, getString(R.string.state_member_insert));
+                        Toast.makeText(getApplicationContext(), "Member successfully created!",
+                                Toast.LENGTH_SHORT).show();
+                        logHelper.logInfo(getString(R.string.state_member_insert));
                         MemberActivity.this.finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "An error occured while creating member!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "An error occured while creating member!",
+                                Toast.LENGTH_SHORT).show();
                         edtFirstName.setText("");
                         edtLastName.setText("");
                         edtEmail.setText("");
                         MemberActivity.this.finish();
                     }
                 } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    Log.e(CLASS_TAG, getString(R.string.state_exception) + " : " + Log.getStackTraceString(ex));
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logException(ex);
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if (statusCode == 404){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                } else if (statusCode == 500){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
+                if (statusCode == 404) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
+                } else if (statusCode == 500) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
+                            Toast.LENGTH_SHORT).show();
+                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
                 }
             }
         });

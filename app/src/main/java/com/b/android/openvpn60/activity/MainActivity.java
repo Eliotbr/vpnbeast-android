@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private final String CLASS_TAG = Constants.CLASS_TAG_ACTIVITY.toString() + this.getClass().toString();
     private static final int PERMISSION_REQUEST = 23621;
 
+    private SharedPreferences sharedPrefs;
     private Location lastLocation;
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
@@ -87,11 +88,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private Intent importer;
     public static VpnProfile profile;
     private VpnProfile mRemovedProfile;
-    private SharedPreferences mPrefs;
     private EditText edtPort;
     private EditText edtUser;
     private EditText edtHost;
-    private Intent intentMain;
     private Button btnConnect;
     private ProgressDialog dlgProgress;
     private String mUsername;
@@ -125,16 +124,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private void init() {
         //profiles = getProfileInfos();
         profiles = new ArrayList<>(getPM().getProfiles());
-        logHelper = new LogHelper(MainActivity.this);
+        logHelper = LogHelper.getLogHelper(this);
         btnConnect = (Button) this.findViewById(R.id.btnConnect);
-        intentMain = this.getIntent();
         importer = new Intent(this, ImportActivity.class);
         intentService = new Intent(this, LaunchVPN.class);
         edtHost = (EditText) this.findViewById(R.id.edtIP);
         edtUser = (EditText) this.findViewById(R.id.edtUser);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
         txtProfileName = (TextView) this.findViewById(R.id.txtProfileName);
-        mPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         edtUser.setText(mUsername);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(Constants.EXTRA_KEY.toString()));
@@ -167,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             startOrStopVPN(profile);
                         }
                     });
-
                 }
             }
         });
@@ -224,11 +221,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         logHelper.logInfo("Update last login date = " + "OK");
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register),
+                                Toast.LENGTH_SHORT).show();
                         logHelper.logInfo("Update last login date = " + "Failed");
                     }
                 } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
+                            Toast.LENGTH_SHORT).show();
                     logHelper.logException(ex);
                 }
             }
@@ -236,15 +235,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
                 if (statusCode == 404){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
+                            Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
                 else if (statusCode == 500){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
+                            Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
+                            Toast.LENGTH_SHORT).show();
                     logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
                 }
             }
@@ -333,9 +335,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 if (profiles.isEmpty())
                     Toast.makeText(MainActivity.this, R.string.err_profile_removed, Toast.LENGTH_LONG).show();
                 else {
-                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
+                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this,
+                            AlertDialog.THEME_HOLO_DARK);
                     mBuilder.setTitle(getString(R.string.prompt_remove_profile));
-                    final CustomAdapter mAdapter = new CustomAdapter(MainActivity.this, R.layout.list_row, R.id.text, profiles) { };
+                    final CustomAdapter mAdapter = new CustomAdapter(MainActivity.this, R.layout.list_row,
+                            R.id.text, profiles) {};
                     mBuilder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -355,7 +359,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                 getPM().removeProfile(MainActivity.this, mAdapter.mProfile2);  //
                                 updateProfiles();
                                 //profiles = (ArrayList<VpnProfile>) getPM().getProfiles();
-                                Toast.makeText(MainActivity.this, R.string.profile_removed, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, R.string.profile_removed,
+                                        Toast.LENGTH_SHORT).show();
                                 if (profiles.isEmpty()) {
                                     btnConnect.setBackgroundColor(Color.GRAY);
                                     edtPort.setText("");
@@ -379,7 +384,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (isMember) {
-                    Toast.makeText(MainActivity.this, "You are already a valid member!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You are already a valid member!",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(MainActivity.this, MemberActivity.class);
                     intent.putExtra(USER_NAME, userName);
@@ -467,7 +473,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 profiles = profilesSorted;
                 dlgProgress.dismiss();
-                Toast.makeText(MainActivity.this, getString(R.string.state_sorted_profiles), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getString(R.string.state_sorted_profiles),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

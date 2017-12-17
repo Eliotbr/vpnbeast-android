@@ -81,11 +81,11 @@ public class ImportActivity extends ActionBarActivity {
         this.setContentView(R.layout.activity_import);
         init();
         checkPermission();
-        logHelper = new LogHelper(ImportActivity.this);
     }
 
 
     private void init() {
+        logHelper = LogHelper.getLogHelper(this);
         txtCert = (TextView) this.findViewById(R.id.file_title);
         btnSelect = (Button) this.findViewById(R.id.file_select_button);
         btnClear = (Button) this.findViewById(R.id.file_clear_button);

@@ -13,21 +13,27 @@ public class LogHelper {
     private Logger logger;
 
 
-    public LogHelper(Context context) {
+    private LogHelper(Context context) {
         logger = Logger.getLogger(context.getClass().toString());
+    }
+
+    public static LogHelper getLogHelper(Context context) {
+        return new LogHelper(context);
     }
 
     public void logException(Throwable throwable) {
         logger.log(Level.SEVERE, "EXCEPTION! ", throwable);
     }
 
-
     public void logInfo(String message) {
         logger.log(Level.INFO, message);
     }
 
-
     public void logWarning(String warning) {
         logger.log(Level.WARNING, warning);
+    }
+
+    public void logWarning(String warning, Throwable throwable) {
+        logger.log(Level.WARNING, warning, throwable);
     }
 }
