@@ -113,6 +113,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
             return true;
         } catch (Exception e) {
             logHelper.logException(e);
+            logHelper.logWarning("sendMail() with no parameter");
         }
         return false;
     }
@@ -120,7 +121,6 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
     private synchronized void sendMail(String subject, String body,
                                        String senderEmail, String recipients, String logFilePath)
             throws Exception {
-
         File file= new File(logFilePath);
         boolean fileExists =file.exists();
         if (fileExists) {
@@ -169,6 +169,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
             Transport.send(message);
         } catch (Exception e) {
             logHelper.logException(e);
+            logHelper.logWarning("sendMail() with 4 parameters");
         }
     }
 }
