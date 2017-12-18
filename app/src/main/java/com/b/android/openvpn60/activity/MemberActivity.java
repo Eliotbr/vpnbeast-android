@@ -1,8 +1,11 @@
 package com.b.android.openvpn60.activity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,5 +136,42 @@ public class MemberActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem itm1 = menu.add("Settings");
+        itm1.setNumericShortcut('1');
+        itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MemberActivity.this, "You selected Settings", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        MenuItem itm2 = menu.add("About us");
+        itm2.setNumericShortcut('2');
+        itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MemberActivity.this, AlertDialog.THEME_HOLO_DARK);
+                dlg.setTitle(item.getTitle());
+                dlg.setMessage("This is the place where we put some sort of messages.");
+                dlg.setPositiveButton(android.R.string.ok, null);
+                dlg.setNegativeButton(android.R.string.cancel, null);
+                dlg.show();
+                return false;
+            }
+        });
+        MenuItem itm3 = menu.add("Close");
+        itm3.setNumericShortcut('3');
+        itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                MemberActivity.this.finish();
+                return false;
+            }
+        });
+        return true;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_member"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
@@ -10,11 +10,12 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dip"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
-        android:src="@drawable/pp1"
-
+        android:src="@drawable/logo_vpnbeast"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"/>
 
     <GridLayout
         android:layout_width="match_parent"
@@ -25,6 +26,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
+        android:layout_marginTop="40dp"
         >
 
         <TextView
@@ -33,6 +35,7 @@
             android:id="@+id/txtFirstName"
             android:text="First Name: "
             android:layout_column="0"
+            android:textColor="@color/colorAccent"
             android:layout_row="0"
             android:textStyle="bold"
             />
@@ -43,6 +46,8 @@
             android:id="@+id/edtFirstName"
             android:layout_column="1"
             android:layout_row="0"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
             android:inputType="text"
@@ -55,6 +60,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/txtLastName"
             android:text="Last Name: "
+            android:textColor="@color/colorAccent"
             android:layout_column="0"
             android:layout_row="1"
             android:textStyle="bold"
@@ -66,17 +72,19 @@
             android:id="@+id/edtLastName"
             android:layout_column="1"
             android:layout_row="1"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
             android:inputType="text"
             />
-
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/txtEmail"
             android:text="Email: "
+            android:textColor="@color/colorAccent"
             android:layout_column="0"
             android:layout_row="2"
             android:textStyle="bold"
@@ -88,6 +96,8 @@
             android:id="@+id/edtEmail2"
             android:layout_column="1"
             android:layout_row="2"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
             android:inputType="textEmailAddress"
@@ -116,7 +126,7 @@
             android:layout_gravity="fill_horizontal"
             android:text="@string/text_submit"
             android:background="#fd383434"
-            android:textColor="#368e13"
+            android:textColor="@color/colorAccent"
             />
 
 
