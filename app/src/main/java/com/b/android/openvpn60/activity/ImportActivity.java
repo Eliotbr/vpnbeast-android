@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +34,7 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.VpnProfile;
 
 import java.io.File;

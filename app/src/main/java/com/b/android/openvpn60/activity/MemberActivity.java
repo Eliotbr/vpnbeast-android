@@ -3,7 +3,6 @@ package com.b.android.openvpn60.activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,9 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.core.Utility;
+import com.b.android.openvpn60.util.EmailUtil;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.constant.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -23,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +66,7 @@ public class MemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if (Utility.validate(edtEmail.getText().toString()))
+                if (EmailUtil.validate(edtEmail.getText().toString()))
                     invokeWSForMember(edtFirstName.getText().toString(), edtLastName.getText().toString(),
                             edtEmail.getText().toString());
                     else {

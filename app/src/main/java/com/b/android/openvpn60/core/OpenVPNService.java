@@ -33,6 +33,7 @@ import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.ActivityStatus;
 import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -87,6 +88,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
     private static Class mNotificationActivityClass;
     private Intent intentStatus;
     //private static OpenVPNService instance;
+    private LogHelper logHelper;
 
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
@@ -322,7 +324,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 // I don't know why  this happens:
                 // java.lang.IllegalArgumentException: Receiver not registered: de.blinkt.openvpn.NetworkSateReceiver@41a61a10
                 // Ignore for now ...
-                iae.printStackTrace();
+                logHelper.logException(iae);
             }
         mDeviceStateReceiver = null;
 
@@ -346,7 +348,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        logHelper = LogHelper.getLogHelper(OpenVPNService.this);
         if (intent != null && intent.getBooleanExtra(ALWAYS_SHOW_NOTIFICATION, false))
             mNotificationAlwaysVisible = true;
 
@@ -434,7 +436,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         try {
             mProfile.writeConfigFile(this);
         } catch (IOException e) {
-            VpnStatus.logException("Error writing config file", e);
+            logHelper.logException("Error writing config file", e);
             endVpnService();
             return;
         }
@@ -519,7 +521,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    //ignore
+                    logHelper.logException(e);
                 }
             }
         }
@@ -536,7 +538,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    //ignore
+                    logHelper.logException(e);
                 }
             }
         }
@@ -551,7 +553,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
         } catch (IllegalArgumentException | InstantiationException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | IllegalAccessException e) {
-            e.printStackTrace();
+            logHelper.logException(e);
         }
         return null;
     }
@@ -623,7 +625,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             try {
                 builder.addAddress(mLocalIP.mIp, mLocalIP.len);
             } catch (IllegalArgumentException iae) {
-                VpnStatus.logError(R.string.dns_add_error, mLocalIP, iae.getLocalizedMessage());
+                logHelper.logException(getString(R.string.dns_add_error), iae);
                 return null;
             }
         }
@@ -633,7 +635,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             try {
                 builder.addAddress(ipv6parts[0], Integer.parseInt(ipv6parts[1]));
             } catch (IllegalArgumentException iae) {
-                VpnStatus.logError(R.string.ip_add_error, mLocalIPv6, iae.getLocalizedMessage());
+                logHelper.logException(getString(R.string.ip_add_error), iae);
                 return null;
             }
 
@@ -644,7 +646,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             try {
                 builder.addDnsServer(dns);
             } catch (IllegalArgumentException iae) {
-                VpnStatus.logError(R.string.dns_add_error, dns, iae.getLocalizedMessage());
+                logHelper.logException(getString(R.string.dns_add_error), iae);
             }
         }
 
@@ -677,7 +679,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                     positiveIPv4Routes.add(dnsServer);
                 }
             } catch (Exception e) {
-                VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
+                logHelper.logException("Error parsing DNS Server IP: " + mDnslist.get(0), e);
             }
         }
 
@@ -691,7 +693,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 else
                     builder.addRoute(route.getIPv4Address(), route.networkMask);
             } catch (IllegalArgumentException ia) {
-                VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
+                logHelper.logException(getString(R.string.route_rejected) + " " + route, ia);
             }
         }
 
@@ -699,7 +701,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             try {
                 builder.addRoute(route6.getIPv6Address(), route6.networkMask);
             } catch (IllegalArgumentException ia) {
-                VpnStatus.logError(getString(R.string.route_rejected) + route6 + " " + ia.getLocalizedMessage());
+                logHelper.logException(getString(R.string.route_rejected) + " " + route6, ia);
             }
         }
 
@@ -745,13 +747,13 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             //Debug.stopMethodTracing();
             ParcelFileDescriptor tun = builder.establish();
             if (tun == null)
-                throw new NullPointerException("Android establish() method returned null (Really broken network configuration?)");
+                throw new NullPointerException("Android establish() method returned null (Really broken " +
+                        "network configuration?)");
             return tun;
         } catch (Exception e) {
-            VpnStatus.logError(R.string.tun_open_error);
-            VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());
+            logHelper.logException(getString(R.string.tun_open_error), e);
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                VpnStatus.logError(R.string.tun_error_helpful);
+                logHelper.logWarning(getString(R.string.tun_error_helpful));
             }
             return null;
         }
@@ -809,7 +811,8 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 mProfile.allowedAppsVpn.remove(pkg);
-                VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
+                logHelper.logException(e);
+                logHelper.logInfo(getString(R.string.app_no_longer_exists));
             }
         }
 
@@ -818,7 +821,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             try {
                 builder.addAllowedApplication(getPackageName());
             } catch (PackageManager.NameNotFoundException e) {
-                VpnStatus.logError("This should not happen: " + e.getLocalizedMessage());
+                logHelper.logException(e);
             }
         }
 
@@ -887,7 +890,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             mRoutesv6.addIPv6(ip, mask, included);
 
         } catch (UnknownHostException e) {
-            VpnStatus.logException(e);
+            logHelper.logException(e);
         }
 
 

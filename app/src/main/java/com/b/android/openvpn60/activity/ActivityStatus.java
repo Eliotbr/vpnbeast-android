@@ -27,7 +27,7 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.constant.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.constant.Constants;
 
 public class ToStringActivity extends AppCompatActivity {
 

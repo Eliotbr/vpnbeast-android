@@ -25,6 +25,10 @@ public class LogHelper {
         logger.log(Level.SEVERE, "EXCEPTION! ", throwable);
     }
 
+    public void logException(String errorMessage, Throwable throwable) {
+        logger.log(Level.SEVERE, errorMessage + "\n", throwable);
+    }
+
     public void logInfo(String message) {
         logger.log(Level.INFO, message);
     }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.User;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.constant.Constants;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

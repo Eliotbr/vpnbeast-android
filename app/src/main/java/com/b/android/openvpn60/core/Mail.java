@@ -1,72 +1,232 @@
 package com.b.android.openvpn60.core;
 
-import java.io.UnsupportedEncodingException;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.b.android.openvpn60.helper.LogHelper;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Security;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
-import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
- * Created by b on 9/19/17.
+ * Created by b on 9/20/2017.
  */
 
-public class Mail {
-    private final String PORT_587 = "587";
-    private final String SMTP_AUTH = "true";
-    private final String START_TLS = "true";
-    private final String HOST_HOTMAIL = "smtp.live.com";
-    private final String HOST_GMAIL = "smtp.gmail.com";
+public class Mail extends javax.mail.Authenticator {
+    private String mailhost = "smtp.gmail.com";
+    private String user;
+    private String password;
+    private Session session;
+    private LogHelper logHelper;
 
-    private String fromEmail;
-    private String fromPassword;
-    private String toEmailList;
-    private String emailSubject;
-    private String emailBody;
-
-    Properties emailProperties;
-    Session mailSession;
-    MimeMessage emailMessage;
-
-
-    public Mail() {
-
+    static {
+        Security.addProvider(new JSEEProvider());
     }
 
-    public Mail(String fromEmail, String fromPassword,
-                String toEmailList, String emailSubject, String emailBody) {
-        this.fromEmail = fromEmail;
-        this.fromPassword = fromPassword;
-        this.toEmailList = toEmailList;
-        this.emailSubject = emailSubject;
-        this.emailBody = emailBody;
-
-        emailProperties = System.getProperties();
-        emailProperties.put("mail.smtp.port", PORT_587);
-        emailProperties.put("mail.smtp.auth", SMTP_AUTH);
-        emailProperties.put("mail.smtp.starttls.enable", START_TLS);
+    public Mail(Context context, String user, String password) {
+        this.user = user;
+        this.password = password;
+        logHelper = LogHelper.getLogHelper(context);
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.host", mailhost);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");// 587
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+        props.setProperty("mail.smtp.quitwait", "false");
+        session = Session.getDefaultInstance(props, this);
     }
 
-    public MimeMessage createEmailMessage() throws AddressException,
-            MessagingException, UnsupportedEncodingException {
-        mailSession = Session.getDefaultInstance(emailProperties, null);
-        emailMessage = new MimeMessage(mailSession);
-        emailMessage.setFrom(new InternetAddress(fromEmail, fromEmail));
-        emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmailList));
-        emailMessage.setSubject(emailSubject);
-        emailMessage.setContent(emailBody, "text/html");// for a html email
-        // emailMessage.setText(emailBody);// for a text email
-        return emailMessage;
+    public boolean sendEmail() {
+        try {
+            sendMail("Reset Password", "This email will contain reset password link",
+                    "bilalccaliskan@gmail.com", "bilalccaliskan@gmail.com", "");
+            return true;
+        } catch (Exception e) {
+            logHelper.logException(e);
+        }
+        return false;
     }
 
-    public void sendEmail() throws AddressException, MessagingException {
-        Transport transport = mailSession.getTransport("smtp");
-        transport.connect(HOST_GMAIL, fromEmail, fromPassword);
-        transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
-        transport.close();
+    protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication(user, password);
+    }
+
+    private synchronized void sendMail(String subject, String body,
+                                      String sender, String recipients) throws Exception {
+        try {
+            MimeMessage message = new MimeMessage(session);
+            DataHandler handler = new DataHandler(new javax.mail.util.ByteArrayDataSource(
+                    body.getBytes(), "text/plain"));
+            message.setSender(new InternetAddress(sender));
+            message.setSubject(subject);
+            message.setDataHandler(handler);
+            if (recipients.indexOf(',') > 0)
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(recipients));
+            else
+                message.setRecipient(Message.RecipientType.TO,
+                        new InternetAddress(recipients));
+            Transport.send(message);
+        } catch (Exception e) {
+            Log.e("Mail exception", e.getMessage());
+        }
+    }
+
+    private synchronized void sendMail(String subject, String body,
+                                      String senderEmail, String recipients, String filePath,
+                                      String logFilePath) throws Exception {
+        boolean fileExists = new File(filePath).exists();
+        if (fileExists) {
+
+            String from = senderEmail;
+            String to = recipients;
+            String fileAttachment = filePath;
+
+            // Define message
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+                    to));
+            message.setSubject(subject);
+
+            // create the message part
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+            // fill message
+            messageBodyPart.setText(body);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            // Part two is attachment
+            messageBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(fileAttachment);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName("screenShoot.jpg");
+            multipart.addBodyPart(messageBodyPart);
+
+            // part three for logs
+            messageBodyPart = new MimeBodyPart();
+            DataSource sourceb = new FileDataSource(logFilePath);
+            messageBodyPart.setDataHandler(new DataHandler(sourceb));
+            messageBodyPart.setFileName("logs.txt");
+            multipart.addBodyPart(messageBodyPart);
+
+            // Put parts in message
+            message.setContent(multipart);
+
+            // Send the message
+            Transport.send(message);
+        } else {
+            sendMail(subject, body, senderEmail, recipients);
+        }
+    }
+
+    private synchronized void sendMail(String subject, String body,
+                                      String senderEmail, String recipients, String logFilePath)
+            throws Exception {
+
+        File file= new File(logFilePath);
+        boolean fileExists =file.exists();
+        if (fileExists) {
+
+            String from = senderEmail;
+            String to = recipients;
+
+            // Define message
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+                    to));
+            message.setSubject(subject);
+
+            // create the message part
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+            // fill message
+            messageBodyPart.setText(body);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            // part three for logs
+            messageBodyPart = new MimeBodyPart();
+            DataSource sourceb = new FileDataSource(logFilePath);
+            messageBodyPart.setDataHandler(new DataHandler(sourceb));
+            messageBodyPart.setFileName(file.getName());
+            multipart.addBodyPart(messageBodyPart);
+
+            // Put parts in message
+            message.setContent(multipart);
+
+            // Send the message
+            Transport.send(message);
+        } else {
+            sendMail(subject, body, senderEmail, recipients);
+        }
+    }
+
+    public class ByteArrayDataSource implements DataSource {
+        private byte[] data;
+        private String type;
+
+        public ByteArrayDataSource(byte[] data, String type) {
+            super();
+            this.data = data;
+            this.type = type;
+        }
+
+        public ByteArrayDataSource(byte[] data) {
+            super();
+            this.data = data;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getContentType() {
+            if (type == null)
+                return "application/octet-stream";
+            else
+                return type;
+        }
+
+        public InputStream getInputStream() throws IOException {
+            return new ByteArrayInputStream(data);
+        }
+
+        public String getName() {
+            return "ByteArrayDataSource";
+        }
+
+        public OutputStream getOutputStream() throws IOException {
+            throw new IOException("Not Supported");
+        }
     }
 }

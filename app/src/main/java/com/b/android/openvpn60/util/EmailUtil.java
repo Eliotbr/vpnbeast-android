@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * Created by b on 7/30/17.
  */
 
-public class Utility {
+public class EmailUtil {
 
     private static Pattern pattern;
     //Email Pattern

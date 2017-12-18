@@ -1,20 +1,15 @@
 package com.b.android.openvpn60.helper;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.LoginActivity;
-import com.b.android.openvpn60.core.GmailSender;
 import com.b.android.openvpn60.core.JSEEProvider;
-import com.b.android.openvpn60.core.Mail;
-import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.File;
 import java.security.Security;

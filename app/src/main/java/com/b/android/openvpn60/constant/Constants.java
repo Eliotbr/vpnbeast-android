@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.util;
+package com.b.android.openvpn60.constant;
 
 /**
  * Created by b on 8/16/17.
