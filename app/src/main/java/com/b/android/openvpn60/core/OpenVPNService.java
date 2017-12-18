@@ -430,9 +430,8 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
     private void startOpenVPN() {
         VpnStatus.logInfo(R.string.building_configration);
-        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, ConnectionStatus.LEVEL_START);
-
-
+        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration,
+                ConnectionStatus.LEVEL_START);
         try {
             mProfile.writeConfigFile(this);
         } catch (IOException e) {
@@ -594,8 +593,10 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
             cfg += mLocalIPv6;
 
 
-        cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) + TextUtils.join("|", mRoutesv6.getNetworks(true));
-        cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) + TextUtils.join("|", mRoutesv6.getNetworks(false));
+        cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) +
+                TextUtils.join("|", mRoutesv6.getNetworks(true));
+        cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) +
+                TextUtils.join("|", mRoutesv6.getNetworks(false));
         cfg += "dns: " + TextUtils.join("|", mDnslist);
         cfg += "domain: " + mDomain;
         cfg += "mtu: " + mMtu;
@@ -654,7 +655,8 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
                 && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
                 && mMtu < 1280) {
-            VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
+            VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround " +
+                    "Android Bug #70916", mMtu));
             builder.setMtu(1280);
         } else {
             builder.setMtu(mMtu);
@@ -663,10 +665,12 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         Collection<NetworkSpace.ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
         Collection<NetworkSpace.ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
-        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
+        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                mDnslist.size() >= 1) {
             // Check if the first DNS Server is in the VPN range
             try {
-                NetworkSpace.ipAddress dnsServer = new NetworkSpace.ipAddress(new IPAddress(mDnslist.get(0), 32), true);
+                NetworkSpace.ipAddress dnsServer = new NetworkSpace.ipAddress(new IPAddress(mDnslist.get(0),
+                        32), true);
                 boolean dnsIncluded = false;
                 for (NetworkSpace.ipAddress net : positiveIPv4Routes) {
                     if (net.containsNet(dnsServer)) {
