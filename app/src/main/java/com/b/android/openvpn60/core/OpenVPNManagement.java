@@ -5,6 +5,7 @@ package com.b.android.openvpn60.core;
  */
 
 public interface OpenVPNManagement {
+
     interface PausedStateCallback {
         boolean shouldBeRunning();
     }

@@ -2,10 +2,9 @@ package com.b.android.openvpn60.model;
 
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.b.android.openvpn60.core.JSEEProvider;
+import com.b.android.openvpn60.util.JSEEUtil;
 import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.ByteArrayInputStream;
@@ -28,7 +27,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
 
 /**
  * Created by b on 9/20/2017.
@@ -42,7 +40,7 @@ public class Mail extends javax.mail.Authenticator {
     private LogHelper logHelper;
 
     static {
-        Security.addProvider(new JSEEProvider());
+        Security.addProvider(new JSEEUtil());
     }
 
     public Mail(Context context, String user, String password) {
