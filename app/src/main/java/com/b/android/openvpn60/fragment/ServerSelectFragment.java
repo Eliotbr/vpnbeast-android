@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.activity.MainActivity;
 import com.b.android.openvpn60.constant.Constants;
 

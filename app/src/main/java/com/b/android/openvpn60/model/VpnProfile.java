@@ -1,4 +1,4 @@
-package com.b.android.openvpn60;
+package com.b.android.openvpn60.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.security.KeyChain;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -16,10 +15,10 @@ import android.util.Log;
 
 import de.blinkt.openvpn.core.NativeUtils;
 
+import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.OpenVPNService;
-import com.b.android.openvpn60.core.PasswordCache;
-import com.b.android.openvpn60.core.VPNLaunchHelper;
-import com.b.android.openvpn60.core.Connection;
+import com.b.android.openvpn60.helper.CacheHelper;
+import com.b.android.openvpn60.helper.VPNLaunchHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,14 +26,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -887,7 +883,7 @@ public class VpnProfile implements Serializable, Cloneable {
     //! Openvpn asks for a "Private Key", this should be pkcs12 key
     //
     public String getPasswordPrivateKey() {
-        String cachedPw = PasswordCache.getPKCS12orCertificatePassword(uuid, true);
+        String cachedPw = CacheHelper.getPKCS12orCertificatePassword(uuid, true);
         if (cachedPw != null) {
             return cachedPw;
         }
@@ -977,7 +973,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public String getPasswordAuth() {
-        String cachedPw = PasswordCache.getAuthPassword(uuid, true);
+        String cachedPw = CacheHelper.getAuthPassword(uuid, true);
         if (cachedPw != null) {
             return cachedPw;
         } else {

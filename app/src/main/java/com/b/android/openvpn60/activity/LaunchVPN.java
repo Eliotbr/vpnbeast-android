@@ -1,4 +1,4 @@
-package com.b.android.openvpn60;
+package com.b.android.openvpn60.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -23,13 +23,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.b.android.openvpn60.activity.ActivityStatus;
+import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
-import com.b.android.openvpn60.core.PasswordCache;
-import com.b.android.openvpn60.core.Preferences;
+import com.b.android.openvpn60.helper.CacheHelper;
+import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.core.ProfileManager;
-import com.b.android.openvpn60.core.VPNLaunchHelper;
+import com.b.android.openvpn60.helper.VPNLaunchHelper;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.helper.LogHelper;
 
@@ -60,8 +61,8 @@ public class LaunchVPN extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.launchvpn);
+        logHelper = LogHelper.getLogHelper(LaunchVPN.this);
         startVpnFromIntent();
-        logHelper = LogHelper.getLogHelper(this);
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -70,9 +71,9 @@ public class LaunchVPN extends Activity {
             IServiceStatus service = IServiceStatus.Stub.asInterface(binder);
             try {
                 if (mTransientAuthPW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), CacheHelper.AUTHPASSWORD, mTransientAuthPW);
                 if (mTransientCertOrPCKS12PW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), CacheHelper.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
             } catch (RemoteException e) {
                 logHelper.logException(e);
@@ -91,7 +92,7 @@ public class LaunchVPN extends Activity {
         final Intent intent = getIntent();
         final String action = intent.getAction();
         if (Intent.ACTION_MAIN.equals(action)) {
-            if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
+            if (PreferencesUtil.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
                 VpnStatus.clearLog();
             // we got called to be the starting point, most likely a shortcut
             String shortcutUUID = intent.getStringExtra(EXTRA_KEY);
@@ -177,7 +178,7 @@ public class LaunchVPN extends Activity {
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
-                    SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+                    SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
                     ProfileManager.updateLRU(this, mSelectedProfile);
                     VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
                     showAfterMain();
@@ -192,7 +193,7 @@ public class LaunchVPN extends Activity {
     }
 
     private void showAfterMain() {
-        Intent startLW = new Intent(getBaseContext(), ActivityStatus.class);
+        Intent startLW = new Intent(getBaseContext(), StatusActivity.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startLW.putExtra(RESULT_PROFILE, mSelectedProfile);
         startActivity(startLW);

@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
 
+import com.b.android.openvpn60.helper.CacheHelper;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -122,7 +124,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
 
         @Override
         public void setCachedPassword(String uuid, int type, String password) {
-            PasswordCache.setCachedPassword(uuid, type, password);
+            CacheHelper.setCachedPassword(uuid, type, password);
         }
 
     };

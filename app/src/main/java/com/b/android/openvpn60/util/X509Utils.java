@@ -6,7 +6,7 @@
 package com.b.android.openvpn60.util;
 
 
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;

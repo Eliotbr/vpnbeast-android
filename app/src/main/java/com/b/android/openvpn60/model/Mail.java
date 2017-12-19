@@ -1,10 +1,11 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.model;
 
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.b.android.openvpn60.core.JSEEProvider;
 import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.ByteArrayInputStream;

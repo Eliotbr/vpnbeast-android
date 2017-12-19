@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.model;
 
 import java.util.Locale;
 
@@ -7,8 +7,8 @@ import java.util.Locale;
  */
 
 public class IPAddress {
-    String ip;
-    int len;
+    public static String ip;
+    public static int len;
 
 
     public IPAddress(String ip, String mask) {
@@ -61,7 +61,7 @@ public class IPAddress {
                 (newip & 0xff00) >> 8, newip & 0xff);
     }
 
-    static long getInt(String ipaddr) {
+    public static long getInt(String ipaddr) {
         String[] ipt = ipaddr.split("\\.");
         long ip = 0;
         ip += Long.parseLong(ipt[0]) << 24;
@@ -71,7 +71,7 @@ public class IPAddress {
         return ip;
     }
 
-    public long getInt() {
+    public static long getInt() {
         return getInt(ip);
     }
 }

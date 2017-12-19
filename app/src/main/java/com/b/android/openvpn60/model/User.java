@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.model;
 
 import java.io.Serializable;
 import java.util.UUID;

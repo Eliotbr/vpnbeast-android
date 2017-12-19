@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.helper;
 
 import java.util.UUID;
 
@@ -6,21 +6,21 @@ import java.util.UUID;
  * Created by b on 5/15/17.
  */
 
-public class PasswordCache {
+public class CacheHelper {
     public static final int PCKS12ORCERTPASSWORD = 2;
     public static final int AUTHPASSWORD = 3;
-    private static PasswordCache mInstance;
+    private static CacheHelper mInstance;
     final private UUID mUuid;
     private String mKeyOrPkcs12Password;
     private String mAuthPassword;
 
-    private PasswordCache(UUID uuid) {
+    private CacheHelper(UUID uuid) {
         mUuid = uuid;
     }
 
-    public static PasswordCache getInstance(UUID uuid) {
+    public static CacheHelper getInstance(UUID uuid) {
         if (mInstance == null || !mInstance.mUuid.equals(uuid)) {
-            mInstance = new PasswordCache(uuid);
+            mInstance = new CacheHelper(uuid);
         }
         return mInstance;
     }
@@ -45,7 +45,7 @@ public class PasswordCache {
     }
 
     public static void setCachedPassword(String uuid, int type, String password) {
-        PasswordCache instance = getInstance(UUID.fromString(uuid));
+        CacheHelper instance = getInstance(UUID.fromString(uuid));
         switch (type) {
             case PCKS12ORCERTPASSWORD:
                 instance.mKeyOrPkcs12Password = password;

@@ -9,7 +9,7 @@
     android:layout_alignParentRight="true"
     android:background="@color/colorBackground"
     android:layout_alignParentBottom="true"
-    tools:context="com.b.android.openvpn60.activity.ActivityStatus">
+    tools:context="com.b.android.openvpn60.activity.StatusActivity">
 
     <GridLayout
         android:layout_width="match_parent"

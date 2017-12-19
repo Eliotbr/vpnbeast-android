@@ -29,13 +29,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.helper.ConfigHelper;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.constant.Constants;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -4,6 +4,8 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.compat.BuildConfig;
 
+import com.b.android.openvpn60.model.IPAddress;
+
 import junit.framework.Assert;
 
 import java.math.BigInteger;

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
-import com.b.android.openvpn60.VpnProfile;
-import com.b.android.openvpn60.core.Connection;
-import com.b.android.openvpn60.core.IPAddress;
+import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.model.Connection;
+import com.b.android.openvpn60.model.IPAddress;
 
 import java.io.BufferedReader;
 import java.io.IOException;

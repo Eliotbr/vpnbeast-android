@@ -27,10 +27,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.b.android.openvpn60.LaunchVPN;
-import com.b.android.openvpn60.VpnProfile;
+
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.adapter.CustomAdapter;
-import com.b.android.openvpn60.core.Connection;
+import com.b.android.openvpn60.model.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 } else {
                     dlgProgress = new ProgressDialog(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
                     dlgProgress.setTitle(R.string.state_importing);
-                    final Intent mStatus = new Intent(MainActivity.this, ActivityStatus.class);
+                    final Intent mStatus = new Intent(MainActivity.this, StatusActivity.class);
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

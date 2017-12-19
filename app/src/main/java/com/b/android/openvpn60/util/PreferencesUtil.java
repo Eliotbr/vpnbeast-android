@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  * Created by b on 5/15/17.
  */
 
-public class Preferences {
+public class PreferencesUtil {
 
-    static SharedPreferences getSharedPreferencesMulti(String name, Context c) {
+    public static SharedPreferences getSharedPreferencesMulti(String name, Context c) {
         return c.getSharedPreferences(name, Context.MODE_MULTI_PROCESS | Context.MODE_PRIVATE);
 
     }

@@ -1,13 +1,13 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.helper;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.core.VpnStatus;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,7 +75,7 @@ public class VPNLaunchHelper {
     }
 
 
-    static String[] buildOpenvpnArgv(Context c) {
+    public static String[] buildOpenvpnArgv(Context c) {
         Vector<String> args = new Vector<>();
 
         String binaryName = writeMiniVPN(c);

@@ -31,12 +31,12 @@ import android.widget.Toast;
 
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.LaunchVPN;
+import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;

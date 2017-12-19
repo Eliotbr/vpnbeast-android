@@ -29,11 +29,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.b.android.openvpn60.LaunchVPN;
+import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.activity.ActivityStatus;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.activity.StatusActivity;
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.helper.VPNLaunchHelper;
+import com.b.android.openvpn60.listener.DeviceStateReceiver;
+import com.b.android.openvpn60.model.IPAddress;
+import com.b.android.openvpn60.util.BuildUtil;
+import com.b.android.openvpn60.util.PreferencesUtil;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -285,7 +290,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
     PendingIntent getStatusPendingIntent() {
         // Let the configure Button show the Log
-        Class activityClass = ActivityStatus.class;
+        Class activityClass = StatusActivity.class;
         if (mNotificationActivityClass != null) {
             activityClass = mNotificationActivityClass;
         }
@@ -454,10 +459,10 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         mStarting = false;
 
         // Start a new session by creating a new thread.
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildConfig.FLAVOR))
+        if (!"ovpn3".equals(BuildUtil.FLAVOR))
             mOvpn3 = false;
 
         // Open the Management Interface

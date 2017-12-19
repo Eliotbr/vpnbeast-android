@@ -6,6 +6,7 @@
 package com.b.android.openvpn60.core;
 import android.app.Application;
 
+import com.b.android.openvpn60.helper.PRNGHelper;
 import com.b.android.openvpn60.listener.StatusListener;
 
 /*
@@ -20,7 +21,7 @@ public class ICSOpenVPNApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PRNGFixes.apply();
+        PRNGHelper.apply();
 
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());

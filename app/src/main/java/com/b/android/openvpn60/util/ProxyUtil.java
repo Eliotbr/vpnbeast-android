@@ -1,8 +1,8 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.util;
 
 import android.util.Log;
 
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
@@ -17,10 +17,10 @@ import java.util.List;
  * Created by b on 5/15/17.
  */
 
-public class ProxyDetection {
-    private static final String TAG = "com.b.android.openvpn.core." + ProxyDetection.class.toString();
+public class ProxyUtil {
+    private static final String TAG = "com.b.android.openvpn.core." + ProxyUtil.class.toString();
 
-    static SocketAddress detectProxy(VpnProfile vp) {
+    public static SocketAddress detectProxy(VpnProfile vp) {
         // Construct a new url with https as protocol
         try {
             URL url = new URL(String.format("https://%s:%s",vp.connections[0].serverName, vp.connections[0].serverPort));
