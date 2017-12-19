@@ -624,7 +624,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if (mLocalIP != null) {
             addLocalNetworksToRoutes();
             try {
-                builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+                builder.addAddress(mLocalIP.ip, mLocalIP.len);
             } catch (IllegalArgumentException iae) {
                 logHelper.logException(getString(R.string.dns_add_error), iae);
                 return null;
@@ -713,7 +713,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if (mDomain != null)
             builder.addSearchDomain(mDomain);
 
-        VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.mIp, mLocalIP.len, mLocalIPv6, mMtu);
+        VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.ip, mLocalIP.len, mLocalIPv6, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)), TextUtils.join(", ", mRoutesv6.getNetworks(false)));
@@ -790,7 +790,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 continue;
             }
 
-            if (ipAddr.equals(mLocalIP.mIp))
+            if (ipAddr.equals(mLocalIP.ip))
                 continue;
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.allowLocalLAN) {
@@ -877,7 +877,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }
 
         if (route.normalise())
-            VpnStatus.logWarning(R.string.route_not_netip, dest, route.len, route.mIp);
+            VpnStatus.logWarning(R.string.route_not_netip, dest, route.len, route.ip);
 
         mRoutes.addIP(route, include);
     }
@@ -949,7 +949,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
         /* Workaround for Lollipop, it  does not route traffic to the VPNs own network mask */
         if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            IPAddress interfaceRoute = new IPAddress(mLocalIP.mIp, mLocalIP.len);
+            IPAddress interfaceRoute = new IPAddress(mLocalIP.ip, mLocalIP.len);
             interfaceRoute.normalise();
             addRoute(interfaceRoute);
         }

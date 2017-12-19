@@ -1,9 +1,11 @@
 package com.b.android.openvpn60.core;
 
+import android.content.Context;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
 import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class ConfigParser {
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
+    private Context context;
 
 
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {

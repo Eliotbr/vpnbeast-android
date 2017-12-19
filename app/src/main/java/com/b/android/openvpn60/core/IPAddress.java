@@ -7,12 +7,12 @@ import java.util.Locale;
  */
 
 public class IPAddress {
-    String mIp;
+    String ip;
     int len;
 
 
     public IPAddress(String ip, String mask) {
-        mIp = ip;
+        this.ip = ip;
         long netmask = getInt(mask);
 
         // Add 33. bit to ensure the loop terminates
@@ -35,20 +35,20 @@ public class IPAddress {
 
     public IPAddress(String address, int prefix_length) {
         len = prefix_length;
-        mIp = address;
+        ip = address;
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.ENGLISH, "%s/%d", mIp, len);
+        return String.format(Locale.ENGLISH, "%s/%d", ip, len);
     }
 
     public boolean normalise() {
-        long ip = getInt(mIp);
+        long ip = getInt(this.ip);
 
         long newip = ip & (0xffffffffl << (32 - len));
         if (newip != ip) {
-            mIp = String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
+            this.ip = getNormalizedString(newip);
             return true;
         } else {
             return false;
@@ -56,19 +56,22 @@ public class IPAddress {
 
     }
 
+    private String getNormalizedString(long newip) {
+        return String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16,
+                (newip & 0xff00) >> 8, newip & 0xff);
+    }
+
     static long getInt(String ipaddr) {
         String[] ipt = ipaddr.split("\\.");
         long ip = 0;
-
         ip += Long.parseLong(ipt[0]) << 24;
         ip += Integer.parseInt(ipt[1]) << 16;
         ip += Integer.parseInt(ipt[2]) << 8;
         ip += Integer.parseInt(ipt[3]);
-
         return ip;
     }
 
     public long getInt() {
-        return getInt(mIp);
+        return getInt(ip);
     }
 }
