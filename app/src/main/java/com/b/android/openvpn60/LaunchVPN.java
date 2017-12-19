@@ -24,13 +24,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.b.android.openvpn60.activity.ActivityStatus;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.PasswordCache;
 import com.b.android.openvpn60.core.Preferences;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VPNLaunchHelper;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.util.Constants;
+import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.IOException;
 
@@ -47,19 +48,20 @@ public class LaunchVPN extends Activity {
     public static final String EXTRA_HIDELOG = "showNoLogWindow";
     public static final String CLEARLOG = "clearlogconnect";
     public static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
-
     private static final int START_VPN_PROFILE = 70;
     private static final String TAG = "com.b.android.openvpn." + LaunchVPN.class.toString();
 
     private VpnProfile mSelectedProfile;
     private String mTransientAuthPW;
     private String mTransientCertOrPCKS12PW;
+    private LogHelper logHelper;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.launchvpn);
         startVpnFromIntent();
+        logHelper = LogHelper.getLogHelper(this);
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -68,17 +70,13 @@ public class LaunchVPN extends Activity {
             IServiceStatus service = IServiceStatus.Stub.asInterface(binder);
             try {
                 if (mTransientAuthPW != null)
-
                     service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
                 if (mTransientCertOrPCKS12PW != null)
                     service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
-
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
-
             } catch (RemoteException e) {
-                e.printStackTrace();
+                logHelper.logException(e);
             }
-
             unbindService(this);
         }
 
@@ -90,26 +88,17 @@ public class LaunchVPN extends Activity {
 
     protected void startVpnFromIntent() {
         // Resolve the intent
-
         final Intent intent = getIntent();
         final String action = intent.getAction();
-
-        // If the intent is a request to create a shortcut, we'll do that and exit
-
-
         if (Intent.ACTION_MAIN.equals(action)) {
-            // Check if we need to clear the log
             if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
                 VpnStatus.clearLog();
-
             // we got called to be the starting point, most likely a shortcut
             String shortcutUUID = intent.getStringExtra(EXTRA_KEY);
             String shortcutName = intent.getStringExtra(EXTRA_NAME);
-
             VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
             if (shortcutName != null && profileToConnect == null)
                 profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
-
             if (profileToConnect == null) {
                 //Handle that later
                 finish();
@@ -121,18 +110,14 @@ public class LaunchVPN extends Activity {
     }
 
     private void askForPW(final int type) {
-
         final EditText entry = new EditText(this);
         final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
-
         entry.setSingleLine();
         entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         entry.setTransformationMethod(new PasswordTransformationMethod());
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.pw_request_dialog_title, getString(type)));
         dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.name));
-
         if (type == R.string.password) {
             ((EditText) userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.userName);
             ((EditText) userpwlayout.findViewById(R.id.password)).setText(mSelectedProfile.password);
@@ -146,34 +131,28 @@ public class LaunchVPN extends Activity {
                         ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             });
-
             dialog.setView(userpwlayout);
-        } else {
+        } else
             dialog.setView(entry);
-        }
 
         AlertDialog.Builder builder = dialog.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         if (type == R.string.password) {
                             mSelectedProfile.userName = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
-
                             String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
-                            if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
+                            if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked())
                                 mSelectedProfile.password = pw;
-                            } else {
+                            else {
                                 mSelectedProfile.password = null;
                                 mTransientAuthPW = pw;
                             }
-                        } else {
+                        } else
                             mTransientCertOrPCKS12PW = entry.getText().toString();
-                        }
                         Intent intent = new Intent(LaunchVPN.this, OpenVPNStatusService.class);
                         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
                     }
-
                 });
         dialog.setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
@@ -184,15 +163,12 @@ public class LaunchVPN extends Activity {
                         finish();
                     }
                 });
-
         dialog.create().show();
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
                 int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
@@ -210,14 +186,12 @@ public class LaunchVPN extends Activity {
                 // User does not want us to start, so we just vanish
                 VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled,
                         ConnectionStatus.LEVEL_NOTCONNECTED);
-
                 finish();
             }
         }
     }
 
-    void showAfterMain() {
-
+    private void showAfterMain() {
         Intent startLW = new Intent(getBaseContext(), ActivityStatus.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startLW.putExtra(RESULT_PROFILE, mSelectedProfile);
@@ -225,7 +199,7 @@ public class LaunchVPN extends Activity {
         this.finish();
     }
 
-    void showConfigErrorDialog(int vpnok) {
+    private void showConfigErrorDialog(int vpnok) {
         AlertDialog.Builder d = new AlertDialog.Builder(this);
         d.setTitle(R.string.config_error_found);
         d.setMessage(vpnok);
@@ -234,7 +208,6 @@ public class LaunchVPN extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
-
             }
         });
         d.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -258,17 +231,14 @@ public class LaunchVPN extends Activity {
         });
     }
 
-    void launchVPN() {
+    private void launchVPN() {
         int vpnok = mSelectedProfile.checkProfile(this);
         if (vpnok != R.string.no_error_found) {
             showConfigErrorDialog(vpnok);
             return;
         }
-
         Intent intent = VpnService.prepare(this);
-
         execeuteSUcmd("chown system /dev/tun");
-
         if (intent != null) {
             VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_permission,
                     ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
@@ -278,12 +248,10 @@ public class LaunchVPN extends Activity {
             } catch (ActivityNotFoundException ane) {
                 // Shame on you Sony! At least one user reported that
                 // an official Sony Xperia Arc S image triggers this exception
-                VpnStatus.logError(R.string.no_vpn_support_image);
+                logHelper.logException(getString(R.string.no_vpn_support_image), ane);
             }
-        } else {
+        } else
             onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
-        }
-
     }
 
     private void execeuteSUcmd(String command) {
@@ -294,7 +262,7 @@ public class LaunchVPN extends Activity {
             //if (ret == 0)
             //mCmfixed = true;
         } catch (InterruptedException | IOException e) {
-            VpnStatus.logException("SU command", e);
+            logHelper.logException(e);
         }
     }
 }

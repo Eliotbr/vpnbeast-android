@@ -17,8 +17,16 @@ public class LogHelper {
         logger = Logger.getLogger(context.getClass().toString());
     }
 
+    private LogHelper(String className) {
+        logger = Logger.getLogger(className);
+    }
+
     public static LogHelper getLogHelper(Context context) {
         return new LogHelper(context);
+    }
+
+    public static LogHelper getLogHelper(String className) {
+        return new LogHelper(className);
     }
 
     public void logException(Throwable throwable) {
