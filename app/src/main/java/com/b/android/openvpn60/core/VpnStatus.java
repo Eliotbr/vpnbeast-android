@@ -393,7 +393,7 @@ public class VpnStatus {
         newLogItem(new LogItem(LogLevel.DEBUG, resourceId, args));
     }
 
-    static void newLogItem(LogItem logItem) {
+    public static void newLogItem(LogItem logItem) {
         newLogItem(logItem, false);
     }
 

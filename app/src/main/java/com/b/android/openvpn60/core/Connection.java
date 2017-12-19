@@ -3,6 +3,7 @@ package com.b.android.openvpn60.core;
 import android.text.TextUtils;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Created by b on 5/15/17.
@@ -26,8 +27,6 @@ public class Connection implements Serializable, Cloneable {
 
     public String getConnectionBlock() {
         String cfg = "";
-
-        // Server Address
         cfg += "remote ";
         cfg += serverName;
         cfg += " ";
@@ -36,11 +35,8 @@ public class Connection implements Serializable, Cloneable {
             cfg += " udp\n";
         else
             cfg += " tcp-client\n";
-
         if (connectTimeout != 0)
-            cfg += String.format(" connect-timeout  %d\n", connectTimeout);
-
-
+            cfg += String.format(Locale.ENGLISH," connect-timeout  %d\n", connectTimeout);
         if (!TextUtils.isEmpty(customConfiguration) && useCustomConfig) {
             cfg += customConfiguration;
             cfg += "\n";
@@ -71,7 +67,6 @@ public class Connection implements Serializable, Cloneable {
         customConfiguration = "";
         useCustomConfig = false;
         isEnabled = true;
-
         connectTimeout = 0;
     }
 

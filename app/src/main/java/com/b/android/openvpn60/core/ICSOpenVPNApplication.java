@@ -6,6 +6,8 @@
 package com.b.android.openvpn60.core;
 import android.app.Application;
 
+import com.b.android.openvpn60.listener.StatusListener;
+
 /*
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
