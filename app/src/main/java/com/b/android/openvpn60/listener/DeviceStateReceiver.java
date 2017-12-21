@@ -228,15 +228,15 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
 
     private OpenVPNManagement.pauseReason getPauseReason() {
         if (userpause == ConnectState.DISCONNECTED)
-            return OpenVPNManagement.pauseReason.userPause;
+            return OpenVPNManagement.pauseReason.USER_PAUSE;
 
         if (screen == ConnectState.DISCONNECTED)
-            return OpenVPNManagement.pauseReason.screenOff;
+            return OpenVPNManagement.pauseReason.SCREEN_OFF;
 
         if (network == ConnectState.DISCONNECTED)
-            return OpenVPNManagement.pauseReason.noNetwork;
+            return OpenVPNManagement.pauseReason.NO_NETWORK;
 
-        return OpenVPNManagement.pauseReason.userPause;
+        return OpenVPNManagement.pauseReason.USER_PAUSE;
     }
 
     private NetworkInfo getCurrentNetworkInfo(Context context) {

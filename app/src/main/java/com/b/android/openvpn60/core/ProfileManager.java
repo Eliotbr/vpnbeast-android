@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.util.PreferencesUtil;
 
@@ -22,28 +23,27 @@ import java.util.Set;
 
 public class ProfileManager {
     private static final String PREFS_NAME = "VPNList";
-
     private static final String LAST_CONNECTED_PROFILE = "lastConnectedProfile";
     private static final String TEMPORARY_PROFILE_FILENAME = "temporary-vpn-profile";
     private static ProfileManager instance;
-
-    private static VpnProfile mLastConnectedVpn = null;
+    private static VpnProfile lastProfile = null;
     private HashMap<String, VpnProfile> profiles = new HashMap<>();
-    private static VpnProfile tmpprofile = null;
+    private static VpnProfile tmpProfile = null;
+    private static Context context;
+    private static LogHelper logHelper;
 
 
     private static VpnProfile get(String key) {
-        if (tmpprofile != null && tmpprofile.getUUIDString().equals(key))
-            return tmpprofile;
+        if (tmpProfile != null && tmpProfile.getUUIDString().equals(key))
+            return tmpProfile;
 
         if (instance == null)
             return null;
         return instance.profiles.get(key);
-
     }
 
-
     private ProfileManager() {
+
     }
 
     private static void checkInstance(Context context) {
@@ -53,12 +53,13 @@ public class ProfileManager {
         }
     }
 
-    synchronized public static ProfileManager getInstance(Context context) {
+    public synchronized static ProfileManager getInstance(Context context) {
+        logHelper = LogHelper.getLogHelper(ProfileManager.class.toString());
         checkInstance(context);
         return instance;
     }
 
-    public static void setConntectedVpnProfileDisconnected(Context c) {
+    public static void setAsDisconnected(Context c) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
         SharedPreferences.Editor prefsedit = prefs.edit();
         prefsedit.putString(LAST_CONNECTED_PROFILE, null);
@@ -69,14 +70,12 @@ public class ProfileManager {
     /**
      * Sets the profile that is connected (to connect if the service restarts)
      */
-    public static void setConnectedVpnProfile(Context c, VpnProfile connectedProfile) {
+    public static void setAsConnected(Context c, VpnProfile connectedProfile) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
         SharedPreferences.Editor prefsedit = prefs.edit();
-
         prefsedit.putString(LAST_CONNECTED_PROFILE, connectedProfile.getUUIDString());
         prefsedit.apply();
-        mLastConnectedVpn = connectedProfile;
-
+        lastProfile = connectedProfile;
     }
 
     /**
@@ -126,12 +125,12 @@ public class ProfileManager {
     }
 
     public static void setTemporaryProfile(Context c, VpnProfile tmp) {
-        ProfileManager.tmpprofile = tmp;
+        ProfileManager.tmpProfile = tmp;
         saveProfile(c, tmp, true, true);
     }
 
     public static boolean isTempProfile() {
-        return mLastConnectedVpn != null && mLastConnectedVpn  == tmpprofile;
+        return lastProfile != null && lastProfile == tmpProfile;
     }
 
     public void saveProfile(Context context, VpnProfile profile) {
@@ -139,23 +138,19 @@ public class ProfileManager {
     }
 
     private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
-
         if (updateVersion)
             profile.version += 1;
         ObjectOutputStream vpnFile;
-
         String filename = profile.getUUID().toString() + ".vp";
         if (isTemporary)
             filename = TEMPORARY_PROFILE_FILENAME + ".vp";
-
         try {
             vpnFile = new ObjectOutputStream(context.openFileOutput(filename, Activity.MODE_PRIVATE));
-
             vpnFile.writeObject(profile);
             vpnFile.flush();
             vpnFile.close();
         } catch (IOException e) {
-            VpnStatus.logException("saving VPN profile", e);
+            logHelper.logException(e);
             throw new RuntimeException(e);
         }
     }
@@ -182,14 +177,14 @@ public class ProfileManager {
 
                 vp.upgradeProfile();
                 if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
-                    tmpprofile = vp;
+                    tmpProfile = vp;
                 } else {
                     profiles.put(vp.getUUID().toString(), vp);
                 }
 
             } catch (IOException | ClassNotFoundException e) {
                 if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
-                    VpnStatus.logException("Loading VPN List", e);
+                    logHelper.logException(e);
             }
         }
     }
@@ -200,8 +195,8 @@ public class ProfileManager {
         profiles.remove(vpnentry);
         saveProfileList(context);
         context.deleteFile(vpnentry + ".vp");
-        if (mLastConnectedVpn == profile)
-            mLastConnectedVpn = null;
+        if (lastProfile == profile)
+            lastProfile = null;
 
     }
 
@@ -217,6 +212,7 @@ public class ProfileManager {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ignored) {
+                logHelper.logException(ignored);
             }
             instance.loadVPNList(context);
             profile = get(profileUUID);
@@ -233,7 +229,7 @@ public class ProfileManager {
     }
 
     public static VpnProfile getLastConnectedVpn() {
-        return mLastConnectedVpn;
+        return lastProfile;
     }
 
     public static VpnProfile getAlwaysOnVPN(Context context) {
@@ -248,7 +244,7 @@ public class ProfileManager {
     public static void updateLRU(Context c, VpnProfile profile) {
         profile.lastUsed = System.currentTimeMillis();
         // LRU does not change the profile, no need for the service to refresh
-        if (profile!=tmpprofile)
+        if (profile!= tmpProfile)
             saveProfile(c, profile, false, false);
     }
 }

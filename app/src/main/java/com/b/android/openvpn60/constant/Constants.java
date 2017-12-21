@@ -5,6 +5,7 @@ package com.b.android.openvpn60.constant;
  */
 
 public enum Constants {
+
     URL_REGISTER("http://192.168.1.33:8080/UserManagement/rest/UserService/register"),
     URL_REGISTER_MEMBER("http://192.168.1.33:8080/UserManagement/rest/UserService/members"),
     URL_LOGIN("http://192.168.1.33:8080/UserManagement/rest/UserService/login"),

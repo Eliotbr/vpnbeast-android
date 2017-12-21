@@ -37,7 +37,7 @@ import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.helper.VPNLaunchHelper;
 import com.b.android.openvpn60.listener.DeviceStateReceiver;
 import com.b.android.openvpn60.model.IPAddress;
-import com.b.android.openvpn60.util.BuildUtil;
+import com.b.android.openvpn60.constant.BuildConstants;
 import com.b.android.openvpn60.util.PreferencesUtil;
 
 import java.io.IOException;
@@ -161,7 +161,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }
         VpnStatus.removeByteCountListener(this);
         unregisterDeviceStateReceiver();
-        ProfileManager.setConntectedVpnProfileDisconnected(this);
+        ProfileManager.setAsDisconnected(this);
         mOpenVPNThread = null;
         if (!mStarting) {
             stopForeground(!mNotificationAlwaysVisible);
@@ -419,7 +419,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }).start();
 
 
-        ProfileManager.setConnectedVpnProfile(this, mProfile);
+        ProfileManager.setAsConnected(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
         return START_STICKY;
@@ -462,7 +462,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildUtil.FLAVOR))
+        if (!"ovpn3".equals(BuildConstants.FLAVOR))
             mOvpn3 = false;
 
         // Open the Management Interface
@@ -1022,9 +1022,9 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if (mDisplayBytecount) {
             String netstat = String.format(getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false),
-                    humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true),
+                    humanReadableByteCount(diffIn / OpenVPNManagement.byteCountInterval, true),
                     humanReadableByteCount(out, false),
-                    humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
+                    humanReadableByteCount(diffOut / OpenVPNManagement.byteCountInterval, true));
 
             int priority = mNotificationAlwaysVisible ? PRIORITY_DEFAULT : PRIORITY_MIN;
             showNotification(netstat, null, priority, mConnecttime, LEVEL_CONNECTED);

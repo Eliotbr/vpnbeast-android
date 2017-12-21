@@ -230,7 +230,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
     private void disconnectOnDestroy() {
-        ProfileManager.setConntectedVpnProfileDisconnected(context);
+        ProfileManager.setAsDisconnected(context);
         if (serviceInternal != null) {
             try {
                 serviceInternal.stopVPN(false);
@@ -247,9 +247,9 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         final String mIn = humanReadableByteCount(in, false);
-        final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true);
+        final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.byteCountInterval, true);
         final String mOut = humanReadableByteCount(out, false);
-        final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true);
+        final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.byteCountInterval, true);
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
             StatusActivity.this.runOnUiThread(new Runnable() {
                 @Override
@@ -310,7 +310,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected Integer doInBackground(Void... params) {
-                ProfileManager.setConntectedVpnProfileDisconnected(context);
+                ProfileManager.setAsDisconnected(context);
                 if (serviceInternal != null) {
                     try {
                         serviceInternal.stopVPN(false);

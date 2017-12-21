@@ -13,7 +13,7 @@ import android.util.Log;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.util.BuildUtil;
+import com.b.android.openvpn60.constant.BuildConstants;
 import com.b.android.openvpn60.util.ProxyUtil;
 
 import junit.framework.Assert;
@@ -52,7 +52,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     private LogHelper logHelper;
     private static final Vector<OpenVPNManagementThread> active = new Vector<>();
     private LocalSocket mServerSocketLocal;
-    private pauseReason lastPauseReason = pauseReason.noNetwork;
+    private pauseReason lastPauseReason = pauseReason.NO_NETWORK;
     private PausedStateCallback mPauseCallback;
     private boolean mShuttingDown;
 
@@ -352,7 +352,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
         mWaitingForRelease = false;
         mLastHoldRelease = System.currentTimeMillis();
         managmentCommand("hold release\n");
-        managmentCommand("bytecount " + mBytecountInterval + "\n");
+        managmentCommand("bytecount " + byteCountInterval + "\n");
         managmentCommand("state on\n");
         //managmentCommand("log on all\n");
     }
@@ -363,6 +363,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     }
 
     private void processProxyCMD(String argument) {
+
         String[] args = argument.split(",", 3);
         SocketAddress proxyaddr = ProxyUtil.detectProxy(mProfile);
         if (args.length >= 2) {
@@ -423,7 +424,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
                 buf_printf (&out, "%s %s %s", network, netmask, gateway);
                 */
                 if (routeparts.length == 5) {
-                    if (BuildUtil.DEBUG) Assert.assertEquals("dev", routeparts[3]);
+                    if (BuildConstants.DEBUG) Assert.assertEquals("dev", routeparts[3]);
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
                 } else if (routeparts.length >= 3) {
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
@@ -606,7 +607,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     public void resume() {
         releaseHold();
         /* Reset the reason why we are disconnected */
-        lastPauseReason = pauseReason.noNetwork;
+        lastPauseReason = pauseReason.NO_NETWORK;
     }
 
     @Override
