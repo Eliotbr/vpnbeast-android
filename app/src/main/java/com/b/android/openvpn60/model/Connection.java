@@ -10,6 +10,8 @@ import java.util.Locale;
  */
 
 public class Connection implements Serializable, Cloneable {
+    public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
+    private static final long serialVersionUID = 92031902903829089L;
     public String serverName = "openvpn.example.com";
     public String serverPort = "1194";
     public boolean isUdp = true;
@@ -17,9 +19,7 @@ public class Connection implements Serializable, Cloneable {
     public boolean useCustomConfig = false;
     public boolean isEnabled = true;
     public int connectTimeout = 0;
-    public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
 
-    private static final long serialVersionUID = 92031902903829089L;
 
     public Connection() {
         initConstants();

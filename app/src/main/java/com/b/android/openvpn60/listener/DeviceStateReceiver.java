@@ -60,6 +60,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
     }
 
     private static class Datapoint {
+
         private Datapoint(long t, long d) {
             timestamp = t;
             data = d;

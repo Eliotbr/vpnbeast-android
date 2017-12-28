@@ -14,10 +14,8 @@ public class IPAddress {
     public IPAddress(String ip, String mask) {
         this.ip = ip;
         long netmask = getInt(mask);
-
         // Add 33. bit to ensure the loop terminates
         netmask += 1l << 32;
-
         int lenZeros = 0;
         while ((netmask & 0x1) == 0) {
             lenZeros++;
@@ -30,7 +28,6 @@ public class IPAddress {
         } else {
             len = 32 - lenZeros;
         }
-
     }
 
     public IPAddress(String address, int prefix_length) {
@@ -45,20 +42,19 @@ public class IPAddress {
 
     public boolean normalise() {
         long ip = getInt(this.ip);
-
         long newip = ip & (0xffffffffl << (32 - len));
         if (newip != ip) {
             this.ip = getNormalizedString(newip);
             return true;
-        } else {
+        } /*else {
             return false;
-        }
-
+        }*/
+        return false;
     }
 
     private String getNormalizedString(long newip) {
-        return String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16,
-                (newip & 0xff00) >> 8, newip & 0xff);
+        return String.format(Locale.ENGLISH,"%d.%d.%d.%d", (newip & 0xff000000) >> 24,
+                (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
     }
 
     public static long getInt(String ipaddr) {

@@ -38,26 +38,31 @@ public class Mail extends javax.mail.Authenticator {
     private String password;
     private Session session;
     private LogHelper logHelper;
+    private Properties props;
 
     static {
         Security.addProvider(new JSEEUtil());
     }
 
+
     public Mail(Context context, String user, String password) {
         this.user = user;
         this.password = password;
         logHelper = LogHelper.getLogHelper(context);
-        Properties props = new Properties();
+        setDefaultProperties();
+        session = Session.getDefaultInstance(props, this);
+    }
+
+    private void setDefaultProperties() {
+        props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");// 587
         props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.quitwait", "false");
-        session = Session.getDefaultInstance(props, this);
     }
 
     public boolean sendEmail() {
@@ -92,102 +97,78 @@ public class Mail extends javax.mail.Authenticator {
                         new InternetAddress(recipients));
             Transport.send(message);
         } catch (Exception e) {
-            Log.e("Mail exception", e.getMessage());
+            logHelper.logException(e);
         }
     }
 
-    private synchronized void sendMail(String subject, String body,
-                                      String senderEmail, String recipients, String filePath,
-                                      String logFilePath) throws Exception {
+    private synchronized void sendMail(String subject, String body, String senderEmail, String recipients,
+                                       String filePath, String logFilePath) throws Exception {
         boolean fileExists = new File(filePath).exists();
         if (fileExists) {
-
             String from = senderEmail;
             String to = recipients;
             String fileAttachment = filePath;
-
             // Define message
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-                    to));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(subject);
-
             // create the message part
             MimeBodyPart messageBodyPart = new MimeBodyPart();
-
             // fill message
             messageBodyPart.setText(body);
-
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
-
             // Part two is attachment
             messageBodyPart = new MimeBodyPart();
             DataSource source = new FileDataSource(fileAttachment);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName("screenShoot.jpg");
             multipart.addBodyPart(messageBodyPart);
-
             // part three for logs
             messageBodyPart = new MimeBodyPart();
             DataSource sourceb = new FileDataSource(logFilePath);
             messageBodyPart.setDataHandler(new DataHandler(sourceb));
             messageBodyPart.setFileName("logs.txt");
             multipart.addBodyPart(messageBodyPart);
-
             // Put parts in message
             message.setContent(multipart);
-
             // Send the message
             Transport.send(message);
-        } else {
+        } else
             sendMail(subject, body, senderEmail, recipients);
-        }
     }
 
-    private synchronized void sendMail(String subject, String body,
-                                      String senderEmail, String recipients, String logFilePath)
-            throws Exception {
-
+    private synchronized void sendMail(String subject, String body, String senderEmail, String recipients,
+                                       String logFilePath) throws Exception {
         File file= new File(logFilePath);
         boolean fileExists =file.exists();
         if (fileExists) {
-
             String from = senderEmail;
             String to = recipients;
-
             // Define message
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-                    to));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(subject);
-
             // create the message part
             MimeBodyPart messageBodyPart = new MimeBodyPart();
-
             // fill message
             messageBodyPart.setText(body);
-
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
-
             // part three for logs
             messageBodyPart = new MimeBodyPart();
             DataSource sourceb = new FileDataSource(logFilePath);
             messageBodyPart.setDataHandler(new DataHandler(sourceb));
             messageBodyPart.setFileName(file.getName());
             multipart.addBodyPart(messageBodyPart);
-
             // Put parts in message
             message.setContent(multipart);
-
             // Send the message
             Transport.send(message);
-        } else {
+        } else
             sendMail(subject, body, senderEmail, recipients);
-        }
     }
 
     public class ByteArrayDataSource implements DataSource {
