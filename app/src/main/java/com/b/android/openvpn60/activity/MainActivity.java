@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
             profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-            btnConnect.setBackgroundColor(Color.GREEN);
+            btnConnect.setBackgroundColor(getResources().getColor(R.color.colorGreen));
             edtUser.setText(userName);
             edtHost.setText(profile.connections[0].serverName);
             edtPort.setText(profile.connections[0].serverPort);
