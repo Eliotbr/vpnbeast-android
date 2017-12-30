@@ -1,0 +1,37 @@
+package com.b.android.openvpn60.helper;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+
+import com.b.android.openvpn60.activity.LoginActivity;
+import com.b.android.openvpn60.constant.Constants;
+
+/**
+ * Created by b on 12/30/2017.
+ */
+
+public class LoginHelper implements Runnable {
+    private LoginActivity loginActivity;
+    private String userName;
+    private String userPass;
+    private Intent mainIntent;
+
+
+    public LoginHelper(Context context, Intent intent, String userName, String userPass) {
+        loginActivity = (LoginActivity) context;
+        this.userName = userName;
+        this.userPass = userPass;
+        this.mainIntent = intent;
+    }
+
+    @Override
+    public void run() {
+        loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        loginActivity.getIntent().putExtra(Constants.USER_NAME.toString(), userName);
+        loginActivity.getIntent().putExtra(Constants.USER_PASS.toString(), userPass);
+        loginActivity.invokeWS(userName, userPass);
+        //loginActivity.getProgressBar().setVisibility(View.GONE);
+        //loginActivity.startActivity(mainIntent);
+    }
+}

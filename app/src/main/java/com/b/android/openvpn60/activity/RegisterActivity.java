@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.helper.RegisterHelper;
 import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.constant.Constants;
@@ -82,73 +83,23 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 userName = edtUsername.getText().toString();
                 if (!username.equals("") && !password.equals("") && !password2.equals("")) {
-                    if (password.length() < 6 && password.equals(password2))
+                    if (password.length() < 6)
                         Toast.makeText(getApplicationContext(), getString(R.string.err_password),
                                 Toast.LENGTH_SHORT).show();
-                    else
-                        invokeWS(userName, password);
+                    if (password.equals(password2)) {
+                        RegisterHelper registerHelper = new RegisterHelper(RegisterActivity.this,
+                                intentLogin, username, password);
+                        registerHelper.run();
+                    }
+                    else {
+                        Toast.makeText(RegisterActivity.this, "Passwords do not match, please check",
+                                Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        logHelper.logWarning("Passwords does not match...");
+                    }
                 }
                 }
             });
-    }
-
-    public void invokeWS(String userName, String userPass) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        final User user = new User(userName, userPass);
-        final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
-        nameValuePairs.add(new BasicNameValuePair(USER_PASS, userPass));
-        nameValuePairs.add(new BasicNameValuePair(USER_UUID, user.getUuid().toString()));
-        //client.addHeader("Content-Type", "application/json");
-        HttpEntity entity = null;
-        try {
-            entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
-        }
-        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
-                new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getBoolean("status")) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.state_register) ,
-                                Toast.LENGTH_SHORT).show();
-                        intentLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intentLogin.putExtra(Constants.TEMP_USER.toString(), user);
-                        intentLogin.putExtra(USER_NAME, edtUsername.getText().toString());
-                        startActivity(intentLogin);
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
-                if(statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
-                } else if(statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
-                }
-            }
-        });
     }
 
     @Override
@@ -194,6 +145,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 
     public void close(){

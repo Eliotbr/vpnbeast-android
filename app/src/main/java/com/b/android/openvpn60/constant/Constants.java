@@ -6,11 +6,11 @@ package com.b.android.openvpn60.constant;
 
 public enum Constants {
 
-    URL_REGISTER("http://192.168.1.33:8080/UserManagement/rest/UserService/register"),
-    URL_REGISTER_MEMBER("http://192.168.1.33:8080/UserManagement/rest/UserService/members"),
-    URL_LOGIN("http://192.168.1.33:8080/UserManagement/rest/UserService/login"),
-    URL_PUT("http://192.168.1.33:8080/UserManagement/rest/UserService/updateUser"),
-    URL_GET_PROFILES("http://192.168.1.33:8080/UserManagement/rest/UserService/getAllServers"),
+    URL_REGISTER("http://139.59.160.203:8080/UserManagement/rest/user-service/insert-user"),
+    URL_REGISTER_MEMBER("http://139.59.160.203:8080/UserManagement/rest/member-service/insert-member"),
+    URL_LOGIN("http://139.59.160.203:8080/UserManagement/rest/password-service/do-login"),
+    URL_PUT("http://139.59.160.203:8080/UserManagement/rest/user-service/update-user"),
+    URL_GET_PROFILES("http://139.59.160.203:8080/UserManagement/rest/server-service/get-all-servers"),
     URL_CHECK_MEMBERS("http://192.168.1.33:8080/UserManagement/rest/UserService/members"),
     USER_NAME("user_name"),
     USER_UUID("user_uuid"),

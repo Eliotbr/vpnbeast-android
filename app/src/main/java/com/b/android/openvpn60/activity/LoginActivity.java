@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.helper.LoginHelper;
 import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.constant.Constants;
@@ -85,33 +86,41 @@ public class LoginActivity extends ActionBarActivity {
         if (!isNetworkAvailable(getApplicationContext())) {
             showErrorDialog();
             isConnected = false;
-        } else
+        } else {
             isConnected = true;
+            edtUsername.setText(sharedPreferences.getString(Constants.USER_NAME.toString(), null));
+            edtPass.setText(sharedPreferences.getString(Constants.USER_PASS.toString(), null));
+        }
+
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 
     private void init() {
-        logHelper = LogHelper.getLogHelper(this);
-        edtUsername = (EditText) this.findViewById(R.id.edtUser);
-        edtPass = (EditText) this.findViewById(R.id.edtPass);
-        chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
-        intent = new Intent(this, MainActivity.class); //???
-        txtForget = (TextView) this.findViewById(R.id.txtForget);
-        txtSignup = (TextView) this.findViewById(R.id.txtSignup);
-        txtForget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendEmail();
-            }
-        });
-        txtSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginActivity.this.startActivity(intentSignup);
-            }
-        });
-        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
+                logHelper = LogHelper.getLogHelper(this);
+                edtUsername = (EditText) this.findViewById(R.id.edtUser);
+                edtPass = (EditText) this.findViewById(R.id.edtPass);
+                chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
+                intent = new Intent(this, MainActivity.class); //???
+                txtForget = (TextView) this.findViewById(R.id.txtForget);
+                txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+                txtForget.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendEmail();
+                    }
+                });
+                txtSignup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LoginActivity.this.startActivity(intentSignup);
+                    }
+                });
+                progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+                sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
             edtUsername.setText(sharedPreferences.getString(USER_NAME, null));
             edtPass.setText(sharedPreferences.getString(USER_PASS, null));
             chkRemember.setChecked(true);
@@ -159,17 +168,18 @@ public class LoginActivity extends ActionBarActivity {
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
                         /*RequestParams params = new RequestParams();
                         params.put(USER_NAME, userName);
-                        params.put(USER_PASS, password);
+                        params.put(USER_PASS, password);*/
                         // Invoke RESTful Web Service with Http parameters
-                        invokeWS(userName, password);*/
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
+                        loginHelper.run();
+                        /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(Constants.TEMP_USER.toString(), userName);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
-                        startActivity(intent);
+                        startActivity(intent);*/
                     } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.err_state_blank_login),
                                 Toast.LENGTH_SHORT).show();
-                        logHelper.logInfo("Username or password is incorrect, can not start new Activity...");
+                        logHelper.logInfo("Username or password is empty, can not start new activity...");
                     }
                 } else {
                     showErrorDialog();
@@ -206,16 +216,13 @@ public class LoginActivity extends ActionBarActivity {
                         User user = new User();
                         user.setUserName(userName);
                         user.setUserPass(userPass);
-                        progressBar.setVisibility(View.GONE);
                         Log.i(CLASS_TAG, getString(R.string.state_logged_in));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra(Constants.TEMP_USER.toString(), user);
-                        intent.putExtra(USER_NAME, edtUsername.getText().toString());
-                        startActivity(intent);
+                        LoginActivity.this.startActivity(intent);
+                        //progressBar.setVisibility(View.GONE);
                     } else {
-                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
                                 Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),

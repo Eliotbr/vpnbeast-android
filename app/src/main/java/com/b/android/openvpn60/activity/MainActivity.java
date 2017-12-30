@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(Constants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(Constants.TEMP_USER.toString());
-        userName = getIntent().getStringExtra(USER_NAME);
+        userName = sharedPrefs.getString(Constants.USER_NAME.toString(), null);
         btnSelect = (Button) this.findViewById(R.id.btnSelect);
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
