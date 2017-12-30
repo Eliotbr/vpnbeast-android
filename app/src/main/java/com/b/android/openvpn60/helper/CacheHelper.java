@@ -8,39 +8,35 @@ import java.util.UUID;
 
 public class CacheHelper {
     public static final int PCKS12ORCERTPASSWORD = 2;
-    public static final int AUTHPASSWORD = 3;
-    private static CacheHelper mInstance;
-    final private UUID mUuid;
-    private String mKeyOrPkcs12Password;
-    private String mAuthPassword;
+    public static final int AUTH_PASSWORD = 3;
+    private static CacheHelper cacheHelper;
+    private final UUID uuid;
+    private String keyOrPKCSPassword;
+    private String authPassword;
+
 
     private CacheHelper(UUID uuid) {
-        mUuid = uuid;
+        this.uuid = uuid;
     }
 
     public static CacheHelper getInstance(UUID uuid) {
-        if (mInstance == null || !mInstance.mUuid.equals(uuid)) {
-            mInstance = new CacheHelper(uuid);
+        if (cacheHelper == null || !cacheHelper.uuid.equals(uuid)) {
+            cacheHelper = new CacheHelper(uuid);
         }
-        return mInstance;
-    }
-
-    private void test() {
-
+        return cacheHelper;
     }
 
     public static String getPKCS12orCertificatePassword(UUID uuid, boolean resetPw) {
-        String pwcopy = getInstance(uuid).mKeyOrPkcs12Password;
+        String pwcopy = getInstance(uuid).keyOrPKCSPassword;
         if (resetPw)
-            getInstance(uuid).mKeyOrPkcs12Password = null;
+            getInstance(uuid).keyOrPKCSPassword = null;
         return pwcopy;
     }
 
-
     public static String getAuthPassword(UUID uuid, boolean resetPW) {
-        String pwcopy = getInstance(uuid).mAuthPassword;
+        String pwcopy = getInstance(uuid).authPassword;
         if (resetPW)
-            getInstance(uuid).mAuthPassword = null;
+            getInstance(uuid).authPassword = null;
         return pwcopy;
     }
 
@@ -48,13 +44,11 @@ public class CacheHelper {
         CacheHelper instance = getInstance(UUID.fromString(uuid));
         switch (type) {
             case PCKS12ORCERTPASSWORD:
-                instance.mKeyOrPkcs12Password = password;
+                instance.keyOrPKCSPassword = password;
                 break;
-            case AUTHPASSWORD:
-                instance.mAuthPassword = password;
+            case AUTH_PASSWORD:
+                instance.authPassword = password;
                 break;
         }
     }
-
-
 }

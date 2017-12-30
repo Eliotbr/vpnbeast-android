@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
@@ -27,7 +28,6 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.constant.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,7 +40,7 @@ import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
-    public static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
+    public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     public static final String DISCONNECT_VPN = "DISCONNECT_VPN";
     public static final String CLOSE_ACTIVITY = "CLOSE_ACTIVITY";
     public static final String RESULT_DESTROYED = "RESULT_DESTROYED";
@@ -111,13 +111,13 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         edtProfile = (EditText) this.findViewById(R.id.edtProfile);
         edtIp = (EditText) this.findViewById(R.id.edtIp);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
-        sharedPrefs = this.getSharedPreferences(Constants.SHARED_PREFS.toString(), MODE_PRIVATE);
+        sharedPrefs = this.getSharedPreferences(AppConstants.SHARED_PREFS.toString(), MODE_PRIVATE);
         edtStatus = (EditText) this.findViewById(R.id.edtStatus);
         edtDuration = (EditText) this.findViewById(R.id.edtDuration);
         context = this.getApplicationContext();
         edtBytesIn = (EditText) this.findViewById(R.id.edtBytesIn);
         edtBytesOut = (EditText) this.findViewById(R.id.edtBytesOut);
-        edtUser.setText(sharedPrefs.getString(Constants.USER_NAME.toString(), null));
+        edtUser.setText(sharedPrefs.getString(AppConstants.USER_NAME.toString(), null));
         intent = new Intent(this, MainActivity.class);
         logHelper = LogHelper.getLogHelper(this);
         runnable = new Runnable() {
@@ -346,7 +346,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 mBuilder.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().getSerializableExtra(Constants.RESULT_PROFILE.toString());
+                        VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
                         StatusActivity.this.finish();
                         startVPN(profile);
                     }

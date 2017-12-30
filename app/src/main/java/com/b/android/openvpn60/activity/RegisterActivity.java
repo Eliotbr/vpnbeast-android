@@ -13,33 +13,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.helper.RegisterHelper;
-import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.constant.Constants;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private static final String USER_NAME = Constants.USER_NAME.toString();
-    private static final String USER_PASS = Constants.USER_PASS.toString();
-    private static final String USER_UUID = Constants.USER_UUID.toString();
-    private static final String SERVICE_URL = Constants.URL_REGISTER.toString();
+    private static final String USER_NAME = AppConstants.USER_NAME.toString();
+    private static final String USER_PASS = AppConstants.USER_PASS.toString();
+    private static final String USER_UUID = AppConstants.USER_UUID.toString();
+    private static final String SERVICE_URL = ServiceConstants.URL_REGISTER.toString();
     private static final String CLASS_TAG = RegisterActivity.class.toString();
 
     private LogHelper logHelper;

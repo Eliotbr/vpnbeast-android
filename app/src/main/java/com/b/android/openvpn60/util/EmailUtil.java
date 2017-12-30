@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
  */
 
 public class EmailUtil {
-
     private static Pattern pattern;
     private static Matcher matcher;
     private static final String EMAIL_PATTERN =
@@ -18,13 +17,7 @@ public class EmailUtil {
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 
-    /**
-     * Validate Email with regular expression
-     *
-     * @param email
-     * @return true for Valid Email and false for Invalid Email
-     */
-    public static boolean validate(String email) {
+    public static boolean validateEmail(String email) {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         return matcher.matches();

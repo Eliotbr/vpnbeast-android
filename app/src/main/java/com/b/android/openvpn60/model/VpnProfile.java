@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -46,7 +47,8 @@ import javax.crypto.NoSuchPaddingException;
  * Created by b on 5/15/17.
  */
 
-public class VpnProfile implements Serializable, Cloneable {
+public class VpnProfile implements Serializable {
+
     // Note that this class cannot be moved to core where it belongs since
     // the profile loading depends on it being here
     // The Serializable documentation mentions that class name change are possible
@@ -349,7 +351,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         switch (mAuthenticationType) {
-            case VpnProfile.TYPE_USERPASS_CERTIFICATES:
+            case VpnProfileTest.TYPE_USERPASS_CERTIFICATES:
                 cfg += "auth-user-pass\n";
                 break;
             case VpnProfile.TYPE_CERTIFICATES:
@@ -983,9 +985,73 @@ public class VpnProfile implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "Server UUID: " + getUUIDString() +
-                "\nServer Name: " + connections[0].serverName +
-                "\nServer Port: " + connections[0].serverPort;
+        return "VpnProfile{" +
+                "profileDeleted=" + profileDeleted +
+                "\n mAuthenticationType=" + mAuthenticationType +
+                "\n name='" + name + '\'' +
+                "\n aliasName='" + aliasName + '\'' +
+                "\n clientCertFilename='" + clientCertFilename + '\'' +
+                "\n tlsAuthDirection='" + tlsAuthDirection + '\'' +
+                "\n tlsAuthFilename='" + tlsAuthFilename + '\'' +
+                "\n clientKeyFilename='" + clientKeyFilename + '\'' +
+                "\n caFilename='" + caFilename + '\'' +
+                "\n useLzo=" + useLzo +
+                "\n pkcs12Filename='" + pkcs12Filename + '\'' +
+                "\n pkcs12Password='" + pkcs12Password + '\'' +
+                "\n useTLSAuth=" + useTLSAuth +
+                "\n DNS1='" + DNS1 + '\'' +
+                "\n DNS2='" + DNS2 + '\'' +
+                "\n ipv4Address='" + ipv4Address + '\'' +
+                "\n mIPv6Address='" + mIPv6Address + '\'' +
+                "\n overrideDNS=" + overrideDNS +
+                "\n useDefaultRoute=" + useDefaultRoute +
+                "\n usePull=" + usePull +
+                "\n customRoutes='" + customRoutes + '\'' +
+                "\n checkRemoteCN=" + checkRemoteCN +
+                "\n expectTLSCert=" + expectTLSCert +
+                "\n remoteCN='" + remoteCN + '\'' +
+                "\n password='" + password + '\'' +
+                "\n userName='" + userName + '\'' +
+                "\n routenopull=" + routenopull +
+                "\n useRandomHostname=" + useRandomHostname +
+                "\n useFloat=" + useFloat +
+                "\n useCustomConfig=" + useCustomConfig +
+                "\n customConfigOptions='" + customConfigOptions + '\'' +
+                "\n verb='" + verb + '\'' +
+                "\n cipher='" + cipher + '\'' +
+                "\n nobind=" + nobind +
+                "\n useDefaultRoutev6=" + useDefaultRoutev6 +
+                "\n customRoutesv6='" + customRoutesv6 + '\'' +
+                "\n keyPassword='" + keyPassword + '\'' +
+                "\n persistTun=" + persistTun +
+                "\n connectRetryMax='" + connectRetryMax + '\'' +
+                "\n connectRetry='" + connectRetry + '\'' +
+                "\n connectRetryMaxTime='" + connectRetryMaxTime + '\'' +
+                "\n userEditable=" + userEditable +
+                "\n auth='" + auth + '\'' +
+                "\n x509AuthType=" + x509AuthType +
+                "\n x509UsernameField='" + x509UsernameField + '\'' +
+                "\n privateKey=" + privateKey +
+                "\n uuid=" + uuid +
+                "\n allowLocalLAN=" + allowLocalLAN +
+                "\n profileVersion=" + profileVersion +
+                "\n excludedRoutes='" + excludedRoutes + '\'' +
+                "\n excludedRoutesv6='" + excludedRoutesv6 + '\'' +
+                "\n mssFix=" + mssFix +
+                "\n connections=" + Arrays.toString(connections) +
+                "\n remoteRandom=" + remoteRandom +
+                "\n allowedAppsVpn=" + allowedAppsVpn +
+                "\n allowedAppsVpnAreDisallowed=" + allowedAppsVpnAreDisallowed +
+                "\n crlFilename='" + crlFilename + '\'' +
+                "\n profileCreator='" + profileCreator + '\'' +
+                "\n ping=" + ping +
+                "\n pushPeerInfo=" + pushPeerInfo +
+                "\n version=" + version +
+                "\n lastUsed=" + lastUsed +
+                "\n serverName='" + serverName + '\'' +
+                "\n serverPort='" + serverPort + '\'' +
+                "\n useUdp=" + useUdp +
+                '}';
     }
 
     public String getUUIDString() {

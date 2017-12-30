@@ -62,13 +62,12 @@ public class ConfigHelper {
                 if (args.size() == 0)
                     continue;
 
-
                 if (args.get(0).startsWith("--"))
                     args.set(0, args.get(0).substring(2));
 
                 checkinlinefile(args, br);
-
                 String optionname = args.get(0);
+
                 if (optionAliases.get(optionname)!=null)
                     optionname = optionAliases.get(optionname);
 
@@ -97,7 +96,6 @@ public class ConfigHelper {
         if (arg0.startsWith("<") && arg0.endsWith(">")) {
             String argname = arg0.substring(1, arg0.length() - 1);
             String inlinefile = VpnProfile.INLINE_TAG;
-
             String endtag = String.format("</%s>", argname);
             do {
                 String line = br.readLine();
@@ -111,15 +109,12 @@ public class ConfigHelper {
                     inlinefile += "\n";
                 }
             } while (true);
-
             if(inlinefile.endsWith("\n"))
                 inlinefile = inlinefile.substring(0, inlinefile.length()-1);
-
             args.clear();
             args.add(argname);
             args.add(inlinefile);
         }
-
     }
 
     public String getAuthUserPassFile() {
@@ -150,18 +145,13 @@ public class ConfigHelper {
     // adapted openvpn's parse function to java
     private Vector<String> parseline(String line) throws ConfigParseError {
         Vector<String> parameters = new Vector<String>();
-
         if (line.length() == 0)
             return parameters;
-
-
         linestate state = linestate.initial;
         boolean backslash = false;
         char out = 0;
-
         int pos = 0;
         String currentarg = "";
-
         do {
             // Emulate the c parsing ...
             char in;

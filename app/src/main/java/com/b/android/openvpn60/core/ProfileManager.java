@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfileTest;
 import com.b.android.openvpn60.util.PreferencesUtil;
 
 import java.io.IOException;
@@ -106,7 +107,7 @@ public class ProfileManager {
     }
 
     public void saveProfileList(Context context) {
-        SharedPreferences sharedprefs = PreferencesUtil.getSharedPreferencesMulti(PREFS_NAME, context);
+        SharedPreferences sharedprefs = PreferencesUtil.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedprefs.edit();
         editor.putStringSet("vpnlist", profiles.keySet());
 
@@ -137,7 +138,29 @@ public class ProfileManager {
         saveProfile(context, profile, true, false);
     }
 
+    public void saveProfile(Context context, VpnProfileTest profile) {
+        saveProfile(context, profile, true, false);
+    }
+
     private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
+        if (updateVersion)
+            profile.version += 1;
+        ObjectOutputStream vpnFile;
+        String filename = profile.getUUID().toString() + ".vp";
+        if (isTemporary)
+            filename = TEMPORARY_PROFILE_FILENAME + ".vp";
+        try {
+            vpnFile = new ObjectOutputStream(context.openFileOutput(filename, Activity.MODE_PRIVATE));
+            vpnFile.writeObject(profile);
+            vpnFile.flush();
+            vpnFile.close();
+        } catch (IOException e) {
+            logHelper.logException(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void saveProfile(Context context, VpnProfileTest profile, boolean updateVersion, boolean isTemporary) {
         if (updateVersion)
             profile.version += 1;
         ObjectOutputStream vpnFile;
@@ -158,7 +181,7 @@ public class ProfileManager {
 
     private void loadVPNList(Context context) {
         profiles = new HashMap<>();
-        SharedPreferences listpref = PreferencesUtil.getSharedPreferencesMulti(PREFS_NAME, context);
+        SharedPreferences listpref = PreferencesUtil.getDefaultSharedPreferences(context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
         if (vlist == null) {
             vlist = new HashSet<>();

@@ -1,7 +1,5 @@
 package com.b.android.openvpn60.util;
 
-import android.util.Log;
-
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 
