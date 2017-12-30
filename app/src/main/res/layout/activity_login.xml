@@ -25,7 +25,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
-
         >
 
         <TextView
@@ -107,7 +106,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="0.5"
             android:text="@string/clear"
-            android:background="#fd383434"
+            android:background="@drawable/button_selector_black"
             android:layout_marginRight="10dip"
             />
 
@@ -121,7 +120,7 @@
             android:layout_marginLeft="10dip"
             android:layout_gravity="fill_horizontal"
             android:text="@string/text_submit"
-            android:background="#fd383434"
+            android:background="@drawable/button_selector_black"
             />
 
         <TextView
