@@ -7,4 +7,5 @@
     <color name="transparent">#00000000</color>
     <color name="colorBackground">#263238</color>
     <color name="colorDarkerGreen">#388e3c</color>
+    <color name="colorDarkestGreen">#1b5e20</color>
 </resources>

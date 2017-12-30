@@ -37,7 +37,6 @@ import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.model.VpnProfileTest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -275,13 +274,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
             profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-            btnConnect.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+            btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_green));
             edtUser.setText(userName);
             edtHost.setText(profile.connections[0].serverName);
             edtPort.setText(profile.connections[0].serverPort);
         } else {
             edtUser.setText(userName);
-            btnConnect.setBackgroundColor(Color.GRAY);
+            btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
         }
     }
 

@@ -176,7 +176,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 edtPort.setText(mProfile.connections[0].serverPort);
                 edtStatus.setText(getString(R.string.state_connected));
                 btnDisconnect.setText(getString(R.string.disconnect));
-                btnDisconnect.setBackgroundColor(Color.parseColor("#df4a4a"));
+                btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
                 isBytesDisplayed = true;
                 VpnStatus.addByteCountListener(StatusActivity.this);
                 VpnStatus.addStateListener(StatusActivity.this);
