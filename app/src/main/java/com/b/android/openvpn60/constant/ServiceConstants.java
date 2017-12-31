@@ -11,7 +11,7 @@ public enum ServiceConstants {
     URL_LOGIN("http://139.59.160.203:8080/UserManagement/rest/password-service/do-login"),
     URL_PUT("http://139.59.160.203:8080/UserManagement/rest/user-service/update-user"),
     URL_GET_PROFILES("http://139.59.160.203:8080/UserManagement/rest/server-service/get-all-servers"),
-    URL_CHECK_MEMBERS("http://192.168.1.33:8080/UserManagement/rest/UserService/members");
+    URL_CHECK_MEMBERS("http://139.59.160.203:8080/UserManagement/rest/member-service/members");
 
 
     private final String text;

@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        //prepareService();
+        prepareService();
         updateViews();
     }
 
@@ -589,19 +589,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private void isUserAMember(){
-        RequestParams params = new RequestParams();
-        params.put(MEMBER_NAME, userName);
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(SERVICE_URL_GET, params, new JsonHttpResponseHandler() {
+        final List<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
+        HttpEntity entity = null;
+        try {
+            entity = new UrlEncodedFormEntity(nameValuePairs);
+        }
+        catch (UnsupportedEncodingException a) {
+            logHelper.logException(a);
+        }
+        client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    if (response.getInt("status") == 1) {
-                        isMember = true;
-                        logHelper.logInfo("Member validation = OK");
+                    if (response.length() != 0) {
+                        if (response.getInt("memberStatus") == 1) {
+                            isMember = true;
+                            logHelper.logInfo("Member validation = OK");
+                            Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (response.getInt("memberStatus") == 0)
+                            Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
                     }
-                    else if (response.getInt("status") == 0)
-                        Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(MainActivity.this, "User is not a member", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
                     logHelper.logException(ex);

@@ -49,6 +49,7 @@
             android:textColor="@color/colorAccent"
             android:layout_gravity="fill_horizontal"
             android:editable="false"
+            android:focusable="false"
             android:layout_marginLeft="7dp"
             />
 
@@ -66,11 +67,11 @@
         <Button
             android:id="@+id/btnSelect"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:layout_row="1"
-            android:background="@drawable/background_spinner"
+            android:background="@drawable/button_selector_select"
             android:text="Select"
             android:textStyle="bold"
             android:layout_marginLeft="7dp"
@@ -98,6 +99,7 @@
             android:text="Not connected yet"
             android:layout_gravity="fill_horizontal"
             android:editable="false"
+            android:focusable="false"
             android:layout_marginLeft="7dp"
             />
 
@@ -123,6 +125,7 @@
             android:text="Null"
             android:layout_gravity="fill_horizontal"
             android:editable="false"
+            android:focusable="false"
             android:layout_marginLeft="7dp"
             />
 

@@ -115,7 +115,7 @@
             android:layout_marginRight="5dp"
             android:layout_gravity="fill_horizontal"
             android:text="clear"
-            android:background="#fd383434"
+            android:background="@drawable/button_selector_black"
             android:textColor="@color/colorAccent"
             />
 
@@ -129,7 +129,7 @@
             android:layout_columnWeight="0.5"
             android:text="submit"
             android:layout_marginLeft="5dp"
-            android:background="#fd383434"
+            android:background="@drawable/button_selector_black"
             android:textColor="@color/colorAccent"
             />
 

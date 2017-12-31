@@ -112,6 +112,16 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         edtIp = (EditText) this.findViewById(R.id.edtIp);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
         sharedPrefs = this.getSharedPreferences(AppConstants.SHARED_PREFS.toString(), MODE_PRIVATE);
+        if (mProfile != null) {
+            SharedPreferences.Editor editor;
+            editor = sharedPrefs.edit();
+            editor.putString("profile_name", mProfile.name);
+            editor.putString("profile_ip", mProfile.connections[0].serverName);
+            editor.putString("profile_port", mProfile.connections[0].serverPort);
+            editor.putString("profile_status", "Connected");
+            editor.apply();
+            editor.commit();
+        }
         edtStatus = (EditText) this.findViewById(R.id.edtStatus);
         edtDuration = (EditText) this.findViewById(R.id.edtDuration);
         context = this.getApplicationContext();
@@ -170,11 +180,10 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             @Override
             protected void onPostExecute(Integer integer) {
                 mConnectTime = System.currentTimeMillis();
-
-                edtProfile.setText(mProfile.name);
-                edtIp.setText(mProfile.connections[0].serverName);
-                edtPort.setText(mProfile.connections[0].serverPort);
-                edtStatus.setText(getString(R.string.state_connected));
+                edtProfile.setText(sharedPrefs.getString("profile_name", null));
+                edtIp.setText(sharedPrefs.getString("profile_ip", null));
+                edtPort.setText(sharedPrefs.getString("profile_port", null));
+                edtStatus.setText(sharedPrefs.getString("profile_status", null));
                 btnDisconnect.setText(getString(R.string.disconnect));
                 btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
                 isBytesDisplayed = true;

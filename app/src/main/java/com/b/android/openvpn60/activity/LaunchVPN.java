@@ -240,7 +240,7 @@ public class LaunchVPN extends Activity {
             return;
         }
         Intent intent = VpnService.prepare(this);
-        execeuteSUcmd("chown system /dev/tun");
+        //execeuteSUcmd("chown system /dev/tun");
         if (intent != null) {
             VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_permission,
                     ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
