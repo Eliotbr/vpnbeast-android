@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private ServerSelectFragment mFragment;
     private RelativeLayout pnlMain;
     private LogHelper logHelper;
+    private TextView txtUsername, txtProfile, txtIp, txtPort;
 
 
     @Override
@@ -129,9 +130,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         importer = new Intent(this, ImportActivity.class);
         intentService = new Intent(this, LaunchVPN.class);
         edtHost = (EditText) this.findViewById(R.id.edtIP);
+        edtHost.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         edtUser = (EditText) this.findViewById(R.id.edtUser);
+        edtUser.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         edtPort = (EditText) this.findViewById(R.id.edtPort);
+        edtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         txtProfileName = (TextView) this.findViewById(R.id.txtProfileName);
+        txtUsername = (TextView) this.findViewById(R.id.txtName);
+        txtUsername.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        txtProfile = (TextView) this.findViewById(R.id.txtLocation);
+        txtProfile.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        txtIp = (TextView) this.findViewById(R.id.txtIp);
+        txtIp.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        txtPort = (TextView) this.findViewById(R.id.txtPort);
+        txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         edtUser.setText(mUsername);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);

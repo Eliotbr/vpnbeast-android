@@ -67,6 +67,7 @@ public class LoginActivity extends ActionBarActivity {
     private int errorCount = 0;
     private LogHelper logHelper;
     private EmailHelper emailHelper;
+    private TextView txtUsername, txtPassword;
 
 
     @Override
@@ -105,9 +106,12 @@ public class LoginActivity extends ActionBarActivity {
                 edtUsername = (EditText) this.findViewById(R.id.edtUser);
                 edtPass = (EditText) this.findViewById(R.id.edtPass);
                 chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
+                chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 intent = new Intent(this, MainActivity.class); //???
                 txtForget = (TextView) this.findViewById(R.id.txtForget);
+                txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+                txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 txtForget.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -120,6 +124,10 @@ public class LoginActivity extends ActionBarActivity {
                         LoginActivity.this.startActivity(intentSignup);
                     }
                 });
+                txtUsername = (TextView) this.findViewById(R.id.txtName);
+                txtUsername.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+                txtPassword = (TextView) this.findViewById(R.id.txtPass);
+                txtPassword.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
                 sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
                 if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
