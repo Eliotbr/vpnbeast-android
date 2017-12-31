@@ -2,6 +2,7 @@ package com.b.android.openvpn60.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -9,12 +10,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,11 +78,7 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        if (!isNetworkAvailable(getApplicationContext())) {
-            showErrorDialog();
-            errorCount++;
-        } else
-            isConnected = true;
+
     }
 
     @Override
@@ -94,7 +93,6 @@ public class LoginActivity extends ActionBarActivity {
             edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
             edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
         }
-
     }
 
     public ProgressBar getProgressBar() {
@@ -140,12 +138,12 @@ public class LoginActivity extends ActionBarActivity {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*edtUsername.setText("");
+                edtUsername.setText("");
                 edtPass.setText("");
-                chkRemember.setChecked(false);*/
+                chkRemember.setChecked(false);
                 // Crashlytics test crash
-                Crashlytics.getInstance().crash();
-                Crashlytics.log("Crash occured");
+                /*Crashlytics.getInstance().crash();
+                Crashlytics.log("Crash occured");*/
             }
         });
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
@@ -318,11 +316,17 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void showErrorDialog() {
-        alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_HOLO_DARK);
+        alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
         alertDialog.setTitle("Error");
         alertDialog.setMessage("Application requires internet connection. Please check your connection.");
         alertDialog.setCancelable(false);
-        alertDialog.setNeutralButton(android.R.string.ok, null);
+        alertDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                isConnected = isNetworkAvailable(LoginActivity.this);
+            }
+        });
+        final AlertDialog dialog = alertDialog.create();
         alertDialog.show();
     }
 }
