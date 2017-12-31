@@ -2,7 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/colorLighterBackground"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/prompt"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pw_request_dialog_prompt"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/colorAccent"
+        android:hint="@string/username" />
+
 
     <EditText
         android:id="@+id/username"
@@ -10,9 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
+        android:textColor="@color/colorAccent"
         android:hint="@string/username" />
     <EditText
         android:id="@+id/password"
@@ -20,18 +38,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
+        android:textColor="@color/colorAccent"
         android:hint="@string/password"/>
     <CheckBox
         android:id="@+id/show_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="6dp"
         android:text="@string/show_password"
         android:layout_marginRight="4dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         />
 
     <CheckBox
@@ -39,9 +60,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="6dp"
         android:text="@string/save_password"
         android:layout_marginRight="4dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
 

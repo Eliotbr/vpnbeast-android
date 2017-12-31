@@ -119,7 +119,7 @@ public class LaunchVPN extends Activity {
         entry.setTransformationMethod(new PasswordTransformationMethod());
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.pw_request_dialog_title, getString(type)));
-        dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.name));
+        //dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.name));
         if (type == R.string.password) {
             ((EditText) userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.userName);
             ((EditText) userpwlayout.findViewById(R.id.password)).setText(mSelectedProfile.password);
