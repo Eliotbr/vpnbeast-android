@@ -41,9 +41,9 @@ import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
     public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    public static final String DISCONNECT_VPN = "DISCONNECT_VPN";
-    public static final String CLOSE_ACTIVITY = "CLOSE_ACTIVITY";
-    public static final String RESULT_DESTROYED = "RESULT_DESTROYED";
+    public static final String DISCONNECT_VPN = AppConstants.DISCONNECT_VPN.toString();
+    public static final String CLOSE_ACTIVITY = AppConstants.CLOSE_ACTIVITY.toString();
+    public static final String RESULT_DESTROYED = AppConstants.RESULT_DESTROYED.toString();
     public static final String TAG = StatusActivity.class.toString();
     private long hours = 00;
     private long minutes = 00;
@@ -115,10 +115,10 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         if (mProfile != null) {
             SharedPreferences.Editor editor;
             editor = sharedPrefs.edit();
-            editor.putString("profile_name", mProfile.name);
-            editor.putString("profile_ip", mProfile.connections[0].serverName);
-            editor.putString("profile_port", mProfile.connections[0].serverPort);
-            editor.putString("profile_status", "Connected");
+            editor.putString(AppConstants.PROFILE_NAME.toString(), mProfile.name);
+            editor.putString(AppConstants.PROFILE_IP.toString(), mProfile.connections[0].serverName);
+            editor.putString(AppConstants.PROFILE_PORT.toString(), mProfile.connections[0].serverPort);
+            editor.putString(AppConstants.PROFILE_STATUS.toString(), "Connected");
             editor.apply();
             editor.commit();
         }
@@ -180,10 +180,10 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             @Override
             protected void onPostExecute(Integer integer) {
                 mConnectTime = System.currentTimeMillis();
-                edtProfile.setText(sharedPrefs.getString("profile_name", null));
-                edtIp.setText(sharedPrefs.getString("profile_ip", null));
-                edtPort.setText(sharedPrefs.getString("profile_port", null));
-                edtStatus.setText(sharedPrefs.getString("profile_status", null));
+                edtProfile.setText(sharedPrefs.getString(AppConstants.PROFILE_NAME.toString(), null));
+                edtIp.setText(sharedPrefs.getString(AppConstants.PROFILE_IP.toString(), null));
+                edtPort.setText(sharedPrefs.getString(AppConstants.PROFILE_PORT.toString(), null));
+                edtStatus.setText(sharedPrefs.getString(AppConstants.PROFILE_STATUS.toString(), null));
                 btnDisconnect.setText(getString(R.string.disconnect));
                 btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
                 isBytesDisplayed = true;

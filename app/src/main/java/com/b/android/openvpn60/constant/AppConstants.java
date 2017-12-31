@@ -23,8 +23,14 @@ public enum AppConstants {
     EXTRA_KEY("shortcut_profile_uuid"),
     EXTRA_NAME("shortcut_profile_ip"),
     EXTRA_HIDELOG("show_no_log_window"),
-    CLEARLOG("clear_log_connect");
-
+    CLEARLOG("clear_log_connect"),
+    PROFILE_NAME("profile_name"),
+    PROFILE_IP("profile_ip"),
+    PROFILE_PORT("profile_port"),
+    PROFILE_STATUS("profile_status"),
+    CLOSE_ACTIVITY("CLOSE_ACTIVITY"),
+    DISCONNECT_VPN("DISCONNECT_VPN"),
+    RESULT_DESTROYED("RESULT_DESTROYED");
 
     private final String text;
 
