@@ -103,8 +103,8 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
     private void init() {
-        progressDialog = new ProgressDialog(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
-        progressDialog.setProgressStyle(R.style.ProgressBar);
+        progressDialog = new ProgressDialog(StatusActivity.this);
+        //progressDialog.setProgressStyle(R.style.ProgressBar);
         btnDisconnect = (Button) this.findViewById(R.id.btnDisconnect);
         mProfile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
         edtUser = (EditText) this.findViewById(R.id.edtUser);
@@ -311,6 +311,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             @Override
             protected void onPreExecute() {
                 context = getApplicationContext();
+                final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
                 progressDialog.setTitle(R.string.state_disconnecting);
                 progressDialog.setMessage(getString(R.string.state_msg_disconnecting));
                 progressDialog.setCancelable(false);
@@ -333,9 +334,11 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected void onPostExecute(Integer integer) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(StatusActivity.this);
                 mBuilder.setTitle(getString(R.string.state_disconnected));
-                mBuilder.setMessage(R.string.state_msg_disconnected);
+                //mBuilder.setMessage(R.string.state_msg_disconnected);
+                final View disconnectLayout = getLayoutInflater().inflate(R.layout.disconnect_dialog, null, false);
+                mBuilder.setView(disconnectLayout);
                 progressDialog.dismiss();
                 mBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
