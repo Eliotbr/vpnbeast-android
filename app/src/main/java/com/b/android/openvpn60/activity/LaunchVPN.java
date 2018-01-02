@@ -257,7 +257,7 @@ public class LaunchVPN extends Activity {
             onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
     }
 
-    private void execeuteSUcmd(String command) {
+    /*private void execeuteSUcmd(String command) {
         try {
             ProcessBuilder pb = new ProcessBuilder("su", "-c", command);
             Process p = pb.start();
@@ -267,5 +267,5 @@ public class LaunchVPN extends Activity {
         } catch (InterruptedException | IOException e) {
             logHelper.logException(e);
         }
-    }
+    }*/
 }

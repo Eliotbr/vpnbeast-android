@@ -257,7 +257,7 @@ public class LoginActivity extends ActionBarActivity {
 
                     Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
                     alertDialog.setTitle(getString(R.string.title_err));
                     // set that ssBuilder as message
                     alertDialog.setMessage(ssBuilder);
@@ -265,13 +265,13 @@ public class LoginActivity extends ActionBarActivity {
                     alertDialog.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            sendEmail();
                         }
                     });
                     alertDialog.setNegativeButton("Create New Account", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            LoginActivity.this.startActivity(intentSignup);
                         }
                     });
                     alertDialog.show();
