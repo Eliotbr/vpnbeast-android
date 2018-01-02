@@ -239,11 +239,10 @@
             android:layout_columnWeight="0.5"
             android:layout_gravity="fill_horizontal"
             android:layout_marginRight="10dip"
-            
             android:layout_row="1"
             android:background="@drawable/button_selector_grey"
             android:text="@string/state_waiting"
-            android:textColor="#232323" />
+            android:textColor="@color/colorBackground" />
 
     </GridLayout>
 

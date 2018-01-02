@@ -15,6 +15,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -334,13 +337,24 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected void onPostExecute(Integer integer) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(StatusActivity.this);
-                mBuilder.setTitle(getString(R.string.state_disconnected));
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(StatusActivity.this);
+                alertDialog.setTitle(getString(R.string.state_disconnected));
                 //mBuilder.setMessage(R.string.state_msg_disconnected);
-                final View disconnectLayout = getLayoutInflater().inflate(R.layout.disconnect_dialog, null, false);
-                mBuilder.setView(disconnectLayout);
+                //final View disconnectLayout = getLayoutInflater().inflate(R.layout.disconnect_dialog, null, false);
+                //mBuilder.setView(disconnectLayout);
+
+                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+                // Initialize a new spannable string builder instance
+                SpannableStringBuilder ssBuilder = new SpannableStringBuilder(getString(R.string.state_msg_disconnected));
+                ssBuilder.setSpan(
+                        foregroundColorSpan,
+                        0,
+                        getString(R.string.state_msg_disconnected).length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
+                alertDialog.setMessage(ssBuilder);
                 progressDialog.dismiss();
-                mBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         intent.putExtra(DISCONNECT_VPN, true);
@@ -355,7 +369,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
                     }
                 });
-                mBuilder.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
@@ -363,7 +377,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                         startVPN(profile);
                     }
                 });
-                mBuilder.show();
+                alertDialog.show();
             }
         }.execute();
     }
