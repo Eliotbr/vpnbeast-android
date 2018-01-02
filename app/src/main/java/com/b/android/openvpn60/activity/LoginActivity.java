@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -219,24 +222,61 @@ public class LoginActivity extends ActionBarActivity {
                 new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getBoolean("status")) {
-                        User user = new User();
-                        user.setUserName(userName);
-                        user.setUserPass(userPass);
-                        Log.i(CLASS_TAG, getString(R.string.state_logged_in));
-                        LoginActivity.this.startActivity(intent);
-                        //progressBar.setVisibility(View.GONE);
-                    } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
+                if (errorCount <= 3){
+                    try {
+                        if (response.getBoolean("status")) {
+                            User user = new User();
+                            user.setUserName(userName);
+                            user.setUserPass(userPass);
+                            Log.i(CLASS_TAG, getString(R.string.state_logged_in));
+                            LoginActivity.this.startActivity(intent);
+                            //progressBar.setVisibility(View.GONE);
+                        } else {
+                            errorCount++;
+                            Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
+                                    Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    } catch (JSONException ex) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
                                 Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
+                        logHelper.logException(ex);
                     }
-                } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
                 }
+                else  {
+                    // Initialize a new foreground color span instance
+                    ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+                    // Initialize a new spannable string builder instance
+                    SpannableStringBuilder ssBuilder = new SpannableStringBuilder(getString(R.string.err_state_login));
+                    ssBuilder.setSpan(
+                            foregroundColorSpan,
+                            0,
+                            getString(R.string.err_state_login).length(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    );
+
+                    Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+                    alertDialog.setTitle(getString(R.string.title_err));
+                    // set that ssBuilder as message
+                    alertDialog.setMessage(ssBuilder);
+                    alertDialog.setCancelable(false);
+                    alertDialog.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alertDialog.setNegativeButton("Create New Account", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alertDialog.show();
+                }
+
             }
 
             @Override
