@@ -36,7 +36,7 @@
         <item name="colorControlHighlight">#b0bec5</item>
         <item name="android:textColor">#b0bec5</item>
         <item name="android:itemBackground">@color/colorPrimary</item>
-        <item name="android:alertDialogTheme">@style/YourAlertDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/customAlertDialogTheme</item>
     </style>
 
 
@@ -56,8 +56,8 @@
     </style>
 
 
-    <style name="YourAlertDialogTheme">
-        <item name="android:windowBackground">@color/colorLighterBackground</item>
+    <style name="customAlertDialogTheme">
+        <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:textColor">@color/colorAccent</item>
@@ -66,9 +66,7 @@
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
 
-    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:colorAccent">#0000FF</item>
-    </style>
+
 
 
     <style name="ProgressBar" parent="@android:style/Widget.ProgressBar">
