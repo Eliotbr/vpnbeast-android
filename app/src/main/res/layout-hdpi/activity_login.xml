@@ -10,11 +10,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dip"
-        android:src="@drawable/logo_vpnbeast"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/grdLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/grdLayout" />
+        android:src="@drawable/logo_vpnbeast" />
 
     <GridLayout
         android:layout_width="match_parent"
@@ -25,6 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
+        android:layout_above="@id/grdLayoutS"
         >
 
         <TextView
@@ -34,6 +34,7 @@
             android:layout_column="0"
             android:layout_row="0"
             android:text="Email: "
+            android:layout_marginTop="5dp"
             android:textStyle="bold" />
 
         <EditText
@@ -44,6 +45,8 @@
             android:layout_row="0"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
+            android:layout_marginBottom="10dp"
+
             android:textColor="@color/colorAccent"
             />
 
@@ -56,6 +59,7 @@
             android:layout_column="0"
             android:layout_row="1"
             android:textStyle="bold"
+            android:layout_marginTop="5dp"
             />
 
         <EditText
@@ -68,6 +72,7 @@
             android:layout_marginLeft="20dip"
             android:inputType="textPassword"
             android:textColor="@color/colorAccent"
+            android:layout_marginBottom="10dp"
             />
 
     </GridLayout>
@@ -79,11 +84,11 @@
         android:id="@+id/grdLayoutS"
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
-        android:layout_marginTop="10dip"
-        android:layout_below="@+id/grdLayout"
+
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         >
 
         <CheckBox
@@ -93,8 +98,8 @@
             android:layout_columnSpan="2"
             android:id="@+id/chkRemember"
             android:textColor="@color/colorAccent"
+            android:layout_marginBottom="7dip"
 
-            android:layout_marginBottom="10dip"
             />
 
         <Button
@@ -129,11 +134,12 @@
             android:id="@+id/txtSignup"
             android:text="Signup!"
             android:layout_row="2"
-            android:layout_marginTop="25dip"
+            android:layout_column="0"
+            android:layout_marginTop="10dip"
             android:layout_columnSpan="2"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="13sp"
             />
 
         <TextView
@@ -142,26 +148,30 @@
             android:id="@+id/txtForget"
             android:text="Forgot Password!"
             android:layout_row="3"
-            android:layout_marginTop="15dip"
+            android:layout_column="0"
+            android:layout_marginTop="7dip"
+            android:layout_marginBottom="5dp"
             android:layout_columnSpan="2"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="13sp"
             />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center|bottom"
+            android:visibility="visible" />
 
 
 
     </GridLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/grdLayoutS"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:layout_gravity="center|bottom"
-        android:visibility="visible" />
+
 
 </RelativeLayout>
