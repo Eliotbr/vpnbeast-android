@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,7 +13,9 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +35,7 @@ import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.PreferencesUtil;
+import com.b.android.openvpn60.util.ViewUtil;
 import com.crashlytics.android.Crashlytics;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -81,13 +85,13 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-
+        getDeviceInfos();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.INVISIBLE);
         if (!isNetworkAvailable(getApplicationContext())) {
             showErrorDialog();
             isConnected = false;
@@ -96,6 +100,26 @@ public class LoginActivity extends ActionBarActivity {
             edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
             edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
         }
+    }
+
+    private void getDeviceInfos() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        logHelper.logInfo("width = " + width);
+        logHelper.logInfo("height = " + height);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int heightPixels = metrics.heightPixels;
+        int widthPixels = metrics.widthPixels;
+        int densityDpi = metrics.densityDpi;
+        float xdpi = metrics.xdpi;
+        float ydpi = metrics.ydpi;
+        logHelper.logInfo("widthPixels = " + widthPixels);
+        logHelper.logInfo("heightPixels = " + heightPixels);
+        logHelper.logInfo("densityDpi = " + densityDpi);
     }
 
     public ProgressBar getProgressBar() {
@@ -233,9 +257,10 @@ public class LoginActivity extends ActionBarActivity {
                             //progressBar.setVisibility(View.GONE);
                         } else {
                             errorCount++;
+                            ViewUtil.showErrorDialog(LoginActivity.this, getString(R.string.err_state_login));
                             Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
                                     Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     } catch (JSONException ex) {
                         Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
@@ -256,7 +281,7 @@ public class LoginActivity extends ActionBarActivity {
                     );
 
                     Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
                     alertDialog.setTitle(getString(R.string.title_err));
                     // set that ssBuilder as message
