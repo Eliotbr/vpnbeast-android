@@ -252,14 +252,14 @@ public class LoginActivity extends ActionBarActivity {
                             User user = new User();
                             user.setUserName(userName);
                             user.setUserPass(userPass);
-                            Log.i(CLASS_TAG, getString(R.string.state_logged_in));
+                            logHelper.logInfo(getString(R.string.state_logged_in));
                             LoginActivity.this.startActivity(intent);
                             //progressBar.setVisibility(View.GONE);
                         } else {
                             errorCount++;
-                            ViewUtil.showErrorDialog(LoginActivity.this, getString(R.string.err_state_login));
-                            Toast.makeText(getApplicationContext(), getString(R.string.err_state_logged_in),
-                                    Toast.LENGTH_SHORT).show();
+                            AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                    getString(R.string.err_state_login));
+                            alertDialog.show();
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     } catch (JSONException ex) {
@@ -269,24 +269,10 @@ public class LoginActivity extends ActionBarActivity {
                     }
                 }
                 else  {
-                    // Initialize a new foreground color span instance
-                    ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-                    // Initialize a new spannable string builder instance
-                    SpannableStringBuilder ssBuilder = new SpannableStringBuilder(getString(R.string.err_state_login));
-                    ssBuilder.setSpan(
-                            foregroundColorSpan,
-                            0,
-                            getString(R.string.err_state_login).length(),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    );
-
                     Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
-                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
-                    alertDialog.setTitle(getString(R.string.title_err));
-                    // set that ssBuilder as message
-                    alertDialog.setMessage(ssBuilder);
-                    alertDialog.setCancelable(false);
+                    final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                            getString(R.string.err_state_login_extra));
                     alertDialog.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

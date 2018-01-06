@@ -16,12 +16,11 @@
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:id="@+id/grdLayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
-        android:layout_marginTop="80dip"
+
 
         >
 
@@ -215,35 +214,21 @@
             android:focusable="false"
             />
 
-    </GridLayout>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:id="@+id/grdLayoutS"
-        android:layout_marginRight="40dip"
-        android:layout_marginLeft="40dip"
-        android:layout_marginTop="40dip"
-        android:layout_marginBottom="20dip"
-
-        android:layout_below="@+id/grdLayout"
-        >
-
-
         <Button
             android:id="@+id/btnDisconnect"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:layout_column="0"
-            android:layout_columnWeight="0.5"
+            android:layout_columnSpan="2"
             android:layout_gravity="fill_horizontal"
-            android:layout_marginRight="10dip"
-            android:layout_row="1"
+            android:layout_row="8"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_selector_grey"
             android:text="@string/state_waiting"
+            android:layout_marginRight="5dp"
             android:textColor="@color/colorBackground" />
 
     </GridLayout>
+
 
 </RelativeLayout>

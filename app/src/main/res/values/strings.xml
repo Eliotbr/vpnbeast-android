@@ -37,7 +37,7 @@
     <string name="state_user_vpn_permission">User Vpn Permission</string>
     <string name="err_launch">An error occured while launching profile. Please try with other profile</string>
     <string name="import_profile_done">Successfully imported profile</string>
-    <string name="state_connecting_msg">Please wait about 10 seconds while we are trying to connect</string>
+    <string name="state_connecting_msg">Connecting...</string>
     <string name="state_already_connected_msg">There is a profile already connected. Please disconnect first</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
@@ -45,7 +45,7 @@
     <string name="state_disconnecting">Disconnecting</string>
     <string name="state_connecting">Connecting</string>
     <string name="state_msg_disconnecting">Attempting to disconnect. Please wait</string>
-    <string name="state_msg_disconnected">You have disconnected from profile. Starting previous activity</string>
+    <string name="state_msg_disconnected">\nYou have disconnected from profile. Starting previous activity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="text_forget_pass">I forgot my password!</string>
     <string name="text_signup_now">Signup now!</string>
@@ -351,7 +351,8 @@
     <string name="state_add_routes">Adding routes</string>
     <string name="state_connected">Connected</string>
     <string name="state_disconnected">Disconnect</string>
-    <string name="err_state_login">Can not login with these informations. Here is what you can do!</string>
+    <string name="err_state_login">\nYour username or password is invalid</string>
+    <string name="err_state_login_extra">\nCan not login with these informations. Here is what you can do!</string>
     <string name="state_reconnecting">Reconnecting</string>
     <string name="state_exiting">Exiting</string>
     <string name="state_noprocess">Not running</string>

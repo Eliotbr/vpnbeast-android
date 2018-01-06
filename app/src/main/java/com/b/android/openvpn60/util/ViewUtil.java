@@ -22,7 +22,7 @@ import com.b.android.openvpn60.model.VpnProfile;
 
 public class ViewUtil {
 
-    public static void showErrorDialog(Context context, String string) {
+    public static AlertDialog.Builder showErrorDialog(Context context, String string) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Error");
         //mBuilder.setMessage(R.string.state_msg_disconnected);
@@ -30,11 +30,11 @@ public class ViewUtil {
         //mBuilder.setView(disconnectLayout);
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent));
         // Initialize a new spannable string builder instance
-        SpannableStringBuilder ssBuilder = new SpannableStringBuilder(context.getString(R.string.state_msg_disconnected));
+        SpannableStringBuilder ssBuilder = new SpannableStringBuilder(string);
         ssBuilder.setSpan(
                 foregroundColorSpan,
                 0,
-                context.getString(R.string.state_msg_disconnected).length(),
+                string.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
         alertDialog.setMessage(ssBuilder);
@@ -44,6 +44,6 @@ public class ViewUtil {
 
             }
         });
-        alertDialog.show();
+        return alertDialog;
     }
 }
