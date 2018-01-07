@@ -154,10 +154,9 @@
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="0.5"
             android:text="Connect"
-            android:background="@drawable/button_selector_green"
             android:textColor="@color/colorBackground"
             android:layout_marginTop="20dip"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="7dp"
             />
 
         <Button
@@ -169,10 +168,11 @@
             android:layout_gravity="fill_horizontal"
             android:layout_columnWeight="0.5"
             android:text="Tostring"
-            android:background="@drawable/button_selector_green"
             android:textColor="@color/colorBackground"
+            android:background="@drawable/button_selector_green"
             android:layout_marginTop="20dip"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             />
 
     </GridLayout>

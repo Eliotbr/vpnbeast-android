@@ -16,12 +16,16 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.InputType;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.b.android.openvpn60.activity.StatusActivity;
 import com.b.android.openvpn60.constant.Constants;
@@ -54,6 +58,7 @@ public class LaunchVPN extends Activity {
     private VpnProfile mSelectedProfile;
     private String mTransientAuthPW;
     private String mTransientCertOrPCKS12PW;
+
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -121,46 +126,51 @@ public class LaunchVPN extends Activity {
     }
 
     private void askForPW(final int type) {
-
         final EditText entry = new EditText(this);
         final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
-
         entry.setSingleLine();
         entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         entry.setTransformationMethod(new PasswordTransformationMethod());
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.pw_request_dialog_title, getString(type)));
-        dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.name));
-
+        String dialogMessage = getResources().getString(R.string.pw_request_dialog_prompt);
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+        // Initialize a new spannable string builder instance
+        SpannableStringBuilder ssBuilder = new SpannableStringBuilder(dialogMessage);
+        ssBuilder.setSpan(
+                foregroundColorSpan,
+                0,
+                dialogMessage.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+        dialog.setMessage(ssBuilder);
         if (type == R.string.password) {
-            ((EditText) userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.userName);
-            ((EditText) userpwlayout.findViewById(R.id.password)).setText(mSelectedProfile.password);
+            ((EditText) userpwlayout.findViewById(R.id.edtUsername)).setText(mSelectedProfile.userName);
+            ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setText(mSelectedProfile.password);
             ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(!TextUtils.isEmpty(mSelectedProfile.password));
             ((CheckBox) userpwlayout.findViewById(R.id.show_password)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked)
-                        ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     else
-                        ((EditText) userpwlayout.findViewById(R.id.password)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             });
-
             dialog.setView(userpwlayout);
         } else {
             dialog.setView(entry);
         }
 
-        AlertDialog.Builder builder = dialog.setPositiveButton(android.R.string.ok,
+        dialog.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (type == R.string.password) {
-                            mSelectedProfile.userName = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
+                            mSelectedProfile.userName = ((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString();
 
-                            String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
+                            String pw = ((EditText) userpwlayout.findViewById(R.id.edtPassword)).getText().toString();
                             if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
                                 mSelectedProfile.password = pw;
                             } else {
@@ -175,6 +185,7 @@ public class LaunchVPN extends Activity {
                     }
 
                 });
+
         dialog.setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -185,8 +196,8 @@ public class LaunchVPN extends Activity {
                     }
                 });
 
-        dialog.create().show();
 
+        dialog.create().show();
     }
 
     @Override

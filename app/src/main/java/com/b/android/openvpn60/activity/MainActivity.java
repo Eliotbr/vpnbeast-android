@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             edtPort.setText(profile.connections[0].serverPort);
         } else {
             edtUser.setText(userName);
-            btnConnect.setBackgroundColor(Color.GRAY);
+            btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
         }
     }
 
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                                 Toast.makeText(MainActivity.this, R.string.profile_removed,
                                         Toast.LENGTH_SHORT).show();
                                 if (profiles.isEmpty()) {
-                                    btnConnect.setBackgroundColor(Color.GRAY);
+                                    btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
                                     edtPort.setText("");
                                     edtHost.setText("");
                                 }

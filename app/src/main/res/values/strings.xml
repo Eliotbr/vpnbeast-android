@@ -504,7 +504,7 @@
     <string name="pushpeerinfo">Push Peer info</string>
     <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>
     <string name="pw_request_dialog_title">Need %1$s</string>
-    <string name="pw_request_dialog_prompt">Please enter the username and password</string>
+    <string name="pw_request_dialog_prompt">\nPlease enter the username and password</string>
     <string name="disconnect_dialog_prompt">\t\tYou have successfully disconnected from VpnBeast</string>
 
     <string name="disconnect_string">\tPlease enter the username and password</string>

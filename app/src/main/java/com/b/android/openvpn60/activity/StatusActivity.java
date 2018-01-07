@@ -15,11 +15,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
@@ -103,7 +107,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
     private void init() {
-        progressDialog = new ProgressDialog(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
+        progressDialog = new ProgressDialog(StatusActivity.this);
         progressDialog.setProgressStyle(R.style.ProgressBar);
         btnDisconnect = (Button) this.findViewById(R.id.btnDisconnect);
         mProfile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
@@ -176,7 +180,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 edtPort.setText(mProfile.connections[0].serverPort);
                 edtStatus.setText(getString(R.string.state_connected));
                 btnDisconnect.setText(getString(R.string.disconnect));
-                btnDisconnect.setBackgroundColor(Color.parseColor("#df4a4a"));
+                btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
                 isBytesDisplayed = true;
                 VpnStatus.addByteCountListener(StatusActivity.this);
                 VpnStatus.addStateListener(StatusActivity.this);
@@ -301,7 +305,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         checker = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected void onPreExecute() {
-                context = getApplicationContext();
                 progressDialog.setTitle(R.string.state_disconnecting);
                 progressDialog.setMessage(getString(R.string.state_msg_disconnecting));
                 progressDialog.setCancelable(false);
@@ -324,11 +327,21 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected void onPostExecute(Integer integer) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
-                mBuilder.setTitle(getString(R.string.state_disconnected));
-                mBuilder.setMessage(R.string.state_msg_disconnected);
+                AlertDialog.Builder builder = new AlertDialog.Builder(StatusActivity.this);
+                builder.setTitle(getString(R.string.state_disconnected));
+                String dialogMessage = getResources().getString(R.string.state_msg_disconnected);
+                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+                // Initialize a new spannable string builder instance
+                SpannableStringBuilder ssBuilder = new SpannableStringBuilder(dialogMessage);
+                ssBuilder.setSpan(
+                        foregroundColorSpan,
+                        0,
+                        dialogMessage.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
+                builder.setMessage(ssBuilder);
                 progressDialog.dismiss();
-                mBuilder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         intent.putExtra(DISCONNECT_VPN, true);
@@ -343,10 +356,35 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
                     }
                 });
-                mBuilder.show();
+                builder.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().
+                                getSerializableExtra(Constants.RESULT_PROFILE.toString());
+                        StatusActivity.this.finish();
+                        startVPN(profile);
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
             }
         }.execute();
     }
+
+    private ProfileManager getPM() {
+        return ProfileManager.getInstance(this);
+    }
+
+
+    private void startVPN(VpnProfile profile) {
+        getPM().saveProfile(this, profile);
+        Intent intent = new Intent(this, LaunchVPN.class);
+        intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        intent.setAction(Intent.ACTION_MAIN);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
