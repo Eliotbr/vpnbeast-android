@@ -22,8 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.helper.LoginHelper;
 import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.EmailHelper;
@@ -47,12 +46,12 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class LoginActivity extends ActionBarActivity {
-    private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String USER_PASS = AppConstants.USER_PASS.toString();
-    private static final String USER_CHOICE = AppConstants.USER_CHOICE.toString();
-    private static final String SERVICE_URL_GET = ServiceConstants.URL_LOGIN.toString();
-    private static final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + LoginActivity.class.toString();
+    private static final String SHARED_PREFS = Constants.SHARED_PREFS.toString();
+    private static final String USER_NAME = Constants.USER_NAME.toString();
+    private static final String USER_PASS = Constants.USER_PASS.toString();
+    private static final String USER_CHOICE = Constants.USER_CHOICE.toString();
+    private static final String SERVICE_URL_GET = Constants.URL_LOGIN.toString();
+    private static final String CLASS_TAG = Constants.CLASS_TAG_ACTIVITY.toString() + LoginActivity.class.toString();
 
     private AlertDialog.Builder alertDialog;
     private Button btnSubmit;
@@ -90,8 +89,8 @@ public class LoginActivity extends ActionBarActivity {
             isConnected = false;
         } else {
             isConnected = true;
-            edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
-            edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
+            edtUsername.setText(sharedPreferences.getString(Constants.USER_NAME.toString(), null));
+            edtPass.setText(sharedPreferences.getString(Constants.USER_PASS.toString(), null));
         }
     }
 
@@ -201,7 +200,7 @@ public class LoginActivity extends ActionBarActivity {
                         LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
                         loginHelper.run();
                         /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra(AppConstants.TEMP_USER.toString(), userName);
+                        intent.putExtra(Constants.TEMP_USER.toString(), userName);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
                         startActivity(intent);*/
                     } else {

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.VpnProfile;
 
@@ -18,11 +18,11 @@ public class ToStringActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_string);
         TextView txtTostring = (TextView) this.findViewById(R.id.txtTostring);
-        //txtTostring.setText(this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString()).toString());
+        //txtTostring.setText(this.getIntent().getSerializableExtra(Constants.RESULT_PROFILE.toString()).toString());
 
         VpnProfile test = new VpnProfile("converted profile 2");
         Intent statusIntent = new Intent(ToStringActivity.this, StatusActivity.class);
-        statusIntent.putExtra(AppConstants.RESULT_PROFILE.toString(), test);
+        statusIntent.putExtra(Constants.RESULT_PROFILE.toString(), test);
         startOrStopVPN(test);
     }
 

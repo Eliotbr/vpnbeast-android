@@ -21,7 +21,7 @@ public class ICSOpenVPNApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PRNGHelper.apply();
+        PRNGFixes.apply();
         logHelper = LogHelper.getLogHelper(getApplicationContext());
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());

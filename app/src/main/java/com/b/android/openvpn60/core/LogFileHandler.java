@@ -5,8 +5,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.b.android.openvpn60.helper.LogHelper;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,13 +32,12 @@ public class LogFileHandler extends Handler {
     protected OutputStream mLogFile;
     private static final String TAG = "com.b.android.openvpn.core." + LogFileHandler.class.toString();
     public static final String LOGFILE_NAME = "logcache.dat";
-    private LogHelper logHelper;
 
 
     public LogFileHandler(Looper looper) {
         super(looper);
-        logHelper = LogHelper.getLogHelper(LogFileHandler.class.toString());
     }
+
 
     @Override
     public void handleMessage(Message msg) {
@@ -62,9 +59,11 @@ public class LogFileHandler extends Handler {
             } else if (msg.what == FLUSH_TO_DISK) {
                 flushToDisk();
             }
+
         } catch (IOException | BufferOverflowException e) {
-            logHelper.logException(e);
+            Log.e(TAG, "handleMessage: ", e);
         }
+
     }
 
     private void flushToDisk() throws IOException {
@@ -76,14 +75,17 @@ public class LogFileHandler extends Handler {
             mLogFile.flush();
             ((FileOutputStream) mLogFile).getChannel().truncate(0);
         } catch (IOException e) {
-            logHelper.logException(e);
+            e.printStackTrace();
         }
     }
 
     private void writeLogItemToDisk(LogItem li) throws IOException {
+
         // We do not really care if the log cache breaks between Android upgrades,
         // write binary format to disc
+
         byte[] liBytes = li.getMarschaledBytes();
+
         writeEscapedBytes(liBytes);
     }
 
@@ -92,7 +94,9 @@ public class LogFileHandler extends Handler {
         for (byte b : bytes)
             if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1)
                 magic++;
+
         byte eBytes[] = new byte[bytes.length + magic];
+
         int i = 0;
         for (byte b : bytes) {
             if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1) {
@@ -102,6 +106,7 @@ public class LogFileHandler extends Handler {
                 eBytes[i++] = b;
             }
         }
+
         byte[] lenBytes = ByteBuffer.allocate(4).putInt(bytes.length).array();
         synchronized (mLogFile) {
             mLogFile.write(MAGIC_BYTE);
@@ -118,11 +123,15 @@ public class LogFileHandler extends Handler {
     private void readLogCache(File cacheDir) {
         try {
             File logfile = new File(cacheDir, LOGFILE_NAME);
+
+
             if (!logfile.exists() || !logfile.canRead())
                 return;
+
             readCacheContents(new FileInputStream(logfile));
+
         } catch (IOException | RuntimeException e) {
-            logHelper.logException(e);
+            Log.e(TAG, "readLogCache: ", e);
             // ignore reading file error
         } finally {
             synchronized (VpnStatus.readFileLock) {
@@ -135,22 +144,28 @@ public class LogFileHandler extends Handler {
 
     protected void readCacheContents(InputStream in) throws IOException {
         BufferedInputStream logFile = new BufferedInputStream(in);
+
         byte[] buf = new byte[16384];
         int read = logFile.read(buf, 0, 5);
         int itemsRead = 0;
+
+
         readloop:
         while (read >= 5) {
             int skipped = 0;
             while (buf[skipped] != MAGIC_BYTE) {
                 skipped++;
                 if (!(logFile.read(buf, skipped + 4, 1) == 1) || skipped + 10 > buf.length) {
+
                     break readloop;
                 }
             }
             int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
+
             // Marshalled LogItem
             int pos = 0;
             byte buf2[] = new byte[buf.length];
+
             while (pos < len) {
                 byte b = (byte) logFile.read();
                 if (b == MAGIC_BYTE) {
@@ -169,17 +184,21 @@ public class LogFileHandler extends Handler {
                 }
                 buf2[pos++] = b;
             }
+
             restoreLogItem(buf2, len);
+
             //Next item
             read = logFile.read(buf, 0, 5);
             itemsRead++;
             if (itemsRead > 2 * VpnStatus.MAXLOGENTRIES) {
                 read = 0;
             }
+
         }
     }
 
     protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {
+
 
     }
 
@@ -195,4 +214,7 @@ public class LogFileHandler extends Handler {
         }
         return new String(hexChars);
     }
+
+
+
 }

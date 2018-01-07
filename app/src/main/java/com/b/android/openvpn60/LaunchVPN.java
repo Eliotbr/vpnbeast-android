@@ -24,13 +24,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.b.android.openvpn60.activity.StatusActivity;
-import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.PasswordCache;
+import com.b.android.openvpn60.core.Preferences;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VPNLaunchHelper;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.core.Preferences;
 
 import java.io.IOException;
 
@@ -46,6 +46,7 @@ public class LaunchVPN extends Activity {
     public static final String EXTRA_NAME = "shortcutProfileName";
     public static final String EXTRA_HIDELOG = "showNoLogWindow";
     public static final String CLEARLOG = "clearlogconnect";
+    public static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
 
     private static final int START_VPN_PROFILE = 70;
     private static final String TAG = "com.b.android.openvpn." + LaunchVPN.class.toString();
@@ -219,7 +220,7 @@ public class LaunchVPN extends Activity {
 
         Intent startLW = new Intent(getBaseContext(), StatusActivity.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startLW.putExtra(AppConstants.RESULT_PROFILE.toString(), mSelectedProfile);
+        startLW.putExtra(RESULT_PROFILE, mSelectedProfile);
         startActivity(startLW);
         this.finish();
     }

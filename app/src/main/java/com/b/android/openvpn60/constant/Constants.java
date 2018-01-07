@@ -4,8 +4,13 @@ package com.b.android.openvpn60.constant;
  * Created by b on 8/16/17.
  */
 
-public enum AppConstants {
-
+public enum Constants {
+    URL_REGISTER("http://139.59.160.203:8080/UserManagement/rest/user-service/insert-user"),
+    URL_REGISTER_MEMBER("http://139.59.160.203:8080/UserManagement/rest/member-service/insert-member"),
+    URL_LOGIN("http://139.59.160.203:8080/UserManagement/rest/password-service/do-login"),
+    URL_PUT("http://139.59.160.203:8080/UserManagement/rest/user-service/update-user"),
+    URL_GET_PROFILES("http://139.59.160.203:8080/UserManagement/rest/server-service/get-all-servers"),
+    URL_CHECK_MEMBERS("http://139.59.160.203:8080/UserManagement/rest/member-service/members"),
     USER_NAME("user_name"),
     USER_UUID("user_uuid"),
     TEMP_USER("temp_user"),
@@ -23,18 +28,12 @@ public enum AppConstants {
     EXTRA_KEY("shortcut_profile_uuid"),
     EXTRA_NAME("shortcut_profile_ip"),
     EXTRA_HIDELOG("show_no_log_window"),
-    CLEARLOG("clear_log_connect"),
-    PROFILE_NAME("profile_name"),
-    PROFILE_IP("profile_ip"),
-    PROFILE_PORT("profile_port"),
-    PROFILE_STATUS("profile_status"),
-    CLOSE_ACTIVITY("CLOSE_ACTIVITY"),
-    DISCONNECT_VPN("DISCONNECT_VPN"),
-    RESULT_DESTROYED("RESULT_DESTROYED");
+    CLEARLOG("clear_log_connect");
+
 
     private final String text;
 
-    AppConstants(final String text) {
+    Constants(final String text) {
         this.text = text;
     }
 

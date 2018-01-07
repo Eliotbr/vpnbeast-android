@@ -12,8 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.util.EmailUtil;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
@@ -25,7 +24,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
@@ -35,11 +33,11 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class MemberActivity extends AppCompatActivity {
-    private static final String SERVICE_URL = ServiceConstants.URL_REGISTER_MEMBER.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String FIRST_NAME = AppConstants.FIRST_NAME.toString();
-    private static final String LAST_NAME = AppConstants.LAST_NAME.toString();
-    private static final String EMAIL = AppConstants.EMAIL.toString();
+    private static final String SERVICE_URL = Constants.URL_REGISTER_MEMBER.toString();
+    private static final String USER_NAME = Constants.USER_NAME.toString();
+    private static final String FIRST_NAME = Constants.FIRST_NAME.toString();
+    private static final String LAST_NAME = Constants.LAST_NAME.toString();
+    private static final String EMAIL = Constants.EMAIL.toString();
     private static final String CLASS_TAG = MemberActivity.class.toString();
 
     private EditText edtFirstName;

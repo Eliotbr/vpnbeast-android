@@ -29,8 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.LaunchVPN;
-import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
+import com.b.android.openvpn60.constant.Constants;
 import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.adapter.CustomAdapter;
 import com.b.android.openvpn60.core.Connection;
@@ -65,18 +64,18 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String MEMBER_NAME = AppConstants.MEMBER_NAME.toString();
-    private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    private static final String SERVICE_URL_PUT = ServiceConstants.URL_PUT.toString();
-    private static final String SERVICE_URL_GET = ServiceConstants.URL_CHECK_MEMBERS.toString();
-    private static final String SERVICE_URL_GET_PROFILES = ServiceConstants.URL_GET_PROFILES.toString();
-    private static final String SELECTED_PROFILE = AppConstants.SELECTED_PROFILE.toString();
+    private static final String SHARED_PREFS = Constants.SHARED_PREFS.toString();
+    private static final String USER_NAME = Constants.USER_NAME.toString();
+    private static final String MEMBER_NAME = Constants.MEMBER_NAME.toString();
+    private static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
+    private static final String SERVICE_URL_PUT = Constants.URL_PUT.toString();
+    private static final String SERVICE_URL_GET = Constants.URL_CHECK_MEMBERS.toString();
+    private static final String SERVICE_URL_GET_PROFILES = Constants.URL_GET_PROFILES.toString();
+    private static final String SELECTED_PROFILE = Constants.SELECTED_PROFILE.toString();
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FATEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 10; // 10 meters
-    private final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + this.getClass().toString();
+    private final String CLASS_TAG = Constants.CLASS_TAG_ACTIVITY.toString() + this.getClass().toString();
     private static final int PERMISSION_REQUEST = 23621;
 
     private SharedPreferences sharedPrefs;
@@ -148,9 +147,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         edtUser.setText(mUsername);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
-        profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
-        //user = (User) intentMain.getSerializableExtra(AppConstants.TEMP_USER.toString());
-        userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
+        profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(Constants.EXTRA_KEY.toString()));
+        //user = (User) intentMain.getSerializableExtra(Constants.TEMP_USER.toString());
+        userName = sharedPrefs.getString(Constants.USER_NAME.toString(), null);
         btnSelect = (Button) this.findViewById(R.id.btnSelect);
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override

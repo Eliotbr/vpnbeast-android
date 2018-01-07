@@ -1,14 +1,11 @@
 package com.b.android.openvpn60.core;
 
-/**
- * Created by b on 1/7/2018.
- */
-
 import android.content.Context;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
 import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;

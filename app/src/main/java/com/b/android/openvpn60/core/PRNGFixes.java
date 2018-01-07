@@ -39,7 +39,7 @@ import java.security.Security;
  * Cryptography Architecture primitives. A good place to invoke them is in the
  * application's {@code onCreate}.
  */
-public final class PRNGHelper {
+public final class PRNGFixes {
 
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
@@ -47,7 +47,7 @@ public final class PRNGHelper {
             getBuildFingerprintAndDeviceSerial();
 
     /** Hidden constructor to prevent instantiation. */
-    private PRNGHelper() {}
+    private PRNGFixes() {}
 
     /**
      * Applies all fixes.
@@ -220,7 +220,7 @@ public final class PRNGHelper {
             } catch (IOException e) {
                 // On a small fraction of devices /dev/urandom is not writable.
                 // Log and ignore.
-                Log.w(PRNGHelper.class.getSimpleName(),
+                Log.w(PRNGFixes.class.getSimpleName(),
                         "Failed to mix seed into " + URANDOM_FILE);
             } finally {
                 mSeeded = true;

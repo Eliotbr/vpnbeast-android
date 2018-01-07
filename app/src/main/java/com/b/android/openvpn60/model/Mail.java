@@ -3,7 +3,7 @@ package com.b.android.openvpn60.model;
 
 import android.content.Context;
 
-import com.b.android.openvpn60.core.JSEEUtil;
+import com.b.android.openvpn60.core.JSEEProvider;
 import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.ByteArrayInputStream;
@@ -40,7 +40,7 @@ public class Mail extends javax.mail.Authenticator {
     private Properties props;
 
     static {
-        Security.addProvider(new JSEEUtil());
+        Security.addProvider(new JSEEProvider());
     }
 
 

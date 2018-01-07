@@ -7,10 +7,10 @@ import java.security.Provider;
  * Created by b on 9/20/2017.
  */
 
-public class JSEEUtil extends Provider {
+public class JSEEProvider extends Provider {
     private static final long serialVersionUID = 3821760047343914156L;
 
-    public JSEEUtil() {
+    public JSEEProvider() {
         super("HarmonyJSSE", 1.0, "Harmony JSSE Provider");
         AccessController.doPrivileged(new java.security.PrivilegedAction<Void>() {
             public Void run() {

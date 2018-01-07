@@ -3,6 +3,8 @@ package com.b.android.openvpn60.core;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.b.android.openvpn60.R;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -17,6 +19,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.LogItem;
 
 /**
