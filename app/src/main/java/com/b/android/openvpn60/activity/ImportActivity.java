@@ -29,12 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.helper.ConfigHelper;
+import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.VpnProfile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -322,13 +323,13 @@ public class ImportActivity extends ActionBarActivity {
     }
 
     private void doImport(InputStream is) {
-        ConfigHelper cp = new ConfigHelper();
+        ConfigParser cp = new ConfigParser();
         try {
             InputStreamReader isr = new InputStreamReader(is);
             cp.parseConfig(isr);
             mProfile = cp.convertProfile();
             //embedFiles(cp);
-        } catch (IOException | ConfigHelper.ConfigParseError e) {
+        } catch (IOException | ConfigParser.ConfigParseError e) {
             logHelper.logException(e);
         }
     }

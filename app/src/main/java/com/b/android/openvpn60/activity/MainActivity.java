@@ -28,11 +28,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
-import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.adapter.CustomAdapter;
-import com.b.android.openvpn60.model.Connection;
+import com.b.android.openvpn60.core.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
@@ -43,7 +44,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -292,9 +293,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             edtPort.setText(profile.connections[0].serverPort);
         } else {
             edtUser.setText(userName);
-            btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
+            btnConnect.setBackgroundColor(Color.GRAY);
         }
     }
+
 
     @Override
     public void onBackPressed() {

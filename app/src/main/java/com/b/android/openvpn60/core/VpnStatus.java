@@ -296,13 +296,13 @@ public class VpnStatus {
 
     public static void updateStatePause(OpenVPNManagement.pauseReason pauseReason) {
         switch (pauseReason) {
-            case NO_NETWORK:
+            case noNetwork:
                 VpnStatus.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);
                 break;
-            case SCREEN_OFF:
+            case screenOff:
                 VpnStatus.updateStateString("SCREENOFF", "", R.string.state_screenoff, ConnectionStatus.LEVEL_VPNPAUSED);
                 break;
-            case USER_PAUSE:
+            case userPause:
                 VpnStatus.updateStateString("USERPAUSE", "", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
                 break;
         }
@@ -416,7 +416,7 @@ public class VpnStatus {
                 mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
 
-        //if (BuildConstants.DEBUG && !cachedLine && !BuildConstants.FLAVOR.equals("test"))
+        //if (BuildConfig.DEBUG && !cachedLine && !BuildConfig.FLAVOR.equals("test"))
         //    Log.d("OpenVPN", logItem.getString(null));
 
 

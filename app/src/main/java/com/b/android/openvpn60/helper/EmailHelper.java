@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.LoginActivity;
-import com.b.android.openvpn60.util.JSEEUtil;
+import com.b.android.openvpn60.core.JSEEUtil;
 
 import java.io.File;
 import java.security.Security;

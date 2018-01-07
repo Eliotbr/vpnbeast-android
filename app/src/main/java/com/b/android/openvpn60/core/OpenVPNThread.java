@@ -3,8 +3,6 @@ package com.b.android.openvpn60.core;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.b.android.openvpn60.helper.VPNLaunchHelper;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;

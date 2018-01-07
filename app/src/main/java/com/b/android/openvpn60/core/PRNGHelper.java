@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package com.b.android.openvpn60.helper;/*
+package com.b.android.openvpn60.core;/*
  * This software is provided 'as-is', without any express or implied
  * warranty.  In no event will Google be held liable for any damages
  * arising from the use of this software.

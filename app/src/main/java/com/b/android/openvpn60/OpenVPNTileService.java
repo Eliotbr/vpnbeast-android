@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -21,9 +21,9 @@ import android.widget.Toast;
 
 import de.blinkt.openvpn.core.ConnectionStatus;
 
-import com.b.android.openvpn60.activity.LaunchVPN;
-import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.core.OpenVPNService;
+import com.b.android.openvpn60.core.ProfileManager;
+import com.b.android.openvpn60.core.VpnStatus;
 
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 

@@ -29,16 +29,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.b.android.openvpn60.activity.LaunchVPN;
+import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.activity.StatusActivity;
-import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.helper.VPNLaunchHelper;
-import com.b.android.openvpn60.listener.DeviceStateReceiver;
-import com.b.android.openvpn60.model.IPAddress;
-import com.b.android.openvpn60.constant.BuildConstants;
-import com.b.android.openvpn60.util.PreferencesUtil;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -161,7 +156,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }
         VpnStatus.removeByteCountListener(this);
         unregisterDeviceStateReceiver();
-        ProfileManager.setAsDisconnected(this);
+        ProfileManager.setConntectedVpnProfileDisconnected(this);
         mOpenVPNThread = null;
         if (!mStarting) {
             stopForeground(!mNotificationAlwaysVisible);
@@ -419,7 +414,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }).start();
 
 
-        ProfileManager.setAsConnected(this, mProfile);
+        ProfileManager.setConnectedVpnProfile(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
         return START_STICKY;
@@ -459,10 +454,10 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         mStarting = false;
 
         // Start a new session by creating a new thread.
-        SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildConstants.FLAVOR))
+        if (!"ovpn3".equals(BuildConfig.FLAVOR))
             mOvpn3 = false;
 
         // Open the Management Interface
@@ -1022,9 +1017,9 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if (mDisplayBytecount) {
             String netstat = String.format(getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false),
-                    humanReadableByteCount(diffIn / OpenVPNManagement.byteCountInterval, true),
+                    humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true),
                     humanReadableByteCount(out, false),
-                    humanReadableByteCount(diffOut / OpenVPNManagement.byteCountInterval, true));
+                    humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
 
             int priority = mNotificationAlwaysVisible ? PRIORITY_DEFAULT : PRIORITY_MIN;
             showNotification(netstat, null, priority, mConnecttime, LEVEL_CONNECTED);

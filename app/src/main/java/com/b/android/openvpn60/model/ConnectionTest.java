@@ -2,6 +2,8 @@ package com.b.android.openvpn60.model;
 
 import android.text.TextUtils;
 
+import com.b.android.openvpn60.core.Connection;
+
 import java.util.Locale;
 
 /**

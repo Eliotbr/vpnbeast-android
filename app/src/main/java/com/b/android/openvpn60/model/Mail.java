@@ -2,9 +2,8 @@ package com.b.android.openvpn60.model;
 
 
 import android.content.Context;
-import android.util.Log;
 
-import com.b.android.openvpn60.util.JSEEUtil;
+import com.b.android.openvpn60.core.JSEEUtil;
 import com.b.android.openvpn60.helper.LogHelper;
 
 import java.io.ByteArrayInputStream;

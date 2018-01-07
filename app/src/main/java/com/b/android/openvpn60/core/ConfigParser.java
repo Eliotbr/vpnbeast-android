@@ -1,12 +1,14 @@
-package com.b.android.openvpn60.helper;
+package com.b.android.openvpn60.core;
+
+/**
+ * Created by b on 1/7/2018.
+ */
 
 import android.content.Context;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
-import com.b.android.openvpn60.model.VpnProfile;
-import com.b.android.openvpn60.model.Connection;
-import com.b.android.openvpn60.model.IPAddress;
+import com.b.android.openvpn60.VpnProfile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +23,7 @@ import java.util.Vector;
  * Created by b on 5/15/17.
  */
 
-public class ConfigHelper {
+public class ConfigParser {
     public static final String CONVERTED_PROFILE = "converted Profile";
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
@@ -32,7 +34,9 @@ public class ConfigHelper {
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {
         HashMap<String, String> optionAliases = new HashMap<>();
         optionAliases.put("server-poll-timeout", "timeout-connect");
+
         BufferedReader br = new BufferedReader(reader);
+
         int lineno = 0;
         try {
             while (true) {
@@ -40,11 +44,11 @@ public class ConfigHelper {
                 lineno++;
                 if (line == null)
                     break;
+
                 if (lineno == 1) {
                     if ((line.startsWith("PK\003\004")
                             || (line.startsWith("PK\007\008")))) {
-                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is only " +
-                                "possible for OpenVPN config files (.ovpn/.conf)");
+                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
                     }
                     if (line.startsWith("\uFEFF")) {
                         line = line.substring(1);
@@ -62,12 +66,13 @@ public class ConfigHelper {
                 if (args.size() == 0)
                     continue;
 
+
                 if (args.get(0).startsWith("--"))
                     args.set(0, args.get(0).substring(2));
 
                 checkinlinefile(args, br);
-                String optionname = args.get(0);
 
+                String optionname = args.get(0);
                 if (optionAliases.get(optionname)!=null)
                     optionname = optionAliases.get(optionname);
 
@@ -96,6 +101,7 @@ public class ConfigHelper {
         if (arg0.startsWith("<") && arg0.endsWith(">")) {
             String argname = arg0.substring(1, arg0.length() - 1);
             String inlinefile = VpnProfile.INLINE_TAG;
+
             String endtag = String.format("</%s>", argname);
             do {
                 String line = br.readLine();
@@ -109,12 +115,15 @@ public class ConfigHelper {
                     inlinefile += "\n";
                 }
             } while (true);
+
             if(inlinefile.endsWith("\n"))
                 inlinefile = inlinefile.substring(0, inlinefile.length()-1);
+
             args.clear();
             args.add(argname);
             args.add(inlinefile);
         }
+
     }
 
     public String getAuthUserPassFile() {
@@ -145,13 +154,18 @@ public class ConfigHelper {
     // adapted openvpn's parse function to java
     private Vector<String> parseline(String line) throws ConfigParseError {
         Vector<String> parameters = new Vector<String>();
+
         if (line.length() == 0)
             return parameters;
+
+
         linestate state = linestate.initial;
         boolean backslash = false;
         char out = 0;
+
         int pos = 0;
         String currentarg = "";
+
         do {
             // Emulate the c parsing ...
             char in;
@@ -658,7 +672,7 @@ public class ConfigHelper {
         // Parse a connection Block as a new configuration file
 
 
-        ConfigHelper connectionParser = new ConfigHelper();
+        ConfigParser connectionParser = new ConfigParser();
         StringReader reader = new StringReader(connection.substring(VpnProfile.INLINE_TAG.length()));
         connectionParser.parseConfig(reader);
 

@@ -11,8 +11,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.constant.ServiceConstants;
-import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.VpnProfile;
 import com.b.android.openvpn60.activity.MainActivity;
 import com.b.android.openvpn60.constant.AppConstants;
 
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 
 public class ServerSelectFragment extends ListFragment {
     private Context context;
-    private static final String SERVICE_URL_GET_PROFILES = ServiceConstants.URL_GET_PROFILES.toString();
     private ArrayList<VpnProfile> profiles;
     private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     private RelativeLayout pnlRelative = null;
@@ -37,7 +35,7 @@ public class ServerSelectFragment extends ListFragment {
         View v = inflater.inflate(R.layout.list_server_fragment, container, false);
         adapter = new ArrayAdapter<VpnProfile>(inflater.getContext(),
                 R.layout.list_server_text, R.id.list_content,
-                    profiles);
+                profiles);
         context = getActivity().getApplicationContext();
         pnlRelative = (RelativeLayout) getActivity().findViewById(R.id.activity_main);
         pnlRelative.setVisibility(View.INVISIBLE);

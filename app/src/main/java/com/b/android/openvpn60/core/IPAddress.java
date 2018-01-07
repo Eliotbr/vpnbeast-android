@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.model;
+package com.b.android.openvpn60.core;
 
 import java.util.Locale;
 

@@ -41,4 +41,3 @@ public enum ConnectionStatus implements Parcelable {
         }
     };
 }
-

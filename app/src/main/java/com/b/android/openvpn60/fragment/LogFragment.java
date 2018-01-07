@@ -31,12 +31,12 @@ import android.widget.Toast;
 
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.activity.LaunchVPN;
+import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.VpnProfile;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -87,8 +87,10 @@ public class LogFragment extends ListFragment implements VpnStatus.StateListener
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         //%2$s/s %1$s - ↑%4$s/s %3$s
-        final String down = String.format("%2$s/s %1$s", OpenVPNService.humanReadableByteCount(in, false), OpenVPNService.humanReadableByteCount(diffIn / OpenVPNManagement.byteCountInterval, true));
-        final String up = String.format("%2$s/s %1$s", OpenVPNService.humanReadableByteCount(out, false), OpenVPNService.humanReadableByteCount(diffOut / OpenVPNManagement.byteCountInterval, true));
+        final String down = String.format("%2$s/s %1$s", OpenVPNService.humanReadableByteCount(in, false),
+                OpenVPNService.humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true));
+        final String up = String.format("%2$s/s %1$s", OpenVPNService.humanReadableByteCount(out, false),
+                OpenVPNService.humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
 
         if (mUpStatus != null && mDownStatus != null) {
             if (getActivity() != null) {

@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package com.b.android.openvpn60.listener;
+package com.b.android.openvpn60.core;
 
 import android.annotation.TargetApi;
 import android.net.ConnectivityManager;

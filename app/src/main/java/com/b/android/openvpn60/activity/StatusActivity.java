@@ -15,9 +15,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +25,9 @@ import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.VpnProfile;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,9 +41,9 @@ import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
     public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    public static final String DISCONNECT_VPN = AppConstants.DISCONNECT_VPN.toString();
-    public static final String CLOSE_ACTIVITY = AppConstants.CLOSE_ACTIVITY.toString();
-    public static final String RESULT_DESTROYED = AppConstants.RESULT_DESTROYED.toString();
+    public static final String DISCONNECT_VPN = "DISCONNECT_VPN";
+    public static final String CLOSE_ACTIVITY = "CLOSE_ACTIVITY";
+    public static final String RESULT_DESTROYED = "RESULT_DESTROYED";
     public static final String TAG = StatusActivity.class.toString();
     private long hours = 00;
     private long minutes = 00;
@@ -106,8 +103,8 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
     private void init() {
-        progressDialog = new ProgressDialog(StatusActivity.this);
-        //progressDialog.setProgressStyle(R.style.ProgressBar);
+        progressDialog = new ProgressDialog(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
+        progressDialog.setProgressStyle(R.style.ProgressBar);
         btnDisconnect = (Button) this.findViewById(R.id.btnDisconnect);
         mProfile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
         edtUser = (EditText) this.findViewById(R.id.edtUser);
@@ -115,16 +112,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         edtIp = (EditText) this.findViewById(R.id.edtIp);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
         sharedPrefs = this.getSharedPreferences(AppConstants.SHARED_PREFS.toString(), MODE_PRIVATE);
-        if (mProfile != null) {
-            SharedPreferences.Editor editor;
-            editor = sharedPrefs.edit();
-            editor.putString(AppConstants.PROFILE_NAME.toString(), mProfile.name);
-            editor.putString(AppConstants.PROFILE_IP.toString(), mProfile.connections[0].serverName);
-            editor.putString(AppConstants.PROFILE_PORT.toString(), mProfile.connections[0].serverPort);
-            editor.putString(AppConstants.PROFILE_STATUS.toString(), "Connected");
-            editor.apply();
-            editor.commit();
-        }
         edtStatus = (EditText) this.findViewById(R.id.edtStatus);
         edtDuration = (EditText) this.findViewById(R.id.edtDuration);
         context = this.getApplicationContext();
@@ -183,12 +170,13 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             @Override
             protected void onPostExecute(Integer integer) {
                 mConnectTime = System.currentTimeMillis();
-                edtProfile.setText(sharedPrefs.getString(AppConstants.PROFILE_NAME.toString(), null));
-                edtIp.setText(sharedPrefs.getString(AppConstants.PROFILE_IP.toString(), null));
-                edtPort.setText(sharedPrefs.getString(AppConstants.PROFILE_PORT.toString(), null));
-                edtStatus.setText(sharedPrefs.getString(AppConstants.PROFILE_STATUS.toString(), null));
+
+                edtProfile.setText(mProfile.name);
+                edtIp.setText(mProfile.connections[0].serverName);
+                edtPort.setText(mProfile.connections[0].serverPort);
+                edtStatus.setText(getString(R.string.state_connected));
                 btnDisconnect.setText(getString(R.string.disconnect));
-                btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
+                btnDisconnect.setBackgroundColor(Color.parseColor("#df4a4a"));
                 isBytesDisplayed = true;
                 VpnStatus.addByteCountListener(StatusActivity.this);
                 VpnStatus.addStateListener(StatusActivity.this);
@@ -242,7 +230,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
     private void disconnectOnDestroy() {
-        ProfileManager.setAsDisconnected(context);
+        ProfileManager.setConntectedVpnProfileDisconnected(context);
         if (serviceInternal != null) {
             try {
                 serviceInternal.stopVPN(false);
@@ -259,9 +247,9 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         final String mIn = humanReadableByteCount(in, false);
-        final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.byteCountInterval, true);
+        final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true);
         final String mOut = humanReadableByteCount(out, false);
-        final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.byteCountInterval, true);
+        final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true);
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
             StatusActivity.this.runOnUiThread(new Runnable() {
                 @Override
@@ -314,7 +302,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             @Override
             protected void onPreExecute() {
                 context = getApplicationContext();
-                final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
                 progressDialog.setTitle(R.string.state_disconnecting);
                 progressDialog.setMessage(getString(R.string.state_msg_disconnecting));
                 progressDialog.setCancelable(false);
@@ -323,7 +310,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected Integer doInBackground(Void... params) {
-                ProfileManager.setAsDisconnected(context);
+                ProfileManager.setConntectedVpnProfileDisconnected(context);
                 if (serviceInternal != null) {
                     try {
                         serviceInternal.stopVPN(false);
@@ -337,24 +324,11 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
             @Override
             protected void onPostExecute(Integer integer) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(StatusActivity.this);
-                alertDialog.setTitle(getString(R.string.state_disconnected));
-                //mBuilder.setMessage(R.string.state_msg_disconnected);
-                //final View disconnectLayout = getLayoutInflater().inflate(R.layout.disconnect_dialog, null, false);
-                //mBuilder.setView(disconnectLayout);
-
-                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-                // Initialize a new spannable string builder instance
-                SpannableStringBuilder ssBuilder = new SpannableStringBuilder(getString(R.string.state_msg_disconnected));
-                ssBuilder.setSpan(
-                        foregroundColorSpan,
-                        0,
-                        getString(R.string.state_msg_disconnected).length(),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                );
-                alertDialog.setMessage(ssBuilder);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(StatusActivity.this, AlertDialog.THEME_HOLO_DARK);
+                mBuilder.setTitle(getString(R.string.state_disconnected));
+                mBuilder.setMessage(R.string.state_msg_disconnected);
                 progressDialog.dismiss();
-                alertDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                mBuilder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         intent.putExtra(DISCONNECT_VPN, true);
@@ -369,15 +343,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
                     }
                 });
-                alertDialog.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
-                        StatusActivity.this.finish();
-                        startVPN(profile);
-                    }
-                });
-                alertDialog.show();
+                mBuilder.show();
             }
         }.execute();
     }
@@ -390,17 +356,5 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     @Override
     public void setConnectedVPN(String uuid) {
 
-    }
-
-    private void startVPN(VpnProfile profile) {
-        getPM().saveProfile(this, profile);
-        Intent intent = new Intent(this, LaunchVPN.class);
-        intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
-        intent.setAction(Intent.ACTION_MAIN);
-        startActivity(intent);
-    }
-
-    private ProfileManager getPM() {
-        return ProfileManager.getInstance(this);
     }
 }

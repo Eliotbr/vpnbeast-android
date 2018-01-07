@@ -5,18 +5,17 @@ package com.b.android.openvpn60.core;
  */
 
 public interface OpenVPNManagement {
-    int byteCountInterval = 2;
-
     interface PausedStateCallback {
         boolean shouldBeRunning();
     }
 
     enum pauseReason {
-        NO_NETWORK,
-        USER_PAUSE,
-        SCREEN_OFF,
+        noNetwork,
+        userPause,
+        screenOff,
     }
 
+    int mBytecountInterval = 2;
 
     void reconnect();
 
