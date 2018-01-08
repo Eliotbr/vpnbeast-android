@@ -4,7 +4,7 @@ package com.b.android.openvpn60.util;
  * Created by b on 1/7/2018.
  */
 
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;

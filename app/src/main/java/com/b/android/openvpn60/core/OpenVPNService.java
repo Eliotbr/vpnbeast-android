@@ -29,9 +29,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.b.android.openvpn60.LaunchVPN;
+import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.activity.StatusActivity;
 import com.b.android.openvpn60.helper.LogHelper;
 

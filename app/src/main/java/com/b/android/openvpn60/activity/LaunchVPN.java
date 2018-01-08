@@ -1,4 +1,4 @@
-package com.b.android.openvpn60;
+package com.b.android.openvpn60.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -25,10 +25,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
-import com.b.android.openvpn60.activity.StatusActivity;
-import com.b.android.openvpn60.constant.Constants;
+import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.model.VpnProfile;
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.PasswordCache;
 import com.b.android.openvpn60.core.Preferences;
@@ -50,7 +50,7 @@ public class LaunchVPN extends Activity {
     public static final String EXTRA_NAME = "shortcutProfileName";
     public static final String EXTRA_HIDELOG = "showNoLogWindow";
     public static final String CLEARLOG = "clearlogconnect";
-    public static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
+    public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
 
     private static final int START_VPN_PROFILE = 70;
     private static final String TAG = "com.b.android.openvpn." + LaunchVPN.class.toString();

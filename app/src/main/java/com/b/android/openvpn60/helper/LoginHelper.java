@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.b.android.openvpn60.activity.LoginActivity;
-import com.b.android.openvpn60.constant.Constants;
+import com.b.android.openvpn60.constant.AppConstants;
 
 /**
  * Created by b on 12/30/2017.
@@ -27,8 +27,8 @@ public class LoginHelper implements Runnable {
     @Override
     public void run() {
         loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        loginActivity.getIntent().putExtra(Constants.USER_NAME.toString(), userName);
-        loginActivity.getIntent().putExtra(Constants.USER_PASS.toString(), userPass);
+        loginActivity.getIntent().putExtra(AppConstants.USER_NAME.toString(), userName);
+        loginActivity.getIntent().putExtra(AppConstants.USER_PASS.toString(), userPass);
         loginActivity.invokeWS(userName, userPass);
         //loginActivity.getProgressBar().setVisibility(View.GONE);
         //loginActivity.startActivity(mainIntent);

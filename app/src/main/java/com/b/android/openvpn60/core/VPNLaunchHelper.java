@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.core.VpnStatus;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.File;
 import java.io.FileOutputStream;

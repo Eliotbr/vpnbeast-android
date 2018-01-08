@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import junit.framework.Assert;
 

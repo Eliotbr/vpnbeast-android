@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.RegisterActivity;
-import com.b.android.openvpn60.constant.Constants;
+import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.model.User;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -51,9 +52,9 @@ public class RegisterHelper implements Runnable {
         AsyncHttpClient client = new AsyncHttpClient();
         final User user = new User(userName, userPass);
         final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair(Constants.USER_NAME.toString(), userName));
-        nameValuePairs.add(new BasicNameValuePair(Constants.USER_PASS.toString(), userPass));
-        nameValuePairs.add(new BasicNameValuePair(Constants.USER_UUID.toString(), user.getUuid().toString()));
+        nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_NAME.toString(), userName));
+        nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_PASS.toString(), userPass));
+        nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_UUID.toString(), user.getUuid().toString()));
         //client.addHeader("Content-Type", "application/json");
         HttpEntity entity = null;
         try {
@@ -62,7 +63,7 @@ public class RegisterHelper implements Runnable {
         catch (UnsupportedEncodingException a) {
             logHelper.logException(a);
         }
-        client.post(context, Constants.URL_REGISTER.toString(), entity, "application/x-www-form-urlencoded",
+        client.post(context, ServiceConstants.URL_REGISTER.toString(), entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -72,9 +73,9 @@ public class RegisterHelper implements Runnable {
                                 Toast.makeText(context, context.getString(R.string.state_register) ,
                                         Toast.LENGTH_SHORT).show();
                                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                loginIntent.putExtra(Constants.TEMP_USER.toString(), user);
-                                loginIntent.putExtra(Constants.USER_NAME.toString(), userName);
-                                loginIntent.putExtra(Constants.USER_PASS.toString(), userPass);
+                                loginIntent.putExtra(AppConstants.TEMP_USER.toString(), user);
+                                loginIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
+                                loginIntent.putExtra(AppConstants.USER_PASS.toString(), userPass);
                                 saveInfos();
                                 context.startActivity(loginIntent);
                             } else {
@@ -109,12 +110,12 @@ public class RegisterHelper implements Runnable {
     }
 
     private void saveInfos() {
-        SharedPreferences sharedPreferences = registerActivity.getSharedPreferences(Constants.SHARED_PREFS.toString(),
+        SharedPreferences sharedPreferences = registerActivity.getSharedPreferences(AppConstants.SHARED_PREFS.toString(),
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
         editor = sharedPreferences.edit();
-        editor.putString(Constants.USER_NAME.toString(), userName);
-        editor.putString(Constants.USER_PASS.toString(), null);
+        editor.putString(AppConstants.USER_NAME.toString(), userName);
+        editor.putString(AppConstants.USER_PASS.toString(), null);
         editor.apply();
         editor.commit();
     }

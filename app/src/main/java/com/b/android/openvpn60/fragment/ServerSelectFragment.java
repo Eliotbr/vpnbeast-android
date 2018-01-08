@@ -11,9 +11,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.activity.MainActivity;
-import com.b.android.openvpn60.constant.Constants;
+import com.b.android.openvpn60.constant.AppConstants;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ServerSelectFragment extends ListFragment {
     private Context context;
     private ArrayList<VpnProfile> profiles;
-    private static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
+    private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     private RelativeLayout pnlRelative = null;
     private ArrayAdapter<VpnProfile> adapter;
 

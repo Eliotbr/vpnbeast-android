@@ -29,13 +29,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.b.android.openvpn60.LaunchVPN;
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.constant.Constants;
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.ConfigParser;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,10 +44,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ImportActivity extends ActionBarActivity {
-    private static final String RESULT_PROFILE = Constants.RESULT_PROFILE.toString();
-    private static final String USER_NAME = Constants.USER_NAME.toString();
-    private static final String USER_PASS = Constants.USER_PASS.toString();
-    private static final String USER_CHOICE = Constants.USER_CHOICE.toString();
+    private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
+    private static final String USER_NAME = AppConstants.USER_NAME.toString();
+    private static final String USER_PASS = AppConstants.USER_PASS.toString();
+    private static final String USER_CHOICE = AppConstants.USER_CHOICE.toString();
     private static final String CLASS_TAG = ImportActivity.class.toString();
     private static final int PERMISSION_REQUEST = 23621;
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB

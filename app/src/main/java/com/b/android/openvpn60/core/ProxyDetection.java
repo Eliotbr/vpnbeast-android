@@ -6,7 +6,7 @@ package com.b.android.openvpn60.core;
 
 import android.util.Log;
 
-import com.b.android.openvpn60.VpnProfile;
+import com.b.android.openvpn60.model.VpnProfile;
 
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
