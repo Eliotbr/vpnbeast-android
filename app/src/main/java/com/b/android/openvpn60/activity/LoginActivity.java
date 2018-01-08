@@ -25,25 +25,12 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.helper.LoginHelper;
-import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.util.ViewUtil;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -54,23 +41,16 @@ public class LoginActivity extends ActionBarActivity {
     private static final String SERVICE_URL_GET = ServiceConstants.URL_LOGIN.toString();
     private static final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + LoginActivity.class.toString();
 
-    private AlertDialog.Builder alertDialog;
-    private Button btnSubmit;
-    private Button btnClear;
     private EditText edtUsername;
     private EditText edtPass;
     private CheckBox chkRemember;
     private SharedPreferences sharedPreferences;
     private Intent intent;
     private Intent intentSignup;
-    private TextView txtForget;
-    private TextView txtSignup;
     private ProgressBar progressBar;
     private boolean isConnected = false;
     public static int errorCount = 0;
     private LogHelper logHelper;
-    private EmailHelper emailHelper;
-    private TextView txtUsername, txtPassword;
 
 
     @Override
@@ -126,26 +106,24 @@ public class LoginActivity extends ActionBarActivity {
                 chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
                 chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 intent = new Intent(this, MainActivity.class); //???
-                txtForget = (TextView) this.findViewById(R.id.txtForget);
-                txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                txtSignup = (TextView) this.findViewById(R.id.txtSignup);
-                txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+                //txtForget = (TextView) this.findViewById(R.id.txtForget);
+                //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+                //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+                //txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+                final TextView txtForget = (TextView) this.findViewById(R.id.txtForget);
                 txtForget.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         sendEmail();
                     }
                 });
+                final TextView txtSignup = (TextView) this.findViewById(R.id.txtSignup);
                 txtSignup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         LoginActivity.this.startActivity(intentSignup);
                     }
                 });
-                txtUsername = (TextView) this.findViewById(R.id.txtName);
-                txtUsername.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                txtPassword = (TextView) this.findViewById(R.id.txtPass);
-                txtPassword.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
                 sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
                 if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
@@ -154,7 +132,7 @@ public class LoginActivity extends ActionBarActivity {
             chkRemember.setChecked(true);
         }
         intentSignup = new Intent(this, RegisterActivity.class);
-        btnClear = (Button) this.findViewById(R.id.btnClear);
+        final Button btnClear = (Button) this.findViewById(R.id.btnClear);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +144,7 @@ public class LoginActivity extends ActionBarActivity {
                 Crashlytics.log("Crash occured");*/
             }
         });
-        btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
+        final Button btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,7 +225,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void sendEmail() {
-        emailHelper = new EmailHelper(this, "bilalccaliskan@gmail.com", "piranha93");
+        final EmailHelper emailHelper = new EmailHelper(this, "bilalccaliskan@gmail.com", "piranha93");
         emailHelper.execute();
     }
 
@@ -304,7 +282,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void showErrorDialog() {
-        alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
         alertDialog.setTitle("Error");
         alertDialog.setMessage("Application requires internet connection. Please check your connection.");
         alertDialog.setCancelable(false);
@@ -314,7 +292,6 @@ public class LoginActivity extends ActionBarActivity {
                 isConnected = isNetworkAvailable(LoginActivity.this);
             }
         });
-        final AlertDialog dialog = alertDialog.create();
         alertDialog.show();
     }
 }

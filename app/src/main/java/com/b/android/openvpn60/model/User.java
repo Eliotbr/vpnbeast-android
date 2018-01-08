@@ -18,9 +18,8 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
 
-    public User(String userName, String userPass) {
+    public User(String userName) {
         this.userName = userName;
-        this.userPass = userPass;
         uuid = UUID.randomUUID();
     }
 

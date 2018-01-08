@@ -90,12 +90,12 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
     @Override
     protected void onPostExecute(Integer errorCode) {
         if (errorCode == 11) {
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(loginActivity, "Success", Toast.LENGTH_SHORT).show();
             logHelper.logInfo("Email successfully sended...");
         }
         else if (errorCode == 99) {
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(loginActivity, "An error occured while sending email", Toast.LENGTH_SHORT).show();
             logHelper.logWarning("An error occured while sending email");
         }
