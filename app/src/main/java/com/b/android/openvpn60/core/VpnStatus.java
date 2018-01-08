@@ -416,7 +416,7 @@ public class VpnStatus {
                 mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
 
-        //if (BuildConfig.DEBUG && !cachedLine && !BuildConfig.FLAVOR.equals("test"))
+        //if (BuildConstants.DEBUG && !cachedLine && !BuildConstants.FLAVOR.equals("test"))
         //    Log.d("OpenVPN", logItem.getString(null));
 
 

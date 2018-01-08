@@ -17,8 +17,8 @@ import de.blinkt.openvpn.core.NativeUtils;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.OpenVPNService;
-import com.b.android.openvpn60.core.PasswordCache;
-import com.b.android.openvpn60.core.VPNLaunchHelper;
+import com.b.android.openvpn60.util.PasswordUtil;
+import com.b.android.openvpn60.helper.VPNLaunchHelper;
 import com.b.android.openvpn60.core.Connection;
 
 import java.io.File;
@@ -765,7 +765,7 @@ public class VpnProfile implements Serializable, Cloneable {
             String caout = null;
             if (!TextUtils.isEmpty(mCaFilename)) {
                 try {
-                    Certificate[] cacerts = X509Utils.getCertificatesFromFile(mCaFilename);
+                    Certificate[] cacerts = X509Util.getCertificatesFromFile(mCaFilename);
                     StringWriter caoutWriter = new StringWriter();
                     PemWriter pw = new PemWriter(caoutWriter);
 
@@ -884,7 +884,7 @@ public class VpnProfile implements Serializable, Cloneable {
     //! Openvpn asks for a "Private Key", this should be pkcs12 key
     //
     public String getPasswordPrivateKey() {
-        String cachedPw = PasswordCache.getPKCS12orCertificatePassword(uuid, true);
+        String cachedPw = PasswordUtil.getPKCS12orCertificatePassword(uuid, true);
         if (cachedPw != null) {
             return cachedPw;
         }
@@ -974,7 +974,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public String getPasswordAuth() {
-        String cachedPw = PasswordCache.getAuthPassword(uuid, true);
+        String cachedPw = PasswordUtil.getAuthPassword(uuid, true);
         if (cachedPw != null) {
             return cachedPw;
         } else {

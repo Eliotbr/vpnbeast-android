@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.helper;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.File;

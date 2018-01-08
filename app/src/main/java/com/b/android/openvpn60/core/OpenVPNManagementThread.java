@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.constant.BuildConstants;
+import com.b.android.openvpn60.listener.ProxyListener;
 import com.b.android.openvpn60.model.VpnProfile;
 
 import junit.framework.Assert;
@@ -407,7 +409,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
 
     private void processProxyCMD(String argument) {
         String[] args = argument.split(",", 3);
-        SocketAddress proxyaddr = ProxyDetection.detectProxy(mProfile);
+        SocketAddress proxyaddr = ProxyListener.detectProxy(mProfile);
 
 
         if (args.length >= 2) {
@@ -484,7 +486,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
             */
 
                 if (routeparts.length == 5) {
-                    if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
+                    if (BuildConstants.DEBUG) Assert.assertEquals("dev", routeparts[3]);
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
                 } else if (routeparts.length >= 3) {
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);

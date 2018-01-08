@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 
+import com.b.android.openvpn60.util.PreferencesUtil;
+
 import java.util.LinkedList;
 
 /**
@@ -125,7 +127,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(context);
 
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
@@ -171,7 +173,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
 
     public void networkStateChange(Context context) {
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(context);
         boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
 
 

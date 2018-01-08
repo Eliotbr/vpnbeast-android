@@ -43,6 +43,7 @@ public class RegisterHelper implements Runnable {
         logHelper = LogHelper.getLogHelper(RegisterHelper.class.toString());
     }
 
+
     @Override
     public void run() {
         invokeWS(registerActivity, userName, userPass);

@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package com.b.android.openvpn60.core;/*
+package com.b.android.openvpn60.util;/*
  * This software is provided 'as-is', without any express or implied
  * warranty.  In no event will Google be held liable for any damages
  * arising from the use of this software.
@@ -39,7 +39,7 @@ import java.security.Security;
  * Cryptography Architecture primitives. A good place to invoke them is in the
  * application's {@code onCreate}.
  */
-public final class PRNGFixes {
+public final class PRNGUtil {
 
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
@@ -47,7 +47,7 @@ public final class PRNGFixes {
             getBuildFingerprintAndDeviceSerial();
 
     /** Hidden constructor to prevent instantiation. */
-    private PRNGFixes() {}
+    private PRNGUtil() {}
 
     /**
      * Applies all fixes.
@@ -220,7 +220,7 @@ public final class PRNGFixes {
             } catch (IOException e) {
                 // On a small fraction of devices /dev/urandom is not writable.
                 // Log and ignore.
-                Log.w(PRNGFixes.class.getSimpleName(),
+                Log.w(PRNGUtil.class.getSimpleName(),
                         "Failed to mix seed into " + URANDOM_FILE);
             } finally {
                 mSeeded = true;

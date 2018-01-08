@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.core.ConfigParser;
+import com.b.android.openvpn60.helper.ConfigHelper;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
@@ -322,13 +322,13 @@ public class ImportActivity extends ActionBarActivity {
     }
 
     private void doImport(InputStream is) {
-        ConfigParser cp = new ConfigParser();
+        ConfigHelper cp = new ConfigHelper();
         try {
             InputStreamReader isr = new InputStreamReader(is);
             cp.parseConfig(isr);
             mProfile = cp.convertProfile();
             //embedFiles(cp);
-        } catch (IOException | ConfigParser.ConfigParseError e) {
+        } catch (IOException | ConfigHelper.ConfigParseError e) {
             logHelper.logException(e);
         }
     }

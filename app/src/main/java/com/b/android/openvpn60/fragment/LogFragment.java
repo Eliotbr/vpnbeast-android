@@ -495,7 +495,7 @@ public class LogFragment extends ListFragment implements VpnStatus.StateListener
         mClearLogCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Preferences.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
+                PreferencesUtil.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
             }
         });*/
 

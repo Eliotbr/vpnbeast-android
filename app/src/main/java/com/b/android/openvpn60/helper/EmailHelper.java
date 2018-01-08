@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.LoginActivity;
-import com.b.android.openvpn60.core.JSEEProvider;
+import com.b.android.openvpn60.util.JSEEUtil;
 
 import java.io.File;
 import java.security.Security;
@@ -50,7 +50,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
     public EmailHelper(Context context, final String userName, final String password) {
         // Best Practice!
         loginActivity = (LoginActivity) context;
-        Security.addProvider(new JSEEProvider());
+        Security.addProvider(new JSEEUtil());
         this.userName = userName;
         this.password = password;
         authenticator = new Authenticator() {

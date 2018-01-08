@@ -16,7 +16,7 @@ import java.security.cert.CertificateFactory;
 import java.util.Vector;
 
 
-public class X509Utils {
+public class X509Util {
     public static Certificate[] getCertificatesFromFile(String certfilename) throws FileNotFoundException, CertificateException {
         CertificateFactory certFact = CertificateFactory.getInstance("X.509");
 

@@ -1,9 +1,11 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.helper;
 
 import android.content.Context;
 import android.support.v4.util.Pair;
 import android.text.TextUtils;
 
+import com.b.android.openvpn60.core.Connection;
+import com.b.android.openvpn60.core.IPAddress;
 import com.b.android.openvpn60.model.VpnProfile;
 
 import java.io.BufferedReader;
@@ -19,7 +21,7 @@ import java.util.Vector;
  * Created by b on 5/15/17.
  */
 
-public class ConfigParser {
+public class ConfigHelper {
     public static final String CONVERTED_PROFILE = "converted Profile";
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
@@ -668,7 +670,7 @@ public class ConfigParser {
         // Parse a connection Block as a new configuration file
 
 
-        ConfigParser connectionParser = new ConfigParser();
+        ConfigHelper connectionParser = new ConfigHelper();
         StringReader reader = new StringReader(connection.substring(VpnProfile.INLINE_TAG.length()));
         connectionParser.parseConfig(reader);
 

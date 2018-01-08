@@ -28,7 +28,7 @@ import com.b.android.openvpn60.helper.LoginHelper;
 import com.b.android.openvpn60.model.User;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.core.Preferences;
+import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.util.ViewUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -67,7 +67,7 @@ public class LoginActivity extends ActionBarActivity {
     private TextView txtSignup;
     private ProgressBar progressBar;
     private boolean isConnected = false;
-    private int errorCount = 0;
+    public static int errorCount = 0;
     private LogHelper logHelper;
     private EmailHelper emailHelper;
     private TextView txtUsername, txtPassword;
@@ -147,7 +147,7 @@ public class LoginActivity extends ActionBarActivity {
                 txtPassword = (TextView) this.findViewById(R.id.txtPass);
                 txtPassword.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-                sharedPreferences = Preferences.getDefaultSharedPreferences(LoginActivity.this);
+                sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
                 if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
             edtUsername.setText(sharedPreferences.getString(USER_NAME, null));
             edtPass.setText(sharedPreferences.getString(USER_PASS, null));
@@ -198,8 +198,31 @@ public class LoginActivity extends ActionBarActivity {
                         params.put(USER_NAME, userName);
                         params.put(USER_PASS, password);*/
                         // Invoke RESTful Web Service with Http parameters
-                        LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
-                        loginHelper.run();
+                        if (errorCount > 3) {
+                            Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                    getString(R.string.err_state_login_extra));
+                            alertDialog.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    sendEmail();
+                                }
+                            });
+                            alertDialog.setNegativeButton("Create New Account", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    final Intent intentSignup = new Intent(LoginActivity.this, RegisterActivity.class);
+                                    LoginActivity.this.startActivity(intentSignup);
+                                }
+                            });
+                            alertDialog.setCancelable(false);
+                            alertDialog.show();
+                        }
+                        else {
+                            LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
+                            loginHelper.run();
+                        }
                         /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(AppConstants.TEMP_USER.toString(), userName);
                         intent.putExtra(USER_NAME, edtUsername.getText().toString());
@@ -221,85 +244,6 @@ public class LoginActivity extends ActionBarActivity {
             edtPass.setText(sharedPreferences.getString(USER_PASS, null));
             chkRemember.setChecked(true);
         }
-    }
-
-    public void invokeWS(final String userName, final String userPass) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        final List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
-        nameValuePairs.add(new BasicNameValuePair(USER_PASS, userPass));
-        HttpEntity entity = null;
-        try {
-            entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
-        }
-        client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded",
-                new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                if (errorCount <= 3){
-                    try {
-                        if (response.getBoolean("status")) {
-                            User user = new User();
-                            user.setUserName(userName);
-                            user.setUserPass(userPass);
-                            logHelper.logInfo(getString(R.string.state_logged_in));
-                            LoginActivity.this.startActivity(intent);
-                            //progressBar.setVisibility(View.GONE);
-                        } else {
-                            errorCount++;
-                            AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                                    getString(R.string.err_state_login));
-                            alertDialog.show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    } catch (JSONException ex) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
-                                Toast.LENGTH_SHORT).show();
-                        logHelper.logException(ex);
-                    }
-                }
-                else  {
-                    Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                    final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                            getString(R.string.err_state_login_extra));
-                    alertDialog.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sendEmail();
-                        }
-                    });
-                    alertDialog.setNegativeButton("Create New Account", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            LoginActivity.this.startActivity(intentSignup);
-                        }
-                    });
-                    alertDialog.show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
-                if(statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
-                            Toast.LENGTH_LONG).show();
-                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
-                } else if(statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
-                            Toast.LENGTH_LONG).show();
-                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
-                            Toast.LENGTH_LONG).show();
-                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
-                }
-            }
-        });
     }
 
     private void sendEmail() {

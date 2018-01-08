@@ -1,4 +1,4 @@
-package com.b.android.openvpn60.core;
+package com.b.android.openvpn60.util;
 
 import java.security.AccessController;
 import java.security.Provider;
@@ -7,10 +7,10 @@ import java.security.Provider;
  * Created by b on 9/20/2017.
  */
 
-public class JSEEProvider extends Provider {
+public class JSEEUtil extends Provider {
     private static final long serialVersionUID = 3821760047343914156L;
 
-    public JSEEProvider() {
+    public JSEEUtil() {
         super("HarmonyJSSE", 1.0, "Harmony JSSE Provider");
         AccessController.doPrivileged(new java.security.PrivilegedAction<Void>() {
             public Void run() {

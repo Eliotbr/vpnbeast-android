@@ -30,10 +30,10 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
-import com.b.android.openvpn60.core.PasswordCache;
-import com.b.android.openvpn60.core.Preferences;
+import com.b.android.openvpn60.util.PasswordUtil;
+import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.core.ProfileManager;
-import com.b.android.openvpn60.core.VPNLaunchHelper;
+import com.b.android.openvpn60.helper.VPNLaunchHelper;
 import com.b.android.openvpn60.core.VpnStatus;
 
 import java.io.IOException;
@@ -74,9 +74,9 @@ public class LaunchVPN extends Activity {
             try {
                 if (mTransientAuthPW != null)
 
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordUtil.AUTHPASSWORD, mTransientAuthPW);
                 if (mTransientCertOrPCKS12PW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordUtil.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
 
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 
@@ -104,7 +104,7 @@ public class LaunchVPN extends Activity {
 
         if (Intent.ACTION_MAIN.equals(action)) {
             // Check if we need to clear the log
-            if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
+            if (PreferencesUtil.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
                 VpnStatus.clearLog();
 
             // we got called to be the starting point, most likely a shortcut
@@ -212,7 +212,7 @@ public class LaunchVPN extends Activity {
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
-                    SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+                    SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
                     ProfileManager.updateLRU(this, mSelectedProfile);
                     VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
                     showAfterMain();
