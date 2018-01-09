@@ -19,10 +19,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.IServiceStatus;
-import de.blinkt.openvpn.core.IStatusCallbacks;
-import de.blinkt.openvpn.core.LogItem;
 
 
 /**

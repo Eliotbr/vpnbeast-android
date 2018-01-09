@@ -1,4 +1,4 @@
-package de.blinkt.openvpn.core;
+package com.b.android.openvpn60.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.core.VpnStatus;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;

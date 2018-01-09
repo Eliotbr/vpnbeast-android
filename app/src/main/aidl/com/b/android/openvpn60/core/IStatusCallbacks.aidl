@@ -3,10 +3,10 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package de.blinkt.openvpn.core;
+package com.b.android.openvpn60.core;
 
-import de.blinkt.openvpn.core.LogItem;
-import de.blinkt.openvpn.core.ConnectionStatus;
+import com.b.android.openvpn60.core.LogItem;
+import com.b.android.openvpn60.core.ConnectionStatus;
 
 
 interface IStatusCallbacks {

@@ -14,16 +14,16 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.b.android.openvpn60.core.IServiceStatus;
+import com.b.android.openvpn60.core.IStatusCallbacks;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.VpnStatus;
 
 import java.io.File;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.IServiceStatus;
-import de.blinkt.openvpn.core.IStatusCallbacks;
-import de.blinkt.openvpn.core.LogItem;
+import com.b.android.openvpn60.core.ConnectionStatus;
+import com.b.android.openvpn60.core.LogItem;
 
 
 /**
@@ -42,7 +42,7 @@ public class StatusListener {
             IServiceStatus serviceStatus = IServiceStatus.Stub.asInterface(service);
             try {
                 /* Check if this a local service ... */
-                if (service.queryLocalInterface("de.blinkt.openvpn.core.IServiceStatus") == null) {
+                if (service.queryLocalInterface("com.b.android.openvpn60.core.IServiceStatus") == null) {
                     // Not a local service
                     VpnStatus.setConnectedVPNProfile(serviceStatus.getLastConnectedVPN());
                     ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);

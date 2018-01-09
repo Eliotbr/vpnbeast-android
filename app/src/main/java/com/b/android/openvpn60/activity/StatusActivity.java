@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.core.IOpenVPNServiceInternal;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
@@ -38,8 +39,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
+import com.b.android.openvpn60.core.ConnectionStatus;
 
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
     public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();

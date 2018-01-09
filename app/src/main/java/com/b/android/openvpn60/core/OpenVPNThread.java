@@ -19,8 +19,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.blinkt.openvpn.core.LogItem;
-
 /**
  * Created by b on 5/15/17.
  */

@@ -22,4 +22,5 @@ public class NativeUtils {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
             System.loadLibrary("jbcrypto");
     }
+
 }

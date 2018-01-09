@@ -47,12 +47,10 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.NativeUtils;
 
-import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
-import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
+import static com.b.android.openvpn60.core.ConnectionStatus.LEVEL_CONNECTED;
+import static com.b.android.openvpn60.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 
 /**
  * Created by b on 5/15/17.

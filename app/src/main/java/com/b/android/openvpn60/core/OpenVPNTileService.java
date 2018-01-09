@@ -19,13 +19,10 @@ import android.service.quicksettings.TileService;
 import android.widget.Toast;
 
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-
 import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.model.VpnProfile;
 
-import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 
 
 /**

@@ -3,7 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-package de.blinkt.openvpn.core;
+package com.b.android.openvpn60.core;
 /**
  * Created by arne on 15.11.16.
  */

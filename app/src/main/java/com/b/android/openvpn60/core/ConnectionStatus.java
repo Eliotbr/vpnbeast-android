@@ -1,4 +1,4 @@
-package de.blinkt.openvpn.core;
+package com.b.android.openvpn60.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;

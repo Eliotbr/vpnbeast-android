@@ -44,8 +44,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.LogItem;
+import com.b.android.openvpn60.core.ConnectionStatus;
+import com.b.android.openvpn60.core.LogItem;
 
 /**
  * Created by b on 5/11/17.

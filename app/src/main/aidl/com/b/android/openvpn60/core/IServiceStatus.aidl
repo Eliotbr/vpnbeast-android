@@ -1,7 +1,7 @@
 // StatusIPC.aidl
-package de.blinkt.openvpn.core;
+package com.b.android.openvpn60.core;
 // Declare any non-default types here with import statements
-import de.blinkt.openvpn.core.IStatusCallbacks;
+import com.b.android.openvpn60.core.IStatusCallbacks;
 import android.os.ParcelFileDescriptor;
 
 interface IServiceStatus {

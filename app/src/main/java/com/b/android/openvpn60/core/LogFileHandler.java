@@ -17,8 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 
-import de.blinkt.openvpn.core.LogItem;
-
 /**
  * Created by b on 5/15/17.
  */

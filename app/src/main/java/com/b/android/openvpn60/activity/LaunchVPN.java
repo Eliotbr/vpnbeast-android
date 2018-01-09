@@ -27,6 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.core.IServiceStatus;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
@@ -38,8 +39,7 @@ import com.b.android.openvpn60.core.VpnStatus;
 
 import java.io.IOException;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.IServiceStatus;
+import com.b.android.openvpn60.core.ConnectionStatus;
 
 /**
  * Created by b on 5/15/17.

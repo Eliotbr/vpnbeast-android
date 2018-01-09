@@ -14,8 +14,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
-import de.blinkt.openvpn.core.ConnectionStatus;
-import de.blinkt.openvpn.core.LogItem;
 import de.blinkt.openvpn.core.NativeUtils;
 
 /**
