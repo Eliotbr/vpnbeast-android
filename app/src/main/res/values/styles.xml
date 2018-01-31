@@ -40,6 +40,7 @@
     </style>
 
 
+
     <style name="MyTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="colorPrimary">@color/colorPrimary</item>

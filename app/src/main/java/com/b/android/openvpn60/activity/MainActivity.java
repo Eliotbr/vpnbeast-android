@@ -5,7 +5,6 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,15 +12,17 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -119,6 +120,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         init();
         prepareService();
         updateViews();
+        ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(this);
+
+        View mCustomView = mInflater.inflate(R.layout.custom_menu, null);
+        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+        mTitleTextView.setText(userName);
+
+        /*ImageButton imageButton = (ImageButton) mCustomView
+                .findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Refresh Clicked!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
     }
 
     private void init() {
@@ -189,6 +214,49 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 MainActivity.this.startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem itm1 = menu.add("Settings");
+        itm1.setNumericShortcut('1');
+        itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(MainActivity.this, "You selected Settings",
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        MenuItem itm2 = menu.add("About us");
+        itm2.setNumericShortcut('2');
+        itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this,
+                        AlertDialog.THEME_HOLO_DARK);
+                dlg.setTitle(item.getTitle());
+                dlg.setMessage("This is the place where we put some sort of messages.");
+                dlg.setPositiveButton("OK", null);
+                dlg.setNegativeButton("NOT OK", null);
+                dlg.show();
+                return false;
+            }
+        });
+        MenuItem itm3 = menu.add("Close");
+        itm3.setNumericShortcut('3');
+        itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                MainActivity.this.finish();
+                return false;
+            }
+        });
+        return true;
     }
 
     private ProfileManager getPM() {
@@ -314,136 +382,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem itm1 = menu.add(getString(R.string.prompt_import));
-        itm1.setNumericShortcut('1');
-        itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(importer);
-                return false;
-            }
-        });
-        MenuItem itm2 = menu.add(getString(R.string.prompt_remove_profile));
-        itm2.setNumericShortcut('2');
-        itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (profiles.isEmpty())
-                    Toast.makeText(MainActivity.this, R.string.err_profile_removed, Toast.LENGTH_LONG).show();
-                else {
-                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this,
-                            AlertDialog.THEME_HOLO_DARK);
-                    mBuilder.setTitle(getString(R.string.prompt_remove_profile));
-                    final CustomAdapter mAdapter = new CustomAdapter(MainActivity.this, R.layout.list_row,
-                            R.id.text, profiles) {};
-                    mBuilder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            mRemovedProfile = mAdapter.mProfile2;
-                        }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-
-                    mBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (mAdapter.mProfile2 != null) {
-                                getPM().removeProfile(MainActivity.this, mAdapter.mProfile2);  //
-                                updateProfiles();
-                                //profiles = (ArrayList<VpnProfile>) getPM().getProfiles();
-                                Toast.makeText(MainActivity.this, R.string.profile_removed,
-                                        Toast.LENGTH_SHORT).show();
-                                if (profiles.isEmpty()) {
-                                    btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
-                                    edtPort.setText("");
-                                    edtHost.setText("");
-                                }
-                            }
-                        }
-                    });
-                    mBuilder.setNegativeButton(android.R.string.cancel, null);
-                    mBuilder.setAdapter(mAdapter, null);
-                    mBuilder.show();
-                }
-                return false;
-            }
-        });
-        MenuItem itm3 = menu.add("Premium");
-        itm3.setNumericShortcut('3');
-        itm3.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (isMember) {
-                    Toast.makeText(MainActivity.this, "You are already a valid member!",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = new Intent(MainActivity.this, MemberActivity.class);
-                    intent.putExtra(USER_NAME, userName);
-                    MainActivity.this.startActivity(intent);
-                }
-                return false;
-            }
-        });
-        MenuItem itm4 = menu.add(getString(R.string.prompt_sort));
-        itm4.setNumericShortcut('3');
-        itm4.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm4.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                dlgProgress = new ProgressDialog(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
-                dlgProgress.setTitle(getString(R.string.sorting_profiles));
-                dlgProgress.setMessage(getString(R.string.sorting_profiles_msg));
-                dlgProgress.setCancelable(false);
-                dlgProgress.show();
-                Thread mThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (VpnProfile profile : profiles) {
-                            long startTime = System.nanoTime();
-                            executeCmd("ping -c 2 -w 2 " + profile.connections[0].serverName, false);
-                            long time = System.nanoTime() - startTime;
-                            Log.i(CLASS_TAG, "runtime: " + time);
-                            profile.ping = time;
-                        }
-                        sortBySpeed();
-                    }
-                });
-                mThread.start();
-                return false;
-            }
-        });
-        MenuItem itm5 = menu.add(getString(R.string.prompt_displayLocation));
-        itm5.setNumericShortcut('4');
-        itm5.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm5.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                displayLocation();
-                return false;
-            }
-        });
-        MenuItem itm6 = menu.add(getString(R.string.prompt_logout));
-        itm6.setNumericShortcut('5');
-        itm6.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm6.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //FirebaseAuth.getInstance().signOut();
-                MainActivity.this.finish();
-                return false;
-            }
-        });
-        return true;
-    }
 
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
