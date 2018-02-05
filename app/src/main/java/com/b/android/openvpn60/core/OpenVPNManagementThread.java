@@ -600,7 +600,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
             pw = mProfile.getPasswordAuth();
 
             String usercmd = String.format("username '%s' %s\n",
-                    needed, VpnProfile.openVpnEscape(mProfile.userName));
+                    needed, VpnProfile.openVpnEscape(mProfile.getUserName()));
             managmentCommand(usercmd);
         }
         if (pw != null) {

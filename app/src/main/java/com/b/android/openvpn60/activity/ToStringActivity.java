@@ -17,12 +17,11 @@ public class ToStringActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_string);
         TextView txtTostring = (TextView) this.findViewById(R.id.txtTostring);
-        //txtTostring.setText(this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString()).toString());
-
-        VpnProfile test = new VpnProfile("converted profile 2");
+        VpnProfile profile = (VpnProfile) this.getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
+        txtTostring.setText(profile.toString());
         Intent statusIntent = new Intent(ToStringActivity.this, StatusActivity.class);
-        statusIntent.putExtra(AppConstants.RESULT_PROFILE.toString(), test);
-        startOrStopVPN(test);
+        statusIntent.putExtra(AppConstants.RESULT_PROFILE.toString(), toString());
+        //startOrStopVPN(profile);
     }
 
     private void startOrStopVPN(VpnProfile profile) {

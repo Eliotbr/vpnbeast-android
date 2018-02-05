@@ -71,7 +71,6 @@ public class Connection implements Serializable, Cloneable {
         customConfiguration = "";
         useCustomConfig = false;
         isEnabled = true;
-
         connectTimeout = 0;
     }
 

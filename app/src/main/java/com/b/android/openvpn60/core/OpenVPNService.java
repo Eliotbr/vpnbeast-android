@@ -174,9 +174,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
         int icon = R.drawable.vpn26;
-
         android.app.Notification.Builder nbuilder = new Notification.Builder(this);
-
         if (mProfile != null)
             nbuilder.setContentTitle(getString(R.string.notifcation_title, mProfile.name));
         else
@@ -185,7 +183,6 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         nbuilder.setContentText(msg);
         nbuilder.setOnlyAlertOnce(true);
         nbuilder.setOngoing(true);
-
         nbuilder.setSmallIcon(icon);
         if (status == LEVEL_WAITING_FOR_USER_INPUT)
             nbuilder.setContentIntent(getUserInputIntent(msg));
@@ -195,39 +192,14 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         if (when != 0)
             nbuilder.setWhen(when);
 
-
-        // Try to set the priority available since API 16 (Jellybean)
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-
-            jbNotificationExtras(priority, nbuilder);*/
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             lpNotificationExtras(nbuilder);
-
         if (tickerText != null && !tickerText.equals(""))
             nbuilder.setTicker(tickerText);
 
-        @SuppressWarnings("deprecation")
         Notification notification = nbuilder.getNotification();
-
-
         mNotificationManager.notify(OPENVPN_STATUS, notification);
         startForeground(OPENVPN_STATUS, notification);
-
-        // Check if running on a TV
-        if (runningOnAndroidTV() && !(priority < 0))
-            guiHandler.post(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    if (mlastToast != null)
-                        mlastToast.cancel();
-                    String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.name, msg);
-                    mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
-                    mlastToast.show();
-                }
-            });
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -380,7 +352,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
         if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
             String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
-            int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
+            int profileVersion = intent.getIntExtra(getPackageName() + ".profileVerfsion", 0);
             // Try for 10s to get current version of the profile
             mProfile = ProfileManager.get(this, profileUUID, profileVersion, 100);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
@@ -679,7 +651,9 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                     }
                 }
                 if (!dnsIncluded) {
-                    String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore DNS servers outside the VPN range. To enable DNS resolution a route to your DNS Server (%s) has been added.", mDnslist.get(0));
+                    String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore " +
+                            "DNS servers outside the VPN range. To enable DNS resolution a route to your DNS " +
+                                "Server (%s) has been added.", mDnslist.get(0));
                     VpnStatus.logWarning(samsungwarning);
                     positiveIPv4Routes.add(dnsServer);
                 }
@@ -724,7 +698,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         }
 
 
-        String session = mProfile.name;
+        String session = mProfile.getIpAddress();
         if (mLocalIP != null && mLocalIPv6 != null)
             session = getString(R.string.session_ipv6string, session, mLocalIP, mLocalIPv6);
         else if (mLocalIP != null)

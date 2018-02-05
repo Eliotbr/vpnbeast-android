@@ -55,7 +55,7 @@ public class LaunchVPN extends Activity {
     private static final int START_VPN_PROFILE = 70;
     private static final String TAG = "com.b.android.openvpn." + LaunchVPN.class.toString();
 
-    private VpnProfile mSelectedProfile;
+    private VpnProfile selectedProfile;
     private String mTransientAuthPW;
     private String mTransientCertOrPCKS12PW;
 
@@ -74,9 +74,9 @@ public class LaunchVPN extends Activity {
             try {
                 if (mTransientAuthPW != null)
 
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordUtil.AUTHPASSWORD, mTransientAuthPW);
+                    service.setCachedPassword(selectedProfile.getUUIDString(), PasswordUtil.AUTHPASSWORD, mTransientAuthPW);
                 if (mTransientCertOrPCKS12PW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordUtil.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                    service.setCachedPassword(selectedProfile.getUUIDString(), PasswordUtil.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
 
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 
@@ -119,7 +119,7 @@ public class LaunchVPN extends Activity {
                 //Handle that later
                 finish();
             } else {
-                mSelectedProfile = profileToConnect;
+                selectedProfile = profileToConnect;
                 launchVPN();
             }
         }
@@ -145,9 +145,9 @@ public class LaunchVPN extends Activity {
         );
         dialog.setMessage(ssBuilder);
         if (type == R.string.password) {
-            ((EditText) userpwlayout.findViewById(R.id.edtUsername)).setText(mSelectedProfile.userName);
-            ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setText(mSelectedProfile.password);
-            ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(!TextUtils.isEmpty(mSelectedProfile.password));
+            ((EditText) userpwlayout.findViewById(R.id.edtUsername)).setText(selectedProfile.getUserName());
+            ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setText(selectedProfile.getPassword());
+            ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(!TextUtils.isEmpty(selectedProfile.getPassword()));
             ((CheckBox) userpwlayout.findViewById(R.id.show_password)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -168,13 +168,13 @@ public class LaunchVPN extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (type == R.string.password) {
-                            mSelectedProfile.userName = ((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString();
+                            selectedProfile.setUserName(((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString());
 
                             String pw = ((EditText) userpwlayout.findViewById(R.id.edtPassword)).getText().toString();
                             if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
-                                mSelectedProfile.password = pw;
+                                selectedProfile.setPassword(pw);
                             } else {
-                                mSelectedProfile.password = null;
+                                selectedProfile.setPassword(null);
                                 mTransientAuthPW = pw;
                             }
                         } else {
@@ -206,15 +206,15 @@ public class LaunchVPN extends Activity {
 
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
-                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
+                int needpw = selectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
                 if (needpw != 0) {
                     VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
                     SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
-                    ProfileManager.updateLRU(this, mSelectedProfile);
-                    VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
+                    ProfileManager.updateLRU(this, selectedProfile);
+                    VPNLaunchHelper.startOpenVpn(selectedProfile, getBaseContext());
                     showAfterMain();
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -231,7 +231,7 @@ public class LaunchVPN extends Activity {
 
         Intent startLW = new Intent(getBaseContext(), StatusActivity.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startLW.putExtra(RESULT_PROFILE, mSelectedProfile);
+        startLW.putExtra(RESULT_PROFILE, selectedProfile);
         startActivity(startLW);
         this.finish();
     }
@@ -270,7 +270,7 @@ public class LaunchVPN extends Activity {
     }
 
     void launchVPN() {
-        int vpnok = mSelectedProfile.checkProfile(this);
+        int vpnok = selectedProfile.checkProfile(this);
         if (vpnok != R.string.no_error_found) {
             showConfigErrorDialog(vpnok);
             return;

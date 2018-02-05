@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.helper.ConfigHelper;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
@@ -276,7 +275,8 @@ public class ImportActivity extends ActionBarActivity {
 
                     InputStream is = getContentResolver().openInputStream(mUri);
 
-                    doImport(is);
+                    //doImport(is);
+                    mProfile = new VpnProfile("converted Profile");
                     if (mProfile == null)
                         return -3;
                 } catch (FileNotFoundException | SecurityException se) {
@@ -321,17 +321,6 @@ public class ImportActivity extends ActionBarActivity {
         }.execute();
     }
 
-    private void doImport(InputStream is) {
-        ConfigHelper cp = new ConfigHelper();
-        try {
-            InputStreamReader isr = new InputStreamReader(is);
-            cp.parseConfig(isr);
-            mProfile = cp.convertProfile();
-            //embedFiles(cp);
-        } catch (IOException | ConfigHelper.ConfigParseError e) {
-            logHelper.logException(e);
-        }
-    }
 
     private void displayKeyboard() {
         InputMethodManager inputMethodManager =

@@ -32,6 +32,7 @@ import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -83,53 +84,53 @@ public class VpnProfile implements Serializable, Cloneable {
     // variable named wrong and should haven beeen transient
     // but needs to keep wrong name to guarante loading of old
     // profiles
-    public transient boolean profileDeleted = false;
-    public int mAuthenticationType = TYPE_KEYSTORE;
+    private transient boolean profileDeleted = false;
+    private int mAuthenticationType = TYPE_KEYSTORE;
     public String name;
-    public String aliasName;
-    public String clientCertFilename;
-    public String tlsAuthDirection = "";
-    public String tlsAuthFilename;
-    public String clientKeyFilename;
-    public String caFilename;
-    public boolean useLzo = true;
-    public String pkcs12Filename;
-    public String pkcs12Password;
-    public boolean useTLSAuth = false;
+    private String aliasName;
+    private String clientCertFilename;
+    private String tlsAuthDirection = "";
+    private String tlsAuthFilename;
+    private String clientKeyFilename;
+    private String caFilename;
+    private boolean useLzo = true;
+    private String pkcs12Filename;
+    private String pkcs12Password;
+    private boolean useTLSAuth = false;
 
-    public String DNS1 = DEFAULT_DNS1;
-    public String DNS2 = DEFAULT_DNS2;
-    public String ipv4Address;
-    public String mIPv6Address;
-    public boolean overrideDNS = false;
+    private String DNS1 = DEFAULT_DNS1;
+    private String DNS2 = DEFAULT_DNS2;
+    private String ipv4Address;
+    private String mIPv6Address;
+    private boolean overrideDNS = false;
     //public String mSearchDomain = "blinkt.de";
-    public boolean useDefaultRoute = true;
-    public boolean usePull = true;
-    public String customRoutes;
-    public boolean checkRemoteCN = true;
-    public boolean expectTLSCert = false;
-    public String remoteCN = "";
-    public String password = "";
-    public String userName = "";
-    public boolean routenopull = false;
-    public boolean useRandomHostname = false;
-    public boolean useFloat = false;
-    public boolean useCustomConfig = false;
-    public String customConfigOptions = "";
-    public String verb = "1";  //ignored
-    public String cipher = "";
-    public boolean nobind = false;
-    public boolean useDefaultRoutev6 = true;
-    public String customRoutesv6 = "";
-    public String keyPassword = "";
+    private boolean useDefaultRoute = true;
+    private boolean usePull = true;
+    private String customRoutes;
+    private boolean checkRemoteCN = true;
+    private boolean expectTLSCert = false;
+    private String remoteCN = "";
+    private String password = "";
+    private String userName = "";
+    private boolean routenopull = false;
+    private boolean useRandomHostname = false;
+    private boolean useFloat = false;
+    private boolean useCustomConfig = false;
+    private String customConfigOptions = "";
+    private String verb = "1";  //ignored
+    private String cipher = "";
+    private boolean nobind = false;
+    private boolean useDefaultRoutev6 = true;
+    private String customRoutesv6 = "";
+    private String keyPassword = "";
     public boolean persistTun = false;
-    public String connectRetryMax = "-1";
-    public String connectRetry = "2";
-    public String connectRetryMaxTime = "300";
-    public boolean userEditable = true;
-    public String auth = "";
-    public int x509AuthType = X509_VERIFY_TLSREMOTE_RDN;
-    public String x509UsernameField = null;
+    private String connectRetryMax = "-1";
+    private String connectRetry = "2";
+    private String connectRetryMaxTime = "300";
+    private boolean userEditable = true;
+    private String auth = "";
+    private int x509AuthType = X509_VERIFY_TLSREMOTE_RDN;
+    private String x509UsernameField = null;
 
     private transient PrivateKey privateKey;
     // Public attributes, since I got mad with getter/setter
@@ -137,40 +138,155 @@ public class VpnProfile implements Serializable, Cloneable {
     private UUID uuid;
     public boolean allowLocalLAN;
     private int profileVersion;
-    public String excludedRoutes;
-    public String excludedRoutesv6;
-    public int mssFix = 0; // -1 is default,
+    private String excludedRoutes;
+    private String excludedRoutesv6;
+    private int mssFix = 0; // -1 is default,
     public Connection[] connections = new Connection[0];
-    public boolean remoteRandom = false;
+    private boolean remoteRandom = false;
     public HashSet<String> allowedAppsVpn = new HashSet<>();
     public boolean allowedAppsVpnAreDisallowed = true;
-    public String crlFilename;
-    public String profileCreator;
+    private String crlFilename;
+    private String profileCreator;
     public long ping;
-
-    public boolean pushPeerInfo = false;
-    public static final boolean isOpenVPN22 = false;
-
+    private boolean pushPeerInfo = false;
+    private static final boolean isOpenVPN22 = false;
     public int version = 0;
-
     // timestamp when the profile was last used
     public long lastUsed;
-
     /* Options no longer used in new profiles */
-    public String serverName = "openvpn.example.com";
-    public String serverPort = "1194";
-    public boolean useUdp = true;
+    private String serverName = "openvpn.example.com";
+    private String serverPort = "1194";
+    private boolean useUdp = true;
+    private static String certString = "-----BEGIN CERTIFICATE-----\n" +
+            "MIIEujCCA6KgAwIBAgIJAKFMF6qMuej8MA0GCSqGSIb3DQEBCwUAMIGZMQswCQYD\n" +
+            "VQQGEwJOTDEMMAoGA1UECBMDQU1TMRIwEAYDVQQHEwlBbXN0ZXJkYW0xDjAMBgNV\n" +
+            "BAoTBVNLTFNOMRgwFgYDVQQLEw9TZWN1cml0eSBGb2JpYW4xETAPBgNVBAMTCFNL\n" +
+            "TFNOIENBMQ8wDQYDVQQpEwZmZWFub3IxGjAYBgkqhkiG9w0BCQEWC2luZm9AbXlo\n" +
+            "b3N0MB4XDTE1MDQwNDA3MDUyNVoXDTI1MDQwMTA3MDUyNVowgZkxCzAJBgNVBAYT\n" +
+            "Ak5MMQwwCgYDVQQIEwNBTVMxEjAQBgNVBAcTCUFtc3RlcmRhbTEOMAwGA1UEChMF\n" +
+            "U0tMU04xGDAWBgNVBAsTD1NlY3VyaXR5IEZvYmlhbjERMA8GA1UEAxMIU0tMU04g\n" +
+            "Q0ExDzANBgNVBCkTBmZlYW5vcjEaMBgGCSqGSIb3DQEJARYLaW5mb0BteWhvc3Qw\n" +
+            "ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDI6yO9LV8d83vOYoY9dwms\n" +
+            "oR0mumte2ySg4/W14yhHaUbyZX5sBFkp1wWcuWhH7PD/mqwTH8TJYfMerqq4RuZ2\n" +
+            "WEH1qrpjN5aJFTrItKYvZi2HmhBszbWZM8VNSamYd8gh4OS7h0fi+CiJ/YakmnzZ\n" +
+            "/3dGv6j6D/VhjxBERmxH3/wCbIyu258Q/4zNSB2JeNe9rzLoxnUBPbbLIv3MBoUC\n" +
+            "RMRILlFT7pjpOBFKjDwj7LAW4e0fgTgm/qUyMMFu5AfYzH9KI+J3VJpnMziKyj/V\n" +
+            "WOur2ko9YIEtjnxkY2PfKTc5R6GbeRGRYqnZ7kidiswQzfhkWXegECpF8H/0uzyr\n" +
+            "AgMBAAGjggEBMIH+MB0GA1UdDgQWBBSPp/QUSy10aTA5frRnMbzRvLCuoTCBzgYD\n" +
+            "VR0jBIHGMIHDgBSPp/QUSy10aTA5frRnMbzRvLCuoaGBn6SBnDCBmTELMAkGA1UE\n" +
+            "BhMCTkwxDDAKBgNVBAgTA0FNUzESMBAGA1UEBxMJQW1zdGVyZGFtMQ4wDAYDVQQK\n" +
+            "EwVTS0xTTjEYMBYGA1UECxMPU2VjdXJpdHkgRm9iaWFuMREwDwYDVQQDEwhTS0xT\n" +
+            "TiBDQTEPMA0GA1UEKRMGZmVhbm9yMRowGAYJKoZIhvcNAQkBFgtpbmZvQG15aG9z\n" +
+            "dIIJAKFMF6qMuej8MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAC26\n" +
+            "a9jHpke3FK+5wjQFp5+QZdbAaqBUgsTKX1kdna8RuCTcXTfRllxdf5cF93HP0c7K\n" +
+            "09ObKhgyqOPeVCuXJbR1xPlkCMpLYhkER7KyGyM0YxhqKDTsiybbryh2KiScZNzO\n" +
+            "ROBNwH7hURrcnq08Xn3amvorkVI/DsK9UIZfBtDfORDAGn+qed0PNdX1kQQHu2lW\n" +
+            "mQN6PD7MitUk3ojLoCqJmwx1An5BX8Y4M1h9L667IKx7IyoSxngQH53ZX7KcNoxI\n" +
+            "VjLFP6VqKIyu+Vcv/dSRoWNeERKx4YddiDPMDIespcpBPXP57C7Ic6xfwMuQ0Q0q\n" +
+            "1Lfjh4H3ZG2AKNvQkyk=\n" +
+            "-----END CERTIFICATE-----";
 
 
     public VpnProfile(String name) {
-        uuid = UUID.randomUUID();
+        initConstants();
         this.name = name;
-        profileVersion = CURRENT_PROFILE_VERSION;
 
+    }
+
+    public String getIpAddress() {
+        return connections[0].serverName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public long getPing() {
+        return ping;
+    }
+
+
+    private void initConstants() {
+        uuid = UUID.randomUUID();
+        profileVersion = CURRENT_PROFILE_VERSION;
         connections = new Connection[1];
         connections[0] = new Connection();
         lastUsed = System.currentTimeMillis();
+        profileDeleted = false;
+        mAuthenticationType = 3;
+        aliasName = null;
+        clientCertFilename = null;
+        tlsAuthDirection = "";
+        tlsAuthFilename = null;
+        clientKeyFilename = null;
+        caFilename = "[[INLINE]]" + certString;
+        useLzo = true;
+        pkcs12Filename = null;
+        pkcs12Password = null;
+        useTLSAuth = false;
+        DNS1 = "8.8.8.8";
+        DNS2 = "8.8.4.4";
+        ipv4Address = null;
+        mIPv6Address = null;
+        overrideDNS = false;
+        useDefaultRoute = false;
+        usePull = true;
+        customRoutes = null;
+        checkRemoteCN = false;
+        expectTLSCert = false;
+        remoteCN = "";
+        password = "";
+        userName = "";
+        routenopull = false;
+        useRandomHostname = false;
+        useFloat = false;
+        useCustomConfig = false;
+        customConfigOptions = "";
+        verb = "3";
+        cipher = "AES-256-CBC";
+        nobind = true;
+        useDefaultRoutev6 = false;
+        customRoutesv6 = "";
+        keyPassword = "";
+        persistTun = true;
+        connectRetryMax = "-1";
+        connectRetry = "2";
+        connectRetryMaxTime = "300";
+        userEditable = true;
+        auth = "SHA256";
+        x509AuthType = 3;
+        x509UsernameField = null;
+        privateKey = null;
+        allowLocalLAN = true;
+        excludedRoutes = null;
+        excludedRoutesv6 = null;
+        mssFix = 0;
+        remoteRandom = false;
+        allowedAppsVpn = new HashSet<>();
+        allowedAppsVpnAreDisallowed = true;
+        crlFilename = null;
+        profileCreator = null;
+        ping = 0;
+        pushPeerInfo = false;
+        version = 2;
+        lastUsed = System.currentTimeMillis();
+        serverName = "unknown";
+        serverPort = "1194";
+        useUdp = true;
     }
+
 
     public static String openVpnEscape(String unescaped) {
         if (unescaped == null)
@@ -984,9 +1100,73 @@ public class VpnProfile implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "Server UUID: " + getUUIDString() +
-                "\nServer Name: " + connections[0].serverName +
-                "\nServer Port: " + connections[0].serverPort;
+        return "VpnProfile{" +
+                "profileDeleted=" + profileDeleted +
+                ", mAuthenticationType=" + mAuthenticationType +
+                ", name='" + name + '\'' +
+                ", aliasName='" + aliasName + '\'' +
+                ", clientCertFilename='" + clientCertFilename + '\'' +
+                ", tlsAuthDirection='" + tlsAuthDirection + '\'' +
+                ", tlsAuthFilename='" + tlsAuthFilename + '\'' +
+                ", clientKeyFilename='" + clientKeyFilename + '\'' +
+                ", caFilename='" + caFilename + '\'' +
+                ", useLzo=" + useLzo +
+                ", pkcs12Filename='" + pkcs12Filename + '\'' +
+                ", pkcs12Password='" + pkcs12Password + '\'' +
+                ", useTLSAuth=" + useTLSAuth +
+                ", DNS1='" + DNS1 + '\'' +
+                ", DNS2='" + DNS2 + '\'' +
+                ", ipv4Address='" + ipv4Address + '\'' +
+                ", mIPv6Address='" + mIPv6Address + '\'' +
+                ", overrideDNS=" + overrideDNS +
+                ", useDefaultRoute=" + useDefaultRoute +
+                ", usePull=" + usePull +
+                ", customRoutes='" + customRoutes + '\'' +
+                ", checkRemoteCN=" + checkRemoteCN +
+                ", expectTLSCert=" + expectTLSCert +
+                ", remoteCN='" + remoteCN + '\'' +
+                ", password='" + password + '\'' +
+                ", userName='" + userName + '\'' +
+                ", routenopull=" + routenopull +
+                ", useRandomHostname=" + useRandomHostname +
+                ", useFloat=" + useFloat +
+                ", useCustomConfig=" + useCustomConfig +
+                ", customConfigOptions='" + customConfigOptions + '\'' +
+                ", verb='" + verb + '\'' +
+                ", cipher='" + cipher + '\'' +
+                ", nobind=" + nobind +
+                ", useDefaultRoutev6=" + useDefaultRoutev6 +
+                ", customRoutesv6='" + customRoutesv6 + '\'' +
+                ", keyPassword='" + keyPassword + '\'' +
+                ", persistTun=" + persistTun +
+                ", connectRetryMax='" + connectRetryMax + '\'' +
+                ", connectRetry='" + connectRetry + '\'' +
+                ", connectRetryMaxTime='" + connectRetryMaxTime + '\'' +
+                ", userEditable=" + userEditable +
+                ", auth='" + auth + '\'' +
+                ", x509AuthType=" + x509AuthType +
+                ", x509UsernameField='" + x509UsernameField + '\'' +
+                ", privateKey=" + privateKey +
+                ", uuid=" + uuid +
+                ", allowLocalLAN=" + allowLocalLAN +
+                ", profileVersion=" + profileVersion +
+                ", excludedRoutes='" + excludedRoutes + '\'' +
+                ", excludedRoutesv6='" + excludedRoutesv6 + '\'' +
+                ", mssFix=" + mssFix +
+                ", connections=" + Arrays.toString(connections) +
+                ", remoteRandom=" + remoteRandom +
+                ", allowedAppsVpn=" + allowedAppsVpn +
+                ", allowedAppsVpnAreDisallowed=" + allowedAppsVpnAreDisallowed +
+                ", crlFilename='" + crlFilename + '\'' +
+                ", profileCreator='" + profileCreator + '\'' +
+                ", ping=" + ping +
+                ", pushPeerInfo=" + pushPeerInfo +
+                ", version=" + version +
+                ", lastUsed=" + lastUsed +
+                ", serverName='" + serverName + '\'' +
+                ", serverPort='" + serverPort + '\'' +
+                ", useUdp=" + useUdp +
+                '}';
     }
 
     public String getUUIDString() {
