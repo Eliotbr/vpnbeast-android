@@ -2,6 +2,7 @@ package com.b.android.openvpn60.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -39,6 +40,7 @@ import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.util.PreferencesUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        generateProfiles();
         init();
         prepareService();
         updateViews();
@@ -126,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
-
         View mCustomView = mInflater.inflate(R.layout.custom_menu, null);
         TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
         mTitleTextView.setText(userName);
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void init() {
         //profiles = getProfileInfos();
-        profiles = new ArrayList<>(getPM().getProfiles());
+        //profiles = new ArrayList<>(getPM().getProfiles());
         logHelper = LogHelper.getLogHelper(this);
         btnConnect = (Button) this.findViewById(R.id.btnConnect);
         importer = new Intent(this, ImportActivity.class);
@@ -171,11 +173,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         txtPort = (TextView) this.findViewById(R.id.txtPort);
         txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        edtUser.setText(mUsername);
+        userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
+        edtUser.setText(userName);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(AppConstants.TEMP_USER.toString());
-        userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
+        //userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
         btnSelect = (Button) this.findViewById(R.id.btnSelect);
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,21 +209,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
         });
-        Button btnTostring = (Button) this.findViewById(R.id.btnTostring);
-        btnTostring.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ToStringActivity.class);
-                intent.putExtra(RESULT_PROFILE, profile);
-                MainActivity.this.startActivity(intent);
-            }
-        });
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem itm1 = menu.add(getString(R.string.prompt_import));
+        /*MenuItem itm1 = menu.add(getString(R.string.prompt_import));
         itm1.setNumericShortcut('1');
         itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -229,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 startActivity(importer);
                 return false;
             }
-        });
+        });*/
         MenuItem itm2 = menu.add(getString(R.string.prompt_remove_profile));
         itm2.setNumericShortcut('2');
         itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -366,6 +361,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         isUserAMember();
     }
 
+    private void generateProfiles() {
+        profiles = getProfileInfos();
+        /*profiles = new ArrayList<>(getPM().getProfiles());
+        if (profiles.size() == 0) {
+            for (int i=0; i<=3; i++) {
+                VpnProfile tempProfile = new VpnProfile("converted profile " + i);
+                saveProfile(tempProfile);
+            }
+        }*/
+    }
+
+    private void saveProfile(VpnProfile profile) {
+        Intent result = new Intent();
+        ProfileManager vpl = ProfileManager.getInstance(this);
+        vpl.addProfile(profile);
+        vpl.saveProfile(this, profile);
+        vpl.saveProfileList(this);
+        result.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
+        setResult(Activity.RESULT_OK, result);
+        //finish();
+    }
+
     public void invokeWS() {
         AsyncHttpClient client = new AsyncHttpClient();
         final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -471,8 +488,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }
-
-
 
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
@@ -675,23 +690,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
                     if (!isServerstaken) {
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject object = (JSONObject) response.get(i);
-                            VpnProfile tempProfile = new VpnProfile("server");
-                            Connection con = new Connection();
-                            con.serverName = object.getString("serverIp");
-                            con.serverPort = object.getString("serverPort");
-                            //tempProfile.setConnection(con);
-                            tempProfile.setUserName(userName);
-                            tempProfile.setPassword(userName);
-                            profiles.add(tempProfile);
+                        if (profiles.isEmpty()) {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject object = (JSONObject) response.get(i);
+                                VpnProfile tempProfile = new VpnProfile(object.getString("serverName"),
+                                        object.getString("serverIp"), object.getString("serverPort"));
+                                //tempProfile.setConnection(con);
+                                profiles.add(tempProfile);
+                                saveProfile(tempProfile);
+                            }
+                            isServerstaken = true;
+                            if (!profiles.isEmpty()) {
+                                profile = profiles.get(0);
+                            }
+                            updateViews();
+                            logHelper.logInfo(getString(R.string.state_sorted_profiles));
                         }
-                        isServerstaken = true;
-                        if (!profiles.isEmpty()) {
-                            profile = profiles.get(0);
-                        }
-                        updateViews();
-                        logHelper.logInfo(getString(R.string.state_sorted_profiles));
                     }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();

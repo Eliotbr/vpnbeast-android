@@ -59,7 +59,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
-
     private static final String TAG = "com.b.android.openvpn." + VpnProfile.class.toString();
     private static final long serialVersionUID = 7085688938959334563L;
     public static final int MAXLOGLEVEL = 4;
@@ -67,7 +66,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
-
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
     public static final int TYPE_KEYSTORE = 2;
@@ -81,9 +79,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final int X509_VERIFY_TLSREMOTE_DN = 2;
     public static final int X509_VERIFY_TLSREMOTE_RDN = 3;
     public static final int X509_VERIFY_TLSREMOTE_RDN_PREFIX = 4;
-    // variable named wrong and should haven beeen transient
-    // but needs to keep wrong name to guarante loading of old
-    // profiles
     private transient boolean profileDeleted = false;
     private int mAuthenticationType = TYPE_KEYSTORE;
     public String name;
@@ -97,13 +92,11 @@ public class VpnProfile implements Serializable, Cloneable {
     private String pkcs12Filename;
     private String pkcs12Password;
     private boolean useTLSAuth = false;
-
     private String DNS1 = DEFAULT_DNS1;
     private String DNS2 = DEFAULT_DNS2;
     private String ipv4Address;
     private String mIPv6Address;
     private boolean overrideDNS = false;
-    //public String mSearchDomain = "blinkt.de";
     private boolean useDefaultRoute = true;
     private boolean usePull = true;
     private String customRoutes;
@@ -131,7 +124,6 @@ public class VpnProfile implements Serializable, Cloneable {
     private String auth = "";
     private int x509AuthType = X509_VERIFY_TLSREMOTE_RDN;
     private String x509UsernameField = null;
-
     private transient PrivateKey privateKey;
     // Public attributes, since I got mad with getter/setter
     // set members to default values
@@ -153,7 +145,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public int version = 0;
     // timestamp when the profile was last used
     public long lastUsed;
-    /* Options no longer used in new profiles */
     private String serverName = "openvpn.example.com";
     private String serverPort = "1194";
     private boolean useUdp = true;
@@ -188,9 +179,17 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
     public VpnProfile(String name) {
+        connections = new Connection[1];
+        connections[0] = new Connection();
         initConstants();
         this.name = name;
+    }
 
+    public VpnProfile(String name, String ipAddress, String serverPort) {
+        connections = new Connection[1];
+        connections[0] = new Connection(ipAddress, serverPort);
+        this.name = name;
+        initConstants();
     }
 
     public String getIpAddress() {
@@ -221,8 +220,6 @@ public class VpnProfile implements Serializable, Cloneable {
     private void initConstants() {
         uuid = UUID.randomUUID();
         profileVersion = CURRENT_PROFILE_VERSION;
-        connections = new Connection[1];
-        connections[0] = new Connection();
         lastUsed = System.currentTimeMillis();
         profileDeleted = false;
         mAuthenticationType = 3;
@@ -1101,71 +1098,9 @@ public class VpnProfile implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "VpnProfile{" +
-                "profileDeleted=" + profileDeleted +
-                ", mAuthenticationType=" + mAuthenticationType +
-                ", name='" + name + '\'' +
-                ", aliasName='" + aliasName + '\'' +
-                ", clientCertFilename='" + clientCertFilename + '\'' +
-                ", tlsAuthDirection='" + tlsAuthDirection + '\'' +
-                ", tlsAuthFilename='" + tlsAuthFilename + '\'' +
-                ", clientKeyFilename='" + clientKeyFilename + '\'' +
-                ", caFilename='" + caFilename + '\'' +
-                ", useLzo=" + useLzo +
-                ", pkcs12Filename='" + pkcs12Filename + '\'' +
-                ", pkcs12Password='" + pkcs12Password + '\'' +
-                ", useTLSAuth=" + useTLSAuth +
-                ", DNS1='" + DNS1 + '\'' +
-                ", DNS2='" + DNS2 + '\'' +
-                ", ipv4Address='" + ipv4Address + '\'' +
-                ", mIPv6Address='" + mIPv6Address + '\'' +
-                ", overrideDNS=" + overrideDNS +
-                ", useDefaultRoute=" + useDefaultRoute +
-                ", usePull=" + usePull +
-                ", customRoutes='" + customRoutes + '\'' +
-                ", checkRemoteCN=" + checkRemoteCN +
-                ", expectTLSCert=" + expectTLSCert +
-                ", remoteCN='" + remoteCN + '\'' +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", routenopull=" + routenopull +
-                ", useRandomHostname=" + useRandomHostname +
-                ", useFloat=" + useFloat +
-                ", useCustomConfig=" + useCustomConfig +
-                ", customConfigOptions='" + customConfigOptions + '\'' +
-                ", verb='" + verb + '\'' +
-                ", cipher='" + cipher + '\'' +
-                ", nobind=" + nobind +
-                ", useDefaultRoutev6=" + useDefaultRoutev6 +
-                ", customRoutesv6='" + customRoutesv6 + '\'' +
-                ", keyPassword='" + keyPassword + '\'' +
-                ", persistTun=" + persistTun +
-                ", connectRetryMax='" + connectRetryMax + '\'' +
-                ", connectRetry='" + connectRetry + '\'' +
-                ", connectRetryMaxTime='" + connectRetryMaxTime + '\'' +
-                ", userEditable=" + userEditable +
-                ", auth='" + auth + '\'' +
-                ", x509AuthType=" + x509AuthType +
-                ", x509UsernameField='" + x509UsernameField + '\'' +
-                ", privateKey=" + privateKey +
-                ", uuid=" + uuid +
-                ", allowLocalLAN=" + allowLocalLAN +
-                ", profileVersion=" + profileVersion +
-                ", excludedRoutes='" + excludedRoutes + '\'' +
-                ", excludedRoutesv6='" + excludedRoutesv6 + '\'' +
-                ", mssFix=" + mssFix +
-                ", connections=" + Arrays.toString(connections) +
-                ", remoteRandom=" + remoteRandom +
-                ", allowedAppsVpn=" + allowedAppsVpn +
-                ", allowedAppsVpnAreDisallowed=" + allowedAppsVpnAreDisallowed +
-                ", crlFilename='" + crlFilename + '\'' +
-                ", profileCreator='" + profileCreator + '\'' +
-                ", ping=" + ping +
-                ", pushPeerInfo=" + pushPeerInfo +
-                ", version=" + version +
-                ", lastUsed=" + lastUsed +
-                ", serverName='" + serverName + '\'' +
-                ", serverPort='" + serverPort + '\'' +
-                ", useUdp=" + useUdp +
+                "name = " + name + "\n" +
+                "ip address = " + connections[0].serverName + "\n" +
+                "port = " + connections[0].serverPort + "\n" +
                 '}';
     }
 

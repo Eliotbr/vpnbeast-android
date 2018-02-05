@@ -136,6 +136,7 @@ public class LaunchVPN extends Activity {
         String dialogMessage = getResources().getString(R.string.pw_request_dialog_prompt);
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
         // Initialize a new spannable string builder instance
+        dialog.setCancelable(false);
         SpannableStringBuilder ssBuilder = new SpannableStringBuilder(dialogMessage);
         ssBuilder.setSpan(
                 foregroundColorSpan,
@@ -166,7 +167,6 @@ public class LaunchVPN extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         if (type == R.string.password) {
                             selectedProfile.setUserName(((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString());
 

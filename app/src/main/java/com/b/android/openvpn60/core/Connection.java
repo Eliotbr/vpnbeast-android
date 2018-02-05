@@ -17,16 +17,19 @@ public class Connection implements Serializable, Cloneable {
     public boolean isEnabled = true;
     public int connectTimeout = 0;
     public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
-
     private static final long serialVersionUID = 92031902903829089L;
 
+
     public Connection() {
-        initConstants();
+        initConstants(null, null);
+    }
+
+    public Connection(String serverIp, String serverPort) {
+        initConstants(serverIp, serverPort);
     }
 
     public String getConnectionBlock() {
         String cfg = "";
-
         // Server Address
         cfg += "remote ";
         cfg += serverName;
@@ -39,7 +42,6 @@ public class Connection implements Serializable, Cloneable {
 
         if (connectTimeout != 0)
             cfg += String.format(" connect-timeout  %d\n", connectTimeout);
-
 
         if (!TextUtils.isEmpty(customConfiguration) && useCustomConfig) {
             cfg += customConfiguration;
@@ -64,9 +66,14 @@ public class Connection implements Serializable, Cloneable {
             return connectTimeout;
     }
 
-    private void initConstants() {
-        serverName = "95.85.25.155";
-        serverPort = "443";
+    private void initConstants(String ip, String port) {
+        if (ip == null && port == null) {
+            serverName = "95.85.25.155";
+            serverPort = "443";
+        } else {
+            serverName = ip;
+            serverPort = port;
+        }
         isUdp = true;
         customConfiguration = "";
         useCustomConfig = false;

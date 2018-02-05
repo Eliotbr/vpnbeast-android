@@ -48,7 +48,6 @@ public class LoginHelper implements Runnable {
 
 
     public LoginHelper(Context context, Intent intent, String userName, String userPass) {
-        loginActivity = (LoginActivity) context;
         this.userName = userName;
         this.userPass = userPass;
         this.mainIntent = intent;
@@ -59,9 +58,12 @@ public class LoginHelper implements Runnable {
 
     @Override
     public void run() {
-        loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        loginActivity.getIntent().putExtra(AppConstants.USER_NAME.toString(), userName);
-        loginActivity.getIntent().putExtra(AppConstants.USER_PASS.toString(), userPass);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mainIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
+        mainIntent.putExtra(AppConstants.USER_PASS.toString(), userPass);
+        //loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //loginActivity.getIntent().putExtra(AppConstants.USER_NAME.toString(), userName);
+        //loginActivity.getIntent().putExtra(AppConstants.USER_PASS.toString(), userPass);
         //loginActivity.invokeWS(userName, userPass);
         invokeWS(userName, userPass);
         //loginActivity.getProgressBar().setVisibility(View.GONE);
@@ -90,8 +92,7 @@ public class LoginHelper implements Runnable {
                                     user.setUserName(userName);
                                     user.setUserPass(userPass);
                                     logHelper.logInfo(context.getString(R.string.state_logged_in));
-                                    final Intent intent = new Intent(context, MainActivity.class);
-                                    context.startActivity(intent);
+                                    context.startActivity(mainIntent);
                                     //progressBar.setVisibility(View.GONE);
                                 } else {
                                     LoginActivity.errorCount++;
