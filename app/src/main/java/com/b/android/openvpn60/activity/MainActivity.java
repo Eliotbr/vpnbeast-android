@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        generateProfiles();
+        //generateProfiles();
         init();
         prepareService();
         updateViews();
@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private void init() {
         //profiles = getProfileInfos();
         //profiles = new ArrayList<>(getPM().getProfiles());
+        profiles = new ArrayList<>();
+        profiles = getProfileInfos();
         logHelper = LogHelper.getLogHelper(this);
         btnConnect = (Button) this.findViewById(R.id.btnConnect);
         importer = new Intent(this, ImportActivity.class);
@@ -361,8 +363,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         isUserAMember();
     }
 
-    private void generateProfiles() {
-        profiles = getProfileInfos();
+    private ArrayList<VpnProfile> generateProfiles() {
+        return getProfileInfos();
         /*profiles = new ArrayList<>(getPM().getProfiles());
         if (profiles.size() == 0) {
             for (int i=0; i<=3; i++) {
@@ -440,7 +442,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
             profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
         //isUserAMember();
-        updateProfiles();
+        //updateProfiles();
+        generateProfiles();
         super.onResume();
     }
 
@@ -690,11 +693,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
                     if (!isServerstaken) {
-                        if (profiles.isEmpty()) {
+                        if (!profiles.isEmpty())
+                            profiles.clear();
+                        else if (profiles.isEmpty()) {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = (JSONObject) response.get(i);
                                 VpnProfile tempProfile = new VpnProfile(object.getString("serverName"),
-                                        object.getString("serverIp"), object.getString("serverPort"));
+                                        object.getString("serverIp"), object.getString("serverPort"),
+                                            object.getString("serverCert"));
                                 //tempProfile.setConnection(con);
                                 profiles.add(tempProfile);
                                 saveProfile(tempProfile);

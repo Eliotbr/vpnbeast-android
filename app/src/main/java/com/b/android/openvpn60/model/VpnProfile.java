@@ -148,34 +148,7 @@ public class VpnProfile implements Serializable, Cloneable {
     private String serverName = "openvpn.example.com";
     private String serverPort = "1194";
     private boolean useUdp = true;
-    private static String certString = "-----BEGIN CERTIFICATE-----\n" +
-            "MIIEujCCA6KgAwIBAgIJAKFMF6qMuej8MA0GCSqGSIb3DQEBCwUAMIGZMQswCQYD\n" +
-            "VQQGEwJOTDEMMAoGA1UECBMDQU1TMRIwEAYDVQQHEwlBbXN0ZXJkYW0xDjAMBgNV\n" +
-            "BAoTBVNLTFNOMRgwFgYDVQQLEw9TZWN1cml0eSBGb2JpYW4xETAPBgNVBAMTCFNL\n" +
-            "TFNOIENBMQ8wDQYDVQQpEwZmZWFub3IxGjAYBgkqhkiG9w0BCQEWC2luZm9AbXlo\n" +
-            "b3N0MB4XDTE1MDQwNDA3MDUyNVoXDTI1MDQwMTA3MDUyNVowgZkxCzAJBgNVBAYT\n" +
-            "Ak5MMQwwCgYDVQQIEwNBTVMxEjAQBgNVBAcTCUFtc3RlcmRhbTEOMAwGA1UEChMF\n" +
-            "U0tMU04xGDAWBgNVBAsTD1NlY3VyaXR5IEZvYmlhbjERMA8GA1UEAxMIU0tMU04g\n" +
-            "Q0ExDzANBgNVBCkTBmZlYW5vcjEaMBgGCSqGSIb3DQEJARYLaW5mb0BteWhvc3Qw\n" +
-            "ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDI6yO9LV8d83vOYoY9dwms\n" +
-            "oR0mumte2ySg4/W14yhHaUbyZX5sBFkp1wWcuWhH7PD/mqwTH8TJYfMerqq4RuZ2\n" +
-            "WEH1qrpjN5aJFTrItKYvZi2HmhBszbWZM8VNSamYd8gh4OS7h0fi+CiJ/YakmnzZ\n" +
-            "/3dGv6j6D/VhjxBERmxH3/wCbIyu258Q/4zNSB2JeNe9rzLoxnUBPbbLIv3MBoUC\n" +
-            "RMRILlFT7pjpOBFKjDwj7LAW4e0fgTgm/qUyMMFu5AfYzH9KI+J3VJpnMziKyj/V\n" +
-            "WOur2ko9YIEtjnxkY2PfKTc5R6GbeRGRYqnZ7kidiswQzfhkWXegECpF8H/0uzyr\n" +
-            "AgMBAAGjggEBMIH+MB0GA1UdDgQWBBSPp/QUSy10aTA5frRnMbzRvLCuoTCBzgYD\n" +
-            "VR0jBIHGMIHDgBSPp/QUSy10aTA5frRnMbzRvLCuoaGBn6SBnDCBmTELMAkGA1UE\n" +
-            "BhMCTkwxDDAKBgNVBAgTA0FNUzESMBAGA1UEBxMJQW1zdGVyZGFtMQ4wDAYDVQQK\n" +
-            "EwVTS0xTTjEYMBYGA1UECxMPU2VjdXJpdHkgRm9iaWFuMREwDwYDVQQDEwhTS0xT\n" +
-            "TiBDQTEPMA0GA1UEKRMGZmVhbm9yMRowGAYJKoZIhvcNAQkBFgtpbmZvQG15aG9z\n" +
-            "dIIJAKFMF6qMuej8MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAC26\n" +
-            "a9jHpke3FK+5wjQFp5+QZdbAaqBUgsTKX1kdna8RuCTcXTfRllxdf5cF93HP0c7K\n" +
-            "09ObKhgyqOPeVCuXJbR1xPlkCMpLYhkER7KyGyM0YxhqKDTsiybbryh2KiScZNzO\n" +
-            "ROBNwH7hURrcnq08Xn3amvorkVI/DsK9UIZfBtDfORDAGn+qed0PNdX1kQQHu2lW\n" +
-            "mQN6PD7MitUk3ojLoCqJmwx1An5BX8Y4M1h9L667IKx7IyoSxngQH53ZX7KcNoxI\n" +
-            "VjLFP6VqKIyu+Vcv/dSRoWNeERKx4YddiDPMDIespcpBPXP57C7Ic6xfwMuQ0Q0q\n" +
-            "1Lfjh4H3ZG2AKNvQkyk=\n" +
-            "-----END CERTIFICATE-----";
+    private String serverCert;
 
 
     public VpnProfile(String name) {
@@ -185,10 +158,11 @@ public class VpnProfile implements Serializable, Cloneable {
         this.name = name;
     }
 
-    public VpnProfile(String name, String ipAddress, String serverPort) {
+    public VpnProfile(String name, String ipAddress, String serverPort, String serverCert) {
         connections = new Connection[1];
         connections[0] = new Connection(ipAddress, serverPort);
         this.name = name;
+        this.serverCert = serverCert;
         initConstants();
     }
 
@@ -228,7 +202,7 @@ public class VpnProfile implements Serializable, Cloneable {
         tlsAuthDirection = "";
         tlsAuthFilename = null;
         clientKeyFilename = null;
-        caFilename = "[[INLINE]]" + certString;
+        caFilename = "[[INLINE]]" + serverCert;
         useLzo = true;
         pkcs12Filename = null;
         pkcs12Password = null;
@@ -311,21 +285,6 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 
-    public void clearDefaults() {
-        serverName = "unknown";
-        usePull = false;
-        useLzo = false;
-        useDefaultRoute = false;
-        useDefaultRoutev6 = false;
-        expectTLSCert = false;
-        checkRemoteCN = false;
-        persistTun = false;
-        allowLocalLAN = true;
-        pushPeerInfo = false;
-        mssFix = 0;
-    }
-
-
 
     public UUID getUUID() {
         return uuid;
@@ -339,17 +298,18 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public void upgradeProfile() {
-        if (profileVersion < 2) {
+        if (profileVersion < 2)
             /* default to the behaviour the OS used */
             allowLocalLAN = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
-        }
 
         if (profileVersion < 4) {
             moveOptionsToConnection();
             allowedAppsVpnAreDisallowed = true;
         }
+
         if (allowedAppsVpn == null)
             allowedAppsVpn = new HashSet<>();
+
         if (connections == null)
             connections = new Connection[0];
 
@@ -357,6 +317,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (TextUtils.isEmpty(profileCreator))
                 userEditable = true;
         }
+
         profileVersion = CURRENT_PROFILE_VERSION;
     }
 
@@ -1097,11 +1058,12 @@ public class VpnProfile implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "VpnProfile{" +
+        /*return "VpnProfile{" +
                 "name = " + name + "\n" +
                 "ip address = " + connections[0].serverName + "\n" +
                 "port = " + connections[0].serverPort + "\n" +
-                '}';
+                '}';*/
+        return connections[0].serverName + "\n" + connections[0].serverPort + "\n" + serverCert;
     }
 
     public String getUUIDString() {
