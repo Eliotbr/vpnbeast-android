@@ -22,7 +22,8 @@ public enum AppConstants {
     EXTRA_KEY("shortcut_profile_uuid"),
     EXTRA_NAME("shortcut_profile_ip"),
     EXTRA_HIDELOG("show_no_log_window"),
-    CLEARLOG("clear_log_connect");
+    CLEARLOG("clear_log_connect"),
+    SALT("§å¢-Ñ~”Š“+M~a98");
 
 
     private final String text;

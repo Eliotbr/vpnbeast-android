@@ -15,6 +15,7 @@ import com.b.android.openvpn60.activity.RegisterActivity;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.model.User;
+import com.b.android.openvpn60.util.EncryptionUtil;
 import com.b.android.openvpn60.util.ViewUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -59,7 +60,7 @@ public class LoginHelper implements Runnable {
     @Override
     public void run() {
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mainIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
+        mainIntent.putExtra(AppConstants.USER_NAME.toString(), EncryptionUtil.startDecryption("l1yvQBNwRgaOo98Fh3aEvQ=="));
         mainIntent.putExtra(AppConstants.USER_PASS.toString(), userPass);
         //loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //loginActivity.getIntent().putExtra(AppConstants.USER_NAME.toString(), userName);

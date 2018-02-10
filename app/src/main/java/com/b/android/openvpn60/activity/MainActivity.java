@@ -40,6 +40,8 @@ import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.util.EncodingUtil;
+import com.b.android.openvpn60.util.EncryptionUtil;
 import com.b.android.openvpn60.util.PreferencesUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -130,9 +132,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mActionBar.setDisplayShowTitleEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.custom_menu, null);
-        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+        TextView mTitleTextView = mCustomView.findViewById(R.id.title_text);
         mTitleTextView.setText(userName);
-
         /*ImageButton imageButton = (ImageButton) mCustomView
                 .findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +144,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         Toast.LENGTH_LONG).show();
             }
         });*/
-
-
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
-
     }
+
 
     private void init() {
         //profiles = getProfileInfos();
@@ -176,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
+        Toast.makeText(MainActivity.this, EncryptionUtil.startDecryption("KuASqxEWr85mSMxlnM0npg=="), Toast.LENGTH_SHORT).show();
         edtUser.setText(userName);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
@@ -211,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
         });
-
     }
 
 
@@ -346,9 +345,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
+
     private ProfileManager getPM() {
         return ProfileManager.getInstance(this);
     }
+
 
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -358,10 +359,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         isAvailable = true;
     }
 
+
     private void prepareService() {
         invokeWS();
         isUserAMember();
     }
+
 
     private ArrayList<VpnProfile> generateProfiles() {
         return getProfileInfos();
@@ -374,6 +377,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }*/
     }
 
+
     private void saveProfile(VpnProfile profile) {
         Intent result = new Intent();
         ProfileManager vpl = ProfileManager.getInstance(this);
@@ -384,6 +388,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         setResult(Activity.RESULT_OK, result);
         //finish();
     }
+
 
     public void invokeWS() {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -437,6 +442,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
+
     @Override
     protected void onResume() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
@@ -447,28 +453,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onResume();
     }
 
+
     private void startOrStopVPN(VpnProfile profile) {
         startVPN(profile);
     }
+
 
     private void updateProfiles() {
         profiles = getProfiles();
     }
 
+
     private ArrayList<VpnProfile> getProfiles() {
         return new ArrayList<>(getPM().getProfiles());
     }
+
 
     public void updateViews() {
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
             profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
             btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_green));
-            edtUser.setText(userName);
+            //edtUser.setText(userName);
             edtHost.setText(profile.connections[0].serverName);
             edtPort.setText(profile.connections[0].serverPort);
         } else {
-            edtUser.setText(userName);
+            //edtUser.setText(userName);
             btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
         }
     }
@@ -484,6 +494,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
     }
 
+
     private void startVPN(VpnProfile profile) {
         getPM().saveProfile(this, profile);
         Intent intent = new Intent(this, LaunchVPN.class);
@@ -491,6 +502,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }
+
 
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
@@ -524,6 +536,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -533,6 +546,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         return null;
     }
+
 
     public boolean executeCmd(String cmd, boolean sudo) {
         try {
@@ -555,10 +569,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return false;
     }
 
+
     @Override
     public void onConnected(Bundle arg0) {
         displayLocation();
     }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     private synchronized void displayLocation() {
@@ -626,14 +642,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }.execute();
     }
 
+
     @Override
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
     }
 
+
     public void onConnectionFailed(ConnectionResult result) {
         logHelper.logInfo("Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
     }
+
 
     private void isUserAMember(){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -685,6 +704,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
     }
+
 
     private ArrayList<VpnProfile> getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
