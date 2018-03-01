@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
-        Toast.makeText(MainActivity.this, EncryptionUtil.startDecryption("KuASqxEWr85mSMxlnM0npg=="), Toast.LENGTH_SHORT).show();
         edtUser.setText(userName);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
         profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));

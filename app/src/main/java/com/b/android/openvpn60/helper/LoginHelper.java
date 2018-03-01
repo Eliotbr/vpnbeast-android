@@ -60,7 +60,7 @@ public class LoginHelper implements Runnable {
     @Override
     public void run() {
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mainIntent.putExtra(AppConstants.USER_NAME.toString(), EncryptionUtil.startDecryption("l1yvQBNwRgaOo98Fh3aEvQ=="));
+        mainIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
         mainIntent.putExtra(AppConstants.USER_PASS.toString(), userPass);
         //loginActivity.getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //loginActivity.getIntent().putExtra(AppConstants.USER_NAME.toString(), userName);

@@ -1,22 +1,15 @@
 package com.b.android.openvpn60.util;
 
-import android.util.Base64;
-
-import com.b.android.openvpn60.constant.AppConstants;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.AlgorithmParameters;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -27,78 +20,82 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by b on 2/8/2018.
- */
 
 public class EncryptionUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(EncryptionUtil.class.getName());
-    private static String SALT;
-    private static int iterations = 65536;
-    private static int keySize = 256;
-    private static byte[] ivBytes;
-    private static SecretKey secretKey;
 
-
-    static {
+    // AES-256
+    public static String encrypt(String word) {
         try {
-            //SALT = getSalt();
-            SALT = AppConstants.SALT.toString();
-        } catch (Exception exception) {
-            LOGGER.log(Level.SEVERE, "Exception: ", exception);
-        }
-    }
-
-
-    // AES-256 Encryption
-    public static String startEncryption(String clearText) {
-        try {
-            byte[] saltBytes = SALT.getBytes();
-            char[] charSet = clearText.toCharArray();
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            PBEKeySpec spec = new PBEKeySpec(charSet, saltBytes, iterations, keySize);
-            secretKey = skf.generateSecret(spec);
-            SecretKeySpec secretSpec = new SecretKeySpec(secretKey.getEncoded(), "AES");
+            byte[] ivBytes;
+            String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ==";
+            /*you can give whatever you want for password. This is for testing purpose*/
+            SecureRandom random = new SecureRandom();
+            byte bytes[] = new byte[20];
+            random.nextBytes(bytes);
+            byte[] saltBytes = bytes;
+            // Derive the key
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(),saltBytes,65556,256);
+            SecretKey secretKey = factory.generateSecret(spec);
+            SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
+            //encrypting the word
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secret);
             AlgorithmParameters params = cipher.getParameters();
             ivBytes = params.getParameterSpec(IvParameterSpec.class).getIV();
-            byte[] encryptedTextBytes = cipher.doFinal(String.valueOf(charSet).getBytes("UTF-8"));
-            LOGGER.log(Level.INFO, android.util.Base64.encodeToString(encryptedTextBytes, 16));
-            return android.util.Base64.encodeToString(encryptedTextBytes, 16);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException
-                | InvalidKeyException | InvalidParameterSpecException | IllegalBlockSizeException
-                | BadPaddingException | UnsupportedEncodingException e) {
-            LOGGER.log(Level.SEVERE, "Exception: ", e);
+            byte[] encryptedTextBytes = cipher.doFinal(word.getBytes("UTF-8"));
+            //prepend salt and vi
+            byte[] buffer = new byte[saltBytes.length + ivBytes.length + encryptedTextBytes.length];
+            System.arraycopy(saltBytes, 0, buffer, 0, saltBytes.length);
+            System.arraycopy(ivBytes, 0, buffer, saltBytes.length, ivBytes.length);
+            System.arraycopy(encryptedTextBytes, 0, buffer, saltBytes.length + ivBytes.length, encryptedTextBytes.length);
+            return android.util.Base64.encodeToString(buffer, android.util.Base64.DEFAULT);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidKeyException |
+                InvalidParameterSpecException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException exception) {
+            Logger.getLogger(EncryptionUtil.class.getName()).log(Level.SEVERE, "", exception);
         }
         return null;
     }
 
-    // AES-256 Decryption
-    public static String startDecryption(String encoded) {
-        //cipher.replaceAll("_", "/").replaceAll("-", "\\+");
-        try {
-            byte[] ivAndCipherText = Base64.decode(encoded, Base64.NO_WRAP);
-            byte[] iv = Arrays.copyOfRange(ivAndCipherText, 0, 16);
-            byte[] cipherText = Arrays.copyOfRange(ivAndCipherText, 16, ivAndCipherText.length);
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(SALT.getBytes("utf-8"), "AES"), new IvParameterSpec(iv));
-            AlgorithmParameters params = cipher.getParameters();
-            return new String(cipher.doFinal(cipherText), "utf-8");
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Exception: ", e);
-            return null;
-        }
+    public static ArrayList<String> getEncryptedUserList(String userPass, String createDate, String lastDate,
+                                                         String uuid, String status) {
+        ArrayList<String> encryptedList = new ArrayList<>();
+        encryptedList.add(encrypt(userPass));
+        encryptedList.add(encrypt(createDate));
+        if (lastDate != null)
+            encryptedList.add(encrypt(lastDate));
+        else
+            encryptedList.add(null);
+        encryptedList.add(encrypt(uuid));
+        encryptedList.add(encrypt(status));
+        return encryptedList;
     }
 
-    // Generate random salt
-    public static String getSalt() throws Exception {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[20];
-        sr.nextBytes(salt);
-        return new String(salt);
+
+    public static ArrayList<String> getEncryptedServerList(String serverIp, String serverPort, String serverStatus,
+                                                           String serverUuid, String serverCert) {
+        ArrayList<String> encryptedList = new ArrayList<>();
+        encryptedList.add(encrypt(serverIp));
+        encryptedList.add(encrypt(serverPort));
+        encryptedList.add(encrypt(serverStatus));
+        encryptedList.add(encrypt(serverUuid));
+        encryptedList.add(encrypt(serverCert));
+        return encryptedList;
     }
 
+
+    public static ArrayList<String> getEncryptedMemberList(String memberStatus, String email, String createDate, String firstName,
+                                                           String lastName, String startDate, String endDate) {
+        ArrayList<String> encryptedList = new ArrayList<>();
+        encryptedList.add(encrypt(memberStatus));
+        encryptedList.add(encrypt(email));
+        encryptedList.add(encrypt(createDate));
+        encryptedList.add(encrypt(firstName));
+        encryptedList.add(encrypt(lastName));
+        encryptedList.add(encrypt(startDate));
+        encryptedList.add(encrypt(endDate));
+        return encryptedList;
+    }
 }
