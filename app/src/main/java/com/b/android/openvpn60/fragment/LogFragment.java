@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.LaunchVPN;
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.ProfileManager;
@@ -395,7 +396,7 @@ public class LogFragment extends ListFragment implements VpnStatus.StateListener
         VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
         Intent intent = new Intent(getActivity(), OpenVPNService.class);
-        intent.setAction(OpenVPNService.START_SERVICE);
+        intent.setAction(AppConstants.START_SERVICE.toString());
 
     }
 

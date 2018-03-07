@@ -14,6 +14,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.IServiceStatus;
 import com.b.android.openvpn60.core.IStatusCallbacks;
 import com.b.android.openvpn60.core.OpenVPNService;
@@ -64,7 +65,7 @@ public class StatusListener {
     public void init(Context c) {
 
         Intent intent = new Intent(c, OpenVPNStatusService.class);
-        intent.setAction(OpenVPNService.START_SERVICE);
+        intent.setAction(AppConstants.START_SERVICE.toString());
         mCacheDir = c.getCacheDir();
 
         c.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);

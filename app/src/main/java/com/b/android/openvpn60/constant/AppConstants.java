@@ -23,18 +23,25 @@ public enum AppConstants {
     EXTRA_NAME("shortcut_profile_ip"),
     EXTRA_HIDELOG("show_no_log_window"),
     CLEARLOG("clear_log_connect"),
-    SALT("§å¢-Ñ~”Š“+M~a98");
+    SALT("§å¢-Ñ~”Š“+M~a98"),
+    DISCONNECT_VPN("disconnect_vpn"),
+    CLOSE_ACTIVITY("close_activity"),
+    RESULT_DESTROYED("result_destroyed"),
+    START_SERVICE("start_service"),
+    START_SERVICE_STICKY("start_service_sticky"),
+    NOTIFICATION_ALWAYS_VISIBLE("notification_always_visible"),
+    PAUSE_VPN("pause_vpn"),
+    RESUME_VPN("resume_vpn");
 
 
     private final String text;
+
 
     AppConstants(final String text) {
         this.text = text;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Enum#toString()
-     */
+
     @Override
     public String toString() {
         return text;

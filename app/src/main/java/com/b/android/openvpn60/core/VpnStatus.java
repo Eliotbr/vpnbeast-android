@@ -23,23 +23,18 @@ import de.blinkt.openvpn.core.NativeUtils;
 public class VpnStatus {
 
     private static final LinkedList<LogItem> logbuffer;
-
     private static Vector<LogListener> logListener;
     private static Vector<StateListener> stateListener;
     private static Vector<ByteCountListener> byteCountListener;
-
-    private static String mLaststatemsg = "";
-
-    private static String mLaststate = "NOPROCESS";
-
-    private static int mLastStateresid = R.string.state_noprocess;
-
+    private static String lastStateString = "";
+    private static String lastState = "NOPROCESS";
+    private static int lastStateResId = R.string.state_noprocess;
     private static long mlastByteCount[] = {0, 0, 0, 0};
     private static HandlerThread mHandlerThread;
-
     private static String mLastConnectedVPNUUID;
     static boolean readFileLog =false;
     final static Object readFileLock = new Object();
+
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -68,10 +63,10 @@ public class VpnStatus {
     }
 
     public static String getLastCleanLogMessage(Context c) {
-        String message = mLaststatemsg;
+        String message = lastStateString;
         switch (mLastLevel) {
             case LEVEL_CONNECTED:
-                String[] parts = mLaststatemsg.split(",");
+                String[] parts = lastStateString.split(",");
                 /*
                    (a) the integer unix date/time,
                    (b) the state name,
@@ -94,16 +89,16 @@ public class VpnStatus {
         while (message.endsWith(","))
             message = message.substring(0, message.length() - 1);
 
-        String status = mLaststate;
+        String status = lastState;
         if (status.equals("NOPROCESS"))
             return message;
 
-        if (mLastStateresid == R.string.state_waitconnectretry) {
-            return c.getString(R.string.state_waitconnectretry, mLaststatemsg);
+        if (lastStateResId == R.string.state_waitconnectretry) {
+            return c.getString(R.string.state_waitconnectretry, lastStateString);
         }
 
-        String prefix = c.getString(mLastStateresid);
-        if (mLastStateresid == R.string.state_unknown)
+        String prefix = c.getString(lastStateResId);
+        if (lastStateResId == R.string.state_unknown)
             message = status + message;
         if (message.length() > 0)
             prefix += ": ";
@@ -255,8 +250,8 @@ public class VpnStatus {
     public synchronized static void addStateListener(StateListener sl) {
         if (!stateListener.contains(sl)) {
             stateListener.add(sl);
-            if (mLaststate != null)
-                sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel);
+            if (lastState != null)
+                sl.updateState(lastState, lastStateString, lastStateResId, mLastLevel);
         }
     }
 
@@ -292,7 +287,7 @@ public class VpnStatus {
 
     }
 
-    public static void updateStatePause(OpenVPNManagement.pauseReason pauseReason) {
+    public static void updateStatePause(OpenVPNManagement.PauseReason pauseReason) {
         switch (pauseReason) {
             case noNetwork:
                 VpnStatus.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);
@@ -363,9 +358,9 @@ public class VpnStatus {
             return;
         }
 
-        mLaststate = state;
-        mLaststatemsg = msg;
-        mLastStateresid = resid;
+        lastState = state;
+        lastStateString = msg;
+        lastStateResId = resid;
         mLastLevel = level;
 
 

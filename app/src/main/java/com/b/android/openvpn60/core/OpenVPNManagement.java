@@ -9,7 +9,7 @@ public interface OpenVPNManagement {
         boolean shouldBeRunning();
     }
 
-    enum pauseReason {
+    enum PauseReason {
         noNetwork,
         userPause,
         screenOff,
@@ -19,7 +19,7 @@ public interface OpenVPNManagement {
 
     void reconnect();
 
-    void pause(pauseReason reason);
+    void pause(PauseReason reason);
 
     void resume();
 

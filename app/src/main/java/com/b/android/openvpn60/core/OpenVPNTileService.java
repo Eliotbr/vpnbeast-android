@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.R;
+import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.model.VpnProfile;
 
 
@@ -55,7 +56,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     private void clickAction(VpnProfile bootProfile) {
         if (VpnStatus.isVPNActive()) {
             Intent intent = new Intent(this, OpenVPNService.class);
-            intent.setAction(OpenVPNService.START_SERVICE);
+            intent.setAction(AppConstants.START_SERVICE.toString());
             bindService(intent, new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName componentName, IBinder binder) {

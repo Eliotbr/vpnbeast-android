@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.IOpenVPNServiceInternal;
 import com.b.android.openvpn60.core.OpenVPNManagement;
@@ -31,29 +30,25 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import com.b.android.openvpn60.core.ConnectionStatus;
 
+
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
-    public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    public static final String DISCONNECT_VPN = "DISCONNECT_VPN";
-    public static final String CLOSE_ACTIVITY = "CLOSE_ACTIVITY";
-    public static final String RESULT_DESTROYED = "RESULT_DESTROYED";
-    public static final String TAG = StatusActivity.class.toString();
+
+    public static final String TAG = StatusActivity.class.getName();
     private long hours = 00;
     private long minutes = 00;
     private long seconds = 00;
-    private long mConnectTime;
+    private long connectTime;
     private boolean isBytesDisplayed = false;
     private static ProgressDialog progressDialog;
-    private static VpnProfile mProfile;
+    private static VpnProfile vpnProfile;
     private EditText edtUser;
     private EditText edtLocation;
     private EditText edtIp;
@@ -64,17 +59,18 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     private EditText edtBytesOut;
     private EditText edtStatus;
     private Button btnDisconnect;
-    private static AsyncTask<Void, Void, Integer> checker;
+    private static AsyncTask<Void, Void, Integer> connectionChecker;
     private static Intent intent;
     private Runnable runnable;
     private static SharedPreferences sharedPrefs;
     private static Context context;
     private IOpenVPNServiceInternal serviceInternal;
-    private ServiceConnection mConnection;
+    private ServiceConnection serviceConnection;
     private String lastStatus = "";
     private boolean isDestroyed = false;
     private OpenVPNService instance;
     private LogHelper logHelper;
+
 
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -84,16 +80,18 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         }
     };
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        //bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        //bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
         //updateViews();
         VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
         Intent intent = new Intent(StatusActivity.this, OpenVPNService.class);
-        intent.setAction(OpenVPNService.START_SERVICE);
+        intent.setAction(AppConstants.START_SERVICE.toString());
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +102,12 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         runnable.run();
     }
 
+
     private void init() {
         progressDialog = new ProgressDialog(StatusActivity.this);
         progressDialog.setProgressStyle(R.style.ProgressBar);
         btnDisconnect = (Button) this.findViewById(R.id.btnDisconnect);
-        mProfile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
+        vpnProfile = (VpnProfile) getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
         edtUser = (EditText) this.findViewById(R.id.edtUser);
         edtProfile = (EditText) this.findViewById(R.id.edtProfile);
         edtIp = (EditText) this.findViewById(R.id.edtIp);
@@ -125,7 +124,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         runnable = new Runnable() {
             @Override
             public void run() {
-                mConnection = new ServiceConnection() {
+                serviceConnection = new ServiceConnection() {
                     @Override
                     public void onServiceConnected(ComponentName className,
                                                    IBinder service) {
@@ -147,8 +146,9 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         });
     }
 
+
     private void updateViews() {
-        checker = new AsyncTask<Void, Void, Integer>() {
+        connectionChecker = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected void onPreExecute() {
                 if (VpnStatus.mLastLevel != ConnectionStatus.LEVEL_CONNECTED) {
@@ -164,18 +164,16 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 while (VpnStatus.mLastLevel != ConnectionStatus.LEVEL_CONNECTED) {
                     lastStatus = StatusActivity.this.getIntent().getStringExtra("status");
                 }
-                progressDialog.dismiss();
-
                 return 0;
             }
 
             @Override
             protected void onPostExecute(Integer integer) {
-                mConnectTime = System.currentTimeMillis();
-
-                edtProfile.setText(mProfile.name);
-                edtIp.setText(mProfile.connections[0].serverName);
-                edtPort.setText(mProfile.connections[0].serverPort);
+                progressDialog.dismiss();
+                connectTime = System.currentTimeMillis();
+                edtProfile.setText(vpnProfile.name);
+                edtIp.setText(vpnProfile.connections[0].serverName);
+                edtPort.setText(vpnProfile.connections[0].serverPort);
                 edtStatus.setText(getString(R.string.state_connected));
                 btnDisconnect.setText(getString(R.string.disconnect));
                 btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
@@ -184,16 +182,18 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 VpnStatus.addStateListener(StatusActivity.this);
                 updateDuration();
                 Intent intent = new Intent(StatusActivity.this, OpenVPNService.class);
-                intent.setAction(OpenVPNService.START_SERVICE);
-                bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                intent.setAction(AppConstants.START_SERVICE.toString());
+                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
             }
         }.execute();
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
     }
+
 
     private String humanReadableByteCount(long bytes, boolean mbit) {
         if (mbit)
@@ -201,7 +201,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         int unit = mbit ? 1000 : 1024;
         if (bytes < unit)
             return bytes + (mbit ? " bit" : " B");
-
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (mbit ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (mbit ? "" : "");
         if (mbit)
@@ -210,11 +209,13 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             return String.format(Locale.getDefault(), "%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
 
+
     @Override
     public void onBackPressed() {
         Toast.makeText(this, R.string.state_already_connected_msg, Toast.LENGTH_SHORT).show();
         //super.onBackPressed();
     }
+
 
     @Override
     protected void onStop() {
@@ -224,12 +225,14 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
     }
 
+
     @Override
     protected void onDestroy() {
         //disconnectOnDestroy();
-        unbindService(mConnection);
+        unbindService(serviceConnection);
         super.onDestroy();
     }
+
 
     private void disconnectOnDestroy() {
         ProfileManager.setConntectedVpnProfileDisconnected(context);
@@ -242,26 +245,27 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 logHelper.logException(e);
             }
         }
-        unbindService(mConnection);
+        unbindService(serviceConnection);
     }
 
 
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
-        final String mIn = humanReadableByteCount(in, false);
-        final String mIns = humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true);
-        final String mOut = humanReadableByteCount(out, false);
-        final String mOuts = humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true);
+        final String byteIn = humanReadableByteCount(in, false);
+        final String sumByteIn = humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true);
+        final String byteOut = humanReadableByteCount(out, false);
+        final String sumByteOut = humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true);
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
             StatusActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    updateByteTexts(mIn, mIns, mOut, mOuts);
+                    updateByteTexts(byteIn, sumByteIn, byteOut, sumByteOut);
 
                 }
             });
         }
     }
+
 
     private void updateDuration() {
         if (VpnStatus.mLastLevel == ConnectionStatus.LEVEL_CONNECTED) {
@@ -274,7 +278,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                     StatusActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            seconds = (System.currentTimeMillis() - mConnectTime) / 1000;
+                            seconds = (System.currentTimeMillis() - connectTime) / 1000;
                             Calendar cal = Calendar.getInstance();
                             cal.set(Calendar.HOUR_OF_DAY, (int) hours);
                             cal.set(Calendar.MINUTE, (int) minutes);
@@ -289,18 +293,21 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         }
     }
 
+
     private void updateByteTexts(String in, String ins, String out, String outs) {
         edtBytesIn.setText(ins + " / " + in);
         edtBytesOut.setText(outs + " / " + out);
     }
+
 
     private void disconnect() {
         logHelper.logInfo("Disconnect Thread is starting...");
         disconnectVpn();
     }
 
+
     private void disconnectVpn() {
-        checker = new AsyncTask<Void, Void, Integer>() {
+        connectionChecker = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected void onPreExecute() {
                 progressDialog.setTitle(R.string.state_disconnecting);
@@ -342,13 +349,13 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        intent.putExtra(DISCONNECT_VPN, true);
+                        intent.putExtra(AppConstants.DISCONNECT_VPN.toString(), true);
                         VpnStatus.removeStateListener(StatusActivity.this);
                         VpnStatus.removeByteCountListener(StatusActivity.this);
                         StatusActivity.this.finish();
                         if (isDestroyed) {
                             Intent intentMain = new Intent(StatusActivity.this, MainActivity.class);
-                            intentMain.putExtra(RESULT_DESTROYED, isDestroyed);
+                            intentMain.putExtra(AppConstants.RESULT_DESTROYED.toString(), isDestroyed);
                             StatusActivity.this.startActivity(intentMain);
                         }
 
@@ -369,6 +376,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         }.execute();
     }
 
+
     private ProfileManager getPM() {
         return ProfileManager.getInstance(this);
     }
@@ -383,11 +391,11 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
     }
 
 
-
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
 
     }
+
 
     @Override
     public void setConnectedVPN(String uuid) {
