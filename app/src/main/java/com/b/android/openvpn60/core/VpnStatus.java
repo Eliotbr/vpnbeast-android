@@ -287,7 +287,7 @@ public class VpnStatus {
 
     }
 
-    public static void updateStatePause(OpenVPNManagement.PauseReason pauseReason) {
+    public static void updateStatePause(OpenVPNManagement.pauseReason pauseReason) {
         switch (pauseReason) {
             case noNetwork:
                 VpnStatus.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);

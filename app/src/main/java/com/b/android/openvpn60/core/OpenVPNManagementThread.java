@@ -8,7 +8,6 @@ import android.net.VpnService;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.BuildConstants;
@@ -49,7 +48,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     private boolean waitingForRelease = false;
     private long lastHoldRelease = 0;
     private LocalSocket mServerSocketLocal;
-    private PauseReason lastPauseReason = PauseReason.noNetwork;
+    private pauseReason lastPauseReason = pauseReason.noNetwork;
     private PausedStateCallback mPauseCallback;
     private boolean mShuttingDown;
     private LogHelper logHelper;
@@ -587,7 +586,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
 
 
     @Override
-    public void pause(PauseReason reason) {
+    public void pause(pauseReason reason) {
         lastPauseReason = reason;
         signalusr1();
     }
@@ -597,7 +596,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     public void resume() {
         releaseHold();
         /* Reset the reason why we are disconnected */
-        lastPauseReason = PauseReason.noNetwork;
+        lastPauseReason = pauseReason.noNetwork;
     }
 
 
