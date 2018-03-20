@@ -126,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //generateProfiles();
         init();
         prepareService();
-        updateViews();
+        //updateViews();
+        updateViewForFirst();
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
         edtUser.setText(userName);
         pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
-        profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
+        //profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(AppConstants.TEMP_USER.toString());
         //userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
         btnSelect = (Button) this.findViewById(R.id.btnSelect);
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 startActivity(importer);
                 return false;
             }
-        });*/
+        });
         MenuItem itm2 = menu.add(getString(R.string.prompt_remove_profile));
         itm2.setNumericShortcut('2');
         itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -274,8 +275,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
                 return false;
             }
-        });
-        MenuItem itm3 = menu.add("Premium");
+        });*/
+        MenuItem itm3 = menu.add("Register");
         itm3.setNumericShortcut('3');
         itm3.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -483,12 +484,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
+    private void updateViewForFirst() {
+            btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
+    }
+
+
+
     @Override
     public void onBackPressed() {
-        if (frTransaction != null && getFragmentManager() != null) {
-            getFragmentManager().beginTransaction().remove(mFragment).commit();
-            updateViews();
-            pnlMain.setVisibility(View.VISIBLE);
+        //if (frTransaction != null && getFragmentManager() != null) {
+        if (frTransaction != null) {
+            if (!frTransaction.isEmpty()) {
+                getFragmentManager().beginTransaction().remove(mFragment).commit();
+                updateViews();
+                pnlMain.setVisibility(View.VISIBLE);
+            } else
+                Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
         } else
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
     }
@@ -679,7 +690,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Toast.makeText(MainActivity.this, "User is not a member", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "You are not a valid member, you can register from options menu",
+                                Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException ex) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
@@ -705,7 +717,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
-    private ArrayList<VpnProfile> getProfileInfos() {
+    private  ArrayList<VpnProfile> getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(SERVICE_URL_GET_PROFILES, null, new JsonHttpResponseHandler() {
             @Override
@@ -726,9 +738,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             }
                             isServerstaken = true;
                             if (!profiles.isEmpty()) {
-                                profile = profiles.get(0);
+                                //profile = profiles.get(0);
                             }
-                            updateViews();
+                            //updateViews();
                             logHelper.logInfo(getString(R.string.state_sorted_profiles));
                         }
                     }

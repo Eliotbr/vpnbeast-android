@@ -128,6 +128,7 @@ public class LaunchVPN extends Activity {
     private void askForPW(final int type) {
         final EditText entry = new EditText(this);
         final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
+        final CheckBox chkRemember = this.findViewById(R.id.save_password);
         entry.setSingleLine();
         entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         entry.setTransformationMethod(new PasswordTransformationMethod());
@@ -146,9 +147,11 @@ public class LaunchVPN extends Activity {
         );
         dialog.setMessage(ssBuilder);
         if (type == R.string.password) {
-            ((EditText) userpwlayout.findViewById(R.id.edtUsername)).setText(selectedProfile.getUserName());
-            ((EditText) userpwlayout.findViewById(R.id.edtPassword)).setText(selectedProfile.getPassword());
-            ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(!TextUtils.isEmpty(selectedProfile.getPassword()));
+            ((EditText) userpwlayout.findViewById(R.id.edtUsername))
+                    .setText(PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).getString(AppConstants.VPN_USERNAME.toString(), null));
+            ((EditText) userpwlayout.findViewById(R.id.edtPassword))
+                    .setText(PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).getString(AppConstants.VPN_PASSWORD.toString(), null));
+            ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(selectedProfile.getPassword() != null);
             ((CheckBox) userpwlayout.findViewById(R.id.show_password)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -163,16 +166,18 @@ public class LaunchVPN extends Activity {
             dialog.setView(entry);
         }
 
-        dialog.setPositiveButton(android.R.string.ok,
-                new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (type == R.string.password) {
                             selectedProfile.setUserName(((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString());
-
                             String pw = ((EditText) userpwlayout.findViewById(R.id.edtPassword)).getText().toString();
+                            PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).edit().putString(AppConstants.VPN_USERNAME.toString(),
+                                    selectedProfile.getUserName()).apply();
                             if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
                                 selectedProfile.setPassword(pw);
+                                PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).edit().putString(AppConstants.VPN_PASSWORD.toString(),
+                                        selectedProfile.getPassword()).apply();
                             } else {
                                 selectedProfile.setPassword(null);
                                 mTransientAuthPW = pw;

@@ -6,6 +6,8 @@ package com.b.android.openvpn60.constant;
 
 public enum AppConstants {
     USER_NAME("user_name"),
+    VPN_USERNAME("vpn_username"),
+    VPN_PASSWORD("vpn_password"),
     USER_UUID("user_uuid"),
     TEMP_USER("temp_user"),
     USER_PASS("user_pass"),

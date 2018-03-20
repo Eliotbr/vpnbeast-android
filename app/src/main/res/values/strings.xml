@@ -27,7 +27,7 @@
     <string name="welcome_msg">You have logged in successfully </string>
     <string name="title_activity_import">Import Activity</string>
     <string name="import_cert">Import</string>
-    <string name="err_noprofile">There is no profile to connect. Please import first</string>
+    <string name="err_noprofile">There is no profile selected. Please select a profile first.</string>
     <string name="err_no_cert">There is no profile to connect. Please import first</string>
     <string name="submit_file">Submit Certificate</string>
     <string name="file_nothing_selected">No file selected</string>

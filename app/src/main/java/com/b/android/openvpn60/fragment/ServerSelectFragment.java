@@ -28,9 +28,10 @@ public class ServerSelectFragment extends ListFragment {
     private RelativeLayout pnlRelative = null;
     private ArrayAdapter<VpnProfile> adapter;
 
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         profiles = (ArrayList<VpnProfile>) MainActivity.profiles;
         View v = inflater.inflate(R.layout.list_server_fragment, container, false);
         adapter = new ArrayAdapter<VpnProfile>(inflater.getContext(),
@@ -40,7 +41,6 @@ public class ServerSelectFragment extends ListFragment {
         pnlRelative = (RelativeLayout) getActivity().findViewById(R.id.activity_main);
         pnlRelative.setVisibility(View.INVISIBLE);
         setListAdapter(adapter);
-
         return v;
     }
 

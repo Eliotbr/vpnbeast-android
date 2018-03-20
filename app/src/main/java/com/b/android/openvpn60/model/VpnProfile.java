@@ -49,14 +49,10 @@ import javax.crypto.NoSuchPaddingException;
  */
 
 public class VpnProfile implements Serializable, Cloneable {
-    // Note that this class cannot be moved to core where it belongs since
-    // the profile loading depends on it being here
-    // The Serializable documentation mentions that class name change are possible
-    // but the how is unclear
-    //
+
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     // Don't change this, not all parts of the program use this constant
-    public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
+    //public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     private static final String TAG = "com.b.android.openvpn." + VpnProfile.class.toString();
@@ -253,7 +249,7 @@ public class VpnProfile implements Serializable, Cloneable {
         pushPeerInfo = false;
         version = 2;
         lastUsed = System.currentTimeMillis();
-        serverName = "unknown";
+        serverName = "dgo-amsterdam";
         serverPort = "1194";
         useUdp = true;
     }
@@ -1063,7 +1059,7 @@ public class VpnProfile implements Serializable, Cloneable {
                 "ip address = " + connections[0].serverName + "\n" +
                 "port = " + connections[0].serverPort + "\n" +
                 '}';*/
-        return connections[0].serverName + "\n" + connections[0].serverPort + "\n" + serverCert;
+        return serverName + "\n" + connections[0].serverName + "\n" + connections[0].serverPort;
     }
 
     public String getUUIDString() {

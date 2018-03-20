@@ -401,7 +401,7 @@ public class LogFragment extends ListFragment implements VpnStatus.StateListener
     }
 
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == START_VPN_CONFIG && resultCode == Activity.RESULT_OK) {
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
@@ -431,7 +431,7 @@ public class LogFragment extends ListFragment implements VpnStatus.StateListener
             dialog.create().show();
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
 
     @Override
