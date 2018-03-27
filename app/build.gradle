@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.b.android.openvpn60"
         minSdkVersion 14
@@ -31,9 +31,7 @@ android {
             jni.srcDirs = [] //disable automatic ndk-build
         }
 
-        ovpn3 {
 
-        }
 
         debug {
 
