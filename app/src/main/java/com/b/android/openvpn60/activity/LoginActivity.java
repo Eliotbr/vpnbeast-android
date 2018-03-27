@@ -1,13 +1,16 @@
 package com.b.android.openvpn60.activity;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -24,9 +27,9 @@ import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
-import com.b.android.openvpn60.helper.LoginHelper;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.service.LoginService;
 import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.util.ViewUtil;
 import java.net.InetAddress;
@@ -45,7 +48,7 @@ public class LoginActivity extends ActionBarActivity {
     private EditText edtPass;
     private CheckBox chkRemember;
     private SharedPreferences sharedPreferences;
-    private Intent intent;
+    private Intent mainIntent;
     private Intent intentSignup;
     private ProgressBar progressBar;
     private boolean isConnected = false;
@@ -65,6 +68,10 @@ public class LoginActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
+
+        IntentFilter filter = new IntentFilter(LoginService.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
+
         if (!isNetworkAvailable(getApplicationContext())) {
             showErrorDialog();
             isConnected = false;
@@ -73,6 +80,12 @@ public class LoginActivity extends ActionBarActivity {
             edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
             edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
 
     private void getDeviceInfos() {
@@ -105,7 +118,7 @@ public class LoginActivity extends ActionBarActivity {
                 edtPass = (EditText) this.findViewById(R.id.edtPass);
                 chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
                 chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                intent = new Intent(this, MainActivity.class); //???
+                mainIntent = new Intent(this, MainActivity.class); //???
                 //txtForget = (TextView) this.findViewById(R.id.txtForget);
                 //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
                 //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
@@ -176,7 +189,7 @@ public class LoginActivity extends ActionBarActivity {
                         params.put(USER_NAME, userName);
                         params.put(USER_PASS, password);*/
                         // Invoke RESTful Web Service with Http parameters
-                        if (errorCount > 3) {
+                        if (errorCount > 10) {
                             Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                             final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
@@ -194,12 +207,12 @@ public class LoginActivity extends ActionBarActivity {
                                     LoginActivity.this.startActivity(intentSignup);
                                 }
                             });
-                            alertDialog.setCancelable(false);
                             alertDialog.show();
                         }
                         else {
-                            LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
-                            loginHelper.run();
+                            //LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
+                            //loginHelper.run();
+                            startLoginService(userName, password);
                         }
                         /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(AppConstants.TEMP_USER.toString(), userName);
@@ -294,4 +307,35 @@ public class LoginActivity extends ActionBarActivity {
         });
         alertDialog.show();
     }
+
+    public void startLoginService(String userName, String userPass) {
+        // Construct our Intent specifying the Service
+        Intent i = new Intent(this, LoginService.class);
+        // Add extras to the bundle
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        i.putExtra(AppConstants.USER_PASS.toString(), userPass);
+        // Start the service
+        startService(i);
+    }
+
+    // Define the callback for what to do when message is received
+    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getStringExtra("status");
+
+            if (result.equals("success")) {
+                mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                mainIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
+                LoginActivity.this.startActivity(mainIntent);
+            } else if (result.equals("failure")) {
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                        LoginActivity.this.getString(R.string.err_state_login));
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+        }
+    };
+
 }
