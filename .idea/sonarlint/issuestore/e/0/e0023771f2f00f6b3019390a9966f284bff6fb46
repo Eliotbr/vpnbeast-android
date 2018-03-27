@@ -1,13 +1,0 @@
-
-Rsquid:S1481"1Remove this unused "shortcutUUID" local variable.(ªèŞÿÿÿÿÿ8»­­Ÿë+
-Asquid:S1481",Remove this unused "builder" local variable.(ˆ¡Î
-Bsquid:S1481"(Remove this unused "ret" local variable.(ºŸÛøÿÿÿÿ
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÙóÔ8¶Ÿë+
-asquid:S1854"@Remove this useless assignment to local variable "shortcutUUID".(ªèŞÿÿÿÿÿ8»­­Ÿë+
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(•²Ô±
-?squid:S1481"*Remove this unused "prefs" local variable.(”Ñˆ€
-Nsquid:S1854"9Remove this useless assignment to local variable "prefs".(”Ñˆ€
-Psquid:S1854";Remove this useless assignment to local variable "builder".(ˆ¡Î
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ËÆğ 8»­­Ÿë+
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(æ¾õ
-Qsquid:S1854"7Remove this useless assignment to local variable "ret".(ºŸÛøÿÿÿÿ

@@ -1,25 +1,0 @@
-
-csquid:UselessImportCheck"<Remove this unused import 'android.content.DialogInterface'.(Š­›¨þÿÿÿÿ
-7squid:S1148"#Use a logger to log this exception.(ä÷È
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
-Ssquid:UselessImportCheck",Remove this unused import 'android.net.Uri'.(òêû‘ýÿÿÿÿ
-[squid:UselessImportCheck"9Remove this unused import 'android.text.SpannableString'.(üÒþ™
-qsquid:S1450"WRemove the "btnClear" field and declare it as a local variable in the relevant methods.(¢ä¡…ÿÿÿÿÿ
-nsquid:S1192"YDefine a constant instead of duplicating this literal "bilalccaliskan@gmail.com" 3 times.(ù±þÐ
-Zsquid:UselessImportCheck"3Remove this unused import 'android.graphics.Color'.(øãíòþÿÿÿÿ
-rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Þ…ñ–ûÿÿÿÿ
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(À÷ÞÉ
-Dsquid:S1068"/Remove this unused "emailThread" private field.(œÙŽÇ
-msquid:S1450"XRemove the "txtForget" field and declare it as a local variable in the relevant methods.(ßÒ¤»
-rsquid:S1450"XRemove the "txtSignup" field and declare it as a local variable in the relevant methods.(ô°™úÿÿÿÿ
-_squid:UselessImportCheck"8Remove this unused import 'android.widget.LinearLayout'.(çîšçúÿÿÿÿ
-Rsquid:UselessImportCheck"0Remove this unused import 'java.io.InputStream'.(¹»º
-hsquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(“åèŸýÿÿÿÿ
-dsquid:CallToDeprecatedMethod"9Remove this use of "ActionBarActivity"; it is deprecated.(“åèŸýÿÿÿÿ
-esquid:UselessImportCheck"CRemove this unused import 'android.text.style.ForegroundColorSpan'.(¸±íž
-asquid:UselessImportCheck":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ
-osquid:S1450"ZRemove the "emailThread" field and declare it as a local variable in the relevant methods.(œÙŽÇ
-Ysquid:UselessImportCheck"7Remove this unused import 'android.app.ProgressDialog'.(¶ÍÔÓ
-psquid:S2159"VRemove this call to "equals"; comparisons between unrelated types always return false.(ÜÜï£ÿÿÿÿÿ
-osquid:S1450"ZRemove the "alertDialog" field and declare it as a local variable in the relevant methods.(—×â¶
-Zsquid:UselessImportCheck"3Remove this unused import 'android.text.TextUtils'.(û˜½Õøÿÿÿÿ

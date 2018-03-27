@@ -1,60 +1,0 @@
-
-qsquid:S1450"\Remove the "intentService" field and declare it as a local variable in the relevant methods.(£ã›¸
-tsquid:S3008"ZRename this field "UPDATE_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹Ì¼üÿÿÿÿ
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8‰°Æë+
-Esquid:S1068"0Remove this unused "DISPLACEMENT" private field.(õç¢ë
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(ÀÜÒ
-Msquid:S1153"1Directly append the argument of String.valueOf().(Ë°¶³8‰°Æë+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(æ‘ı…8‰°Æë+
-Gsquid:S1068"3Remove this unused "locationRequest" private field.(¢¢ B
-jsquid:S00116"TRename this field "CLASS_TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«ŸÆ
-Msquid:S1153"1Directly append the argument of String.valueOf().(ÓÖÿÇ8‰°Æë+
-†"squid:ClassVariableVisibilityCheck"SMake profile a static final constant or non-public and provide accessors if needed.(Ãäÿ«8ºı¬Ÿë+
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8‰°Æë+
-asquid:HiddenFieldCheck";Rename "profile" which hides the field declared at line 87.(ãı|8‰°Æë+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(š†Öº8‰°Æë+
-Jsquid:S1068"5Remove this unused "isLocationUpdated" private field.(ÚÃœ’
-lsquid:S3008"WRename this field "DISPLACEMENT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õç¢ë
-csquid:S1192"GDefine a constant instead of duplicating this literal "status" 3 times.(âÉ³8‰°Æë+
-Isquid:S1444"-Make this "public static profile" field final(Ãäÿ«8ºı¬Ÿë+
-Ksquid:S1066"/Merge this if statement with the enclosing one.(Ù¦Êƒ8‰°Æë+
-osquid:S1450"URemove the "mPrefs" field and declare it as a local variable in the relevant methods.(ç”Š¨şÿÿÿÿ
-rsquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ğ…á€ûÿÿÿÿ
-Csquid:S1444".Make this "public static profiles" field final(£µû
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ÿê¥¡şÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(“äÿ…ùÿÿÿÿ8‰°Æë+
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(êŒÆ¶úÿÿÿÿ8ºı¬Ÿë+
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(áÀğŠüÿÿÿÿ8‰°Æë+
-Dsquid:S1068"*Remove this unused "tasker" private field.(‚Ïß½üÿÿÿÿ
-Hsquid:S1068"3Remove this unused "mRemovedProfile" private field.(ã±Áö
-8squid:S2386"#Make member "profiles" "protected".(ÀÜÒ
-Msquid:S1153"1Directly append the argument of String.valueOf().(ÓÖÿÇ8‰°Æë+
-Fsquid:S1068"1Remove this unused "intentService" private field.(£ã›¸
-?squid:S1068"+Remove this unused "spinner" private field.(Ï‰¯
-€"squid:ClassVariableVisibilityCheck"TMake profiles a static final constant or non-public and provide accessors if needed.(£µû
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¬³»¼8‰°Æë+
-Fsquid:S1068"1Remove this unused "customAdapter" private field.(æÉİ€
-Rsquid:S2696"6Make the enclosing method "static" or remove this set.(çÒ®8ºı¬Ÿë+
-csquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(´—±¶
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(êŒÆ¶úÿÿÿÿ8ºı¬Ÿë+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²· ¢ıÿÿÿÿ8‰°Æë+
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(‰ˆóùÿÿÿÿ8ºı¬Ÿë+
-¢squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹Æº×şÿÿÿÿ8‰°Æë+
-csquid:UnusedPrivateMethod"4Remove this unused private "getProfileInfos" method.(Å®³ıÿÿÿÿ8‰°Æë+
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(£Ÿ£˜ûÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²í–Òøÿÿÿÿ8›«ö ë+
-osquid:S3008"ZRename this field "FATEST_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìëøÏ
-Nsquid:S1068"2Remove this unused "txtProfileName" private field.(òôµÒ8í½ªÀê+
-Msquid:S1153"1Directly append the argument of String.valueOf().(Ë°¶³8‰°Æë+
-Dsquid:S1068"*Remove this unused "mPrefs" private field.(ç”Š¨şÿÿÿÿ
-Isquid:S1068"4Remove this unused "SELECTED_PROFILE" private field.(¯Ãˆ°
-8squid:S1643"Use a StringBuilder instead.(÷›İÌ8‰°Æë+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(±“¹Öÿÿÿÿÿ8‰°Æë+
-nsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(Ôö§ó8‰°Æë+
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(™¦É¥şÿÿÿÿ
-Hsquid:S1068"3Remove this unused "FATEST_INTERVAL" private field.(ìëøÏ
-bsquid:UnusedPrivateMethod"3Remove this unused private "prepareService" method.(‰Œµ¿úÿÿÿÿ8‰°Æë+
-Msquid:S1068"3Remove this unused "UPDATE_INTERVAL" private field.(¹Ì¼üÿÿÿÿ
-osquid:S1450"URemove the "tasker" field and declare it as a local variable in the relevant methods.(‚Ïß½üÿÿÿÿ
-ysquid:S1450"]Remove the "txtProfileName" field and declare it as a local variable in the relevant methods.(òôµÒ8œóªÀê+
-Rsquid:S2696"6Make the enclosing method "static" or remove this set.(ÁÊÌ¥8‰°Æë+

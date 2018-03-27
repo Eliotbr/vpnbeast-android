@@ -1,8 +1,0 @@
-
-nsquid:S1192"YDefine a constant instead of duplicating this literal "bilalccaliskan@gmail.com" 3 times.(ù±þÐ
-Ksquid:S1444"1Make this "public static processFlag" field final(ÊÊûŒùÿÿÿÿ
-Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-ˆ"squid:ClassVariableVisibilityCheck"WMake processFlag a static final constant or non-public and provide accessors if needed.(ÊÊûŒùÿÿÿÿ
-;squid:S1168"&Return an empty array instead of null.(¥¹ï
-esquid:UselessImportCheck">Remove this unused import 'com.b.android.openvpn60.core.Mail'.( æÔ—üÿÿÿÿ
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ

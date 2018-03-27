@@ -1,20 +1,0 @@
-
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¾Ë¶Šøÿÿÿÿ
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").( Éç·ÿÿÿÿÿ
->squid:S1068")Remove this unused "mData" private field.(¨‘°ø
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ã Ìû
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(íİÜß
-Psquid:S1068"6Remove this unused "PERMISSION_REQUEST" private field.(ÙÇ®ûÿÿÿÿ
-Csquid:S1068".Remove this unused "DATA_VALUE" private field.(ì‚ó
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ø‚ÉÁıÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÂúÀ¤ıÿÿÿÿ
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(µäû®
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(«ŒÂ¾úÿÿÿÿ
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØÈ‘×
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Äú¶¸
-psquid:S1450"VRemove the "mIntent" field and declare it as a local variable in the relevant methods.(´ÔáĞûÿÿÿÿ
-gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(¨½³Œ
-Gsquid:S1068"-Remove this unused "DATA_PATH" private field.(šìÑèùÿÿÿÿ
-Esquid:S1068"+Remove this unused "mIntent" private field.(´ÔáĞûÿÿÿÿ
-?squid:S1068"+Remove this unused "context" private field.(êİç
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(«‘èÔ

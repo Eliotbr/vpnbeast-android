@@ -1,39 +1,0 @@
-
-jsquid:S1192"PDefine a constant instead of duplicating this literal "255.255.255.255" 3 times.(±ÆÊğÿÿÿÿÿ
-]squid:S2276"CReplace the call to "Thread.sleep(...)" with a call to "wait(...)".(»ãßºøÿÿÿÿ
-Esquid:S1068"0Remove this unused "intentStatus" private field.(Í²¯‚
-rsquid:S3923"]This conditional operation returns the same value whether the condition is "true" or "false".(„²‘Ñ
-Gsquid:S1199"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ
-osquid:S1450"URemove the "mOvpn3" field and declare it as a local variable in the relevant methods.(Úğµøÿÿÿÿ
-Hsquid:S1313".Make this IP "224.0.0.0" address configurable.(ª•”ışÿÿÿÿ
-Nsquid:S1313"4Make this IP "255.255.255.255" address configurable.(±ÆÊğÿÿÿÿÿ
-Nsquid:S1313"4Make this IP "255.255.255.255" address configurable.(Ê…¦‹ÿÿÿÿÿ
-Nsquid:S1313"4Make this IP "255.255.255.255" address configurable.(†‚ñ‡ûÿÿÿÿ
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(›‡²„ÿÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘Úá‚ûÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íš¿ôøÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÀŞ¾ùÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ëÈÔ×øÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ëÈÔ×øÿÿÿÿ
-_squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ŠëÿF
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(´Ÿú
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ò³ÿ‡şÿÿÿÿ
-_squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ö¤åk
-tsquid:S1488"_Immediately return this expression instead of assigning it to the temporary variable "pIntent".(­åÂş
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(Ñ’”ö
-\squid:S1226"BIntroduce a new variable instead of reusing the parameter "bytes".(ØÀóÑÿÿÿÿÿ
-gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(ªĞªÄ
-lsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 46 to the 15 allowed.(Ø¸Æóøÿÿÿÿ
-lsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(©ğù÷üÿÿÿÿ
-[squid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
-[squid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
-`squid:S2259"FA "NullPointerException" could be thrown; "mLocalIP" is nullable here.(ØŞ¬µşÿÿÿÿ
-›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(±ÛÈıøÿÿÿÿ
-=squid:S1185"(Remove this method to simply inherit it.(Î¢È
-Csquid:S1940")Use the opposite operator (">=") instead.(¤ƒ’‰ıÿÿÿÿ
-8squid:S1148"#Use a logger to log this exception.(µ»úš
-=squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(Øôêªÿÿÿÿÿ
-Xsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(Ì òÌùÿÿÿÿ
-Xsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(‹õ³şÿÿÿÿ

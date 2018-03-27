@@ -1,6 +1,0 @@
-
-ksquid:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(è·æ÷
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¬≥◊“
-jsquid:S1450"VRemove the "context" field and declare it as a local variable in the relevant methods.(Í›Á
-Qsquid:S1068"<Remove this unused "SERVICE_URL_GET_PROFILES" private field.(π‰⁄˙
-?squid:S1068"+Remove this unused "context" private field.(Í›Á

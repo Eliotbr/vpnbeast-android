@@ -1,40 +1,0 @@
-
-Hsquid:S1068".Remove this unused "lastStatus" private field.(…¤’”ûÿÿÿÿ
-Zsquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 75.(Áõ’
-Zsquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 75.(Áõ’
-osquid:S1450"ZRemove the "sharedPrefs" field and declare it as a local variable in the relevant methods.(àµ¸ö
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(–“Åıÿÿÿÿ
-Tsquid:UselessImportCheck"-Remove this unused import 'android.Manifest'.(¦øïúÿÿÿÿ
-Qsquid:UselessImportCheck"/Remove this unused import 'android.os.Handler'.(ûÛ’¡
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(“·ÛÎşÿÿÿÿ
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(÷•¼Äÿÿÿÿÿ
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(”ÃÚêşÿÿÿÿ
-isquid:UselessImportCheck"BRemove this unused import 'com.google.firebase.auth.FirebaseAuth'.(İÄğöûÿÿÿÿ
-@squid:S1068"+Remove this unused "checker" private field.(À œÍ
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Úì°Õ
-isquid:UselessImportCheck"BRemove this unused import 'com.google.firebase.auth.FirebaseUser'.(’àíĞùÿÿÿÿ
-\squid:S1226"BIntroduce a new variable instead of reusing the parameter "bytes".(ØÀóÑÿÿÿÿÿ
-–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ğ¥Í
-Asquid:S1068",Remove this unused "receiver" private field.(¹™œ»
-_squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(İ–¢
-Csquid:S1068"/Remove this unused "edtLocation" private field.(°«Ÿ7
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(Ã¾×üÿÿÿÿ
-rsquid:S3923"]This conditional operation returns the same value whether the condition is "true" or "false".(„²‘Ñ
-bsquid:UselessImportCheck";Remove this unused import 'android.text.format.DateFormat'.(¨ó¢Ïşÿÿÿÿ
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(ƒœ¡şøÿÿÿÿ
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(ª¡Èıÿÿÿÿ
-`squid:UnusedPrivateMethod"8Remove this unused private "disconnectOnDestroy" method.(Äñø¯ÿÿÿÿÿ
-hsquid:MaximumInheritanceDepth"<This class has 8 parents which is greater than 5 authorized.(îş½¦ûÿÿÿÿ
-Isquid:S1068"4Remove this unused "isBytesDisplayed" private field.(¿ßåª
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(ƒœ¡şøÿÿÿÿ
-<squid:S1185"(Remove this method to simply inherit it.(¹§ 
-xsquid:UselessImportCheck"QRemove this unused import 'com.b.android.openvpn60.core.OpenVPNManagementThread'.(º¡Æˆüÿÿÿÿ
-ksquid:S1450"VRemove the "edtUser" field and declare it as a local variable in the relevant methods.(¶Û¼
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(¢äıõùÿÿÿÿ
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(“·ÛÎşÿÿÿÿ
-›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(±ÛÈıøÿÿÿÿ
-Tsquid:UselessImportCheck"-Remove this unused import 'android.os.Build'.(ãÇ¤Úıÿÿÿÿ
-Fsquid:S1068",Remove this unused "instance" private field.(—¥µ ùÿÿÿÿ
-Usquid:UselessImportCheck"3Remove this unused import 'android.net.VpnService'.(˜Ã¬ö
-isquid:UselessImportCheck"GRemove this unused import 'com.b.android.openvpn60.core.OpenVPNThread'.(áÄÒğ
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(‘Ó³„

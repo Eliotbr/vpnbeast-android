@@ -1,29 +1,0 @@
-
-rsquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ð…á€ûÿÿÿÿ
-7squid:S1148"#Use a logger to log this exception.(ä÷È
-Hsquid:S1172"3Remove this unused method parameter "possibleName".(ÐÙ†‹
-Dsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ï½ß
-fsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(˜õÁn8òÀÕ ë+
-Dsquid:S1481"(Remove this unused "isr" local variable.(Ü¥­Ó8“´¤Ÿë+
-\squid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(”‘¹í8º¢Ÿë+
-_squid:CallToDeprecatedMethod"9Remove this use of "ActionBarActivity"; it is deprecated.(˜ïÿ«
-tsquid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(×Ì«°ûÿÿÿÿ
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘†óäúÿÿÿÿ8º¢Ÿë+
-csquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(˜ïÿ«
-Dsquid:S1066"/Merge this if statement with the enclosing one.(€¹¿ï
-csquid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(ÚÿÂŸûÿÿÿÿ8º¢Ÿë+
-Bsquid:S1068"-Remove this unused "USER_PASS" private field.(®Óãž
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ
-Dsquid:S1068"/Remove this unused "USER_CHOICE" private field.(¦Ó
-Isquid:S1068"/Remove this unused "mImportTask" private field.(×Ì«°ûÿÿÿÿ
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Û–ÕŒ
-Gsquid:S1068"-Remove this unused "USER_NAME" private field.(Þ¢‚Ìùÿÿÿÿ
-rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Þ…ñ–ûÿÿÿÿ
-?squid:S1148"#Use a logger to log this exception.(¸ß¹8º¢Ÿë+
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(µÑë­8œ³Ö ë+
-`squid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Èö¥§8º¢Ÿë+
-Ssquid:S1854"7Remove this useless assignment to local variable "isr".(Ü¥­Ó8“´¤Ÿë+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ8º¢Ÿë+
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ
