@@ -124,6 +124,7 @@ public class LoginService extends Service {
         }
         client.post(context, ServiceConstants.URL_LOGIN.toString(), entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
+
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {

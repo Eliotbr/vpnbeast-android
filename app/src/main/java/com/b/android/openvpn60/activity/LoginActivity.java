@@ -7,14 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.service.LoginService;
@@ -37,12 +33,6 @@ import java.net.UnknownHostException;
 
 
 public class LoginActivity extends ActionBarActivity {
-    private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String USER_PASS = AppConstants.USER_PASS.toString();
-    private static final String USER_CHOICE = AppConstants.USER_CHOICE.toString();
-    private static final String SERVICE_URL_GET = ServiceConstants.URL_LOGIN.toString();
-    private static final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + LoginActivity.class.toString();
 
     private EditText edtUsername;
     private EditText edtPass;
@@ -56,13 +46,15 @@ public class LoginActivity extends ActionBarActivity {
     private LogHelper logHelper;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-        getDeviceInfos();
+        //getDeviceInfos();
     }
+
 
     @Override
     protected void onResume() {
@@ -88,7 +80,11 @@ public class LoginActivity extends ActionBarActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
 
-    private void getDeviceInfos() {
+
+    /**
+     * Below method created to debug for creating different views for different devices
+     */
+    /*private void getDeviceInfos() {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -106,45 +102,51 @@ public class LoginActivity extends ActionBarActivity {
         logHelper.logInfo("widthPixels = " + widthPixels);
         logHelper.logInfo("heightPixels = " + heightPixels);
         logHelper.logInfo("densityDpi = " + densityDpi);
-    }
+    }*/
+
 
     public ProgressBar getProgressBar() {
         return progressBar;
     }
 
+
     private void init() {
-                logHelper = LogHelper.getLogHelper(this);
-                edtUsername = (EditText) this.findViewById(R.id.edtUser);
-                edtPass = (EditText) this.findViewById(R.id.edtPass);
-                chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
-                chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                mainIntent = new Intent(this, MainActivity.class); //???
-                //txtForget = (TextView) this.findViewById(R.id.txtForget);
-                //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
-                //txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-                final TextView txtForget = (TextView) this.findViewById(R.id.txtForget);
-                txtForget.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendEmail();
-                    }
-                });
-                final TextView txtSignup = (TextView) this.findViewById(R.id.txtSignup);
-                txtSignup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LoginActivity.this.startActivity(intentSignup);
-                    }
-                });
-                progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-                sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
-                if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
-            edtUsername.setText(sharedPreferences.getString(USER_NAME, null));
-            edtPass.setText(sharedPreferences.getString(USER_PASS, null));
+        logHelper = LogHelper.getLogHelper(this);
+        edtUsername = (EditText) this.findViewById(R.id.edtUser);
+        edtPass = (EditText) this.findViewById(R.id.edtPass);
+        chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
+        chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        mainIntent = new Intent(this, MainActivity.class); //???
+        intentSignup = new Intent(this, RegisterActivity.class);
+        //txtForget = (TextView) this.findViewById(R.id.txtForget);
+        //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+        //txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
+        final TextView txtForget = (TextView) this.findViewById(R.id.txtForget);
+        txtForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
+
+        final TextView txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+        txtSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.this.startActivity(intentSignup);
+            }
+        });
+
+        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+        sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
+
+        if (sharedPreferences.getBoolean(AppConstants.USER_CHOICE.toString(), false)) {
+            edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
+            edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
             chkRemember.setChecked(true);
         }
-        intentSignup = new Intent(this, RegisterActivity.class);
+
         final Button btnClear = (Button) this.findViewById(R.id.btnClear);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,33 +159,36 @@ public class LoginActivity extends ActionBarActivity {
                 Crashlytics.log("Crash occured");*/
             }
         });
+
         final Button btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (isConnected) {
                     SharedPreferences.Editor editor;
                     progressBar.setVisibility(View.VISIBLE);
                     if (chkRemember.isChecked()) {
                         editor = sharedPreferences.edit();
-                        editor.putString(USER_NAME, edtUsername.getText().toString());
-                        editor.putString(USER_PASS, edtPass.getText().toString());
-                        editor.putBoolean(USER_CHOICE, true);
+                        editor.putString(AppConstants.USER_NAME.toString(), edtUsername.getText().toString());
+                        editor.putString(AppConstants.USER_PASS.toString(), edtPass.getText().toString());
+                        editor.putBoolean(AppConstants.USER_CHOICE.toString(), true);
                         editor.apply();
                         editor.commit();
                         logHelper.logInfo("sharedPreferences updated with user provided values...");
-                    }
-                    else {
+                    } else {
                         editor = sharedPreferences.edit();
-                        editor.putString(USER_NAME, null);
-                        editor.putString(USER_PASS, null);
-                        editor.putBoolean(USER_CHOICE, false);
+                        editor.putString(AppConstants.USER_NAME.toString(), null);
+                        editor.putString(AppConstants.USER_PASS.toString(), null);
+                        editor.putBoolean(AppConstants.USER_CHOICE.toString(), false);
                         logHelper.logInfo("sharedPreferences updated with default values...");
                         editor.apply();
                         editor.commit();
                     }
+
                     final String userName = edtUsername.getText().toString();
                     final String password = edtPass.getText().toString();
+
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
                         /*RequestParams params = new RequestParams();
                         params.put(USER_NAME, userName);
@@ -209,30 +214,25 @@ public class LoginActivity extends ActionBarActivity {
                             });
                             alertDialog.show();
                         }
-                        else {
-                            //LoginHelper loginHelper = new LoginHelper(LoginActivity.this, intent, userName, password);
-                            //loginHelper.run();
+                        else
                             startLoginService(userName, password);
-                        }
-                        /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra(AppConstants.TEMP_USER.toString(), userName);
-                        intent.putExtra(USER_NAME, edtUsername.getText().toString());
-                        startActivity(intent);*/
                     } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_blank_login),
-                                Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                LoginActivity.this.getString(R.string.err_state_empty_fields));
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
                         logHelper.logInfo("Username or password is empty, can not start new activity...");
                     }
                 } else {
                     showErrorDialog();
                     logHelper.logWarning("Internet connection is a MUST for application...");
                 }
-
             }
         });
-        if (sharedPreferences.getBoolean(USER_CHOICE, false)) {
-            edtUsername.setText(sharedPreferences.getString(USER_NAME, null));
-            edtPass.setText(sharedPreferences.getString(USER_PASS, null));
+
+        if (sharedPreferences.getBoolean(AppConstants.USER_CHOICE.toString(), false)) {
+            edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
+            edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
             chkRemember.setChecked(true);
         }
     }
@@ -253,6 +253,7 @@ public class LoginActivity extends ActionBarActivity {
                 return false;
             }
         });
+
         MenuItem itm2 = menu.add("About us");
         itm2.setNumericShortcut('2');
         itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -267,6 +268,7 @@ public class LoginActivity extends ActionBarActivity {
                 return false;
             }
         });
+
         MenuItem itm3 = menu.add("Close");
         itm3.setNumericShortcut('3');
         itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -276,6 +278,7 @@ public class LoginActivity extends ActionBarActivity {
                 return false;
             }
         });
+
         return true;
     }
 
@@ -323,7 +326,6 @@ public class LoginActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra("status");
-
             if (result.equals("success")) {
                 mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
                 mainIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));

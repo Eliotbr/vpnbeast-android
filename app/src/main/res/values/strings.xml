@@ -108,6 +108,7 @@
     <string name="err_enter_mail">Please enter an email address</string>
     <string name="err_password">Password too short, enter minimum 6 characters!</string>
     <string name="err_password_not_same">Your passwords does not match. Please check!</string>
+    <string name="err_email_format">Your email address format is wrong!</string>
 
     <string name="prompt_password_msg">Please enter password</string>
     <string name="err_activity_msg">An error occured and restarted activity</string>
@@ -137,7 +138,7 @@
     <string name="state_register">You are successfully registered! Enjoy!</string>
     <string name="err_state_register">User already registered!</string>
     <string name="err_state_blank_signup">Please fill all the fields to signup!</string>
-    <string name="err_state_blank_login">Please fill all the fields to login!</string>
+    <string name="err_state_empty_fields">Please fill all the required fields!</string>
     <string name="state_member_insert">Member successfully inserted to DB</string>
     <string name="err_state_member_insert">An error occured while inserting to DB. Please try again.</string>
     <string name="text_email_sent">Sending email. Please hold</string>
@@ -351,7 +352,10 @@
     <string name="state_add_routes">Adding routes</string>
     <string name="state_connected">Connected</string>
     <string name="state_disconnected">Disconnect</string>
+
     <string name="err_state_login">\nYour username or password is invalid</string>
+    <string name="err_state_membership">\nAn error occured while creating a member account</string>
+
     <string name="err_state_login_extra">\nCan not login with these informations. Here is what you can do!</string>
     <string name="state_reconnecting">Reconnecting</string>
     <string name="state_exiting">Exiting</string>

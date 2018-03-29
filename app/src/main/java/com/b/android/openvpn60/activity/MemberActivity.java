@@ -1,8 +1,16 @@
 package com.b.android.openvpn60.activity;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,33 +21,14 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
+import com.b.android.openvpn60.service.MembershipService;
 import com.b.android.openvpn60.util.EmailUtil;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
+import com.b.android.openvpn60.util.PreferencesUtil;
+import com.b.android.openvpn60.util.ViewUtil;
 
 
 public class MemberActivity extends AppCompatActivity {
-    private static final String SERVICE_URL = ServiceConstants.URL_REGISTER_MEMBER.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String FIRST_NAME = AppConstants.FIRST_NAME.toString();
-    private static final String LAST_NAME = AppConstants.LAST_NAME.toString();
-    private static final String EMAIL = AppConstants.EMAIL.toString();
-    private static final String CLASS_TAG = MemberActivity.class.toString();
 
     private EditText edtFirstName;
     private EditText edtLastName;
@@ -47,6 +36,10 @@ public class MemberActivity extends AppCompatActivity {
     private Button btnSubmit;
     private ProgressBar progressBar;
     private LogHelper logHelper;
+    private SharedPreferences sharedPreferences;
+    private Intent mainIntent;
+    public int errorCount = 0;
+
 
 
     @Override
@@ -56,8 +49,11 @@ public class MemberActivity extends AppCompatActivity {
         init();
     }
 
+
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
+        sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(this);
+        mainIntent = new Intent(this, MainActivity.class);
         edtFirstName = (EditText) this.findViewById(R.id.edtFirstName);
         edtLastName = (EditText) this.findViewById(R.id.edtLastName);
         edtEmail = (EditText) this.findViewById(R.id.edtEmail2);
@@ -67,75 +63,43 @@ public class MemberActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if (EmailUtil.validateEmail(edtEmail.getText().toString()))
-                    invokeWSForMember(edtFirstName.getText().toString(), edtLastName.getText().toString(),
-                            edtEmail.getText().toString());
+                String username = sharedPreferences.getString(AppConstants.USER_NAME.toString(), null);
+                String firstName = edtFirstName.getText().toString();
+                String lastName = edtLastName.getText().toString();
+                String email = edtEmail.getText().toString();
+
+                if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(email)) {
+                    if (EmailUtil.validateEmail(edtEmail.getText().toString()))
+                        startMembershipService(username, firstName, lastName, email);
                     else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(MemberActivity.this, "Your email address format is wrong!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+                        progressBar.setVisibility(View.GONE);
+                        final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                                getString(R.string.err_email_format));
+                        alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-    public void invokeWSForMember(final String firstName, final String lastName, final String email) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        String userName = this.getIntent().getStringExtra(USER_NAME);
-        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
-        nameValuePairs.add(new BasicNameValuePair(FIRST_NAME, firstName));
-        nameValuePairs.add(new BasicNameValuePair(LAST_NAME, lastName));
-        nameValuePairs.add(new BasicNameValuePair(EMAIL, email));
-        HttpEntity entity = null;
-        try {
-            entity = new UrlEncodedFormEntity(nameValuePairs);
-        } catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
-        }
-        client.post(getApplicationContext(), SERVICE_URL, entity, "application/x-www-form-urlencoded",
-                new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getBoolean("status")) {
-                        Toast.makeText(getApplicationContext(), "Member successfully created!",
-                                Toast.LENGTH_SHORT).show();
-                        logHelper.logInfo(getString(R.string.state_member_insert));
-                        MemberActivity.this.finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "An error occured while creating member!",
-                                Toast.LENGTH_SHORT).show();
-                        edtFirstName.setText("");
-                        edtLastName.setText("");
-                        edtEmail.setText("");
-                        MemberActivity.this.finish();
+                            }
+                        });
+                        alertDialog.show();
                     }
-                } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
-                if (statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_404), throwable);
-                } else if (statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_500), throwable);
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_else), throwable);
+                    progressBar.setVisibility(View.GONE);
+                    final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                            getString(R.string.err_state_empty_fields));
+                    alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alertDialog.show();
+                    logHelper.logInfo("Required fields can not be empty for registration");
                 }
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,6 +112,7 @@ public class MemberActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         MenuItem itm2 = menu.add("About us");
         itm2.setNumericShortcut('2');
         itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -162,6 +127,7 @@ public class MemberActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         MenuItem itm3 = menu.add("Close");
         itm3.setNumericShortcut('3');
         itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -173,4 +139,53 @@ public class MemberActivity extends AppCompatActivity {
         });
         return true;
     }
+
+
+    public void startMembershipService(String userName, String firstName, String lastName, String email) {
+        Intent i = new Intent(this, MembershipService.class);
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        i.putExtra(AppConstants.FIRST_NAME.toString(), firstName);
+        i.putExtra(AppConstants.LAST_NAME.toString(), lastName);
+        i.putExtra(AppConstants.EMAIL.toString(), email);
+        startService(i);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(MembershipService.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
+    }
+
+
+    // Define the callback for what to do when message is received
+    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getStringExtra("status");
+            if (result.equals("success")) {
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                mainIntent.putExtra(AppConstants.FIRST_NAME.toString(), intent.getStringExtra(AppConstants.FIRST_NAME.toString()));
+                mainIntent.putExtra(AppConstants.LAST_NAME.toString(), intent.getStringExtra(AppConstants.LAST_NAME.toString()));
+                mainIntent.putExtra(AppConstants.EMAIL.toString(), intent.getStringExtra(AppConstants.EMAIL.toString()));
+                MemberActivity.this.startActivity(mainIntent);
+            } else if (result.equals("failure")) {
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                        MemberActivity.this.getString(R.string.err_state_membership));
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+        }
+    };
+
 }
