@@ -24,7 +24,6 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
-import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -56,7 +55,9 @@ import static com.b.android.openvpn60.core.ConnectionStatus.LEVEL_WAITING_FOR_US
  * Created by b on 5/15/17.
  */
 
-public class OpenVPNService extends VpnService implements VpnStatus.StateListener, Handler.Callback, VpnStatus.ByteCountListener, IOpenVPNServiceInternal {
+public class OpenVPNService extends VpnService implements VpnStatus.StateListener, Handler.Callback,
+        VpnStatus.ByteCountListener, IOpenVPNServiceInternal {
+
     private static final int OPENVPN_STATUS = 1;
     private static boolean notificationsAlwaysVisible = false;
     private final Vector<String> dnsVector = new Vector<>();

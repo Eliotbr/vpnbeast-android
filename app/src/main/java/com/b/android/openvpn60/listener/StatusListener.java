@@ -17,7 +17,6 @@ import android.util.Log;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.IServiceStatus;
 import com.b.android.openvpn60.core.IStatusCallbacks;
-import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.core.OpenVPNStatusService;
 import com.b.android.openvpn60.core.VpnStatus;
 

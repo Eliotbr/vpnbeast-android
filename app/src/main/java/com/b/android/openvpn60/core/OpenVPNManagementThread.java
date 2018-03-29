@@ -54,6 +54,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     private LogHelper logHelper;
 
 
+
     public OpenVPNManagementThread(VpnProfile profile, OpenVPNService openVpnService) {
         vpnProfile = profile;
         openvpnService = openVpnService;
@@ -103,15 +104,11 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
         } catch (IOException e) {
             logHelper.logException(e);
         }
+
         return false;
-
-
     }
 
-    /**
-     * @param cmd command to write to management socket
-     * @return true if command have been sent
-     */
+
     public boolean managmentCommand(String cmd) {
         try {
             if (localSocket != null && localSocket.getOutputStream() != null) {
@@ -307,9 +304,8 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
     private void handleHold(String argument) {
         int waittime = 0;
         if (shouldBeRunning()) {
-            if (waittime >= 0)
-                VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
-                        R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+            VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
+                    R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
             resumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
         } else {
             waitingForRelease = true;

@@ -1,12 +1,9 @@
 package com.b.android.openvpn60.fragment;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
@@ -31,11 +28,9 @@ import android.widget.Toast;
 
 
 import com.b.android.openvpn60.R;
-import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.core.OpenVPNManagement;
 import com.b.android.openvpn60.core.OpenVPNService;
-import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.core.VpnStatus;
 import com.b.android.openvpn60.model.VpnProfile;
 
