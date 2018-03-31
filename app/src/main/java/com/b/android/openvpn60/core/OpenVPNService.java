@@ -35,6 +35,7 @@ import com.b.android.openvpn60.helper.VPNLaunchHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.activity.StatusActivity;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.util.NotificationUtil;
 import com.b.android.openvpn60.util.PreferencesUtil;
 
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
     private static Class notificationActivityClass;
     //private static OpenVPNService instance;
     private LogHelper logHelper;
+    private NotificationUtil notificationUtil;
 
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
@@ -166,7 +168,13 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
         int icon = R.drawable.vpn26;
-        android.app.Notification.Builder nbuilder = new Notification.Builder(this);
+        Notification.Builder nbuilder = new Notification.Builder(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationUtil = new NotificationUtil(this);
+            nbuilder = notificationUtil.getAndroidChannelNotification();
+        }
+
         if (vpnProfile != null)
             nbuilder.setContentTitle(getString(R.string.notifcation_title, vpnProfile.name));
         else
@@ -186,6 +194,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             lpNotificationExtras(nbuilder);
+
         if (tickerText != null && !tickerText.equals(""))
             nbuilder.setTicker(tickerText);
 
