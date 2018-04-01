@@ -154,9 +154,6 @@ public class LoginActivity extends ActionBarActivity {
                 edtUsername.setText("");
                 edtPass.setText("");
                 chkRemember.setChecked(false);
-                // Crashlytics test crash
-                /*Crashlytics.getInstance().crash();
-                Crashlytics.log("Crash occured");*/
             }
         });
 

@@ -129,8 +129,6 @@ public class RegistrationService extends Service {
                             if (response.getBoolean("status")) {
                                 //loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 responseIntent.putExtra("status", "success");
-                                logHelper.logInfo("API returned success as response");
-                                logHelper.logInfo("status value of responseIntent = " + responseIntent.getStringExtra("status"));
                                 responseIntent.putExtra(AppConstants.TEMP_USER.toString(), user);
                                 responseIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
                                 responseIntent.putExtra(AppConstants.USER_PASS.toString(), userPass);
