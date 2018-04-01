@@ -106,6 +106,7 @@ public class RegistrationService extends Service {
 
     public void invokeWS(final String userName, final String userPass) {
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(8000);
         final User user = new User(userName, userPass);
         final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_NAME.toString(), userName));
@@ -121,6 +122,7 @@ public class RegistrationService extends Service {
         }
         client.post(context, ServiceConstants.URL_REGISTER.toString(), entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
+
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
@@ -143,25 +145,20 @@ public class RegistrationService extends Service {
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         if(statusCode == 404) {
-                            Toast.makeText(context, context.getString(R.string.err_server_404),
-                                    Toast.LENGTH_LONG).show();
-                            logHelper.logWarning(context.getString(R.string.err_server_404), throwable);
+                            logHelper.logException(context.getString(R.string.err_server_404), throwable);
                             responseIntent.putExtra("status", "err_server_404");
                         } else if(statusCode == 500) {
-                            Toast.makeText(context, context.getString(R.string.err_server_500),
-                                    Toast.LENGTH_LONG).show();
-                            logHelper.logWarning(context.getString(R.string.err_server_500), throwable);
+                            logHelper.logException(context.getString(R.string.err_server_500), throwable);
                             responseIntent.putExtra("status", "err_server_500");
                         } else {
-                            Toast.makeText(context, context.getString(R.string.err_server_else),
-                                    Toast.LENGTH_LONG).show();
-                            logHelper.logWarning(context.getString(R.string.err_server_else), throwable);
+                            logHelper.logException(context.getString(R.string.err_server_else), throwable);
                             responseIntent.putExtra("status", "err_server_else");
                         }
                         stopService();
                     }
+
                 });
     }
 

@@ -751,20 +751,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404){
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if(statusCode == 404) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
-                }
-                else if(statusCode == 500){
+                    logHelper.logException(throwable);
+                } else if(statusCode == 500) {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
-                }
-                else{
+                    logHelper.logException(throwable);
+                } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
+                    logHelper.logException(throwable);
                 }
             }
+
         });
         return (ArrayList<VpnProfile>) profiles;
     }

@@ -326,6 +326,7 @@ public class LoginActivity extends ActionBarActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra("status");
+            logHelper.logInfo(result);
             if (result.equals("success")) {
                 mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
                 mainIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
@@ -333,6 +334,21 @@ public class LoginActivity extends ActionBarActivity {
             } else if (result.equals("failure")) {
                 AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
                         LoginActivity.this.getString(R.string.err_state_login));
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_404")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                        "\nServer returned HTTP 404 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_500")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                        "\nServer returned HTTP 500 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_else")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                        "\nServer returned an error code");
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
             }

@@ -204,6 +204,21 @@ public class RegisterActivity extends AppCompatActivity {
                         RegisterActivity.this.getString(R.string.err_state_registration));
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_404")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                        "\nServer returned HTTP 404 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_500")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                        "\nServer returned HTTP 500 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_else")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                        "\nServer returned an error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
         }

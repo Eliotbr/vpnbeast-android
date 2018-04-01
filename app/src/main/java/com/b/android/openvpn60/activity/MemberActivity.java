@@ -59,7 +59,10 @@ public class MemberActivity extends AppCompatActivity {
         edtEmail = (EditText) this.findViewById(R.id.edtEmail2);
         progressBar = (ProgressBar) this.findViewById(R.id.progressBarMember);
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit3);
+        btnSubmit.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_green));
+        btnSubmit.setTextColor(getResources().getColor(R.color.colorBackground));
         btnSubmit.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -67,7 +70,6 @@ public class MemberActivity extends AppCompatActivity {
                 String firstName = edtFirstName.getText().toString();
                 String lastName = edtLastName.getText().toString();
                 String email = edtEmail.getText().toString();
-
                 if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(email)) {
                     if (EmailUtil.validateEmail(edtEmail.getText().toString()))
                         startMembershipService(username, firstName, lastName, email);
@@ -181,6 +183,21 @@ public class MemberActivity extends AppCompatActivity {
             } else if (result.equals("failure")) {
                 AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
                         MemberActivity.this.getString(R.string.err_state_membership));
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_404")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                        "\nServer returned HTTP 404 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_500")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                        "\nServer returned HTTP 500 error code");
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            } else if (result.equals("err_server_else")){
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                        "\nServer returned an error code");
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
