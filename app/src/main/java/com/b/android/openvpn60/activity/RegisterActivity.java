@@ -1,10 +1,15 @@
 package com.b.android.openvpn60.activity;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,17 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.constant.ServiceConstants;
-import com.b.android.openvpn60.helper.RegisterHelper;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.service.LoginService;
+import com.b.android.openvpn60.service.RegistrationService;
+import com.b.android.openvpn60.util.ViewUtil;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String USER_PASS = AppConstants.USER_PASS.toString();
-    private static final String USER_UUID = AppConstants.USER_UUID.toString();
-    private static final String SERVICE_URL = ServiceConstants.URL_REGISTER.toString();
-    private static final String CLASS_TAG = RegisterActivity.class.toString();
 
     private LogHelper logHelper;
     private EditText edtUsername;
@@ -32,10 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtPass2;
     private Button btnSubmit;
     private Button btnClear;
-    private Intent intentLogin;
+    private Intent loginIntent;
     private ProgressBar progressBar;
-    private String userName;
-    private AsyncTask<Void, Void, Integer> checker;
+
 
 
     @Override
@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtPass = (EditText) this.findViewById(R.id.edtPassSignup);
         edtPass2 = (EditText) this.findViewById(R.id.edtPassSignup2);
         progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-        intentLogin = new Intent(this, LoginActivity.class);
+        loginIntent = new Intent(this, LoginActivity.class);
         btnClear = (Button) this.findViewById(R.id.btnClear2);
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit2);
         btnClear.setOnClickListener(new View.OnClickListener() {
@@ -65,26 +65,51 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = edtPass.getText().toString();
                 String password2 = edtPass2.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
-                userName = edtUsername.getText().toString();
-                if (!username.equals("") && !password.equals("") && !password2.equals("")) {
-                    if (password.length() < 6)
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_password),
-                                Toast.LENGTH_SHORT).show();
+                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(password2)) {
                     if (password.equals(password2)) {
-                        RegisterHelper registerHelper = new RegisterHelper(RegisterActivity.this,
-                                intentLogin, username, password);
-                        registerHelper.run();
-                    }
-                    else {
-                        Toast.makeText(RegisterActivity.this, "Passwords do not match, please check",
-                                Toast.LENGTH_SHORT).show();
+                        if (password.length() > 6)
+                            startRegisterService(username, password);
+                        else {
+                            progressBar.setVisibility(View.GONE);
+                            final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                    getString(R.string.err_password));
+                            alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                            alertDialog.show();
+                        }
+                    } else {
                         progressBar.setVisibility(View.GONE);
-                        logHelper.logWarning("Passwords does not match...");
+                        final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                getString(R.string.err_password_not_same));
+                        alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                        alertDialog.show();
                     }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    final AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                            getString(R.string.err_state_empty_fields));
+                    alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    alertDialog.show();
+                    logHelper.logInfo("Required fields can not be empty for registration");
                 }
                 }
             });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,17 +150,62 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.INVISIBLE);
+        IntentFilter filter = new IntentFilter(RegistrationService.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
 
     public ProgressBar getProgressBar() {
         return progressBar;
     }
 
+
     public void close(){
         this.finish();
     }
+
+
+    public void startRegisterService(String userName, String userPass) {
+        // Construct our Intent specifying the Service
+        Intent i = new Intent(this, RegistrationService.class);
+        // Add extras to the bundle
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        i.putExtra(AppConstants.USER_PASS.toString(), userPass);
+        // Start the service
+        startService(i);
+    }
+
+    // Define the callback for what to do when message is received
+    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String result = intent.getStringExtra("status");
+            if (result.equals("success")) {
+                loginIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                loginIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
+                progressBar.setVisibility(View.INVISIBLE);
+                loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Toast.makeText(RegisterActivity.this, R.string.state_register, Toast.LENGTH_LONG).show();
+                RegisterActivity.this.startActivity(loginIntent);
+                RegisterActivity.this.finish();
+            } else if (result.equals("failure")) {
+                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                        RegisterActivity.this.getString(R.string.err_state_registration));
+                alertDialog.show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+        }
+    };
 }

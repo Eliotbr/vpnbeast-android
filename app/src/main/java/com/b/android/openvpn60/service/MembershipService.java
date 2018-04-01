@@ -66,7 +66,7 @@ public class MembershipService extends Service {
     public void onCreate() {
         super.onCreate();
         // An Android handler thread internally operates on a looper.
-        handlerThread = new HandlerThread("LoginService.HandlerThread");
+        handlerThread = new HandlerThread("MembershipService.HandlerThread");
         handlerThread.start();
         context = getApplicationContext();
         logHelper = LogHelper.getLogHelper(LoginService.class.getName());
@@ -149,8 +149,6 @@ public class MembershipService extends Service {
                             } else
                                 responseIntent.putExtra("status", "failure");
                         } catch (JSONException ex) {
-                            Toast.makeText(context, context.getString(R.string.err_state_json),
-                                    Toast.LENGTH_SHORT).show();
                             logHelper.logException(ex);
                         }
                         stopService();
