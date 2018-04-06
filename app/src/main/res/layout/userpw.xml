@@ -33,6 +33,17 @@
 
 
     <CheckBox
+        android:id="@+id/save_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/save_password"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+
+    <CheckBox
         android:id="@+id/show_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,15 +54,7 @@
         />
 
 
-    <CheckBox
-        android:id="@+id/save_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/save_password"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+
 
 
 </LinearLayout>

@@ -3,26 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.b.android.openvpn60">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
+
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> -->
 
-
-    <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-feature
         android:name="android.software.leanback"
         android:required="false" />
+
+
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+
     <application
-        android:name=".core.ICSOpenVPNApplication"
+        android:name=".application.VpnBeastApplication"
         android:allowBackup="true"
         android:banner="@mipmap/ic_launcher"
         android:icon="@mipmap/ic_launcher_round"
@@ -30,13 +41,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNew"
         tools:ignore="UnusedAttribute">
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+
         <activity
             android:name=".activity.MainActivity"
             tools:ignore="ExportedActivity" />
+
 
         <service
             android:name=".core.OpenVPNService"
@@ -48,10 +62,12 @@
             </intent-filter>
         </service>
 
+
         <service
             android:name=".core.OpenVPNStatusService"
             android:exported="false"
             android:process=":openvpn" />
+
 
         <service
             android:name=".core.OpenVPNTileService"
@@ -68,17 +84,21 @@
                 android:value="false" />
         </service>
 
+
         <service
             android:name=".service.LoginService"
             android:exported="false"/>
+
 
         <service
             android:name=".service.MembershipService"
             android:exported="false"/>
 
+
         <service
             android:name=".service.RegistrationService"
             android:exported="false"/>
+
 
         <receiver android:name=".receiver.OnBootReceiver">
             <intent-filter android:priority="999">
@@ -86,6 +106,7 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
 
         <activity
             android:name=".activity.ImportActivity"
@@ -96,28 +117,20 @@
             tools:ignore="ExportedActivity">
             <intent-filter android:label="@string/import_config">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:mimeType="application/x-openvpn-profile" />
             </intent-filter>
             <intent-filter android:label="@string/import_config">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:mimeType="application/ovpn" />
             </intent-filter>
             <intent-filter android:label="@string/import_config">
-
-                <!-- http://stackoverflow.com/questions/7f030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="*/*" />
                 <data android:scheme="file" />
                 <data android:host="*" />
@@ -128,6 +141,8 @@
                 <data android:pathPattern=".*.ovpn" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".activity.LaunchVPN"
             android:autoRemoveFromRecents="true"
@@ -137,28 +152,36 @@
             tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".activity.StatusActivity"
             android:label="@string/title_activity_status"
             android:launchMode="singleTask" />
+
+
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_signup"/>
+
+
         <activity
             android:name=".activity.MemberActivity"
             android:label="@string/title_activity_member"/>
+
+
     </application>
 
 </manifest>

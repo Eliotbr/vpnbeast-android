@@ -81,30 +81,6 @@ public class LoginActivity extends ActionBarActivity {
     }
 
 
-    /**
-     * Below method created to debug for creating different views for different devices
-     */
-    /*private void getDeviceInfos() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        logHelper.logInfo("width = " + width);
-        logHelper.logInfo("height = " + height);
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int heightPixels = metrics.heightPixels;
-        int widthPixels = metrics.widthPixels;
-        int densityDpi = metrics.densityDpi;
-        float xdpi = metrics.xdpi;
-        float ydpi = metrics.ydpi;
-        logHelper.logInfo("widthPixels = " + widthPixels);
-        logHelper.logInfo("heightPixels = " + heightPixels);
-        logHelper.logInfo("densityDpi = " + densityDpi);
-    }*/
-
-
     public ProgressBar getProgressBar() {
         return progressBar;
     }
