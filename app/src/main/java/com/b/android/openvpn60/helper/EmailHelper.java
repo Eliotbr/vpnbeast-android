@@ -34,6 +34,7 @@ import javax.mail.internet.MimeMultipart;
  */
 
 public class EmailHelper extends AsyncTask<Void, Void, Integer> {
+
     private ProgressDialog statusDialog;
     private LoginActivity loginActivity;
     private Context context;
@@ -45,6 +46,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
     private String password;
     private Session session;
     private javax.mail.Authenticator authenticator;
+
 
 
     public EmailHelper(Context context, final String userName, final String password) {
@@ -74,11 +76,13 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         session = Session.getDefaultInstance(props, authenticator);
     }
 
+
     @Override
     protected void onPreExecute() {
         logHelper.logInfo("Preparing to send email...");
         progressBar.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     protected Integer doInBackground(Void... params) {
@@ -86,6 +90,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
             return 11;
         return 99;
     }
+
 
     @Override
     protected void onPostExecute(Integer errorCode) {
@@ -101,6 +106,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         }
     }
 
+
     private boolean sendEmail() {
         try {
             sendMail("Reset Password", "This email will contain reset password link",
@@ -113,9 +119,9 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         return false;
     }
 
+
     private synchronized void sendMail(String subject, String body,
-                                       String senderEmail, String recipients, String logFilePath)
-            throws Exception {
+                                       String senderEmail, String recipients, String logFilePath) throws Exception {
         File file= new File(logFilePath);
         boolean fileExists =file.exists();
         if (fileExists) {
@@ -146,6 +152,7 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
             sendMail(subject, body, senderEmail, recipients);
         }
     }
+
 
     private synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try {
