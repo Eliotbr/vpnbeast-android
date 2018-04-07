@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private RelativeLayout pnlMain;
     private LogHelper logHelper;
     private TextView txtUsername, txtProfile, txtIp, txtPort;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -156,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         profiles = new ArrayList<>();
         profiles = getProfileInfos();
         logHelper = LogHelper.getLogHelper(this);
+        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
         btnConnect = (Button) this.findViewById(R.id.btnConnect);
         importer = new Intent(this, ImportActivity.class);
         intentService = new Intent(this, LaunchVPN.class);
@@ -445,12 +448,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onResume() {
+        super.onResume();
         if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
             profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
         //isUserAMember();
         //updateProfiles();
         generateProfiles();
-        super.onResume();
+        if (progressBar.getVisibility() != View.INVISIBLE)
+            progressBar.setVisibility(View.INVISIBLE);
     }
 
 
