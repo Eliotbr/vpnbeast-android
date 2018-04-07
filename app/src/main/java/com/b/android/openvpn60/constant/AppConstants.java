@@ -33,7 +33,9 @@ public enum AppConstants {
     START_SERVICE_STICKY("start_service_sticky"),
     NOTIFICATION_ALWAYS_VISIBLE("notification_always_visible"),
     PAUSE_VPN("pause_vpn"),
-    RESUME_VPN("resume_vpn");
+    RESUME_VPN("resume_vpn"),
+    INSERT_MEMBER("insert_member"),
+    CHECK_MEMBER("check_member");
 
 
     private final String text;
