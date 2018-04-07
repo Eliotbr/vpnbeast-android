@@ -10,11 +10,13 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.activity.LoginActivity;
+import com.b.android.openvpn60.activity.MainActivity;
 import com.b.android.openvpn60.activity.MemberActivity;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
@@ -69,11 +71,10 @@ public class MembershipService extends Service {
         handlerThread = new HandlerThread("MembershipService.HandlerThread");
         handlerThread.start();
         context = getApplicationContext();
-        logHelper = LogHelper.getLogHelper(LoginService.class.getName());
+        logHelper = LogHelper.getLogHelper(MembershipService.class.getName());
         // An Android service handler is a handler running on a specific background thread.
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
-
     }
 
     // Fires when a service is started up
@@ -82,12 +83,18 @@ public class MembershipService extends Service {
         serviceHandler.post(new Runnable() {
             @Override
             public void run() {
-                responseIntent = new Intent(ACTION);
-                String username = intent.getStringExtra(AppConstants.USER_NAME.toString());
-                String firstName = intent.getStringExtra(AppConstants.FIRST_NAME.toString());
-                String lastName = intent.getStringExtra(AppConstants.LAST_NAME.toString());
-                String email = intent.getStringExtra(AppConstants.EMAIL.toString());
-                invokeWSForMember(username, firstName, lastName, email);
+                if (intent.getAction().equals(AppConstants.INSERT_MEMBER.toString())) {
+                    responseIntent = new Intent(AppConstants.INSERT_MEMBER.toString());
+                    String username = intent.getStringExtra(AppConstants.USER_NAME.toString());
+                    String firstName = intent.getStringExtra(AppConstants.FIRST_NAME.toString());
+                    String lastName = intent.getStringExtra(AppConstants.LAST_NAME.toString());
+                    String email = intent.getStringExtra(AppConstants.EMAIL.toString());
+                    insertMember(username, firstName, lastName, email);
+                } else if (intent.getAction().equals(AppConstants.CHECK_MEMBER.toString())) {
+                    responseIntent = new Intent(AppConstants.CHECK_MEMBER.toString());
+                    String username = intent.getStringExtra(AppConstants.USER_NAME.toString());
+                    checkMembership(username);
+                }
             }
         });
         // Keep service around "sticky"
@@ -109,7 +116,7 @@ public class MembershipService extends Service {
     }
 
 
-    public void invokeWSForMember(final String userName, final String firstName, final String lastName, final String email) {
+    public void insertMember(final String userName, final String firstName, final String lastName, final String email) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(8000);
         final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -159,18 +166,67 @@ public class MembershipService extends Service {
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         if(statusCode == 404) {
                             logHelper.logException(context.getString(R.string.err_server_404), throwable);
-                            responseIntent.putExtra("status", "err_server_404");
+                            responseIntent.putExtra("status", "errServer400");
                         } else if(statusCode == 500) {
                             logHelper.logException(context.getString(R.string.err_server_500), throwable);
-                            responseIntent.putExtra("status", "err_server_500");
+                            responseIntent.putExtra("status", "errServer500");
                         } else {
                             logHelper.logException(context.getString(R.string.err_server_else), throwable);
-                            responseIntent.putExtra("status", "err_server_else");
+                            responseIntent.putExtra("status", "errServerElse");
                         }
                         stopService();
                     }
                 });
     }
+
+
+    private void checkMembership(String userName){
+        AsyncHttpClient client = new AsyncHttpClient();
+        final List<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_NAME.toString(), userName));
+        HttpEntity entity = null;
+        try {
+            entity = new UrlEncodedFormEntity(nameValuePairs);
+        }
+        catch (UnsupportedEncodingException a) {
+            logHelper.logException(a);
+        }
+        client.post(getApplicationContext(), ServiceConstants.URL_CHECK_MEMBERS.toString(), entity,
+                "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            //if (response.length() != 0) {
+                            if (response.isNull("memberStatus") || response.getInt("memberStatus") == 0) {
+                                responseIntent.putExtra("status", "failure");
+                                logHelper.logInfo(responseIntent.getAction() + " - " + "status = success");
+                            } else if (response.getInt("memberStatus") == 1) {
+                                responseIntent.putExtra("status", "success");
+                                logHelper.logInfo(responseIntent.getAction() + " - " + "status = success");
+                            }
+                        } catch (JSONException ex) {
+                            logHelper.logException(ex);
+                        }
+                        stopService();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        if(statusCode == 404) {
+                            logHelper.logException(context.getString(R.string.err_server_404), throwable);
+                            responseIntent.putExtra("status", "errServer404");
+                        } else if(statusCode == 500) {
+                            logHelper.logException(context.getString(R.string.err_server_500), throwable);
+                            responseIntent.putExtra("status", "errServer500");
+                        } else {
+                            logHelper.logException(context.getString(R.string.err_server_else), throwable);
+                            responseIntent.putExtra("status", "errServerElse");
+                        }
+                        stopService();
+                    }
+                });
+    }
+
 
     private void saveInfos(String userName, String firstName, String lastName, String email) {
         SharedPreferences sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(context);

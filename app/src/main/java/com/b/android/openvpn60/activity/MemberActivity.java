@@ -145,6 +145,7 @@ public class MemberActivity extends AppCompatActivity {
 
     public void startMembershipService(String userName, String firstName, String lastName, String email) {
         Intent i = new Intent(this, MembershipService.class);
+        i.setAction(AppConstants.INSERT_MEMBER.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         i.putExtra(AppConstants.FIRST_NAME.toString(), firstName);
         i.putExtra(AppConstants.LAST_NAME.toString(), lastName);
@@ -156,7 +157,7 @@ public class MemberActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter(MembershipService.ACTION);
+        IntentFilter filter = new IntentFilter(AppConstants.INSERT_MEMBER.toString());
         LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
     }
 
@@ -172,36 +173,38 @@ public class MemberActivity extends AppCompatActivity {
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
             String result = intent.getStringExtra("status");
-            if (result.equals("success")) {
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
-                mainIntent.putExtra(AppConstants.FIRST_NAME.toString(), intent.getStringExtra(AppConstants.FIRST_NAME.toString()));
-                mainIntent.putExtra(AppConstants.LAST_NAME.toString(), intent.getStringExtra(AppConstants.LAST_NAME.toString()));
-                mainIntent.putExtra(AppConstants.EMAIL.toString(), intent.getStringExtra(AppConstants.EMAIL.toString()));
-                MemberActivity.this.startActivity(mainIntent);
-            } else if (result.equals("failure")) {
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
-                        MemberActivity.this.getString(R.string.err_state_membership));
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_404")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
-                        "\nServer returned HTTP 404 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_500")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
-                        "\nServer returned HTTP 500 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_else")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
-                        "\nServer returned an error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
+            if (action.equals(AppConstants.INSERT_MEMBER.toString())) {
+                if (result.equals("success")) {
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                    mainIntent.putExtra(AppConstants.FIRST_NAME.toString(), intent.getStringExtra(AppConstants.FIRST_NAME.toString()));
+                    mainIntent.putExtra(AppConstants.LAST_NAME.toString(), intent.getStringExtra(AppConstants.LAST_NAME.toString()));
+                    mainIntent.putExtra(AppConstants.EMAIL.toString(), intent.getStringExtra(AppConstants.EMAIL.toString()));
+                    MemberActivity.this.startActivity(mainIntent);
+                } else if (result.equals("failure")) {
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                            MemberActivity.this.getString(R.string.err_state_membership));
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else if (result.equals("errServer404")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                            "\nServer returned HTTP 404 error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else if (result.equals("errServer500")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                            "\nServer returned HTTP 500 error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else if (result.equals("errServerElse")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MemberActivity.this,
+                            "\nServer returned an error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
             }
-
         }
     };
 

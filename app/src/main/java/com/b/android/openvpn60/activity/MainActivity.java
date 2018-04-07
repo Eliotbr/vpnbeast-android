@@ -6,14 +6,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -41,9 +45,12 @@ import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.service.MembershipService;
+import com.b.android.openvpn60.service.RegistrationService;
 import com.b.android.openvpn60.util.EncodingUtil;
 import com.b.android.openvpn60.util.EncryptionUtil;
 import com.b.android.openvpn60.util.PreferencesUtil;
+import com.b.android.openvpn60.util.ViewUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -73,12 +80,9 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
     private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String MEMBER_NAME = AppConstants.MEMBER_NAME.toString();
     private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     private static final String SERVICE_URL_PUT = ServiceConstants.URL_PUT.toString();
-    private static final String SERVICE_URL_GET = ServiceConstants.URL_CHECK_MEMBERS.toString();
     private static final String SERVICE_URL_GET_PROFILES = ServiceConstants.URL_GET_PROFILES.toString();
-    private static final String SELECTED_PROFILE = AppConstants.SELECTED_PROFILE.toString();
     private static int UPDATE_INTERVAL = 10000; // 10 sec
     private static int FATEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 10; // 10 meters
@@ -94,13 +98,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private LocationRequest locationRequest;
     private Intent importer;
     public static VpnProfile profile;
-    private VpnProfile mRemovedProfile;
     private EditText edtPort;
     private EditText edtUser;
     private EditText edtHost;
     private Button btnConnect;
     private ProgressDialog dlgProgress;
-    private String mUsername;
     private Intent intentService;
     public static List<VpnProfile> profiles;
     private ArrayAdapter<VpnProfile> adapter;
@@ -137,16 +139,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         View mCustomView = mInflater.inflate(R.layout.custom_menu, null);
         TextView mTitleTextView = mCustomView.findViewById(R.id.title_text);
         mTitleTextView.setText(userName);
-        /*ImageButton imageButton = (ImageButton) mCustomView
-                .findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Refresh Clicked!",
-                        Toast.LENGTH_LONG).show();
-            }
-        });*/
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
     }
@@ -219,66 +211,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /*MenuItem itm1 = menu.add(getString(R.string.prompt_import));
-        itm1.setNumericShortcut('1');
-        itm1.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(importer);
-                return false;
-            }
-        });
-        MenuItem itm2 = menu.add(getString(R.string.prompt_remove_profile));
-        itm2.setNumericShortcut('2');
-        itm2.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (profiles.isEmpty())
-                    Toast.makeText(MainActivity.this, R.string.err_profile_removed, Toast.LENGTH_LONG).show();
-                else {
-                    final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this,
-                            AlertDialog.THEME_HOLO_DARK);
-                    mBuilder.setTitle(getString(R.string.prompt_remove_profile));
-                    final CustomAdapter mAdapter = new CustomAdapter(MainActivity.this, R.layout.list_row,
-                            R.id.text, profiles) {};
-                    mBuilder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            mRemovedProfile = mAdapter.mProfile2;
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-
-                    mBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (mAdapter.mProfile2 != null) {
-                                getPM().removeProfile(MainActivity.this, mAdapter.mProfile2);  //
-                                updateProfiles();
-                                //profiles = (ArrayList<VpnProfile>) getPM().getProfiles();
-                                Toast.makeText(MainActivity.this, R.string.profile_removed,
-                                        Toast.LENGTH_SHORT).show();
-                                if (profiles.isEmpty()) {
-                                    btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
-                                    edtPort.setText("");
-                                    edtHost.setText("");
-                                }
-                            }
-                        }
-                    });
-                    mBuilder.setNegativeButton(android.R.string.cancel, null);
-                    mBuilder.setAdapter(mAdapter, null);
-                    mBuilder.show();
-                }
-                return false;
-            }
-        });*/
         MenuItem itm3 = menu.add("Register");
         itm3.setNumericShortcut('3');
         itm3.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -365,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void prepareService() {
         invokeWS();
-        isUserAMember();
+        startMembershipService(userName);
     }
 
 
@@ -456,8 +388,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         generateProfiles();
         if (progressBar.getVisibility() != View.INVISIBLE)
             progressBar.setVisibility(View.INVISIBLE);
+        IntentFilter filter = new IntentFilter(AppConstants.CHECK_MEMBER.toString());
+        LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
+    }
 
     private void startOrStopVPN(VpnProfile profile) {
         startVPN(profile);
@@ -669,59 +609,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
-    private void isUserAMember(){
-        AsyncHttpClient client = new AsyncHttpClient();
-        final List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
-        HttpEntity entity = null;
-        try {
-            entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
-        }
-        client.post(getApplicationContext(), SERVICE_URL_GET, entity, "application/x-www-form-urlencoded",
-                new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.length() != 0) {
-                        if (response.getInt("memberStatus") == 1) {
-                            isMember = true;
-                            logHelper.logInfo("Member validation = OK");
-                            Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (response.getInt("memberStatus") == 0)
-                            Toast.makeText(getApplicationContext(), "Not a valid member", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(MainActivity.this, "You are not a valid member, you can register from options menu",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if(statusCode == 404) {
-                    logHelper.logWarning(getString(R.string.err_server_404) + " " + Log.getStackTraceString(t));
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                }
-                else if(statusCode == 500) {
-                    logHelper.logWarning(getString(R.string.err_server_500) + " " + Log.getStackTraceString(t));
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                } else {
-                    logHelper.logWarning(getString(R.string.err_server_else) + " " + Log.getStackTraceString(t));
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-
     private  ArrayList<VpnProfile> getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(SERVICE_URL_GET_PROFILES, null, new JsonHttpResponseHandler() {
@@ -772,4 +659,48 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
         return (ArrayList<VpnProfile>) profiles;
     }
+
+
+    // Define the callback for what to do when message is received
+    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String result = intent.getStringExtra("status");
+            if (action.equals(AppConstants.CHECK_MEMBER.toString())) {
+                if (result.equals("success")) {
+                    isMember = true;
+                    Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_LONG).show();
+                } else if (result.equals("failure")) {
+                    isMember = false;
+                    Toast.makeText(MainActivity.this, "You are not a member, you can register " + "\n" +
+                            "from options menu", Toast.LENGTH_LONG).show();
+                } else if (result.equals("errServer404")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                            "\nServer returned HTTP 404 error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else if (result.equals("errServer500")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                            "\nServer returned HTTP 500 error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else if (result.equals("errServerElse")){
+                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                            "\nServer returned an error code");
+                    alertDialog.show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+    };
+
+
+    private void startMembershipService(String userName) {
+        Intent i = new Intent(this, MembershipService.class);
+        i.setAction(AppConstants.CHECK_MEMBER.toString());
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        startService(i);
+    }
+
 }
