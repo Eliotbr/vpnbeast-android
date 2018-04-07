@@ -309,17 +309,17 @@ public class LoginActivity extends ActionBarActivity {
                         LoginActivity.this.getString(R.string.err_state_login));
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_404")){
+            } else if (result.equals("errServer404")){
                 AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
                         "\nServer returned HTTP 404 error code");
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_500")){
+            } else if (result.equals("errServer500")){
                 AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
                         "\nServer returned HTTP 500 error code");
                 alertDialog.show();
                 progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_else")){
+            } else if (result.equals("errServerElse")){
                 AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
                         "\nServer returned an error code");
                 alertDialog.show();
