@@ -146,13 +146,13 @@ public class RegistrationService extends Service {
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         if(statusCode == 404) {
                             logHelper.logException(context.getString(R.string.err_server_404), throwable);
-                            responseIntent.putExtra("status", "err_server_404");
+                            responseIntent.putExtra("status", "errServer404");
                         } else if(statusCode == 500) {
                             logHelper.logException(context.getString(R.string.err_server_500), throwable);
-                            responseIntent.putExtra("status", "err_server_500");
+                            responseIntent.putExtra("status", "errServer500");
                         } else {
                             logHelper.logException(context.getString(R.string.err_server_else), throwable);
-                            responseIntent.putExtra("status", "err_server_else");
+                            responseIntent.putExtra("status", "errServerElse");
                         }
                         stopService();
                     }
