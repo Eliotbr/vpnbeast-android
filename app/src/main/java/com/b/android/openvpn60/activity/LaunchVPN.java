@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.IServiceStatus;
@@ -56,13 +57,14 @@ public class LaunchVPN extends Activity {
     private VpnProfile selectedProfile;
     private String mTransientAuthPW;
     private String mTransientCertOrPCKS12PW;
-
+    private SharedPreferences prefs;
 
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.launchvpn);
+        //setContentView(R.layout.launchvpn);
+        prefs = PreferencesUtil.getDefaultSharedPreferences(this);
         startVpnFromIntent();
     }
 
@@ -99,7 +101,7 @@ public class LaunchVPN extends Activity {
         // If the intent is a request to create a shortcut, we'll do that and exit
         if (Intent.ACTION_MAIN.equals(action)) {
             // Check if we need to clear the log
-            if (PreferencesUtil.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
+            if (prefs.getBoolean(CLEARLOG, true))
                 VpnStatus.clearLog();
             // we got called to be the starting point, most likely a shortcut
             String shortcutUUID = intent.getStringExtra(EXTRA_KEY);
@@ -112,6 +114,8 @@ public class LaunchVPN extends Activity {
                 finish();
             } else {
                 selectedProfile = profileToConnect;
+                selectedProfile.setUserName(prefs.getString(AppConstants.VPN_USERNAME.toString(), null));
+                selectedProfile.setPassword(prefs.getString(AppConstants.VPN_PASSWORD.toString(), null));
                 launchVPN();
             }
         }
@@ -141,9 +145,9 @@ public class LaunchVPN extends Activity {
 
         if (type == R.string.password) {
             ((EditText) userpwlayout.findViewById(R.id.edtUsername))
-                    .setText(PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).getString(AppConstants.VPN_USERNAME.toString(), null));
+                    .setText(prefs.getString(AppConstants.VPN_USERNAME.toString(), null));
             ((EditText) userpwlayout.findViewById(R.id.edtPassword))
-                    .setText(PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).getString(AppConstants.VPN_PASSWORD.toString(), null));
+                    .setText(prefs.getString(AppConstants.VPN_PASSWORD.toString(), null));
             ((CheckBox) userpwlayout.findViewById(R.id.save_password)).setChecked(selectedProfile.getPassword() != null);
             ((CheckBox) userpwlayout.findViewById(R.id.show_password)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -165,11 +169,11 @@ public class LaunchVPN extends Activity {
                         if (type == R.string.password) {
                             selectedProfile.setUserName(((EditText) userpwlayout.findViewById(R.id.edtUsername)).getText().toString());
                             String pw = ((EditText) userpwlayout.findViewById(R.id.edtPassword)).getText().toString();
-                            PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).edit().putString(AppConstants.VPN_USERNAME.toString(),
+                            prefs.edit().putString(AppConstants.VPN_USERNAME.toString(),
                                     selectedProfile.getUserName()).apply();
                             if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
                                 selectedProfile.setPassword(pw);
-                                PreferencesUtil.getDefaultSharedPreferences(LaunchVPN.this).edit().putString(AppConstants.VPN_PASSWORD.toString(),
+                                prefs.edit().putString(AppConstants.VPN_PASSWORD.toString(),
                                         selectedProfile.getPassword()).apply();
                             } else {
                                 selectedProfile.setPassword(null);
@@ -204,12 +208,14 @@ public class LaunchVPN extends Activity {
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
                 int needpw = selectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
-                if (needpw != 0) {
+                if (prefs.getString(AppConstants.VPN_PASSWORD.toString(), null) == null) {
                     VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
-                    SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(this);
+                    Toast.makeText(LaunchVPN.this, prefs.getString(AppConstants.VPN_PASSWORD.toString(), null),
+                            Toast.LENGTH_LONG).show();
+                    mTransientAuthPW = selectedProfile.getPassword();
                     ProfileManager.updateLRU(this, selectedProfile);
                     VPNLaunchHelper.startOpenVpn(selectedProfile, getBaseContext());
                     showAfterMain();
