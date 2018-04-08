@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_row="0"
+            android:textSize="15sp"
             android:text="Email: "
             android:layout_marginTop="5dp"
             android:textStyle="bold" />
@@ -46,8 +47,8 @@
             android:layout_row="0"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
+            android:textSize="15sp"
             android:layout_marginBottom="10dp"
-
             android:textColor="@color/colorAccent"
             />
 
@@ -58,6 +59,7 @@
             android:id="@+id/txtPass"
             android:text="Password: "
             android:layout_column="0"
+            android:textSize="15sp"
             android:layout_row="1"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
@@ -69,6 +71,7 @@
             android:id="@+id/edtPass"
             android:layout_column="1"
             android:layout_row="1"
+            android:textSize="15sp"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
             android:inputType="textPassword"
@@ -96,6 +99,7 @@
             android:layout_height="wrap_content"
             android:text="Remember my credidentals"
             app:layout_columnSpan="2"
+            android:textSize="13sp"
             android:id="@+id/chkRemember"
             android:textColor="@color/colorAccent"
             android:layout_marginBottom="7dip"

@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:id="@+id/grdLayout"
-
         android:layout_marginRight="40dip"
         android:layout_marginLeft="40dip"
         android:layout_above="@id/grdLayoutS"
@@ -33,6 +32,7 @@
             android:layout_column="0"
             android:layout_row="0"
             android:text="Email: "
+            android:textSize="15sp"
             android:layout_marginTop="7dp"
             android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
             android:layout_marginBottom="10dp"
-
+            android:textSize="15sp"
             android:textColor="@color/colorAccent"
             />
 
@@ -57,6 +57,7 @@
             android:text="Password: "
             android:layout_column="0"
             android:layout_row="1"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginTop="7dp"
             />
@@ -69,6 +70,7 @@
             android:layout_row="1"
             android:layout_gravity="fill_horizontal"
             android:layout_marginLeft="20dip"
+            android:textSize="15sp"
             android:inputType="textPassword"
             android:textColor="@color/colorAccent"
             android:layout_marginBottom="10dp"
@@ -93,6 +95,7 @@
             android:layout_height="wrap_content"
             android:text="Remember my credidentals"
             android:layout_columnSpan="2"
+            android:textSize="13sp"
             android:id="@+id/chkRemember"
             android:textColor="@color/colorAccent"
             android:layout_marginBottom="7dip"

@@ -86,17 +86,12 @@
 
 
         <service
-            android:name=".service.LoginService"
+            android:name=".service.MemberService"
             android:exported="false"/>
 
 
         <service
-            android:name=".service.MembershipService"
-            android:exported="false"/>
-
-
-        <service
-            android:name=".service.RegistrationService"
+            android:name=".service.UserService"
             android:exported="false"/>
 
 
