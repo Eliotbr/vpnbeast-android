@@ -355,7 +355,7 @@
 
     <string name="err_state_login">\nYour username or password is invalid</string>
     <string name="err_state_membership">\nAn error occured while creating a member account</string>
-    <string name="err_state_registration">\nAn error occured while creating a user</string>
+    <string name="err_state_registration">\nUsername is not available</string>
 
     <string name="err_state_login_extra">\nCan not login with these informations. Here is what you can do!</string>
     <string name="state_reconnecting">Reconnecting</string>
