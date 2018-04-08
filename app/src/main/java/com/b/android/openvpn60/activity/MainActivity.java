@@ -8,7 +8,6 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -25,11 +24,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -40,16 +37,11 @@ import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.adapter.CustomAdapter;
 import com.b.android.openvpn60.constant.ServiceConstants;
-import com.b.android.openvpn60.core.Connection;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.service.MembershipService;
-import com.b.android.openvpn60.service.RegistrationService;
-import com.b.android.openvpn60.util.EncodingUtil;
-import com.b.android.openvpn60.util.EncryptionUtil;
-import com.b.android.openvpn60.util.PreferencesUtil;
+import com.b.android.openvpn60.service.MemberService;
 import com.b.android.openvpn60.util.ViewUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -667,29 +659,44 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             String result = intent.getStringExtra("status");
-            if (action.equals(AppConstants.CHECK_MEMBER.toString())) {
-                if (result.equals("success")) {
-                    isMember = true;
-                    Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_LONG).show();
-                } else if (result.equals("failure")) {
-                    isMember = false;
-                    Toast.makeText(MainActivity.this, "You are not a member, you can register " + "\n" +
-                            "from options menu", Toast.LENGTH_LONG).show();
-                } else if (result.equals("errServer404")){
-                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
-                            "\nServer returned HTTP 404 error code");
-                    alertDialog.show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                } else if (result.equals("errServer500")){
-                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
-                            "\nServer returned HTTP 500 error code");
-                    alertDialog.show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                } else if (result.equals("errServerElse")){
-                    AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
-                            "\nServer returned an error code");
-                    alertDialog.show();
-                    progressBar.setVisibility(View.INVISIBLE);
+            AlertDialog.Builder alertDialog;
+            if (action != null && action.equals(AppConstants.CHECK_MEMBER.toString())) {
+                switch (result) {
+                    case "success":
+                        isMember = true;
+                        Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "failure":
+                        isMember = false;
+                        Toast.makeText(MainActivity.this, "You are not a member, you can register " + "\n" +
+                                "from options menu", Toast.LENGTH_LONG).show();
+                        break;
+
+                    case "errServer404":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned HTTP 404 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServer500":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned HTTP 500 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServerElse":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned an error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Invalid response from service = " + result);
+
                 }
             }
         }
@@ -697,7 +704,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     private void startMembershipService(String userName) {
-        Intent i = new Intent(this, MembershipService.class);
+        Intent i = new Intent(this, MemberService.class);
         i.setAction(AppConstants.CHECK_MEMBER.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         startService(i);

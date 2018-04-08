@@ -25,7 +25,7 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.helper.EmailHelper;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.service.LoginService;
+import com.b.android.openvpn60.service.UserService;
 import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.util.ViewUtil;
 import java.net.InetAddress;
@@ -61,7 +61,7 @@ public class LoginActivity extends ActionBarActivity {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
 
-        IntentFilter filter = new IntentFilter(LoginService.ACTION);
+        IntentFilter filter = new IntentFilter(AppConstants.DO_LOGIN.toString());
         LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
 
         if (!isNetworkAvailable(getApplicationContext())) {
@@ -285,47 +285,61 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void startLoginService(String userName, String userPass) {
-        // Construct our Intent specifying the Service
-        Intent i = new Intent(this, LoginService.class);
-        // Add extras to the bundle
+        Intent i = new Intent(this, UserService.class);
+        i.setAction(AppConstants.DO_LOGIN.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         i.putExtra(AppConstants.USER_PASS.toString(), userPass);
-        // Start the service
         startService(i);
     }
 
-    // Define the callback for what to do when message is received
+
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra("status");
+            String action = intent.getAction();
             logHelper.logInfo(result);
-            if (result.equals("success")) {
-                mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
-                mainIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
-                LoginActivity.this.startActivity(mainIntent);
-            } else if (result.equals("failure")) {
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                        LoginActivity.this.getString(R.string.err_state_login));
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("errServer404")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                        "\nServer returned HTTP 404 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("errServer500")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                        "\nServer returned HTTP 500 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("errServerElse")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
-                        "\nServer returned an error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+            AlertDialog.Builder alertDialog;
+            if (action != null && action.equals(AppConstants.DO_LOGIN.toString())) {
+                switch (result) {
+                    case "success":
+                        mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                        mainIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
+                        LoginActivity.this.startActivity(mainIntent);
+                        break;
 
+                    case "failure":
+                        alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                LoginActivity.this.getString(R.string.err_state_login));
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServer404":
+                        alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                "\nServer returned HTTP 404 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServer500":
+                        alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                "\nServer returned HTTP 500 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServerElse":
+                        alertDialog = ViewUtil.showErrorDialog(LoginActivity.this,
+                                "\nServer returned an error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Invalid response from service = " + result);
+                }
+            }
         }
     };
 

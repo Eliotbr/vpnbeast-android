@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
-import com.b.android.openvpn60.service.MembershipService;
+import com.b.android.openvpn60.service.MemberService;
 import com.b.android.openvpn60.util.EmailUtil;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.util.PreferencesUtil;
@@ -59,8 +59,6 @@ public class MemberActivity extends AppCompatActivity {
         edtEmail = (EditText) this.findViewById(R.id.edtEmail2);
         progressBar = (ProgressBar) this.findViewById(R.id.progressBarMember);
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit3);
-        btnSubmit.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_green));
-        btnSubmit.setTextColor(getResources().getColor(R.color.colorBackground));
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -144,7 +142,7 @@ public class MemberActivity extends AppCompatActivity {
 
 
     public void startMembershipService(String userName, String firstName, String lastName, String email) {
-        Intent i = new Intent(this, MembershipService.class);
+        Intent i = new Intent(this, MemberService.class);
         i.setAction(AppConstants.INSERT_MEMBER.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         i.putExtra(AppConstants.FIRST_NAME.toString(), firstName);
@@ -175,7 +173,7 @@ public class MemberActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             String result = intent.getStringExtra("status");
-            if (action.equals(AppConstants.INSERT_MEMBER.toString())) {
+            if (action != null && action.equals(AppConstants.INSERT_MEMBER.toString())) {
                 if (result.equals("success")) {
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     mainIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));

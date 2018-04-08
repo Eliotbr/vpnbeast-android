@@ -20,8 +20,7 @@ import android.widget.Toast;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.helper.LogHelper;
-import com.b.android.openvpn60.service.LoginService;
-import com.b.android.openvpn60.service.RegistrationService;
+import com.b.android.openvpn60.service.UserService;
 import com.b.android.openvpn60.util.ViewUtil;
 
 
@@ -155,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
-        IntentFilter filter = new IntentFilter(RegistrationService.ACTION);
+        IntentFilter filter = new IntentFilter(AppConstants.INSERT_USER.toString());
         LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
     }
 
@@ -165,6 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
+
 
     public ProgressBar getProgressBar() {
         return progressBar;
@@ -177,50 +177,65 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void startRegisterService(String userName, String userPass) {
-        // Construct our Intent specifying the Service
-        Intent i = new Intent(this, RegistrationService.class);
-        // Add extras to the bundle
+        Intent i = new Intent(this, UserService.class);
+        i.setAction(AppConstants.INSERT_USER.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         i.putExtra(AppConstants.USER_PASS.toString(), userPass);
-        // Start the service
         startService(i);
     }
 
-    // Define the callback for what to do when message is received
+
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String result = intent.getStringExtra("status");
-            if (result.equals("success")) {
-                loginIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
-                loginIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
-                progressBar.setVisibility(View.INVISIBLE);
-                loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Toast.makeText(RegisterActivity.this, R.string.state_register, Toast.LENGTH_LONG).show();
-                RegisterActivity.this.startActivity(loginIntent);
-                RegisterActivity.this.finish();
-            } else if (result.equals("failure")) {
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
-                        RegisterActivity.this.getString(R.string.err_state_registration));
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_404")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
-                        "\nServer returned HTTP 404 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_500")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
-                        "\nServer returned HTTP 500 error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            } else if (result.equals("err_server_else")){
-                AlertDialog.Builder alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
-                        "\nServer returned an error code");
-                alertDialog.show();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+            String action = intent.getAction();
+            AlertDialog.Builder alertDialog;
+            if (action != null && action.equals(AppConstants.INSERT_USER.toString())) {
+                switch (result) {
+                    case "success":
+                        loginIntent.putExtra(AppConstants.USER_NAME.toString(), intent.getStringExtra(AppConstants.USER_NAME.toString()));
+                        loginIntent.putExtra(AppConstants.USER_PASS.toString(), intent.getStringExtra(AppConstants.USER_PASS.toString()));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Toast.makeText(RegisterActivity.this, R.string.state_register, Toast.LENGTH_LONG).show();
+                        RegisterActivity.this.startActivity(loginIntent);
+                        RegisterActivity.this.finish();
+                        break;
 
+                    case "failure":
+                        alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                RegisterActivity.this.getString(R.string.err_state_registration));
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServer404":
+                        alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                "\nServer returned HTTP 404 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServer500":
+                        alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                "\nServer returned HTTP 500 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    case "errServerElse":
+                        alertDialog = ViewUtil.showErrorDialog(RegisterActivity.this,
+                                "\nServer returned an error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Invalid response from service = " + result);
+
+                }
+            }
         }
     };
 }

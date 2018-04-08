@@ -34,6 +34,8 @@ public enum AppConstants {
     NOTIFICATION_ALWAYS_VISIBLE("notification_always_visible"),
     PAUSE_VPN("pause_vpn"),
     RESUME_VPN("resume_vpn"),
+    INSERT_USER("insert_user"),
+    DO_LOGIN("do_login"),
     INSERT_MEMBER("insert_member"),
     CHECK_MEMBER("check_member");
 
