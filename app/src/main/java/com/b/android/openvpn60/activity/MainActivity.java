@@ -69,7 +69,9 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
     private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
     private static final String USER_NAME = AppConstants.USER_NAME.toString();
     private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private LogHelper logHelper;
     private TextView txtUsername, txtProfile, txtIp, txtPort;
     private ProgressBar progressBar;
+
 
 
     @Override

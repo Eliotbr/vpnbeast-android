@@ -16,7 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class ImportActivity extends ActionBarActivity {
+public class ImportActivity extends AppCompatActivity {
     private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     private static final String USER_NAME = AppConstants.USER_NAME.toString();
     private static final String USER_PASS = AppConstants.USER_PASS.toString();
