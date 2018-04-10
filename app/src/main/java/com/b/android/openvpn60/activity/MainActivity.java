@@ -150,9 +150,6 @@ public class MainActivity extends AppCompatActivity {
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
         edtUser.setText(userName);
         pnlMain = this.findViewById(R.id.activity_main);
-        //profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
-        //user = (User) intentMain.getSerializableExtra(AppConstants.TEMP_USER.toString());
-        //userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
         btnSelect = this.findViewById(R.id.btnSelect);
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
         itm6.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                //FirebaseAuth.getInstance().signOut();
                 MainActivity.this.finish();
                 return false;
             }
@@ -277,9 +273,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void prepareService() {
-        //startUserService(userName);
-        //startMemberService(userName);
-        //startServerService();
+        startUserService(userName);
+        startMemberService(userName);
+        startServerService();
     }
 
 
