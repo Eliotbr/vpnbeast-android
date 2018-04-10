@@ -34,28 +34,10 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
-public class MemberService extends Service {
+public class MemberService extends MainService {
 
-    private volatile HandlerThread handlerThread;
-    private ServiceHandler serviceHandler;
-    private LocalBroadcastManager localBroadcastManager;
-    private Context context;
-    private LogHelper logHelper;
-    private Intent responseIntent;
     public static final String ACTION = "com.b.android.service.MemberService";
 
-
-    // Define how the handler will process messages
-    private final class ServiceHandler extends Handler {
-        public ServiceHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message message) {
-
-        }
-    }
 
     // Fires when a service is first initialized
     public void onCreate() {
@@ -69,6 +51,7 @@ public class MemberService extends Service {
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
+
 
     // Fires when a service is started up
     @Override
@@ -93,20 +76,6 @@ public class MemberService extends Service {
         });
         // Keep service around "sticky"
         return START_STICKY;
-    }
-
-    // Defines the shutdown sequence
-    @Override
-    public void onDestroy() {
-        // Cleanup service before destruction
-        handlerThread.quit();
-    }
-
-    // Binding is another way to communicate between service and activity
-    // Not needed here, local broadcasts will be used instead
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
 
@@ -232,11 +201,6 @@ public class MemberService extends Service {
         editor.putString(AppConstants.EMAIL.toString(), email);
         editor.apply();
         editor.commit();
-    }
-
-    private void stopService() {
-        localBroadcastManager.sendBroadcast(responseIntent);
-        stopSelf();
     }
 
 }

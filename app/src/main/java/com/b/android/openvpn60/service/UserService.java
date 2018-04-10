@@ -36,29 +36,10 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
-public class UserService extends Service {
+public class UserService extends MainService {
 
-    private volatile HandlerThread handlerThread;
-    private UserService.ServiceHandler serviceHandler;
-    private LocalBroadcastManager localBroadcastManager;
-    private Context context;
-    private LogHelper logHelper;
-    private Intent responseIntent;
     public static final String ACTION = "com.b.android.service.UserService";
 
-
-
-    // Define how the handler will process messages
-    private final class ServiceHandler extends Handler {
-        public ServiceHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message message) {
-
-        }
-    }
 
 
     public void onCreate() {
@@ -82,32 +63,21 @@ public class UserService extends Service {
                 String username = intent.getStringExtra(AppConstants.USER_NAME.toString());
                 String userpass = intent.getStringExtra(AppConstants.USER_PASS.toString());
                 String action = intent.getAction();
-                if (action != null && action.equals(AppConstants.INSERT_USER.toString())) {
-                    responseIntent = new Intent(AppConstants.INSERT_USER.toString());
-                    insertUser(username, userpass);
-                } else if (action != null && action.equals(AppConstants.DO_LOGIN.toString())) {
-                    responseIntent = new Intent(AppConstants.DO_LOGIN.toString());
-                    doLogin(username, userpass);
+                if (action != null) {
+                    if (action.equals(AppConstants.INSERT_USER.toString())) {
+                        responseIntent = new Intent(AppConstants.INSERT_USER.toString());
+                        insertUser(username, userpass);
+                    } else if (action.equals(AppConstants.DO_LOGIN.toString())) {
+                        responseIntent = new Intent(AppConstants.DO_LOGIN.toString());
+                        doLogin(username, userpass);
+                    } else if (action.equals(AppConstants.UPDATE_LAST_LOGIN.toString())) {
+                        responseIntent = new Intent(AppConstants.UPDATE_LAST_LOGIN.toString());
+                        updateLastLogin(username);
+                    }
                 }
             }
         });
         return START_STICKY;
-    }
-
-
-    // Defines the shutdown sequence
-    @Override
-    public void onDestroy() {
-        // Cleanup service before destruction
-        handlerThread.quit();
-    }
-
-
-    // Binding is another way to communicate between service and activity
-    // Not needed here, local broadcasts will be used instead
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
 
@@ -164,6 +134,53 @@ public class UserService extends Service {
                         stopService();
                     }
 
+                });
+    }
+
+
+    public void updateLastLogin(String userName) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair(AppConstants.USER_NAME.toString(), userName));
+        HttpEntity entity = null;
+        try {
+            entity = new UrlEncodedFormEntity(nameValuePairs);
+        } catch (UnsupportedEncodingException a) {
+            logHelper.logException(a);
+        }
+        client.put(getApplicationContext(), ServiceConstants.URL_PUT.toString(), entity, "application/x-www-form-urlencoded",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            if (response.getBoolean("status")) {
+                                logHelper.logInfo("Update last login date = " + "OK");
+                                responseIntent.putExtra("status", "success");
+                            } else {
+                                logHelper.logInfo("Update last login date = " + "Failed");
+                                responseIntent.putExtra("status", "failure");
+                            }
+                        } catch (Exception ex) {
+                            logHelper.logException(ex);
+                        }
+                        stopService();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        if(statusCode == 404) {
+                            logHelper.logException(context.getString(R.string.err_server_404), throwable);
+                            responseIntent.putExtra("status", "errServer404");
+                        } else if(statusCode == 500) {
+                            logHelper.logException(context.getString(R.string.err_server_500), throwable);
+                            responseIntent.putExtra("status", "errServer500");
+                        } else {
+                            logHelper.logException(context.getString(R.string.err_server_else), throwable);
+                            responseIntent.putExtra("status", "errServerElse");
+                        }
+                        stopService();
+                    }
                 });
     }
 
@@ -237,12 +254,6 @@ public class UserService extends Service {
         editor.putString(AppConstants.USER_PASS.toString(), null);
         editor.apply();
         editor.commit();
-    }
-
-
-    private void stopService() {
-        localBroadcastManager.sendBroadcast(responseIntent);
-        stopSelf();
     }
 
 }

@@ -276,6 +276,7 @@ public class ImportActivity extends AppCompatActivity {
                     InputStream is = getContentResolver().openInputStream(mUri);
 
                     //doImport(is);
+                    //mProfile = new VpnProfile("converted Profile");
                     mProfile = new VpnProfile("converted Profile");
                     if (mProfile == null)
                         return -3;
@@ -308,7 +309,7 @@ public class ImportActivity extends AppCompatActivity {
                     mBuilder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            intentMain.putExtra(RESULT_PROFILE, mProfile);
+                            //intentMain.putExtra(RESULT_PROFILE, mProfile);
                             saveProfile();
                             ImportActivity.this.setResult(RESULT_OK);
                             ImportActivity.this.finish();

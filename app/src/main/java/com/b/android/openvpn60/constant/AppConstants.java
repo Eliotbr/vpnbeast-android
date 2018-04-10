@@ -36,8 +36,14 @@ public enum AppConstants {
     RESUME_VPN("resume_vpn"),
     INSERT_USER("insert_user"),
     DO_LOGIN("do_login"),
+    UPDATE_LAST_LOGIN("update_last_login"),
+    GET_LOCATION("get_location"),
     INSERT_MEMBER("insert_member"),
-    CHECK_MEMBER("check_member");
+    CHECK_MEMBER("check_member"),
+    VPN_PROFILES("vpn_profiles"),
+    LAUNCH_VPN("launch_vpn"),
+    BUNDLE_VPN_PROFILES("bundle_vpn_profiles"),
+    GET_VPN_PROFILES("get_vpn_profiles");
 
 
     private final String text;

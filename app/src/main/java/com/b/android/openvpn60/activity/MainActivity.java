@@ -16,9 +16,12 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,16 +35,19 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.b.android.openvpn60.constant.AppConstants;
+import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.adapter.CustomAdapter;
-import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.core.ProfileManager;
 import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.fragment.ServerSelectFragment;
 import com.b.android.openvpn60.helper.LogHelper;
+import com.b.android.openvpn60.service.LocationService;
 import com.b.android.openvpn60.service.MemberService;
+import com.b.android.openvpn60.service.ServerService;
+import com.b.android.openvpn60.service.UserService;
+import com.b.android.openvpn60.util.PreferencesUtil;
 import com.b.android.openvpn60.util.ViewUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,8 +65,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
@@ -69,27 +73,12 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String SHARED_PREFS = AppConstants.SHARED_PREFS.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    private static final String SERVICE_URL_PUT = ServiceConstants.URL_PUT.toString();
-    private static final String SERVICE_URL_GET_PROFILES = ServiceConstants.URL_GET_PROFILES.toString();
-    private static int UPDATE_INTERVAL = 10000; // 10 sec
-    private static int FATEST_INTERVAL = 5000; // 5 sec
-    private static int DISPLACEMENT = 10; // 10 meters
     private final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + this.getClass().toString();
     private static final int PERMISSION_REQUEST = 23621;
 
     private SharedPreferences sharedPrefs;
-    private Location lastLocation;
-    // Google client to interact with Google API
-    private GoogleApiClient mGoogleApiClient;
-    // boolean flag to toggle periodic location updates
-    private boolean isLocationUpdated = false;
-    private LocationRequest locationRequest;
     private Intent importer;
     public static VpnProfile profile;
     private EditText edtPort;
@@ -102,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private ArrayAdapter<VpnProfile> adapter;
     private CustomAdapter customAdapter;
     private Button btnSelect;
-    private boolean isAvailable = false;
     private AsyncTask<Void, Void, Integer> tasker;
     private String userName;
     private boolean isMember = false;
@@ -122,10 +110,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //generateProfiles();
         init();
         prepareService();
-        //updateViews();
         updateViewForFirst();
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
@@ -140,38 +126,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     private void init() {
-        //profiles = getProfileInfos();
-        //profiles = new ArrayList<>(getPM().getProfiles());
-        profiles = new ArrayList<>();
-        profiles = getProfileInfos();
         logHelper = LogHelper.getLogHelper(this);
-        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
-        btnConnect = (Button) this.findViewById(R.id.btnConnect);
+        progressBar = this.findViewById(R.id.progressBar);
+        btnConnect = this.findViewById(R.id.btnConnect);
         importer = new Intent(this, ImportActivity.class);
         intentService = new Intent(this, LaunchVPN.class);
-        edtHost = (EditText) this.findViewById(R.id.edtIP);
+        edtHost = this.findViewById(R.id.edtIP);
         edtHost.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        edtUser = (EditText) this.findViewById(R.id.edtUser);
+        edtUser = this.findViewById(R.id.edtUser);
         edtUser.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        edtPort = (EditText) this.findViewById(R.id.edtPort);
+        edtPort = this.findViewById(R.id.edtPort);
         edtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        txtProfileName = (TextView) this.findViewById(R.id.txtProfileName);
-        txtUsername = (TextView) this.findViewById(R.id.txtName);
+        txtProfileName = this.findViewById(R.id.txtProfileName);
+        txtUsername = this.findViewById(R.id.txtName);
         txtUsername.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        txtProfile = (TextView) this.findViewById(R.id.txtLocation);
+        txtProfile = this.findViewById(R.id.txtLocation);
         txtProfile.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        txtIp = (TextView) this.findViewById(R.id.txtIp);
+        txtIp = this.findViewById(R.id.txtIp);
         txtIp.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        txtPort = (TextView) this.findViewById(R.id.txtPort);
+        txtPort = this.findViewById(R.id.txtPort);
         txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        sharedPrefs = this.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        sharedPrefs = PreferencesUtil.getDefaultSharedPreferences(MainActivity.this);
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
         edtUser.setText(userName);
-        pnlMain = (RelativeLayout) this.findViewById(R.id.activity_main);
+        pnlMain = this.findViewById(R.id.activity_main);
         //profile = ProfileManager.get(getApplicationContext(), getIntent().getStringExtra(AppConstants.EXTRA_KEY.toString()));
         //user = (User) intentMain.getSerializableExtra(AppConstants.TEMP_USER.toString());
         //userName = sharedPrefs.getString(AppConstants.USER_NAME.toString(), null);
-        btnSelect = (Button) this.findViewById(R.id.btnSelect);
+        btnSelect = this.findViewById(R.id.btnSelect);
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mStatus.putExtra(RESULT_PROFILE, profile);
+                            mStatus.putExtra(AppConstants.RESULT_PROFILE.toString(), (Parcelable) profile);
                             startOrStopVPN(profile);
                         }
                     });
@@ -217,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                             Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(MainActivity.this, MemberActivity.class);
-                    intent.putExtra(USER_NAME, userName);
+                    intent.putExtra(AppConstants.USER_NAME.toString(), userName);
                     MainActivity.this.startActivity(intent);
                 }
                 return false;
@@ -257,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         itm5.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                displayLocation();
+                checkPermission();
                 return false;
             }
         });
@@ -282,136 +264,61 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 
     private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST);
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != MockPackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+            } else
+                startLocationService();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        isAvailable = true;
     }
 
 
     private void prepareService() {
-        invokeWS();
-        startMembershipService(userName);
-    }
-
-
-    private ArrayList<VpnProfile> generateProfiles() {
-        return getProfileInfos();
-        /*profiles = new ArrayList<>(getPM().getProfiles());
-        if (profiles.size() == 0) {
-            for (int i=0; i<=3; i++) {
-                VpnProfile tempProfile = new VpnProfile("converted profile " + i);
-                saveProfile(tempProfile);
-            }
-        }*/
-    }
-
-
-    private void saveProfile(VpnProfile profile) {
-        Intent result = new Intent();
-        ProfileManager vpl = ProfileManager.getInstance(this);
-        vpl.addProfile(profile);
-        vpl.saveProfile(this, profile);
-        vpl.saveProfileList(this);
-        result.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-        setResult(Activity.RESULT_OK, result);
-        //finish();
-    }
-
-
-    public void invokeWS() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair(USER_NAME, userName));
-        HttpEntity entity = null;
-        try {
-            entity = new UrlEncodedFormEntity(nameValuePairs);
-        } catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
-        }
-        client.put(getApplicationContext(), SERVICE_URL_PUT, entity, "application/x-www-form-urlencoded",
-                new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getBoolean("status")) {
-                        logHelper.logInfo("Update last login date = " + "OK");
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), getString(R.string.err_state_register),
-                                Toast.LENGTH_SHORT).show();
-                        logHelper.logInfo("Update last login date = " + "Failed");
-                    }
-                } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                if (statusCode == 404){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
-                }
-                else if (statusCode == 500){
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else),
-                            Toast.LENGTH_SHORT).show();
-                    logHelper.logWarning(getString(R.string.state_error_occured) + statusCode);
-                }
-            }
-        });
+        //startUserService(userName);
+        //startMemberService(userName);
+        //startServerService();
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent().getSerializableExtra(RESULT_PROFILE) != null)
-            profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
-        //isUserAMember();
-        //updateProfiles();
-        generateProfiles();
+        if (getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString()) != null)
+            profile = getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString());
         if (progressBar.getVisibility() != View.INVISIBLE)
             progressBar.setVisibility(View.INVISIBLE);
-        IntentFilter filter = new IntentFilter(AppConstants.CHECK_MEMBER.toString());
-        LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
+        IntentFilter memberFilter = new IntentFilter(AppConstants.CHECK_MEMBER.toString());
+        LocalBroadcastManager.getInstance(this).registerReceiver(memberReceiver, memberFilter);
+        IntentFilter serverFilter = new IntentFilter(AppConstants.GET_VPN_PROFILES.toString());
+        LocalBroadcastManager.getInstance(this).registerReceiver(serverReceiver, serverFilter);
+        IntentFilter userFilter = new IntentFilter(AppConstants.UPDATE_LAST_LOGIN.toString());
+        LocalBroadcastManager.getInstance(this).registerReceiver(userReceiver, userFilter);
+        IntentFilter locationFilter = new IntentFilter(AppConstants.GET_LOCATION.toString());
+        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, locationFilter);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(memberReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(serverReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
     }
+
 
     private void startOrStopVPN(VpnProfile profile) {
         startVPN(profile);
     }
 
 
-    private void updateProfiles() {
-        profiles = getProfiles();
-    }
-
-
-    private ArrayList<VpnProfile> getProfiles() {
-        return new ArrayList<>(getPM().getProfiles());
-    }
-
-
     public void updateViews() {
-        if (getIntent().getSerializableExtra(RESULT_PROFILE) != null) {
-            profile = (VpnProfile) getIntent().getSerializableExtra(RESULT_PROFILE);
+        if (getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString()) != null) {
+            profile = getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString());
             //intentService.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
             btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_green));
             //edtUser.setText(userName);
@@ -429,10 +336,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
-
     @Override
     public void onBackPressed() {
-        //if (frTransaction != null && getFragmentManager() != null) {
         if (frTransaction != null) {
             if (!frTransaction.isEmpty()) {
                 getFragmentManager().beginTransaction().remove(mFragment).commit();
@@ -520,144 +425,71 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
-    @Override
-    public void onConnected(Bundle arg0) {
-        displayLocation();
+    private void startUserService(String userName) {
+        Intent i = new Intent(this, UserService.class);
+        i.setAction(AppConstants.UPDATE_LAST_LOGIN.toString());
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        startService(i);
     }
 
 
-    @TargetApi(Build.VERSION_CODES.M)
-    private synchronized void displayLocation() {
-        tasker = new AsyncTask<Void, Void, Integer>() {
-            Thread threadOne;
-            Thread threadTwo;
+    private BroadcastReceiver userReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String result = intent.getStringExtra("status");
+            AlertDialog.Builder alertDialog;
+            if (action != null && action.equals(AppConstants.UPDATE_LAST_LOGIN.toString())) {
+                switch (result) {
+                    case "success":
+                        Toast.makeText(MainActivity.this, "Update last login = true", Toast.LENGTH_SHORT).show();
+                        break;
 
-            @Override
-            protected void onPreExecute() {
-                threadOne = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkPermission();
-                    }
-                });
-                threadOne.start();
+                    case "failure":
+                        isMember = false;
+                        Toast.makeText(MainActivity.this, "An error occured while updating last login date",
+                                Toast.LENGTH_LONG).show();
+                        break;
 
-                threadTwo = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isAvailable) {
-                            try {
-                                lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                            } catch (SecurityException a) {
-                                logHelper.logException(a);
+                    case "errServer404":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned HTTP 404 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
 
-                            }
-                        }
-                    }
+                    case "errServer500":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned HTTP 500 error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
 
-                });
-                //threadTwo.start();
-            }
+                    case "errServerElse":
+                        alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
+                                "\nServer returned an error code");
+                        alertDialog.show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
 
-            @Override
-            protected Integer doInBackground(Void... params) {
-                try {
-                    threadOne.join(2000);
-                    threadTwo.start();
-                    threadTwo.join();
-                }catch( Exception e) {
-                    logHelper.logException(e);
-                    return -1;
-                }
+                    default:
+                        throw new IllegalArgumentException("Invalid response from service = " + result);
 
-                return 0;
-            }
-
-            @Override
-            protected void onPostExecute(Integer integer) {
-                if (integer == 0) {
-                    if (lastLocation != null) {
-                        double latitude = lastLocation.getLatitude();
-                        double longitude = lastLocation.getLongitude();
-
-                        Toast.makeText(MainActivity.this, getString(R.string.state_displayLocation) + String.valueOf(latitude) + ", " + String.valueOf(longitude), Toast.LENGTH_SHORT).show();
-                        logHelper.logInfo("Location received = " + String.valueOf(latitude) + ", " +
-                                String.valueOf(longitude));
-
-                    } else {
-                        Toast.makeText(MainActivity.this, getString(R.string.prompt_displayLocation), Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
-        }.execute();
+        }
+    };
+
+
+    private void startMemberService(String userName) {
+        Intent i = new Intent(this, MemberService.class);
+        i.setAction(AppConstants.CHECK_MEMBER.toString());
+        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+        startService(i);
     }
 
 
-    @Override
-    public void onConnectionSuspended(int arg0) {
-        mGoogleApiClient.connect();
-    }
-
-
-    public void onConnectionFailed(ConnectionResult result) {
-        logHelper.logInfo("Connection failed:  = " + result.getErrorCode() + " - " + result.getErrorMessage());
-    }
-
-
-    private  ArrayList<VpnProfile> getProfileInfos() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(SERVICE_URL_GET_PROFILES, null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                try {
-                    if (!isServerstaken) {
-                        if (!profiles.isEmpty())
-                            profiles.clear();
-                        else if (profiles.isEmpty()) {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject object = (JSONObject) response.get(i);
-                                VpnProfile tempProfile = new VpnProfile(object.getString("serverName"),
-                                        object.getString("serverIp"), object.getString("serverPort"),
-                                            object.getString("serverCert"));
-                                //tempProfile.setConnection(con);
-                                profiles.add(tempProfile);
-                                saveProfile(tempProfile);
-                            }
-                            isServerstaken = true;
-                            if (!profiles.isEmpty()) {
-                                //profile = profiles.get(0);
-                            }
-                            //updateViews();
-                            logHelper.logInfo(getString(R.string.state_sorted_profiles));
-                        }
-                    }
-                } catch (JSONException ex) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_state_json), Toast.LENGTH_SHORT).show();
-                    logHelper.logException(ex);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if(statusCode == 404) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_404), Toast.LENGTH_SHORT).show();
-                    logHelper.logException(throwable);
-                } else if(statusCode == 500) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_500), Toast.LENGTH_SHORT).show();
-                    logHelper.logException(throwable);
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.err_server_else), Toast.LENGTH_SHORT).show();
-                    logHelper.logException(throwable);
-                }
-            }
-
-        });
-        return (ArrayList<VpnProfile>) profiles;
-    }
-
-
-    // Define the callback for what to do when message is received
-    private BroadcastReceiver testReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver memberReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -706,11 +538,58 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     };
 
 
-    private void startMembershipService(String userName) {
-        Intent i = new Intent(this, MemberService.class);
-        i.setAction(AppConstants.CHECK_MEMBER.toString());
-        i.putExtra(AppConstants.USER_NAME.toString(), userName);
+    private void startServerService() {
+        Intent i = new Intent(this, ServerService.class);
+        i.setAction(AppConstants.GET_VPN_PROFILES.toString());
+        logHelper.logInfo("Creating ServerService...");
         startService(i);
     }
 
+
+    private BroadcastReceiver serverReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            profiles = new ArrayList<>();
+            //Bundle bundle = intent.getBundleExtra(AppConstants.BUNDLE_VPN_PROFILES.toString());
+            if (action != null && action.equals(AppConstants.GET_VPN_PROFILES.toString())) {
+                logHelper.logInfo("ArrayList successfully fetched!");
+                Bundle bundle = intent.getBundleExtra(AppConstants.BUNDLE_VPN_PROFILES.toString());
+                profiles = bundle.getParcelableArrayList(AppConstants.VPN_PROFILES.toString());
+            }
+        }
+    };
+
+
+    private void startLocationService() {
+        Intent i = new Intent(this, LocationService.class);
+        i.setAction(AppConstants.GET_LOCATION.toString());
+        logHelper.logInfo("Creating LocationService...");
+        startService(i);
+    }
+
+
+    private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action != null && action.equals(AppConstants.GET_LOCATION.toString())) {
+                logHelper.logInfo("Location successfully fetched!");
+                logHelper.logInfo("Latitude = " + intent.getDoubleExtra("latitude", 0));
+                logHelper.logInfo("Longitude = " + intent.getDoubleExtra("longitude", 0));
+
+                Toast.makeText(MainActivity.this, "Latitude = " + String.valueOf(intent.getDoubleExtra("latitude", 0)) +
+                        "\n" + "Longitude = " + String.valueOf(intent.getDoubleExtra("longitude", 0)), Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            startOrStopVPN((VpnProfile) data.getParcelableExtra(AppConstants.RESULT_PROFILE.toString()));
+        }
+    }
 }

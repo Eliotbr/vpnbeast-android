@@ -14,6 +14,7 @@ import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.text.InputType;
 import android.text.SpannableStringBuilder;
@@ -54,6 +55,7 @@ public class LaunchVPN extends Activity {
     public static final String CLEARLOG = "clearlogconnect";
     public static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
     private static final int START_VPN_PROFILE = 70;
+    private static final int START_STATUS_ACTIVITY = 80;
     private VpnProfile selectedProfile;
     private String mTransientAuthPW;
     private String mTransientCertOrPCKS12PW;
@@ -227,6 +229,11 @@ public class LaunchVPN extends Activity {
 
                 finish();
             }
+        } else if (requestCode == START_STATUS_ACTIVITY) {
+            if (resultCode == Activity.RESULT_FIRST_USER)
+                startVpnFromIntent();
+            else if (resultCode == Activity.RESULT_OK)
+                LaunchVPN.this.finish();
         }
     }
 
@@ -234,9 +241,9 @@ public class LaunchVPN extends Activity {
     void showAfterMain() {
         Intent startLW = new Intent(getBaseContext(), StatusActivity.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startLW.putExtra(RESULT_PROFILE, selectedProfile);
-        startActivity(startLW);
-        this.finish();
+        startLW.putExtra(RESULT_PROFILE, (Parcelable) selectedProfile);
+        startActivityForResult(startLW, START_STATUS_ACTIVITY);
+        //this.finish();
     }
 
 

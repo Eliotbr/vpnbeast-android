@@ -95,6 +95,16 @@
             android:exported="false"/>
 
 
+        <service
+            android:name=".service.ServerService"
+            android:exported="false"/>
+
+
+        <service
+            android:name=".service.LocationService"
+            android:exported="false"/>
+
+
         <receiver android:name=".receiver.OnBootReceiver">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

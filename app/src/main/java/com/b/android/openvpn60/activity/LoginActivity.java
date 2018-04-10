@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
-        edtUsername = (EditText) this.findViewById(R.id.edtUser);
-        edtPass = (EditText) this.findViewById(R.id.edtPass);
-        chkRemember = (CheckBox) this.findViewById(R.id.chkRemember);
+        edtUsername = this.findViewById(R.id.edtUser);
+        edtPass = this.findViewById(R.id.edtPass);
+        chkRemember = this.findViewById(R.id.chkRemember);
         chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         mainIntent = new Intent(this, MainActivity.class); //???
         intentSignup = new Intent(this, RegisterActivity.class);
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
         //txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        final TextView txtForget = (TextView) this.findViewById(R.id.txtForget);
+        final TextView txtForget = this.findViewById(R.id.txtForget);
         txtForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final TextView txtSignup = (TextView) this.findViewById(R.id.txtSignup);
+        final TextView txtSignup = this.findViewById(R.id.txtSignup);
         txtSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+        progressBar = this.findViewById(R.id.progressBar);
         sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
 
         if (sharedPreferences.getBoolean(AppConstants.USER_CHOICE.toString(), false)) {
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             chkRemember.setChecked(true);
         }
 
-        final Button btnClear = (Button) this.findViewById(R.id.btnClear);
+        final Button btnClear = this.findViewById(R.id.btnClear);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,11 +133,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button btnSubmit = (Button) this.findViewById(R.id.btnSubmit);
+        final Button btnSubmit = this.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (isConnected) {
                     SharedPreferences.Editor editor;
                     progressBar.setVisibility(View.VISIBLE);
@@ -158,10 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.apply();
                         editor.commit();
                     }
-
                     final String userName = edtUsername.getText().toString();
                     final String password = edtPass.getText().toString();
-
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
                         /*RequestParams params = new RequestParams();
                         params.put(USER_NAME, userName);

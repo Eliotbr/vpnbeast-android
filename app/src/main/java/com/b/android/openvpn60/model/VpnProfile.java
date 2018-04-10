@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -47,7 +49,7 @@ import javax.crypto.NoSuchPaddingException;
  * Created by b on 5/15/17.
  */
 
-public class VpnProfile implements Serializable, Cloneable {
+public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     // Don't change this, not all parts of the program use this constant
@@ -161,6 +163,42 @@ public class VpnProfile implements Serializable, Cloneable {
         initConstants();
     }
 
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public VpnProfile createFromParcel(Parcel in) {
+            return new VpnProfile(in);
+        }
+
+        public VpnProfile[] newArray(int size) {
+            return new VpnProfile[size];
+        }
+    };
+
+    // Parcelling part
+    public VpnProfile(Parcel in) {
+        this.name = in.readString();
+        connections = new Connection[1];
+        connections[0] = new Connection(in.readString(), in.readString());
+        //connections[0].serverName = in.readString();
+        //connections[0].serverPort = in.readString();
+        serverCert = in.readString();
+        initConstants();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(connections[0].serverName);
+        dest.writeString(connections[0].serverPort);
+        dest.writeString(this.serverCert);
+    }
+
+
     public String getIpAddress() {
         return connections[0].serverName;
     }
@@ -248,7 +286,7 @@ public class VpnProfile implements Serializable, Cloneable {
         pushPeerInfo = false;
         version = 2;
         lastUsed = System.currentTimeMillis();
-        serverName = "dgo-amsterdam";
+        serverName = name;
         serverPort = "1194";
         useUdp = true;
     }

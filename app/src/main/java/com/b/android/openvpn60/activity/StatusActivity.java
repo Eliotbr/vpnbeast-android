@@ -1,5 +1,6 @@
 package com.b.android.openvpn60.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -12,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
@@ -37,6 +39,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import com.b.android.openvpn60.core.ConnectionStatus;
+import com.b.android.openvpn60.util.PreferencesUtil;
 
 
 public class StatusActivity extends AppCompatActivity implements VpnStatus.StateListener, VpnStatus.ByteCountListener {
@@ -112,13 +115,21 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         edtProfile = (EditText) this.findViewById(R.id.edtProfile);
         edtIp = (EditText) this.findViewById(R.id.edtIp);
         edtPort = (EditText) this.findViewById(R.id.edtPort);
-        sharedPrefs = this.getSharedPreferences(AppConstants.SHARED_PREFS.toString(), MODE_PRIVATE);
+        sharedPrefs = PreferencesUtil.getDefaultSharedPreferences(StatusActivity.this);
         edtStatus = (EditText) this.findViewById(R.id.edtStatus);
         edtDuration = (EditText) this.findViewById(R.id.edtDuration);
         context = this.getApplicationContext();
         edtBytesIn = (EditText) this.findViewById(R.id.edtBytesIn);
         edtBytesOut = (EditText) this.findViewById(R.id.edtBytesOut);
         edtUser.setText(sharedPrefs.getString(AppConstants.USER_NAME.toString(), null));
+        edtProfile.setText(vpnProfile.name);
+        edtIp.setText(vpnProfile.connections[0].serverName);
+        edtPort.setText(vpnProfile.connections[0].serverPort);
+        edtStatus.setText("Connecting...");
+        btnDisconnect.setText("Connecting");
+        edtBytesIn.setText("null");
+        edtBytesOut.setText("null");
+        edtDuration.setText("00:00:00");
         intent = new Intent(this, MainActivity.class);
         logHelper = LogHelper.getLogHelper(this);
         runnable = new Runnable() {
@@ -171,9 +182,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
             protected void onPostExecute(Integer integer) {
                 progressDialog.dismiss();
                 connectTime = System.currentTimeMillis();
-                edtProfile.setText(vpnProfile.name);
-                edtIp.setText(vpnProfile.connections[0].serverName);
-                edtPort.setText(vpnProfile.connections[0].serverPort);
                 edtStatus.setText(getString(R.string.state_connected));
                 btnDisconnect.setText(getString(R.string.disconnect));
                 btnDisconnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_red));
@@ -352,6 +360,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                         intent.putExtra(AppConstants.DISCONNECT_VPN.toString(), true);
                         VpnStatus.removeStateListener(StatusActivity.this);
                         VpnStatus.removeByteCountListener(StatusActivity.this);
+                        StatusActivity.this.setResult(Activity.RESULT_OK);
                         StatusActivity.this.finish();
                         if (isDestroyed) {
                             Intent intentMain = new Intent(StatusActivity.this, MainActivity.class);
@@ -364,10 +373,13 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
                 builder.setNegativeButton("Reconnect", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        VpnProfile profile = (VpnProfile) StatusActivity.this.getIntent().
-                                getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
+                        Intent intent = new Intent();
+                        VpnProfile profile = StatusActivity.this.getIntent().
+                                getParcelableExtra(AppConstants.RESULT_PROFILE.toString());
+                        intent.putExtra(AppConstants.RESULT_PROFILE.toString(), (Parcelable) profile);
+                        StatusActivity.this.setResult(Activity.RESULT_FIRST_USER, intent);
                         StatusActivity.this.finish();
-                        startVPN(profile);
+                        //startVPN(profile);
                     }
                 });
                 builder.setCancelable(false);
