@@ -34,6 +34,7 @@ import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -159,6 +160,17 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         connections = new Connection[1];
         connections[0] = new Connection(ipAddress, serverPort);
         this.name = name;
+        this.uuid = UUID.randomUUID();
+        this.serverCert = serverCert;
+        initConstants();
+    }
+
+
+    public VpnProfile(String uuid, String name, String ipAddress, String serverPort, String serverCert) {
+        connections = new Connection[1];
+        connections[0] = new Connection(ipAddress, serverPort);
+        this.name = name;
+        this.uuid = UUID.fromString(uuid);
         this.serverCert = serverCert;
         initConstants();
     }
@@ -225,7 +237,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
 
     private void initConstants() {
-        uuid = UUID.randomUUID();
         profileVersion = CURRENT_PROFILE_VERSION;
         lastUsed = System.currentTimeMillis();
         profileDeleted = false;
@@ -1089,13 +1100,9 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         }
     }
 
+
     @Override
     public String toString() {
-        /*return "VpnProfile{" +
-                "name = " + name + "\n" +
-                "ip address = " + connections[0].serverName + "\n" +
-                "port = " + connections[0].serverPort + "\n" +
-                '}';*/
         return serverName + "\n" + connections[0].serverName + "\n" + connections[0].serverPort;
     }
 
@@ -1164,6 +1171,15 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
             Log.e(TAG, "processSignJellyBeans: ", e);
             return null;
         }
+    }
+
+
+    public String getServerCert() {
+        return serverCert;
+    }
+
+    public void setServerCert(String serverCert) {
+        this.serverCert = serverCert;
     }
 
 

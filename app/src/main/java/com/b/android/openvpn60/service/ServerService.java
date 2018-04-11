@@ -10,6 +10,7 @@ import com.b.android.openvpn60.activity.LaunchVPN;
 import com.b.android.openvpn60.constant.AppConstants;
 import com.b.android.openvpn60.constant.ServiceConstants;
 import com.b.android.openvpn60.core.ProfileManager;
+import com.b.android.openvpn60.helper.DbHelper;
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.loopj.android.http.AsyncHttpClient;
@@ -27,7 +28,7 @@ public class ServerService extends MainService {
     public static ArrayList<VpnProfile> profiles;
     private boolean isServerstaken = false;
     private Bundle bundle;
-
+    private DbHelper dbHelper;
 
 
     public void onCreate() {
@@ -36,6 +37,7 @@ public class ServerService extends MainService {
         handlerThread = new HandlerThread("ServerService.HandlerThread");
         handlerThread.start();
         context = getApplicationContext();
+        dbHelper = new DbHelper(context);
         logHelper = LogHelper.getLogHelper(ServerService.class.getName());
         bundle = new Bundle();
         profiles = new ArrayList<>();
@@ -69,6 +71,7 @@ public class ServerService extends MainService {
                 try {
                     if (response != null) {
                         if (!isServerstaken) {
+                            profiles.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = (JSONObject) response.get(i);
                                 VpnProfile tempProfile = new VpnProfile(object.getString("serverName"),
@@ -76,7 +79,7 @@ public class ServerService extends MainService {
                                         object.getString("serverCert"));
                                 //tempProfile.setConnection(con);
                                 profiles.add(tempProfile);
-                                saveProfile(tempProfile);
+                                //saveProfile(tempProfile);
                             }
                             isServerstaken = true;
                             if (!profiles.isEmpty()) {
@@ -85,6 +88,8 @@ public class ServerService extends MainService {
                             bundle.putParcelableArrayList(AppConstants.VPN_PROFILES.toString(), profiles);
                             responseIntent.putExtra(AppConstants.BUNDLE_VPN_PROFILES.toString(), bundle);
                             logHelper.logInfo(getString(R.string.state_sorted_profiles));
+                            logHelper.logInfo("Talking with DbHelper...");
+                            dbHelper.insertProfileList(profiles);
                         }
                     }
                 } catch (JSONException ex) {

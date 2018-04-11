@@ -107,10 +107,12 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
 
     private void init() {
+        logHelper = LogHelper.getLogHelper(this);
         progressDialog = new ProgressDialog(StatusActivity.this);
         progressDialog.setProgressStyle(R.style.ProgressBar);
         btnDisconnect = (Button) this.findViewById(R.id.btnDisconnect);
-        vpnProfile = (VpnProfile) getIntent().getSerializableExtra(AppConstants.RESULT_PROFILE.toString());
+        vpnProfile = (VpnProfile) getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString());
+        logHelper.logInfo("PROFILE = " + "\n" + vpnProfile.toString());
         edtUser = (EditText) this.findViewById(R.id.edtUser);
         edtProfile = (EditText) this.findViewById(R.id.edtProfile);
         edtIp = (EditText) this.findViewById(R.id.edtIp);
@@ -131,7 +133,6 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
         edtBytesOut.setText("null");
         edtDuration.setText("00:00:00");
         intent = new Intent(this, MainActivity.class);
-        logHelper = LogHelper.getLogHelper(this);
         runnable = new Runnable() {
             @Override
             public void run() {
