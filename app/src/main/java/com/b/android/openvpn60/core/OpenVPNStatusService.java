@@ -225,4 +225,5 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                                    UpdateMessage um) throws RemoteException {
         broadcastItem.updateStateString(um.state, um.logmessage, um.resId, um.level);
     }
+
 }

@@ -156,14 +156,14 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         this.name = name;
     }
 
-    public VpnProfile(String name, String ipAddress, String serverPort, String serverCert) {
+    /*public VpnProfile(String name, String ipAddress, String serverPort, String serverCert) {
         connections = new Connection[1];
         connections[0] = new Connection(ipAddress, serverPort);
         this.name = name;
         this.uuid = UUID.randomUUID();
         this.serverCert = serverCert;
         initConstants();
-    }
+    }*/
 
 
     public VpnProfile(String uuid, String name, String ipAddress, String serverPort, String serverCert) {
@@ -188,6 +188,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
     // Parcelling part
     public VpnProfile(Parcel in) {
+        this.uuid = UUID.fromString(in.readString());
         this.name = in.readString();
         connections = new Connection[1];
         connections[0] = new Connection(in.readString(), in.readString());
@@ -204,6 +205,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.uuid.toString());
         dest.writeString(this.name);
         dest.writeString(connections[0].serverName);
         dest.writeString(connections[0].serverPort);

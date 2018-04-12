@@ -19,13 +19,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import cz.msebera.android.httpclient.Header;
 
 
 public class ServerService extends MainService {
 
     public static final String ACTION = "com.b.android.service.ServerService";
-    public static ArrayList<VpnProfile> profiles;
+    public static HashMap<String, VpnProfile> profileMap;
+    public static ArrayList<VpnProfile> profileList;
     private boolean isServerstaken = false;
     private Bundle bundle;
     private DbHelper dbHelper;
@@ -40,7 +43,8 @@ public class ServerService extends MainService {
         dbHelper = new DbHelper(context);
         logHelper = LogHelper.getLogHelper(ServerService.class.getName());
         bundle = new Bundle();
-        profiles = new ArrayList<>();
+        profileMap = new HashMap<>();
+        profileList = new ArrayList<>();
         // An Android service handler is a handler running on a specific background thread.
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -71,25 +75,25 @@ public class ServerService extends MainService {
                 try {
                     if (response != null) {
                         if (!isServerstaken) {
-                            profiles.clear();
+                            profileList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = (JSONObject) response.get(i);
-                                VpnProfile tempProfile = new VpnProfile(object.getString("serverName"),
-                                        object.getString("serverIp"), object.getString("serverPort"),
-                                        object.getString("serverCert"));
+                                VpnProfile tempProfile = new VpnProfile(object.getString("serverUuid"),
+                                        object.getString("serverName"), object.getString("serverIp"),
+                                        object.getString("serverPort"), object.getString("serverCert"));
                                 //tempProfile.setConnection(con);
-                                profiles.add(tempProfile);
-                                //saveProfile(tempProfile);
+                                profileList.add(tempProfile);
+                                saveProfile(tempProfile);
                             }
                             isServerstaken = true;
-                            if (!profiles.isEmpty()) {
+                            if (!profileList.isEmpty()) {
                                 //profile = profiles.get(0);
                             }
-                            bundle.putParcelableArrayList(AppConstants.VPN_PROFILES.toString(), profiles);
+                            bundle.putParcelableArrayList(AppConstants.VPN_PROFILES.toString(), profileList);
                             responseIntent.putExtra(AppConstants.BUNDLE_VPN_PROFILES.toString(), bundle);
                             logHelper.logInfo(getString(R.string.state_sorted_profiles));
                             logHelper.logInfo("Talking with DbHelper...");
-                            dbHelper.insertProfileList(profiles);
+                            dbHelper.insertProfileList(profileList);
                         }
                     }
                 } catch (JSONException ex) {

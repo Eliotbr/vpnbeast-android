@@ -43,6 +43,7 @@ public enum AppConstants {
     VPN_PROFILES("vpn_profiles"),
     LAUNCH_VPN("launch_vpn"),
     BUNDLE_VPN_PROFILES("bundle_vpn_profiles"),
+    GET_CACHED_VPN_PROFILES("get_cached_vpn_profiles"),
     GET_VPN_PROFILES("get_vpn_profiles");
 
 

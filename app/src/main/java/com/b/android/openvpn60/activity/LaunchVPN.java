@@ -124,6 +124,7 @@ public class LaunchVPN extends Activity {
     }
 
 
+
     private void askForPW(final int type) {
         final EditText entry = new EditText(this);
         final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
@@ -305,6 +306,7 @@ public class LaunchVPN extends Activity {
             onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
         }
     }
+
 
 
     private void execeuteSUcmd(String command) {

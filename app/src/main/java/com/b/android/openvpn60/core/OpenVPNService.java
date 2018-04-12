@@ -648,7 +648,7 @@ public class OpenVPNService extends VpnService implements VpnStatus.StateListene
                 if (!dnsIncluded) {
                     String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore " +
                             "DNS servers outside the VPN range. To enable DNS resolution a route to your DNS " +
-                                "Server (%s) has been added.", dnsVector.get(0));
+                            "Server (%s) has been added.", dnsVector.get(0));
                     VpnStatus.logWarning(samsungwarning);
                     positiveIPv4Routes.add(dnsServer);
                 }
