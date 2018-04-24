@@ -167,14 +167,13 @@ public class MainActivity extends AppCompatActivity {
                     String mErr = getString(R.string.err_noprofile);
                     Toast.makeText(MainActivity.this, mErr, Toast.LENGTH_LONG).show();
                 } else {
-                    dlgProgress = new ProgressDialog(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
-                    dlgProgress.setTitle(R.string.state_importing);
-                    final Intent mStatus = new Intent(MainActivity.this, StatusActivity.class);
+                    final Intent statusIntent = new Intent(MainActivity.this, StatusActivity.class);
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mStatus.putExtra(AppConstants.RESULT_PROFILE.toString(), (Parcelable) profile);
-                            startOrStopVPN(profile);
+                            progressBar.setVisibility(View.VISIBLE);
+                            statusIntent.putExtra(AppConstants.RESULT_PROFILE.toString(), (Parcelable) profile);
+                            startVPN(profile);
                         }
                     });
                 }
@@ -282,8 +281,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString()) != null)
-            profile = getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString());
         if (progressBar.getVisibility() != View.INVISIBLE)
             progressBar.setVisibility(View.INVISIBLE);
         IntentFilter memberFilter = new IntentFilter(AppConstants.CHECK_MEMBER.toString());
@@ -304,11 +301,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(serverReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(userReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
-    }
-
-
-    private void startOrStopVPN(VpnProfile profile) {
-        startVPN(profile);
     }
 
 
@@ -495,13 +487,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (result) {
                     case "success":
                         isMember = true;
-                        Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Member validation = OK", Toast.LENGTH_SHORT).show();
                         break;
 
                     case "failure":
                         isMember = false;
                         Toast.makeText(MainActivity.this, "You are not a member, you can register " + "\n" +
-                                "from options menu", Toast.LENGTH_LONG).show();
+                                "from options menu", Toast.LENGTH_SHORT).show();
                         break;
 
                     case "errServer404":
@@ -585,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 0) {
-            startOrStopVPN((VpnProfile) data.getParcelableExtra(AppConstants.RESULT_PROFILE.toString()));
+            startVPN((VpnProfile) data.getParcelableExtra(AppConstants.RESULT_PROFILE.toString()));
         }
     }
 }

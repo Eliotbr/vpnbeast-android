@@ -47,7 +47,7 @@ public class ServerSelectFragment extends ListFragment {
                 R.layout.list_server_text, R.id.list_content,
                 profiles);
         context = getActivity().getApplicationContext();
-        pnlRelative = (RelativeLayout) getActivity().findViewById(R.id.activity_main);
+        pnlRelative = getActivity().findViewById(R.id.activity_main);
         pnlRelative.setVisibility(View.INVISIBLE);
         setListAdapter(adapter);
         return v;

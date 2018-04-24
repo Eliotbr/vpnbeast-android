@@ -143,7 +143,7 @@ public class OpenVPNManagementThread implements Runnable, OpenVPNManagement {
             }
             // Closing one of the two sockets also closes the other
             //mServerSocketLocal.close();
-            while (true) {
+            while (!mShuttingDown) {
                 int numbytesread = instream.read(buffer);
                 if (numbytesread == -1)
                     return;

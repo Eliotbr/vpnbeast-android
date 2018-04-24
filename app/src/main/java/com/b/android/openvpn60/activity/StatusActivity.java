@@ -237,8 +237,7 @@ public class StatusActivity extends AppCompatActivity implements VpnStatus.State
 
     @Override
     protected void onDestroy() {
-        //disconnectOnDestroy();
-        unbindService(serviceConnection);
+        disconnectOnDestroy();
         super.onDestroy();
     }
 

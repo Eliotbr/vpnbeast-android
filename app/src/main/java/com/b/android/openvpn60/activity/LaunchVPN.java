@@ -216,8 +216,6 @@ public class LaunchVPN extends Activity {
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
-                    Toast.makeText(LaunchVPN.this, prefs.getString(AppConstants.VPN_PASSWORD.toString(), null),
-                            Toast.LENGTH_LONG).show();
                     mTransientAuthPW = selectedProfile.getPassword();
                     ProfileManager.updateLRU(this, selectedProfile);
                     VPNLaunchHelper.startOpenVpn(selectedProfile, getBaseContext());

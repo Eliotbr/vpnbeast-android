@@ -3,13 +3,18 @@ package com.b.android.openvpn60.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.b.android.openvpn60.helper.DbHelper;
+import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 import com.b.android.openvpn60.util.PreferencesUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,7 +33,7 @@ public class ProfileManager {
     private static VpnProfile mLastConnectedVpn = null;
     private HashMap<String, VpnProfile> profiles = new HashMap<>();
     private static VpnProfile tmpprofile = null;
-
+    private static LogHelper logHelper;
 
 
     private static VpnProfile get(String key) {
@@ -43,12 +48,13 @@ public class ProfileManager {
 
 
     private ProfileManager() {
+        logHelper = LogHelper.getLogHelper(ProfileManager.class.getName());
     }
 
     private static void checkInstance(Context context) {
         if (instance == null) {
             instance = new ProfileManager();
-            instance.loadVPNList(context);
+            //instance.loadVPNList(context);
         }
     }
 
@@ -60,9 +66,11 @@ public class ProfileManager {
     public static void setConntectedVpnProfileDisconnected(Context c) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
         SharedPreferences.Editor prefsedit = prefs.edit();
+        File dir = c.getFilesDir();
+        File file = new File(dir, TEMPORARY_PROFILE_FILENAME + ".vp");
+        boolean deleted = file.delete();
         prefsedit.putString(LAST_CONNECTED_PROFILE, null);
         prefsedit.apply();
-
     }
 
     /**
@@ -78,12 +86,9 @@ public class ProfileManager {
 
     }
 
-    /**
-     * Returns the profile that was last connected (to connect if the service restarts)
-     */
+
     public static VpnProfile getLastConnectedProfile(Context c) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
-
         String lastConnectedProfile = prefs.getString(LAST_CONNECTED_PROFILE, null);
         if (lastConnectedProfile != null)
             return get(c, lastConnectedProfile);
@@ -96,6 +101,7 @@ public class ProfileManager {
         return profiles.values();
     }
 
+
     public VpnProfile getProfileByName(String name) {
         for (VpnProfile vpnp : profiles.values()) {
             if (vpnp.getName().equals(name)) {
@@ -105,51 +111,45 @@ public class ProfileManager {
         return null;
     }
 
+
     public void saveProfileList(Context context) {
         SharedPreferences sharedprefs = PreferencesUtil.getSharedPreferencesMulti(PREFS_NAME, context);
         SharedPreferences.Editor editor = sharedprefs.edit();
         editor.putStringSet("vpnlist", profiles.keySet());
-
-        // For reasing I do not understand at all
-        // Android saves my prefs file only one time
-        // if I remove the debug code below :(
         int counter = sharedprefs.getInt("counter", 0);
         editor.putInt("counter", counter + 1);
         editor.apply();
-
     }
+
 
     public void addProfile(VpnProfile profile) {
         profiles.put(profile.getUUID().toString(), profile);
-
     }
+
 
     public static void setTemporaryProfile(Context c, VpnProfile tmp) {
         ProfileManager.tmpprofile = tmp;
         saveProfile(c, tmp, true, true);
     }
 
+
     public static boolean isTempProfile() {
         return mLastConnectedVpn != null && mLastConnectedVpn  == tmpprofile;
     }
+
 
     public void saveProfile(Context context, VpnProfile profile) {
         saveProfile(context, profile, true, false);
     }
 
-    private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
 
+    private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
         if (updateVersion)
             profile.version += 1;
         ObjectOutputStream vpnFile;
-
-        String filename = profile.getUUID().toString() + ".vp";
-        if (isTemporary)
-            filename = TEMPORARY_PROFILE_FILENAME + ".vp";
-
+        String filename = TEMPORARY_PROFILE_FILENAME + ".vp";
         try {
             vpnFile = new ObjectOutputStream(context.openFileOutput(filename, Activity.MODE_PRIVATE));
-
             vpnFile.writeObject(profile);
             vpnFile.flush();
             vpnFile.close();
@@ -161,7 +161,6 @@ public class ProfileManager {
 
 
     private void loadVPNList(Context context) {
-        profiles = new HashMap<>();
         SharedPreferences listpref = PreferencesUtil.getSharedPreferencesMulti(PREFS_NAME, context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
         if (vlist == null) {
@@ -169,16 +168,13 @@ public class ProfileManager {
         }
         // Always try to load the temporary profile
         vlist.add(TEMPORARY_PROFILE_FILENAME);
-
         for (String vpnentry : vlist) {
             try {
                 ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
                 VpnProfile vp = ((VpnProfile) vpnfile.readObject());
-
                 // Sanity check
                 if (vp == null || vp.name == null || vp.getUUID() == null)
                     continue;
-
                 vp.upgradeProfile();
                 if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
                     tmpprofile = vp;
