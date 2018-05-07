@@ -4,8 +4,6 @@ package com.b.android.openvpn60.listener;
  * Created by b on 1/7/2018.
  */
 
-import android.util.Log;
-
 import com.b.android.openvpn60.helper.LogHelper;
 import com.b.android.openvpn60.model.VpnProfile;
 
@@ -18,12 +16,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-/**
- * Created by b on 5/15/17.
- */
+
 
 public class ProxyListener {
-    private static final LogHelper logHelper = LogHelper.getLogHelper(ProxyListener.class.toString());
+
+    private static final LogHelper logHelper = LogHelper.getLogHelper(ProxyListener.class.getName());
+
 
 
     public static SocketAddress detectProxy(VpnProfile vp) {
@@ -43,6 +41,7 @@ public class ProxyListener {
         }
         return null;
     }
+
 
     public static Proxy getFirstProxy(URL url) throws URISyntaxException {
         System.setProperty("java.net.useSystemProxies", "true");

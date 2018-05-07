@@ -11,6 +11,7 @@ import java.util.logging.Logger;
  */
 
 public class EncodingUtil {
+
     private static final Logger LOGGER = Logger.getLogger(EncodingUtil.class.toString());
 
 

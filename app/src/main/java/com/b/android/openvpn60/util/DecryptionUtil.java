@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 public class DecryptionUtil {
 
-
+    // AES256 Decryption on the client side
     public static String decrypt(String encryptedText) {
         try {
             String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ==";

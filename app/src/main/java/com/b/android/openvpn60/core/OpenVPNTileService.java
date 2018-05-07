@@ -32,6 +32,7 @@ import com.b.android.openvpn60.model.VpnProfile;
 @TargetApi(Build.VERSION_CODES.N)
 public class OpenVPNTileService extends TileService implements VpnStatus.StateListener {
 
+
     @SuppressLint("Override")
     @TargetApi(Build.VERSION_CODES.N)
     @Override
@@ -52,6 +53,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
                 });
         }
     }
+
 
     private void clickAction(VpnProfile bootProfile) {
         if (VpnStatus.isVPNActive()) {
@@ -90,14 +92,15 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
         startVpnIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
         startVpnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startVpnIntent.putExtra(LaunchVPN.EXTRA_HIDELOG, true);
-
         context.startActivity(startVpnIntent);
     }
+
 
     @TargetApi(Build.VERSION_CODES.N)
     @Override
     public void onTileAdded() {
     }
+
 
     @Override
     public void onStartListening() {
@@ -110,6 +113,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     public VpnProfile getQSVPN() {
         return ProfileManager.getAlwaysOnVPN(this);
     }
+
 
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
@@ -135,14 +139,15 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
             t.setLabel(getString(R.string.qs_disconnect, name));
             t.setState(Tile.STATE_ACTIVE);
         }
-
         t.updateTile();
     }
+
 
     @Override
     public void setConnectedVPN(String uuid) {
 
     }
+
 
     @Override
     public void onStopListening() {

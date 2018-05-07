@@ -43,32 +43,21 @@ public final class PRNGUtil {
 
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
-    private static final byte[] BUILD_FINGERPRINT_AND_DEVICE_SERIAL =
-            getBuildFingerprintAndDeviceSerial();
+    private static final byte[] BUILD_FINGERPRINT_AND_DEVICE_SERIAL = getBuildFingerprintAndDeviceSerial();
 
-    /** Hidden constructor to prevent instantiation. */
+
+
     private PRNGUtil() {}
 
-    /**
-     * Applies all fixes.
-     *
-     * @throws SecurityException if a fix is needed but could not be applied.
-     */
+
     public static void apply() {
         applyOpenSSLFix();
         installLinuxPRNGSecureRandom();
     }
 
-    /**
-     * Applies the fix for OpenSSL PRNG having low entropy. Does nothing if the
-     * fix is not needed.
-     *
-     * @throws SecurityException if the fix is needed but could not be applied.
-     */
+
     private static void applyOpenSSLFix() throws SecurityException {
-        if ((Build.VERSION.SDK_INT < VERSION_CODE_JELLY_BEAN)
-                || (Build.VERSION.SDK_INT > VERSION_CODE_JELLY_BEAN_MR2)) {
-            // No need to apply the fix
+        if ((Build.VERSION.SDK_INT < VERSION_CODE_JELLY_BEAN) || (Build.VERSION.SDK_INT > VERSION_CODE_JELLY_BEAN_MR2)) {
             return;
         }
 
@@ -79,27 +68,18 @@ public final class PRNGUtil {
                     .invoke(null, generateSeed());
 
             // Mix output of Linux PRNG into OpenSSL's PRNG
-            int bytesRead = (Integer) Class.forName(
-                    "org.apache.harmony.xnet.provider.jsse.NativeCrypto")
+            int bytesRead = (Integer) Class.forName("org.apache.harmony.xnet.provider.jsse.NativeCrypto")
                     .getMethod("RAND_load_file", String.class, long.class)
                     .invoke(null, "/dev/urandom", 1024);
             if (bytesRead != 1024) {
-                throw new IOException(
-                        "Unexpected number of bytes read from Linux PRNG: "
-                                + bytesRead);
+                throw new IOException("Unexpected number of bytes read from Linux PRNG: " + bytesRead);
             }
         } catch (Exception e) {
             throw new SecurityException("Failed to seed OpenSSL PRNG", e);
         }
     }
 
-    /**
-     * Installs a Linux PRNG-backed {@code SecureRandom} implementation as the
-     * default. Does nothing if the implementation is already the default or if
-     * there is not need to install the implementation.
-     *
-     * @throws SecurityException if the fix is needed but could not be applied.
-     */
+
     private static void installLinuxPRNGSecureRandom()
             throws SecurityException {
         if (Build.VERSION.SDK_INT > VERSION_CODE_JELLY_BEAN_MR2) {
@@ -107,10 +87,7 @@ public final class PRNGUtil {
             return;
         }
 
-        // Install a Linux PRNG-based SecureRandom implementation as the
-        // default, if not yet installed.
-        Provider[] secureRandomProviders =
-                Security.getProviders("SecureRandom.SHA1PRNG");
+        Provider[] secureRandomProviders = Security.getProviders("SecureRandom.SHA1PRNG");
         if ((secureRandomProviders == null)
                 || (secureRandomProviders.length < 1)
                 || (!LinuxPRNGSecureRandomProvider.class.equals(
@@ -122,11 +99,8 @@ public final class PRNGUtil {
         // SecureRandom.getInstance("SHA1PRNG") return a SecureRandom backed
         // by the Linux PRNG-based SecureRandom implementation.
         SecureRandom rng1 = new SecureRandom();
-        if (!LinuxPRNGSecureRandomProvider.class.equals(
-                rng1.getProvider().getClass())) {
-            throw new SecurityException(
-                    "new SecureRandom() backed by wrong Provider: "
-                            + rng1.getProvider().getClass());
+        if (!LinuxPRNGSecureRandomProvider.class.equals(rng1.getProvider().getClass())) {
+            throw new SecurityException("new SecureRandom() backed by wrong Provider: " + rng1.getProvider().getClass());
         }
 
         SecureRandom rng2;

@@ -7,12 +7,14 @@ import java.util.UUID;
  */
 
 public class PasswordUtil {
+
     public static final int PCKS12ORCERTPASSWORD = 2;
     public static final int AUTHPASSWORD = 3;
     private static PasswordUtil mInstance;
     final private UUID mUuid;
     private String mKeyOrPkcs12Password;
     private String mAuthPassword;
+
 
     private PasswordUtil(UUID uuid) {
         mUuid = uuid;
@@ -25,17 +27,12 @@ public class PasswordUtil {
         return mInstance;
     }
 
-    private void test() {
-
-    }
-
     public static String getPKCS12orCertificatePassword(UUID uuid, boolean resetPw) {
         String pwcopy = getInstance(uuid).mKeyOrPkcs12Password;
         if (resetPw)
             getInstance(uuid).mKeyOrPkcs12Password = null;
         return pwcopy;
     }
-
 
     public static String getAuthPassword(UUID uuid, boolean resetPW) {
         String pwcopy = getInstance(uuid).mAuthPassword;
@@ -55,6 +52,5 @@ public class PasswordUtil {
                 break;
         }
     }
-
 
 }

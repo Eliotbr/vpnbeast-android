@@ -36,6 +36,7 @@ public class VpnStatus {
     final static Object readFileLock = new Object();
 
 
+
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));
@@ -48,19 +49,24 @@ public class VpnStatus {
         newLogItem(li);
     }
 
+
     public static void logException(Exception e) {
         logException(LogLevel.ERROR, null, e);
     }
+
 
     public static void logException(String context, Exception e) {
         logException(LogLevel.ERROR, context, e);
     }
 
+
     static final int MAXLOGENTRIES = 1000;
+
 
     public static boolean isVPNActive() {
         return mLastLevel != ConnectionStatus.LEVEL_AUTH_FAILED && !(mLastLevel == ConnectionStatus.LEVEL_NOTCONNECTED);
     }
+
 
     public static String getLastCleanLogMessage(Context c) {
         String message = lastStateString;
@@ -104,17 +110,6 @@ public class VpnStatus {
             prefix += ": ";
 
         return prefix + message;
-
-    }
-
-    public static void initLogCache(File cacheDir) {
-        mHandlerThread = new HandlerThread("LogFileWriter", Thread.MIN_PRIORITY);
-        mHandlerThread.start();
-        mLogFileHandler = new LogFileHandler(mHandlerThread.getLooper());
-
-
-        Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_INIT, cacheDir);
-        mLogFileHandler.sendMessage(m);
 
     }
 

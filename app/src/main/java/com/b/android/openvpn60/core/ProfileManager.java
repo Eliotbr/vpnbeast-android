@@ -26,6 +26,7 @@ import java.util.Set;
  */
 
 public class ProfileManager {
+
     private static final String PREFS_NAME = "VPNList";
     private static final String LAST_CONNECTED_PROFILE = "lastConnectedProfile";
     private static final String TEMPORARY_PROFILE_FILENAME = "temporary-vpn-profile";
@@ -34,6 +35,7 @@ public class ProfileManager {
     private HashMap<String, VpnProfile> profiles = new HashMap<>();
     private static VpnProfile tmpprofile = null;
     private static LogHelper logHelper;
+
 
 
     private static VpnProfile get(String key) {
@@ -51,6 +53,7 @@ public class ProfileManager {
         logHelper = LogHelper.getLogHelper(ProfileManager.class.getName());
     }
 
+
     private static void checkInstance(Context context) {
         if (instance == null) {
             instance = new ProfileManager();
@@ -58,10 +61,12 @@ public class ProfileManager {
         }
     }
 
+
     synchronized public static ProfileManager getInstance(Context context) {
         checkInstance(context);
         return instance;
     }
+
 
     public static void setConntectedVpnProfileDisconnected(Context c) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
@@ -73,17 +78,16 @@ public class ProfileManager {
         prefsedit.apply();
     }
 
+
     /**
      * Sets the profile that is connected (to connect if the service restarts)
      */
     public static void setConnectedVpnProfile(Context c, VpnProfile connectedProfile) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(c);
         SharedPreferences.Editor prefsedit = prefs.edit();
-
         prefsedit.putString(LAST_CONNECTED_PROFILE, connectedProfile.getUUIDString());
         prefsedit.apply();
         mLastConnectedVpn = connectedProfile;
-
     }
 
 
@@ -172,7 +176,6 @@ public class ProfileManager {
             try {
                 ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
                 VpnProfile vp = ((VpnProfile) vpnfile.readObject());
-                // Sanity check
                 if (vp == null || vp.name == null || vp.getUUID() == null)
                     continue;
                 vp.upgradeProfile();
@@ -200,9 +203,11 @@ public class ProfileManager {
 
     }
 
+
     public static VpnProfile get(Context context, String profileUUID) {
         return get(context, profileUUID, 0, 10);
     }
+
 
     public static VpnProfile get(Context context, String profileUUID, int version, int tries) {
         checkInstance(context);
@@ -212,37 +217,36 @@ public class ProfileManager {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ignored) {
+                logHelper.logException(ignored);
             }
             instance.loadVPNList(context);
             profile = get(profileUUID);
             int ver = profile == null ? -1 : profile.version;
         }
 
-        if (tried > 5)
-
-        {
+        if (tried > 5) {
             int ver = profile == null ? -1 : profile.version;
             VpnStatus.logError(String.format(Locale.US, "Used x %d tries to get current version (%d/%d) of the profile", tried, ver, version));
         }
         return profile;
     }
 
+
     public static VpnProfile getLastConnectedVpn() {
         return mLastConnectedVpn;
     }
 
+
     public static VpnProfile getAlwaysOnVPN(Context context) {
         checkInstance(context);
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(context);
-
         String uuid = prefs.getString("alwaysOnVpn", null);
         return get(uuid);
-
     }
+
 
     public static void updateLRU(Context c, VpnProfile profile) {
         profile.lastUsed = System.currentTimeMillis();
-        // LRU does not change the profile, no need for the service to refresh
         if (profile!=tmpprofile)
             saveProfile(c, profile, false, false);
     }

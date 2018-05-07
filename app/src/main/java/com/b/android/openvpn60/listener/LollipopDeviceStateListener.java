@@ -15,12 +15,15 @@ import android.os.Build;
 /**
  * Created by b on 26.11.14.
  */
+
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCallback {
 
     private String mLastConnectedStatus;
     private String mLastLinkProperties;
     private String mLastNetworkCapabilities;
+
+
 
     @Override
     public void onAvailable(Network network) {
@@ -31,6 +34,7 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
         }
     }
 
+
     @Override
     public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
         super.onLinkPropertiesChanged(network, linkProperties);
@@ -39,6 +43,7 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
             mLastLinkProperties = linkProperties.toString();
         }
     }
+
 
     @Override
     public void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {

@@ -190,11 +190,9 @@ public class NetworkSpace {
             BigInteger ourLast = getLastAddress();
             BigInteger netFirst = network.getFirstAddress();
             BigInteger netLast = network.getLastAddress();
-
             boolean a = ourFirst.compareTo(netFirst) != 1;
             boolean b = ourLast.compareTo(netLast) != -1;
             return a && b;
-
         }
     }
 
@@ -211,6 +209,7 @@ public class NetworkSpace {
         return ips;
     }
 
+
     public void clear() {
         mIpAddresses.clear();
     }
@@ -221,6 +220,7 @@ public class NetworkSpace {
         mIpAddresses.add(new ipAddress(cidrIp, include));
     }
 
+
     public void addIPSplit(IPAddress cidrIp, boolean include) {
         ipAddress newIP = new ipAddress(cidrIp, include);
         ipAddress[] splitIps = newIP.split();
@@ -228,29 +228,25 @@ public class NetworkSpace {
             mIpAddresses.add(split);
     }
 
+
     void addIPv6(Inet6Address address, int mask, boolean included) {
         mIpAddresses.add(new ipAddress(address, mask, included));
     }
 
+
     TreeSet<ipAddress> generateIPList() {
-
         PriorityQueue<ipAddress> networks = new PriorityQueue<ipAddress>(mIpAddresses);
-
         TreeSet<ipAddress> ipsDone = new TreeSet<ipAddress>();
-
         ipAddress currentNet = networks.poll();
         if (currentNet == null)
             return ipsDone;
-
         while (currentNet != null) {
             // Check if it and the next of it are compatible
             ipAddress nextNet = networks.poll();
-
             if (BuildConfig.DEBUG) Assert.assertNotNull(currentNet);
             if (nextNet == null || currentNet.getLastAddress().compareTo(nextNet.getFirstAddress()) == -1) {
                 // Everything good, no overlapping nothing to do
                 ipsDone.add(currentNet);
-
                 currentNet = nextNet;
             } else {
                 // This network is smaller or equal to the next but has the same base address
@@ -262,14 +258,9 @@ public class NetworkSpace {
                     } else {
                         // our currentNet is included in next and types differ. Need to split the next network
                         ipAddress[] newNets = nextNet.split();
-
-
-                        // TODO: The contains method of the Priority is stupid linear search
-
                         // First add the second half to keep the order in networks
                         if (!networks.contains(newNets[1]))
                             networks.add(newNets[1]);
-
                         if (newNets[0].getLastAddress().equals(currentNet.getLastAddress())) {
                             if (BuildConfig.DEBUG)
                                 Assert.assertEquals(newNets[0].networkMask, currentNet.networkMask);
@@ -287,7 +278,6 @@ public class NetworkSpace {
                         Assert.assertTrue(currentNet.getLastAddress().compareTo(nextNet.getLastAddress()) != -1);
                     }
                     // This network is bigger than the next and last ip of current >= next
-
                     //noinspection StatementWithEmptyBody
                     if (currentNet.included == nextNet.included) {
                         // Next network is in included in our network with the same type,
@@ -295,8 +285,6 @@ public class NetworkSpace {
                     } else {
                         // We need to split our network
                         ipAddress[] newNets = currentNet.split();
-
-
                         if (newNets[1].networkMask == nextNet.networkMask) {
                             if (BuildConfig.DEBUG) {
                                 Assert.assertTrue(newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
@@ -310,39 +298,33 @@ public class NetworkSpace {
                             networks.add(nextNet);
                         }
                         currentNet = newNets[0];
-
                     }
                 }
             }
 
         }
-
         return ipsDone;
     }
 
+
     Collection<ipAddress> getPositiveIPList() {
         TreeSet<ipAddress> ipsSorted = generateIPList();
-
         Vector<ipAddress> ips = new Vector<ipAddress>();
         for (ipAddress ia : ipsSorted) {
             if (ia.included)
                 ips.add(ia);
         }
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             // Include postive routes from the original set under < 4.4 since these might overrule the local
             // network but only if no smaller negative route exists
             for (ipAddress origIp : mIpAddresses) {
                 if (!origIp.included)
                     continue;
-
                 // The netspace exists
                 if (ipsSorted.contains(origIp))
                     continue;
-
                 boolean skipIp = false;
                 // If there is any smaller net that is excluded we may not add the positive route back
-
                 for (ipAddress calculatedIp : ipsSorted) {
                     if (!calculatedIp.included && origIp.containsNet(calculatedIp)) {
                         skipIp = true;
@@ -351,13 +333,10 @@ public class NetworkSpace {
                 }
                 if (skipIp)
                     continue;
-
                 // It is safe to include the IP
                 ips.add(origIp);
             }
-
         }
-
         return ips;
     }
 

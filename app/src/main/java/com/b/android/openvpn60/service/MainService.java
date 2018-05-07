@@ -23,6 +23,7 @@ public abstract class MainService extends Service {
     public Intent responseIntent;
 
 
+
     // Define how the handler will process messages
     public final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -36,10 +37,8 @@ public abstract class MainService extends Service {
     }
 
 
-    // Defines the shutdown sequence
     @Override
     public void onDestroy() {
-        // Cleanup service before destruction
         handlerThread.quit();
     }
 

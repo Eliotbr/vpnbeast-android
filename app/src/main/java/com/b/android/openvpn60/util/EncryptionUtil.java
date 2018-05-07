@@ -23,8 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionUtil {
 
-
-    // AES-256
+    // AES-256 Encryption on client side
     public static String encrypt(String word) {
         try {
             byte[] ivBytes;

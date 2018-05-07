@@ -52,9 +52,7 @@ import javax.crypto.NoSuchPaddingException;
 
 public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
-    transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
-    // Don't change this, not all parts of the program use this constant
-    //public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
+    public transient static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     private static final String TAG = "com.b.android.openvpn." + VpnProfile.class.toString();
@@ -123,8 +121,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     private int x509AuthType = X509_VERIFY_TLSREMOTE_RDN;
     private String x509UsernameField = null;
     private transient PrivateKey privateKey;
-    // Public attributes, since I got mad with getter/setter
-    // set members to default values
     private UUID uuid;
     public boolean allowLocalLAN;
     private int profileVersion;
@@ -141,12 +137,12 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     private boolean pushPeerInfo = false;
     private static final boolean isOpenVPN22 = false;
     public int version = 0;
-    // timestamp when the profile was last used
     public long lastUsed;
     private String serverName = "openvpn.example.com";
     private String serverPort = "1194";
     private boolean useUdp = true;
     private String serverCert;
+
 
 
     public VpnProfile(String name) {
@@ -155,6 +151,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         initConstants();
         this.name = name;
     }
+
 
     /*public VpnProfile(String name, String ipAddress, String serverPort, String serverCert) {
         connections = new Connection[1];
@@ -180,7 +177,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         public VpnProfile createFromParcel(Parcel in) {
             return new VpnProfile(in);
         }
-
         public VpnProfile[] newArray(int size) {
             return new VpnProfile[size];
         }

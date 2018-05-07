@@ -24,6 +24,7 @@ import java.io.File;
 
 import com.b.android.openvpn60.core.ConnectionStatus;
 import com.b.android.openvpn60.core.LogItem;
+import com.b.android.openvpn60.helper.LogHelper;
 
 
 /**
@@ -31,9 +32,10 @@ import com.b.android.openvpn60.core.LogItem;
  */
 
 public class StatusListener {
-    private File mCacheDir;
-    private ServiceConnection mConnection = new ServiceConnection() {
 
+    private static final LogHelper logHelper = LogHelper.getLogHelper(StatusListener.class.getName());
+
+    private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -49,8 +51,7 @@ public class StatusListener {
                 }
 
             } catch (RemoteException e) {
-                e.printStackTrace();
-                Log.e("com.b.android.openvpn.core.StatusListener", "onServiceConnected: ", e);
+                logHelper.logException(e);
             }
         }
 
@@ -61,21 +62,17 @@ public class StatusListener {
 
     };
 
-    public void init(Context c) {
 
+    public void init(Context c) {
         Intent intent = new Intent(c, OpenVPNStatusService.class);
         intent.setAction(AppConstants.START_SERVICE.toString());
-        mCacheDir = c.getCacheDir();
-
+        File mCacheDir = c.getCacheDir();
         c.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-
     }
 
 
-    private IStatusCallbacks mCallback = new IStatusCallbacks.Stub()
+    private IStatusCallbacks mCallback = new IStatusCallbacks.Stub() {
 
-    {
         @Override
         public void newLogItem(LogItem item) throws RemoteException {
             VpnStatus.newLogItem(item);

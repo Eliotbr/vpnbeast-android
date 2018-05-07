@@ -7,6 +7,7 @@ import java.util.Locale;
  */
 
 public class IPAddress {
+
     String ip;
     int len;
 
@@ -30,18 +31,20 @@ public class IPAddress {
         } else {
             len = 32 - lenZeros;
         }
-
     }
+
 
     public IPAddress(String address, int prefix_length) {
         len = prefix_length;
         ip = address;
     }
 
+
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH, "%s/%d", ip, len);
     }
+
 
     public boolean normalise() {
         long ip = getInt(this.ip);
@@ -56,10 +59,12 @@ public class IPAddress {
 
     }
 
+
     private String getNormalizedString(long newip) {
         return String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16,
                 (newip & 0xff00) >> 8, newip & 0xff);
     }
+
 
     static long getInt(String ipaddr) {
         String[] ipt = ipaddr.split("\\.");
@@ -70,6 +75,7 @@ public class IPAddress {
         ip += Integer.parseInt(ipt[3]);
         return ip;
     }
+
 
     public long getInt() {
         return getInt(ip);
