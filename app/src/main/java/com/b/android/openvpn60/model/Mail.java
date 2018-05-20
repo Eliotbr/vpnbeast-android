@@ -76,6 +76,7 @@ public class Mail extends javax.mail.Authenticator {
         return false;
     }
 
+    @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }

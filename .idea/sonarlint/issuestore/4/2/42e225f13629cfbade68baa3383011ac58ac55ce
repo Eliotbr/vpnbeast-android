@@ -1,0 +1,21 @@
+
+ƒsquid:S1192"bDefine a constant instead of duplicating this literal "application/x-www-form-urlencoded" 3 times.(¼ÄØ†ıÿÿÿÿ8ÉÛ°Ó·,
+isquid:S1192"MDefine a constant instead of duplicating this literal "errServer500" 3 times.(È®¨º8ÉÛ°Ó·,
+nsquid:S1192"MDefine a constant instead of duplicating this literal "errServer404" 3 times.(èÅÄòşÿÿÿÿ8ÉÛ°Ó·,
+isquid:S1192"HDefine a constant instead of duplicating this literal "success" 3 times.(ºË–øşÿÿÿÿ8ÉÛ°Ó·,
+dsquid:S1192"HDefine a constant instead of duplicating this literal "status" 19 times.(âÉ³8ÉÛ°Ó·,
+dsquid:S1192"HDefine a constant instead of duplicating this literal "failure" 3 times.(ÑÑÓ€8ÉÛ°Ó·,
+osquid:S1192"NDefine a constant instead of duplicating this literal "errServerElse" 3 times.(ä¡ÚÔøÿÿÿÿ8ÉÛ°Ó·,
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8ÉÛ°Ó·,
+usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8ÉÛ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ç¶œøüÿÿÿÿ8ÉÛ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÄšÑùüÿÿÿÿ8ÉÛ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ë¯äŞûÿÿÿÿ8ÉÛ°Ó·,
+Rsquid:S2696"6Make the enclosing method "static" or remove this set.(ÅÍ8ÉÛ°Ó·,
+Psquid:S1172"/Remove this unused method parameter "password".(Â’´·øÿÿÿÿ8ÉÛ°Ó·,
+]squid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è8ÉÛ°Ó·,
+]squid:UselessImportCheck"/Remove this unused import 'android.os.IBinder'.(Ñğôˆùÿÿÿÿ8ÉÛ°Ó·,
+Xsquid:UselessImportCheck"/Remove this unused import 'android.os.Handler'.(ûÛ’¡8ÉÛ°Ó·,
+Vsquid:UselessImportCheck".Remove this unused import 'android.os.Looper'.(âå8ÉÛ°Ó·,
+^squid:UselessImportCheck"0Remove this unused import 'android.app.Service'.(èœ—ÿúÿÿÿÿ8ÉÛ°Ó·,
+]squid:UselessImportCheck"/Remove this unused import 'android.os.Message'.(¤ªæéıÿÿÿÿ8ÉÛ°Ó·,

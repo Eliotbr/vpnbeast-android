@@ -15,6 +15,10 @@ import com.b.android.openvpn60.R;
 
 public class ViewUtil {
 
+    private ViewUtil() {
+
+    }
+
     public static AlertDialog.Builder showErrorDialog(Context context, String string) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("Error");
@@ -34,7 +38,7 @@ public class ViewUtil {
         alertDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                // nothing is going to happen when clicked that button
             }
         });
         return alertDialog;

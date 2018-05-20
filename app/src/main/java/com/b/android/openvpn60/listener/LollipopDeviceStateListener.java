@@ -12,17 +12,22 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Build;
 
+import com.b.android.openvpn60.helper.LogHelper;
+
 /**
  * Created by b on 26.11.14.
  */
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCallback {
-
+    private static final LogHelper LOG_HELPER;
     private String mLastConnectedStatus;
     private String mLastLinkProperties;
     private String mLastNetworkCapabilities;
 
+    static {
+        LOG_HELPER = LogHelper.getLogHelper(LollipopDeviceStateListener.class.getName());
+    }
 
 
     @Override
@@ -34,16 +39,13 @@ public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCall
         }
     }
 
-
     @Override
     public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
         super.onLinkPropertiesChanged(network, linkProperties);
-
         if (!linkProperties.toString().equals(mLastLinkProperties)) {
             mLastLinkProperties = linkProperties.toString();
         }
     }
-
 
     @Override
     public void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {

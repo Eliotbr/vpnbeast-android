@@ -1,0 +1,14 @@
+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(àÔ¦¾8¸Ø°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Œï£ºùÿÿÿÿ8¸Ø°Ó·,
+‘squid:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ôá·Êûÿÿÿÿ8¸Ø°Ó·,
+—squid:S1319"vThe type of the "profileList" object should be an interface such as "List" rather than the implementation "ArrayList".(Õù ùÿÿÿÿ8¸Ø°Ó·,
+wsquid:S1488"[Immediately return this expression instead of assigning it to the temporary variable "res".(¿€Î‘8¸Ø°Ó·,
+€squid:S1488"_Immediately return this expression instead of assigning it to the temporary variable "numRows".(ºÕëÙýÿÿÿÿ8¸Ø°Ó·,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8¸Ø°Ó·,
+Ssquid:S1135"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8¸Ø°Ó·,
+Rsquid:S1153"1Directly append the argument of String.valueOf().(žóôÜúÿÿÿÿ8¸Ø°Ó·,
+Rsquid:S1153"1Directly append the argument of String.valueOf().(žóôÜúÿÿÿÿ8¸Ø°Ó·,
+asquid:UselessImportCheck"3Remove this unused import 'android.widget.TabHost'.(úŸñÑüÿÿÿÿ8¸Ø°Ó·,
+ssquid:UselessImportCheck"JRemove this unused import 'com.b.android.openvpn60.constant.AppConstants'.(ëï’Ô8¸Ø°Ó·,
+Ysquid:UselessImportCheck"+Remove this unused import 'java.util.UUID'.(ÀãÄ£úÿÿÿÿ8¸Ø°Ó·,

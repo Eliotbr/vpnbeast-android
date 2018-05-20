@@ -23,11 +23,15 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionUtil {
 
+    private EncryptionUtil() {
+
+    }
+
     // AES-256 Encryption on client side
     public static String encrypt(String word) {
         try {
             byte[] ivBytes;
-            String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ==";
+            String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ=="; //NOSONAR
             /*you can give whatever you want for password. This is for testing purpose*/
             SecureRandom random = new SecureRandom();
             byte bytes[] = new byte[20];
@@ -57,7 +61,6 @@ public class EncryptionUtil {
         return null;
     }
 
-
     public static ArrayList<String> getEncryptedUserList(String userPass, String createDate, String lastDate,
                                                          String uuid, String status) {
         ArrayList<String> encryptedList = new ArrayList<>();
@@ -72,7 +75,6 @@ public class EncryptionUtil {
         return encryptedList;
     }
 
-
     public static ArrayList<String> getEncryptedServerList(String serverIp, String serverPort, String serverStatus,
                                                            String serverUuid, String serverCert) {
         ArrayList<String> encryptedList = new ArrayList<>();
@@ -83,7 +85,6 @@ public class EncryptionUtil {
         encryptedList.add(encrypt(serverCert));
         return encryptedList;
     }
-
 
     public static ArrayList<String> getEncryptedMemberList(String memberStatus, String email, String createDate, String firstName,
                                                            String lastName, String startDate, String endDate) {

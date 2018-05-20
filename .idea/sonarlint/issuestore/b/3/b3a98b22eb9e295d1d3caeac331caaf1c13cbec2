@@ -1,0 +1,58 @@
+
+8squid:S1643"Use a StringBuilder instead.(÷›İÌ8ûŞ°Ó·,
+Isquid:S1659"(Declare "txtProfile" on a separate line.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+Dsquid:S1659"#Declare "txtIp" on a separate line.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+Fsquid:S1659"%Declare "txtPort" on a separate line.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+Wsquid:S1068"6Remove this unused "PERMISSION_REQUEST" private field.(ÙÇ®ûÿÿÿÿ8ûŞ°Ó·,
+Ksquid:S1068"/Remove this unused "sharedPrefs" private field.(®–8ûŞ°Ó·,
+Hsquid:S1068",Remove this unused "importer" private field.(ë¸îü8ûŞ°Ó·,
+Msquid:S1068"1Remove this unused "intentService" private field.(£ã›¸8ûŞ°Ó·,
+Msquid:S1068"1Remove this unused "customAdapter" private field.(æÉİ€8ûŞ°Ó·,
+Ksquid:S1068"*Remove this unused "tasker" private field.(‚Ïß½üÿÿÿÿ8ûŞ°Ó·,
+Msquid:S1068"2Remove this unused "isServerstaken" private field.(ø·ÙO8ûŞ°Ó·,
+Nsquid:S1068"2Remove this unused "txtProfileName" private field.(òôµÒ8ûŞ°Ó·,
+Fsquid:S1068"+Remove this unused "spinner" private field.(Ï‰¯8ûŞ°Ó·,
+vsquid:S1450"ZRemove the "sharedPrefs" field and declare it as a local variable in the relevant methods.(®–8ûŞ°Ó·,
+ssquid:S1450"WRemove the "importer" field and declare it as a local variable in the relevant methods.(ë¸îü8ûŞ°Ó·,
+rsquid:S1450"VRemove the "edtUser" field and declare it as a local variable in the relevant methods.(¶Û¼8ûŞ°Ó·,
+xsquid:S1450"\Remove the "intentService" field and declare it as a local variable in the relevant methods.(£ã›¸8ûŞ°Ó·,
+ysquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ğ…á€ûÿÿÿÿ8ûŞ°Ó·,
+ysquid:S1450"]Remove the "txtProfileName" field and declare it as a local variable in the relevant methods.(òôµÒ8ûŞ°Ó·,
+{squid:S1450"ZRemove the "txtUsername" field and declare it as a local variable in the relevant methods.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+zsquid:S1450"YRemove the "txtProfile" field and declare it as a local variable in the relevant methods.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+usquid:S1450"TRemove the "txtIp" field and declare it as a local variable in the relevant methods.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+wsquid:S1450"VRemove the "txtPort" field and declare it as a local variable in the relevant methods.(›Ê´èøÿÿÿÿ8ûŞ°Ó·,
+Isquid:S1444"-Make this "public static profile" field final(Ãäÿ«8ûŞ°Ó·,
+Jsquid:S1444".Make this "public static profiles" field final(£µû8ûŞ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(“äÿ…ùÿÿÿÿ8ûŞ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¹±«¼şÿÿÿÿ8ûŞ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¹±«¼şÿÿÿÿ8ûŞ°Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(·š¤§ûÿÿÿÿ8ûŞ°Ó·,
+Rsquid:S2696"6Make the enclosing method "static" or remove this set.(ÔõÏ8ûŞ°Ó·,
+Wsquid:S2696"6Make the enclosing method "static" or remove this set.(áÀğŠüÿÿÿÿ8ûŞ°Ó·,
+Wsquid:S2696"6Make the enclosing method "static" or remove this set.(²Øü´üÿÿÿÿ8ûŞ°Ó·,
+Wsquid:S2696"6Make the enclosing method "static" or remove this set.(ëâşÿÿÿÿ8ûŞ°Ó·,
+asquid:HiddenFieldCheck";Rename "profile" which hides the field declared at line 83.(ãı|8ûŞ°Ó·,
+†"squid:ClassVariableVisibilityCheck"SMake profile a static final constant or non-public and provide accessors if needed.(Ãäÿ«8ûŞ°Ó·,
+‡"squid:ClassVariableVisibilityCheck"TMake profiles a static final constant or non-public and provide accessors if needed.(£µû8ûŞ°Ó·,
+Dsquid:S2386"#Make member "profiles" "protected".(áÀğŠüÿÿÿÿ8ûŞ°Ó·,
+vsquid:S00116"TRename this field "CLASS_TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö‡ŠÛşÿÿÿÿ8ûŞ°Ó·,
+lsquid:UselessImportCheck">Remove this unused import 'android.content.pm.PackageManager'.(€®¥õÿÿÿÿÿ8ûŞ°Ó·,
+zsquid:UselessImportCheck"LRemove this unused import 'com.google.android.gms.location.LocationRequest'.(´âêëÿÿÿÿÿ8ûŞ°Ó·,
+qsquid:UselessImportCheck"CRemove this unused import 'com.loopj.android.http.AsyncHttpClient'.(¬¹×àúÿÿÿÿ8ûŞ°Ó·,
+^squid:UselessImportCheck"0Remove this unused import 'org.json.JSONObject'.(œÖ´üşÿÿÿÿ8ûŞ°Ó·,
+†squid:UselessImportCheck"]Remove this unused import 'cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity'.(ü’‹í8ûŞ°Ó·,
+jsquid:UselessImportCheck"ARemove this unused import 'cz.msebera.android.httpclient.Header'.(±ÿ¢„8ûŞ°Ó·,
+ysquid:UselessImportCheck"KRemove this unused import 'com.loopj.android.http.JsonHttpResponseHandler'.(”äöúÿÿÿÿ8ûŞ°Ó·,
+dsquid:UselessImportCheck"6Remove this unused import 'android.location.Location'.(›¡ì®øÿÿÿÿ8ûŞ°Ó·,
+jsquid:UselessImportCheck"ARemove this unused import 'java.io.UnsupportedEncodingException'.(Ãµ…“8ûŞ°Ó·,
+{squid:UselessImportCheck"MRemove this unused import 'com.google.android.gms.location.LocationServices'.(’öñÿıÿÿÿÿ8ûŞ°Ó·,
+|squid:UselessImportCheck"NRemove this unused import 'com.b.android.openvpn60.constant.ServiceConstants'.(ÎŸåâùÿÿÿÿ8ûŞ°Ó·,
+ysquid:UselessImportCheck"KRemove this unused import 'com.google.android.gms.common.ConnectionResult'.(öÎãçüÿÿÿÿ8ûŞ°Ó·,
+psquid:UselessImportCheck"HRemove this unused import 'cz.msebera.android.httpclient.NameValuePair'.(¢Ø€M8ûŞ°Ó·,
+wsquid:UselessImportCheck"NRemove this unused import 'com.google.android.gms.common.api.GoogleApiClient'.(¹¾êŒ8ûŞ°Ó·,
+ƒsquid:UselessImportCheck"URemove this unused import 'cz.msebera.android.httpclient.message.BasicNameValuePair'.(™Ù£Íúÿÿÿÿ8ûŞ°Ó·,
+nsquid:UselessImportCheck"ERemove this unused import 'cz.msebera.android.httpclient.HttpEntity'.(™óò±8ûŞ°Ó·,
+Zsquid:UselessImportCheck"1Remove this unused import 'android.app.Activity'.(‡ÊÍÆ8ûŞ°Ó·,
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ûŞ°Ó·,
+jsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(²Ú±8ûŞ°Ó·,

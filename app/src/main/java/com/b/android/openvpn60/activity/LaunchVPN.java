@@ -65,11 +65,9 @@ public class LaunchVPN extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        //setContentView(R.layout.launchvpn);
         prefs = PreferencesUtil.getDefaultSharedPreferences(this);
         startVpnFromIntent();
     }
-
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -88,14 +86,12 @@ public class LaunchVPN extends Activity {
             unbindService(this);
         }
 
-
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            // nothing to do
         }
 
     };
-
 
     protected void startVpnFromIntent() {
         final Intent intent = getIntent();
@@ -123,12 +119,9 @@ public class LaunchVPN extends Activity {
         }
     }
 
-
-
     private void askForPW(final int type) {
         final EditText entry = new EditText(this);
         final View userpwlayout = getLayoutInflater().inflate(R.layout.userpw, null, false);
-        final CheckBox chkRemember = this.findViewById(R.id.save_password);
         entry.setSingleLine();
         entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         entry.setTransformationMethod(new PasswordTransformationMethod());
@@ -204,7 +197,6 @@ public class LaunchVPN extends Activity {
         dialog.create().show();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -236,7 +228,6 @@ public class LaunchVPN extends Activity {
         }
     }
 
-
     void showAfterMain() {
         Intent startLW = new Intent(getBaseContext(), StatusActivity.class);
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -244,7 +235,6 @@ public class LaunchVPN extends Activity {
         startActivityForResult(startLW, START_STATUS_ACTIVITY);
         //this.finish();
     }
-
 
     void showConfigErrorDialog(int vpnok) {
         AlertDialog.Builder d = new AlertDialog.Builder(this);
@@ -269,7 +259,6 @@ public class LaunchVPN extends Activity {
         d.show();
     }
 
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setOnDismissListener(AlertDialog.Builder d) {
         d.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -279,7 +268,6 @@ public class LaunchVPN extends Activity {
             }
         });
     }
-
 
     void launchVPN() {
         int vpnok = selectedProfile.checkProfile(this);
@@ -305,15 +293,11 @@ public class LaunchVPN extends Activity {
         }
     }
 
-
-
     private void execeuteSUcmd(String command) {
         try {
             ProcessBuilder pb = new ProcessBuilder("su", "-c", command);
             Process p = pb.start();
-            int ret = p.waitFor();
-            //if (ret == 0)
-            //mCmfixed = true;
+            p.waitFor();
         } catch (InterruptedException | IOException e) {
             VpnStatus.logException("SU command", e);
         }

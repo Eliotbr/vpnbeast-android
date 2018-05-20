@@ -2,8 +2,6 @@ package com.b.android.openvpn60.model;
 
 import android.text.TextUtils;
 
-import com.b.android.openvpn60.core.Connection;
-
 import java.util.Locale;
 
 /**
@@ -43,11 +41,6 @@ public class ConnectionTest {
             cfg += "\n";
         }
         return cfg;
-    }
-
-    @Override
-    public Connection clone() throws CloneNotSupportedException {
-        return (Connection) super.clone();
     }
 
     public boolean isOnlyRemote() {

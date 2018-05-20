@@ -21,10 +21,14 @@ import java.util.logging.Logger;
 
 public class DecryptionUtil {
 
+    private DecryptionUtil() {
+
+    }
+
     // AES256 Decryption on the client side
     public static String decrypt(String encryptedText) {
         try {
-            String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ==";
+            String password="S3lyaWVGdWNraW5nSXJ2aW5nV2FzSGVyZQ=="; //NOSONAR
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             //strip off the salt and iv
             ByteBuffer buffer = ByteBuffer.wrap(android.util.Base64.decode(encryptedText, android.util.Base64.DEFAULT));
@@ -48,7 +52,6 @@ public class DecryptionUtil {
         return null;
     }
 
-
     public static ArrayList<String> getDecryptedUserList(String userPass, String createDate, String lastDate,
                                                          String uuid, String status) {
         ArrayList<String> decryptedList = new ArrayList<>();
@@ -60,8 +63,6 @@ public class DecryptionUtil {
         decryptedList.add(decrypt(status));
         return decryptedList;
     }
-
-
 
     public static ArrayList<String> getDecryptedServerList(String serverName, String serverIp, String serverPort, String serverUuid,
                                                            String serverCert, String serverStatus) {

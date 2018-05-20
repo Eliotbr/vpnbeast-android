@@ -33,7 +33,6 @@ import java.net.UnknownHostException;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText edtUsername;
     private EditText edtPass;
     private CheckBox chkRemember;
@@ -46,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     private LogHelper logHelper;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         init();
         //getDeviceInfos();
     }
-
 
     @Override
     protected void onResume() {
@@ -80,11 +77,9 @@ public class LoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
 
-
     public ProgressBar getProgressBar() {
         return progressBar;
     }
-
 
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
@@ -94,10 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         chkRemember.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         mainIntent = new Intent(this, MainActivity.class); //???
         intentSignup = new Intent(this, RegisterActivity.class);
-        //txtForget = (TextView) this.findViewById(R.id.txtForget);
-        //txtForget.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        //txtSignup = (TextView) this.findViewById(R.id.txtSignup);
-        //txtSignup.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         final TextView txtForget = this.findViewById(R.id.txtForget);
         txtForget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                 sendEmail();
             }
         });
-
         final TextView txtSignup = this.findViewById(R.id.txtSignup);
         txtSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,16 +103,13 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(intentSignup);
             }
         });
-
         progressBar = this.findViewById(R.id.progressBar);
         sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(LoginActivity.this);
-
         if (sharedPreferences.getBoolean(AppConstants.USER_CHOICE.toString(), false)) {
             edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
             edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
             chkRemember.setChecked(true);
         }
-
         final Button btnClear = this.findViewById(R.id.btnClear);
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
                 chkRemember.setChecked(false);
             }
         });
-
         final Button btnSubmit = this.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,10 +146,6 @@ public class LoginActivity extends AppCompatActivity {
                     final String userName = edtUsername.getText().toString();
                     final String password = edtPass.getText().toString();
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
-                        /*RequestParams params = new RequestParams();
-                        params.put(USER_NAME, userName);
-                        params.put(USER_PASS, password);*/
-                        // Invoke RESTful Web Service with Http parameters
                         if (errorCount > 10) {
                             Toast.makeText(LoginActivity.this, "Login count exceeded", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
@@ -178,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                             alertDialog.setNegativeButton("Create New Account", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    final Intent intentSignup = new Intent(LoginActivity.this, RegisterActivity.class);
-                                    LoginActivity.this.startActivity(intentSignup);
+                                    final Intent tmpIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                    LoginActivity.this.startActivity(tmpIntent);
                                 }
                             });
                             alertDialog.show();
@@ -199,7 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         if (sharedPreferences.getBoolean(AppConstants.USER_CHOICE.toString(), false)) {
             edtUsername.setText(sharedPreferences.getString(AppConstants.USER_NAME.toString(), null));
             edtPass.setText(sharedPreferences.getString(AppConstants.USER_PASS.toString(), null));
@@ -223,7 +204,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         MenuItem itm2 = menu.add("About us");
         itm2.setNumericShortcut('2');
         itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -238,7 +218,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         MenuItem itm3 = menu.add("Close");
         itm3.setNumericShortcut('3');
         itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -248,7 +227,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         return true;
     }
 
@@ -260,7 +238,7 @@ public class LoginActivity extends AppCompatActivity {
     public boolean isInternetAvailable() {
         try {
             final InetAddress address = InetAddress.getByName("www.google.com");
-            return !address.equals("");
+            return !new String(address.getAddress()).equals("");
         } catch (UnknownHostException e) {
             logHelper.logException(e);
         }
@@ -288,7 +266,6 @@ public class LoginActivity extends AppCompatActivity {
         i.putExtra(AppConstants.USER_PASS.toString(), userPass);
         startService(i);
     }
-
 
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override

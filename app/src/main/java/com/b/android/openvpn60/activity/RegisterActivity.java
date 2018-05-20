@@ -24,8 +24,7 @@ import com.b.android.openvpn60.service.UserService;
 import com.b.android.openvpn60.util.ViewUtil;
 
 
-public class RegisterActivity extends AppCompatActivity {
-
+public class  RegisterActivity extends AppCompatActivity {
     private LogHelper logHelper;
     private EditText edtUsername;
     private EditText edtPass;
@@ -36,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtUsername = (EditText) this.findViewById(R.id.edtEmail2);
         edtPass = (EditText) this.findViewById(R.id.edtPassSignup);
         edtPass2 = (EditText) this.findViewById(R.id.edtPassSignup2);
-        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) this.findViewById(R.id.progressBar) ;
         loginIntent = new Intent(this, LoginActivity.class);
         btnClear = (Button) this.findViewById(R.id.btnClear2);
         btnSubmit = (Button) this.findViewById(R.id.btnSubmit2);
@@ -109,7 +107,6 @@ public class RegisterActivity extends AppCompatActivity {
             });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem itm1 = menu.add("Settings");
@@ -149,7 +146,6 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -158,23 +154,19 @@ public class RegisterActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
 
-
     public ProgressBar getProgressBar() {
         return progressBar;
     }
 
-
     public void close(){
         this.finish();
     }
-
 
     public void startRegisterService(String userName, String userPass) {
         Intent i = new Intent(this, UserService.class);
@@ -183,7 +175,6 @@ public class RegisterActivity extends AppCompatActivity {
         i.putExtra(AppConstants.USER_PASS.toString(), userPass);
         startService(i);
     }
-
 
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
         @Override

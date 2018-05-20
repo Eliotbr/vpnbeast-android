@@ -19,10 +19,15 @@ import java.util.List;
 
 
 public class ProxyListener {
+    private static final LogHelper logHelper;
 
-    private static final LogHelper logHelper = LogHelper.getLogHelper(ProxyListener.class.getName());
+    static {
+        logHelper = LogHelper.getLogHelper(ProxyListener.class.getName());
+    }
 
+    private ProxyListener() {
 
+    }
 
     public static SocketAddress detectProxy(VpnProfile vp) {
         // Construct a new url with https as protocol
@@ -35,13 +40,11 @@ public class ProxyListener {
             if (addr instanceof InetSocketAddress) {
                 return addr;
             }
-
         } catch (MalformedURLException | URISyntaxException a) {
             logHelper.logException(a);
         }
         return null;
     }
-
 
     public static Proxy getFirstProxy(URL url) throws URISyntaxException {
         System.setProperty("java.net.useSystemProxies", "true");

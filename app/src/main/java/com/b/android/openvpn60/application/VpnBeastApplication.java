@@ -8,10 +8,8 @@ import com.b.android.openvpn60.util.PRNGUtil;
 
 
 public class VpnBeastApplication extends Application {
-
     private StatusListener statusListener;
     private LogHelper logHelper;
-
 
     @Override
     public void onCreate() {

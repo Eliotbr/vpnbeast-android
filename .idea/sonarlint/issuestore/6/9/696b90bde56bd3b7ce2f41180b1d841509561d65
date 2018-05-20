@@ -1,0 +1,8 @@
+
+rsquid:S1450"XRemove the "logHelper" field and declare it as a local variable in the relevant methods.(ëû’óüÿÿÿÿ
+Csquid:S1481")Remove this unused "xdpi" local variable.(¶§üüøÿÿÿÿ
+>squid:S1481")Remove this unused "ydpi" local variable.(äƒ™ñ
+Osquid:S1118":Add a private constructor to hide the implicit public one.(ÄÐ½¹
+Msquid:S1854"8Remove this useless assignment to local variable "ydpi".(äƒ™ñ
+Rsquid:S1854"8Remove this useless assignment to local variable "xdpi".(¶§üüøÿÿÿÿ
+Vsquid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è

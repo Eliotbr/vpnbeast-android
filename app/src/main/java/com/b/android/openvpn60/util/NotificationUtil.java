@@ -12,11 +12,9 @@ import android.support.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class NotificationUtil extends ContextWrapper {
-
     private NotificationManager mManager;
     public static final String ANDROID_CHANNEL_ID = "com.b.android.vpnbeast.ANDROID";
     public static final String ANDROID_CHANNEL_NAME = "ANDROID_CHANNEL";
-
 
 
     public NotificationUtil(Context base) {
@@ -24,7 +22,7 @@ public class NotificationUtil extends ContextWrapper {
         createChannels();
     }
 
-
+    // We should create notification channels for Android Oreo and above
     public void createChannels() {
         // create android channel
         NotificationChannel androidChannel = new NotificationChannel(ANDROID_CHANNEL_ID,
@@ -40,7 +38,6 @@ public class NotificationUtil extends ContextWrapper {
         getManager().createNotificationChannel(androidChannel);
     }
 
-
     private NotificationManager getManager() {
         if (mManager == null) {
             mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -48,13 +45,7 @@ public class NotificationUtil extends ContextWrapper {
         return mManager;
     }
 
-
     public Notification.Builder getAndroidChannelNotification(/*String title, String body*/) {
         return new Notification.Builder(getApplicationContext(), ANDROID_CHANNEL_ID);
-                /*.setContentTitle(title)
-                .setContentText(body)
-                .setSmallIcon(android.R.drawable.stat_notify_more)
-                .setAutoCancel(true);*/
     }
-
 }

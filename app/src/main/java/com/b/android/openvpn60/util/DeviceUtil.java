@@ -10,14 +10,15 @@ import com.b.android.openvpn60.helper.LogHelper;
 
 public class DeviceUtil {
 
-    private static LogHelper logHelper;
+    private DeviceUtil() {
 
+    }
 
     /**
      * Below method created to debug for creating different views for different devices
      */
     public static void getDeviceInfos(Activity activity) {
-        logHelper = LogHelper.getLogHelper(DeviceUtil.class.getName());
+        LogHelper logHelper = LogHelper.getLogHelper(DeviceUtil.class.getName());
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -32,6 +33,8 @@ public class DeviceUtil {
         int densityDpi = metrics.densityDpi;
         float xdpi = metrics.xdpi;
         float ydpi = metrics.ydpi;
+        logHelper.logInfo("xdpi = " + xdpi);
+        logHelper.logInfo("ydpi = " + ydpi);
         logHelper.logInfo("widthPixels = " + widthPixels);
         logHelper.logInfo("heightPixels = " + heightPixels);
         logHelper.logInfo("densityDpi = " + densityDpi);

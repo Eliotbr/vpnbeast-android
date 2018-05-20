@@ -23,12 +23,9 @@ public class CustomAdapter extends ArrayAdapter<VpnProfile> {
     private LayoutInflater mLayoutInflater;
     public RadioButton mSelectedRB;
     public TextView mSelectedTxt;
-    private int mSelectedTxtPosition = -1;
     private int mSelectedPosition = -1;
     private List<VpnProfile> profiles;
     public VpnProfile mProfile2;
-    private CustomAdapter mInstance;
-    //private VpnProfile mSelected;
 
 
     public CustomAdapter(Context context, int resource, int textViewResourceId, List<VpnProfile> objects) {
@@ -36,7 +33,6 @@ public class CustomAdapter extends ArrayAdapter<VpnProfile> {
         mResourceId = resource;
         profiles = objects;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mInstance = this;
     }
 
     @Override
@@ -83,9 +79,7 @@ public class CustomAdapter extends ArrayAdapter<VpnProfile> {
         }
         holder.name.setText(profiles.get(position).getName());
         holder.name.setTextColor(Color.WHITE);
-        //this.mProfile2 = CustomAdapter.this.getItem(position);
         mProfile2 = profiles.get(position);
-        //holder.name.setText(getItem(position).getName());
         return view;
     }
 

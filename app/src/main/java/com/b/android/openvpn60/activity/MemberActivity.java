@@ -29,7 +29,6 @@ import com.b.android.openvpn60.util.ViewUtil;
 
 
 public class MemberActivity extends AppCompatActivity {
-
     private EditText edtFirstName;
     private EditText edtLastName;
     private EditText edtEmail;
@@ -41,14 +40,12 @@ public class MemberActivity extends AppCompatActivity {
     public int errorCount = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
         init();
     }
-
 
     private void init() {
         logHelper = LogHelper.getLogHelper(this);
@@ -78,7 +75,7 @@ public class MemberActivity extends AppCompatActivity {
                         alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                // nothing to do
                             }
                         });
                         alertDialog.show();
@@ -90,7 +87,7 @@ public class MemberActivity extends AppCompatActivity {
                     alertDialog.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            // nothing to do
                         }
                     });
                     alertDialog.show();
@@ -99,7 +96,6 @@ public class MemberActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,7 +108,6 @@ public class MemberActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         MenuItem itm2 = menu.add("About us");
         itm2.setNumericShortcut('2');
         itm2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -127,7 +122,6 @@ public class MemberActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         MenuItem itm3 = menu.add("Close");
         itm3.setNumericShortcut('3');
         itm3.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -140,7 +134,6 @@ public class MemberActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void startMembershipService(String userName, String firstName, String lastName, String email) {
         Intent i = new Intent(this, MemberService.class);
         i.setAction(AppConstants.INSERT_MEMBER.toString());
@@ -151,7 +144,6 @@ public class MemberActivity extends AppCompatActivity {
         startService(i);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -159,13 +151,11 @@ public class MemberActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(testReceiver, filter);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(testReceiver);
     }
-
 
     // Define the callback for what to do when message is received
     private BroadcastReceiver testReceiver = new BroadcastReceiver() {
@@ -205,5 +195,4 @@ public class MemberActivity extends AppCompatActivity {
             }
         }
     };
-
 }

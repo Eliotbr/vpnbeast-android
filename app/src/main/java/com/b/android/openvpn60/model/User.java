@@ -10,13 +10,13 @@ import java.util.UUID;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private UUID uuid;
-
     private int id;
     private String userName;
     private String userPass;
     private String email;
     private String firstName;
     private String lastName;
+
 
     public User(String userName, String userPass) {
         this.userName = userName;

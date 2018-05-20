@@ -32,7 +32,6 @@ import com.b.android.openvpn60.helper.LogHelper;
  */
 
 public class StatusListener {
-
     private static final LogHelper logHelper = LogHelper.getLogHelper(StatusListener.class.getName());
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -47,7 +46,7 @@ public class StatusListener {
                 if (service.queryLocalInterface("com.b.android.openvpn60.core.IServiceStatus") == null) {
                     // Not a local service
                     VpnStatus.setConnectedVPNProfile(serviceStatus.getLastConnectedVPN());
-                    ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);
+                    serviceStatus.registerStatusCallback(mCallback);
                 }
 
             } catch (RemoteException e) {
@@ -57,7 +56,7 @@ public class StatusListener {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-
+            // nothing to do
         }
 
     };
@@ -66,7 +65,6 @@ public class StatusListener {
     public void init(Context c) {
         Intent intent = new Intent(c, OpenVPNStatusService.class);
         intent.setAction(AppConstants.START_SERVICE.toString());
-        File mCacheDir = c.getCacheDir();
         c.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 

@@ -74,13 +74,8 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private final String CLASS_TAG = AppConstants.CLASS_TAG_ACTIVITY.toString() + this.getClass().toString();
-    private static final int PERMISSION_REQUEST = 23621;
-
-    private SharedPreferences sharedPrefs;
-    private Intent importer;
-    public static VpnProfile profile;
+    private static final LogHelper LOG_HELPER;
+    public VpnProfile profile;
     private EditText edtPort;
     private EditText edtUser;
     private EditText edtHost;
@@ -100,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction frTransaction;
     private ServerSelectFragment mFragment;
     private RelativeLayout pnlMain;
-    private LogHelper logHelper;
     private TextView txtUsername, txtProfile, txtIp, txtPort;
     private ProgressBar progressBar;
 
+    static {
+        LOG_HELPER = LogHelper.getLogHelper(MainActivity.class.getName());
+    }
 
 
     @Override
@@ -124,12 +121,9 @@ public class MainActivity extends AppCompatActivity {
         mActionBar.setDisplayShowCustomEnabled(true);
     }
 
-
     private void init() {
-        logHelper = LogHelper.getLogHelper(this);
         progressBar = this.findViewById(R.id.progressBar);
         btnConnect = this.findViewById(R.id.btnConnect);
-        importer = new Intent(this, ImportActivity.class);
         intentService = new Intent(this, LaunchVPN.class);
         edtHost = this.findViewById(R.id.edtIP);
         edtHost.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
@@ -146,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         txtIp.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
         txtPort = this.findViewById(R.id.txtPort);
         txtPort.setShadowLayer(1, 0, 1, getResources().getColor(R.color.colorAccent));
-        sharedPrefs = PreferencesUtil.getDefaultSharedPreferences(MainActivity.this);
         userName = getIntent().getStringExtra(AppConstants.USER_NAME.toString());
         edtUser.setText(userName);
         pnlMain = this.findViewById(R.id.activity_main);
@@ -180,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -219,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                             long startTime = System.nanoTime();
                             executeCmd("ping -c 2 -w 2 " + profile.connections[0].serverName, false);
                             long time = System.nanoTime() - startTime;
-                            Log.i(CLASS_TAG, "runtime: " + time);
+                            LOG_HELPER.logInfo("runtime: " + time);
                             profile.ping = time;
                         }
                         sortBySpeed();
@@ -252,11 +244,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
     private ProfileManager getPM() {
         return ProfileManager.getInstance(this);
     }
-
 
     private void checkPermission() {
         try {
@@ -266,17 +256,15 @@ public class MainActivity extends AppCompatActivity {
             } else
                 startLocationService();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG_HELPER.logException(e);
         }
     }
-
 
     private void prepareService() {
         startUserService(userName);
         startMemberService(userName);
         startServerService();
     }
-
 
     @Override
     protected void onResume() {
@@ -293,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, locationFilter);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -302,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(userReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver);
     }
-
 
     public void updateViews() {
         if (getIntent().getParcelableExtra(AppConstants.RESULT_PROFILE.toString()) != null) {
@@ -318,11 +304,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void updateViewForFirst() {
             btnConnect.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selector_grey));
     }
-
 
     @Override
     public void onBackPressed() {
@@ -337,7 +321,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, getString(R.string.msg_logout), Toast.LENGTH_SHORT).show();
     }
 
-
     private void startVPN(VpnProfile profile) {
         getPM().saveProfile(this, profile);
         Intent intent = new Intent(this, LaunchVPN.class);
@@ -345,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }
-
 
     private void sortBySpeed() {
         MainActivity.this.runOnUiThread(new Runnable() {
@@ -379,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -389,7 +370,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
-
 
     public boolean executeCmd(String cmd, boolean sudo) {
         try {
@@ -403,15 +383,14 @@ public class MainActivity extends AppCompatActivity {
             String res = "";
             while ((s = stdInput.readLine()) != null)
                 res += s + "\n";
-            logHelper.logInfo("executeCmd " + res);
+            LOG_HELPER.logInfo("executeCmd " + res);
             int exitValue = p.waitFor();
             return (exitValue == 0);
         } catch (Exception e) {
-            logHelper.logException(e);
+            LOG_HELPER.logException(e);
         }
         return false;
     }
-
 
     private void startUserService(String userName) {
         Intent i = new Intent(this, UserService.class);
@@ -419,7 +398,6 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         startService(i);
     }
-
 
     private BroadcastReceiver userReceiver = new BroadcastReceiver() {
         @Override
@@ -468,14 +446,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     private void startMemberService(String userName) {
         Intent i = new Intent(this, MemberService.class);
         i.setAction(AppConstants.CHECK_MEMBER.toString());
         i.putExtra(AppConstants.USER_NAME.toString(), userName);
         startService(i);
     }
-
 
     private BroadcastReceiver memberReceiver = new BroadcastReceiver() {
         @Override
@@ -525,14 +501,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     private void startServerService() {
         Intent i = new Intent(this, ServerService.class);
         i.setAction(AppConstants.GET_VPN_PROFILES.toString());
-        logHelper.logInfo("Creating ServerService...");
+        LOG_HELPER.logInfo("Creating ServerService...");
         startService(i);
     }
-
 
     private BroadcastReceiver serverReceiver = new BroadcastReceiver() {
         @Override
@@ -541,37 +515,33 @@ public class MainActivity extends AppCompatActivity {
             profiles = new ArrayList<>();
             //Bundle bundle = intent.getBundleExtra(AppConstants.BUNDLE_VPN_PROFILES.toString());
             if (action != null && action.equals(AppConstants.GET_VPN_PROFILES.toString())) {
-                logHelper.logInfo("ArrayList successfully fetched!");
+                LOG_HELPER.logInfo("ArrayList successfully fetched!");
                 Bundle bundle = intent.getBundleExtra(AppConstants.BUNDLE_VPN_PROFILES.toString());
                 profiles = bundle.getParcelableArrayList(AppConstants.VPN_PROFILES.toString());
             }
         }
     };
 
-
     private void startLocationService() {
         Intent i = new Intent(this, LocationService.class);
         i.setAction(AppConstants.GET_LOCATION.toString());
-        logHelper.logInfo("Creating LocationService...");
+        LOG_HELPER.logInfo("Creating LocationService...");
         startService(i);
     }
-
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action != null && action.equals(AppConstants.GET_LOCATION.toString())) {
-                logHelper.logInfo("Location successfully fetched!");
-                logHelper.logInfo("Latitude = " + intent.getDoubleExtra("latitude", 0));
-                logHelper.logInfo("Longitude = " + intent.getDoubleExtra("longitude", 0));
-
+                LOG_HELPER.logInfo("Location successfully fetched!");
+                LOG_HELPER.logInfo("Latitude = " + intent.getDoubleExtra("latitude", 0));
+                LOG_HELPER.logInfo("Longitude = " + intent.getDoubleExtra("longitude", 0));
                 Toast.makeText(MainActivity.this, "Latitude = " + String.valueOf(intent.getDoubleExtra("latitude", 0)) +
                         "\n" + "Longitude = " + String.valueOf(intent.getDoubleExtra("longitude", 0)), Toast.LENGTH_SHORT).show();
             }
         }
     };
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

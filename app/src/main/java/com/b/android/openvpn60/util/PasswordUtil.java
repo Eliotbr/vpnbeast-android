@@ -7,7 +7,6 @@ import java.util.UUID;
  */
 
 public class PasswordUtil {
-
     public static final int PCKS12ORCERTPASSWORD = 2;
     public static final int AUTHPASSWORD = 3;
     private static PasswordUtil mInstance;
@@ -50,6 +49,8 @@ public class PasswordUtil {
             case AUTHPASSWORD:
                 instance.mAuthPassword = password;
                 break;
+            default:
+                throw new IllegalStateException("Invalid parameter");
         }
     }
 

@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class DbHelper extends SQLiteOpenHelper {
-
     private static final String DATABASE_NAME = "VpnBeast.db";
     public static final String TABLE_NAME = "vpn_profiles";
     public static final String TABLE_ID = "id";
@@ -28,30 +27,24 @@ public class DbHelper extends SQLiteOpenHelper {
     private LogHelper logHelper;
 
 
-
     public DbHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
         logHelper = LogHelper.getLogHelper(DbHelper.class.getName());
         //deleteAllProfiles();
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("create table vpn_profiles" + "(id integer primary key, server_uuid text, server_name text, " +
                 "server_ip text, server_port text, server_cert text)");
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-
 
     public boolean insertProfile (String serverUuid, String serverName, String serverIp, String serverPort, String serverCert) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,20 +58,17 @@ public class DbHelper extends SQLiteOpenHelper {
         return true;
     }
 
-
     public Cursor getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from contacts where id=" + id + "", null);
         return res;
     }
 
-
     public int numberOfRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
         return numRows;
     }
-
 
     public boolean updateProfile (Integer id, String serverUuid, String serverName, String serverIp, String serverPort,
                                   String serverCert) {
@@ -93,18 +83,15 @@ public class DbHelper extends SQLiteOpenHelper {
         return true;
     }
 
-
     public Integer deleteProfile (Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "id = ? ", new String[] { Integer.toString(id) });
     }
 
-
     public Integer deleteAllProfiles() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, null, null);
     }
-
 
     public ArrayList<VpnProfile> getAllProfiles() {
         ArrayList<VpnProfile> profileList = new ArrayList<>();
@@ -130,7 +117,6 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         return profileList;
     }
-
 
     public boolean insertProfileList(ArrayList<VpnProfile> profileList) {
         if (profileList.size() > numberOfRows()) {

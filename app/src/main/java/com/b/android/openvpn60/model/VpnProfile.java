@@ -21,7 +21,6 @@ import com.b.android.openvpn60.R;
 import com.b.android.openvpn60.core.OpenVPNService;
 import com.b.android.openvpn60.util.PasswordUtil;
 import com.b.android.openvpn60.helper.VPNLaunchHelper;
-import com.b.android.openvpn60.core.Connection;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,12 +33,11 @@ import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.UUID;
-import java.util.Vector;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -99,7 +97,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     private boolean checkRemoteCN = true;
     private boolean expectTLSCert = false;
     private String remoteCN = "";
-    private String password = "";
+    private String password = ""; //NOSONAR
     private String userName = "";
     private boolean routenopull = false;
     private boolean useRandomHostname = false;
@@ -111,12 +109,11 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     private boolean nobind = false;
     private boolean useDefaultRoutev6 = true;
     private String customRoutesv6 = "";
-    private String keyPassword = "";
+    private String keyPassword = ""; //NOSONAR
     public boolean persistTun = false;
     private String connectRetryMax = "-1";
     private String connectRetry = "2";
     private String connectRetryMaxTime = "300";
-    private boolean userEditable = true;
     private String auth = "";
     private int x509AuthType = X509_VERIFY_TLSREMOTE_RDN;
     private String x509UsernameField = null;
@@ -125,7 +122,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     public boolean allowLocalLAN;
     private int profileVersion;
     private String excludedRoutes;
-    private String excludedRoutesv6;
     private int mssFix = 0; // -1 is default,
     public Connection[] connections = new Connection[0];
     private boolean remoteRandom = false;
@@ -144,24 +140,12 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     private String serverCert;
 
 
-
     public VpnProfile(String name) {
         connections = new Connection[1];
         connections[0] = new Connection();
         initConstants();
         this.name = name;
     }
-
-
-    /*public VpnProfile(String name, String ipAddress, String serverPort, String serverCert) {
-        connections = new Connection[1];
-        connections[0] = new Connection(ipAddress, serverPort);
-        this.name = name;
-        this.uuid = UUID.randomUUID();
-        this.serverCert = serverCert;
-        initConstants();
-    }*/
-
 
     public VpnProfile(String uuid, String name, String ipAddress, String serverPort, String serverCert) {
         connections = new Connection[1];
@@ -171,7 +155,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         this.serverCert = serverCert;
         initConstants();
     }
-
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public VpnProfile createFromParcel(Parcel in) {
@@ -233,7 +216,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         return ping;
     }
 
-
     private void initConstants() {
         profileVersion = CURRENT_PROFILE_VERSION;
         lastUsed = System.currentTimeMillis();
@@ -244,7 +226,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         tlsAuthDirection = "";
         tlsAuthFilename = null;
         clientKeyFilename = null;
-        caFilename = "[[INLINE]]" + serverCert;
+        caFilename = INLINE_TAG + serverCert;
         useLzo = true;
         pkcs12Filename = null;
         pkcs12Password = null;
@@ -260,7 +242,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         checkRemoteCN = false;
         expectTLSCert = false;
         remoteCN = "";
-        password = "";
+        password = ""; //NOSONAR
         userName = "";
         routenopull = false;
         useRandomHostname = false;
@@ -272,19 +254,17 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         nobind = true;
         useDefaultRoutev6 = false;
         customRoutesv6 = "";
-        keyPassword = "";
+        keyPassword = ""; //NOSONAR
         persistTun = true;
         connectRetryMax = "-1";
         connectRetry = "2";
         connectRetryMaxTime = "300";
-        userEditable = true;
         auth = "SHA256";
         x509AuthType = 3;
         x509UsernameField = null;
         privateKey = null;
         allowLocalLAN = true;
         excludedRoutes = null;
-        excludedRoutesv6 = null;
         mssFix = 0;
         remoteRandom = false;
         allowedAppsVpn = new HashSet<>();
@@ -299,7 +279,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         serverPort = "1194";
         useUdp = true;
     }
-
 
     public static String openVpnEscape(String unescaped) {
         if (unescaped == null)
@@ -316,7 +295,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
             return '"' + escapedString + '"';
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof VpnProfile) {
@@ -326,7 +304,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
             return false;
         }
     }
-
 
     public UUID getUUID() {
         return uuid;
@@ -343,7 +320,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         if (profileVersion < 2)
             /* default to the behaviour the OS used */
             allowLocalLAN = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
-
         if (profileVersion < 4) {
             moveOptionsToConnection();
             allowedAppsVpnAreDisallowed = true;
@@ -354,11 +330,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
         if (connections == null)
             connections = new Connection[0];
-
-        if (profileVersion < 6) {
-            if (TextUtils.isEmpty(profileCreator))
-                userEditable = true;
-        }
 
         profileVersion = CURRENT_PROFILE_VERSION;
     }
@@ -374,14 +345,11 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     }
 
     public String getConfigFile(Context context, boolean configForOvpn3) {
-
         File cacheDir = context.getCacheDir();
         String cfg = "";
-
         // Enable management interface
         cfg += "# Enables connection to GUI\n";
         cfg += "management ";
-
         cfg += cacheDir.getAbsolutePath() + "/" + "mgmtsocket";
         cfg += " unix\n";
         cfg += "management-client\n";
@@ -389,20 +357,16 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         //cfg += "management-signal\n";
         cfg += "management-query-passwords\n";
         cfg += "management-hold\n\n";
-
         if (!configForOvpn3) {
             cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
             String versionString = String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
                     NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
             cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
         }
-
         cfg += "machine-readable-output\n";
         cfg += "allow-recursive-routing\n";
-
         // Users are confused by warnings that are misleading...
         cfg += "ifconfig-nowarn\n";
-
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
@@ -413,8 +377,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         else if (useTLSClient)
             cfg += "tls-client\n";
 
-
-        //cfg += "verb " + mVerb + "\n";
         cfg += "verb " + MAXLOGLEVEL + "\n";
 
         if (connectRetryMax == null) {
@@ -464,35 +426,38 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
             }
         }
 
-
         switch (mAuthenticationType) {
             case VpnProfile.TYPE_USERPASS_CERTIFICATES:
                 cfg += "auth-user-pass\n";
                 break;
+
             case VpnProfile.TYPE_CERTIFICATES:
                 // Ca
                 cfg += insertFileData("ca", caFilename);
-
                 // Client Cert + Key
                 cfg += insertFileData("key", clientKeyFilename);
                 cfg += insertFileData("cert", clientCertFilename);
-
                 break;
+
             case VpnProfile.TYPE_USERPASS_PKCS12:
                 cfg += "auth-user-pass\n";
                 break;
+
             case VpnProfile.TYPE_PKCS12:
                 cfg += insertFileData("pkcs12", pkcs12Filename);
                 break;
 
             case VpnProfile.TYPE_USERPASS_KEYSTORE:
                 cfg += "auth-user-pass\n";
-
                 break;
+
             case VpnProfile.TYPE_USERPASS:
                 cfg += "auth-user-pass\n";
                 cfg += insertFileData("ca", caFilename);
                 break;
+
+            default:
+                throw new IllegalStateException("Invalid auth type");
         }
 
         if (!TextUtils.isEmpty(crlFilename))
@@ -517,7 +482,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
                 cfg += tlsAuthDirection;
                 cfg += "\n";
             }
-
         }
 
         if (!usePull) {
@@ -544,7 +508,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
                 routes += "route " + route + " net_gateway\n";
             }
         }
-
 
         if (useDefaultRoutev6)
             cfg += "route-ipv6 ::/0\n";
@@ -699,7 +662,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
 
     @NonNull
     private Collection<String> getCustomRoutes(String routes) {
-        Vector<String> cidrRoutes = new Vector<>();
+        ArrayList<String> cidrRoutes = new ArrayList<>();
         if (routes == null) {
             // No routes set, return empty vector
             return cidrRoutes;
@@ -718,7 +681,7 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
     }
 
     private Collection<String> getCustomRoutesv6(String routes) {
-        Vector<String> cidrRoutes = new Vector<>();
+        ArrayList<String> cidrRoutes = new ArrayList<>();
         if (routes == null) {
             // No routes set, return empty vector
             return cidrRoutes;
@@ -758,25 +721,22 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         return parts[0] + "  " + netmask;
     }
 
-
     public Intent prepareStartService(Context context) {
-        Intent intent = getStartServiceIntent(context);
-
-        // TODO: Handle this?!
-//        if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
-//            if (getKeyStoreCertificates(context) == null)
-//                return null;
-//        }
-
-        return intent;
+        return getStartServiceIntent(context);
     }
 
     public void writeConfigFile(Context context) throws IOException {
-        FileWriter cfg = new FileWriter(VPNLaunchHelper.getConfigFilePath(context));
-        cfg.write(getConfigFile(context, false));
-        cfg.flush();
-        cfg.close();
-
+        FileWriter cfg = null;
+        try {
+            cfg = new FileWriter(VPNLaunchHelper.getConfigFilePath(context));
+            cfg.write(getConfigFile(context, false));
+            cfg.flush();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if (cfg != null)
+                cfg.close();
+        }
     }
 
     public Intent getStartServiceIntent(Context context) {
@@ -787,10 +747,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
         intent.putExtra(prefix + ".profileVersion", version);
         return intent;
     }
-
-    /*public String[] getKeyStoreCertificates(Context context) {
-        return getKeyStoreCertificates(context, 5);
-    }*/
 
     public static String getDisplayName(String embeddedFile) {
         int start = DISPLAYNAME_TAG.length();
@@ -848,103 +804,6 @@ public class VpnProfile implements Parcelable, Serializable, Cloneable {
             super(msg);
         }
     }
-
-    /*synchronized String[] getKeyStoreCertificates(Context context, int tries) {
-        // Force application context- KeyChain methods will block long enough that by the time they
-        // are finished and try to unbind, the original activity context might have been destroyed.
-        context = context.getApplicationContext();
-
-        try {
-            PrivateKey privateKey = KeyChain.getPrivateKey(context, mAlias);
-            mPrivateKey = privateKey;
-
-            String keystoreChain = null;
-
-
-            X509Certificate[] caChain = KeyChain.getCertificateChain(context, mAlias);
-            if (caChain == null)
-                throw new NoCertReturnedException("No certificate returned from Keystore");
-
-            else {
-                StringWriter ksStringWriter = new StringWriter();
-
-                PemWriter pw = new PemWriter(ksStringWriter);
-                for (int i = 1; i < caChain.length; i++) {
-                    X509Certificate cert = caChain[i];
-                    pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
-                }
-                pw.close();
-                keystoreChain = ksStringWriter.toString();
-            }
-
-
-            String caout = null;
-            if (!TextUtils.isEmpty(mCaFilename)) {
-                try {
-                    Certificate[] cacerts = X509Util.getCertificatesFromFile(mCaFilename);
-                    StringWriter caoutWriter = new StringWriter();
-                    PemWriter pw = new PemWriter(caoutWriter);
-
-                    for (Certificate cert : cacerts)
-                        pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
-                    pw.close();
-                    caout = caoutWriter.toString();
-
-                } catch (Exception e) {
-                    Log.e(TAG, "getKeyStoreCertificates: ", e);
-                }
-            }
-
-
-            StringWriter certout = new StringWriter();
-
-
-            if (caChain.length >= 1) {
-                X509Certificate usercert = caChain[0];
-
-                PemWriter upw = new PemWriter(certout);
-                upw.writeObject(new PemObject("CERTIFICATE", usercert.getEncoded()));
-                upw.close();
-
-            }
-            String user = certout.toString();
-
-
-            String ca, extra;
-            if (caout == null) {
-                ca = keystoreChain;
-                extra = null;
-            } else {
-                ca = caout;
-                extra = keystoreChain;
-            }
-
-            return new String[]{ca, extra, user};
-        } catch (InterruptedException | IOException | KeyChainException | NoCertReturnedException | IllegalArgumentException
-                | CertificateException e) {
-            e.printStackTrace();
-            Log.e(TAG, "getKeyStoreCertificates: ", e);
-
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-                if (!mAlias.matches("^[a-zA-Z0-9]$")) {
-
-                }
-            }
-            return null;
-
-        } catch (AssertionError e) {
-            if (tries == 0)
-                return null;
-            Log.e(TAG, "getKeyStoreCertificates: ", e);
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e1) {
-                Log.e(TAG, "getKeyStoreCertificates: ", e1);
-            }
-            return getKeyStoreCertificates(context, tries - 1);
-        }
-
-    }*/
 
     //! Return an error if something is wrong
     public int checkProfile(Context context) {

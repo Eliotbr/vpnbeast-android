@@ -34,35 +34,27 @@ import javax.mail.internet.MimeMultipart;
  */
 
 public class EmailHelper extends AsyncTask<Void, Void, Integer> {
-
-    private ProgressDialog statusDialog;
     private LoginActivity loginActivity;
-    private Context context;
     public static boolean processFlag = false;
     private LogHelper logHelper;
     private ProgressBar progressBar;
     private String mailhost = "smtp.gmail.com";
-    private String userName;
-    private String password;
     private Session session;
     private javax.mail.Authenticator authenticator;
-
 
 
     public EmailHelper(Context context, final String userName, final String password) {
         // Best Practice!
         loginActivity = (LoginActivity) context;
         Security.addProvider(new JSEEUtil());
-        this.userName = userName;
-        this.password = password;
         authenticator = new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(userName, password);
             }
         };
         progressBar = (ProgressBar) ((LoginActivity) context).findViewById(R.id.progressBar);
         logHelper = LogHelper.getLogHelper(context);
-        this.context = loginActivity;
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.host", mailhost);
@@ -76,13 +68,11 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         session = Session.getDefaultInstance(props, authenticator);
     }
 
-
     @Override
     protected void onPreExecute() {
         logHelper.logInfo("Preparing to send email...");
         progressBar.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     protected Integer doInBackground(Void... params) {
@@ -91,21 +81,18 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         return 99;
     }
 
-
     @Override
     protected void onPostExecute(Integer errorCode) {
         if (errorCode == 11) {
             progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(loginActivity, "Success", Toast.LENGTH_SHORT).show();
             logHelper.logInfo("Email successfully sended...");
-        }
-        else if (errorCode == 99) {
+        } else if (errorCode == 99) {
             progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(loginActivity, "An error occured while sending email", Toast.LENGTH_SHORT).show();
             logHelper.logWarning("An error occured while sending email");
         }
     }
-
 
     private boolean sendEmail() {
         try {
@@ -118,7 +105,6 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
         }
         return false;
     }
-
 
     private synchronized void sendMail(String subject, String body,
                                        String senderEmail, String recipients, String logFilePath) throws Exception {
@@ -152,7 +138,6 @@ public class EmailHelper extends AsyncTask<Void, Void, Integer> {
             sendMail(subject, body, senderEmail, recipients);
         }
     }
-
 
     private synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
         try {

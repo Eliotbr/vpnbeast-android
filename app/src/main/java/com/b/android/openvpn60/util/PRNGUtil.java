@@ -40,21 +40,19 @@ import java.security.Security;
  * application's {@code onCreate}.
  */
 public final class PRNGUtil {
-
     private static final int VERSION_CODE_JELLY_BEAN = 16;
     private static final int VERSION_CODE_JELLY_BEAN_MR2 = 18;
     private static final byte[] BUILD_FINGERPRINT_AND_DEVICE_SERIAL = getBuildFingerprintAndDeviceSerial();
 
 
+    private PRNGUtil() {
 
-    private PRNGUtil() {}
-
+    }
 
     public static void apply() {
         applyOpenSSLFix();
         installLinuxPRNGSecureRandom();
     }
-
 
     private static void applyOpenSSLFix() throws SecurityException {
         if ((Build.VERSION.SDK_INT < VERSION_CODE_JELLY_BEAN) || (Build.VERSION.SDK_INT > VERSION_CODE_JELLY_BEAN_MR2)) {
@@ -79,14 +77,12 @@ public final class PRNGUtil {
         }
     }
 
-
     private static void installLinuxPRNGSecureRandom()
             throws SecurityException {
         if (Build.VERSION.SDK_INT > VERSION_CODE_JELLY_BEAN_MR2) {
             // No need to apply the fix
             return;
         }
-
         Provider[] secureRandomProviders = Security.getProviders("SecureRandom.SHA1PRNG");
         if ((secureRandomProviders == null)
                 || (secureRandomProviders.length < 1)
@@ -94,7 +90,6 @@ public final class PRNGUtil {
                 secureRandomProviders[0].getClass()))) {
             Security.insertProviderAt(new LinuxPRNGSecureRandomProvider(), 1);
         }
-
         // Assert that new SecureRandom() and
         // SecureRandom.getInstance("SHA1PRNG") return a SecureRandom backed
         // by the Linux PRNG-based SecureRandom implementation.
@@ -102,7 +97,6 @@ public final class PRNGUtil {
         if (!LinuxPRNGSecureRandomProvider.class.equals(rng1.getProvider().getClass())) {
             throw new SecurityException("new SecureRandom() backed by wrong Provider: " + rng1.getProvider().getClass());
         }
-
         SecureRandom rng2;
         try {
             rng2 = SecureRandom.getInstance("SHA1PRNG");

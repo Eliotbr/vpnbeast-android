@@ -128,17 +128,12 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
     @Override
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(context);
-
-
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             networkStateChange(context);
         } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
             boolean screenOffPause = prefs.getBoolean("screenoff", false);
-
             if (screenOffPause) {
                 if (ProfileManager.getLastConnectedVpn() != null && !ProfileManager.getLastConnectedVpn().persistTun)
-
-
                     screen = connectState.PENDINGDISCONNECT;
                 fillTrafficData();
                 if (network == connectState.DISCONNECTED || userpause == connectState.DISCONNECTED)
@@ -148,7 +143,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
             // Network was disabled because screen off
             boolean connected = shouldBeConnected();
             screen = connectState.SHOULDBECONNECTED;
-
             /* We should connect now, cancel any outstanding disconnect timer */
             mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
             /* should be connected has changed because the screen is on now, connect the VPN */
@@ -157,10 +151,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
             else if (!shouldBeConnected())
                 /*Update the reason why we are still paused */
                 mManagement.pause(getPauseReason());
-
         }
     }
-
 
     private void fillTrafficData() {
         trafficdata.add(new Datapoint(System.currentTimeMillis(), TRAFFIC_LIMIT));
@@ -170,13 +162,10 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
         return (a == null) ? (b == null) : a.equals(b);
     }
 
-
     public void networkStateChange(Context context) {
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
         SharedPreferences prefs = PreferencesUtil.getDefaultSharedPreferences(context);
         boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
-
-
         String netstatestring;
         if (networkInfo == null) {
             netstatestring = "not connected";
@@ -187,36 +176,20 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
             String extrainfo = networkInfo.getExtraInfo();
             if (extrainfo == null)
                 extrainfo = "";
-
-			/*
-            if(networkInfo.getType()==android.net.ConnectivityManager.TYPE_WIFI) {
-				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-				WifiInfo wifiinfo = wifiMgr.getConnectionInfo();
-				extrainfo+=wifiinfo.getBSSID();
-
-				subtype += wifiinfo.getNetworkId();
-			}*/
-
-
             netstatestring = String.format("%2$s %4$s to %1$s %3$s", networkInfo.getTypeName(),
                     networkInfo.getDetailedState(), extrainfo, subtype);
         }
-
         if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
             int newnet = networkInfo.getType();
-
             boolean pendingDisconnect = (network == connectState.PENDINGDISCONNECT);
             network = connectState.SHOULDBECONNECTED;
-
             boolean sameNetwork;
             if (lastConnectedNetwork == null
                     || lastConnectedNetwork.getType() != networkInfo.getType()
-                    || !equalsObj(lastConnectedNetwork.getExtraInfo(), networkInfo.getExtraInfo())
-                    )
+                    || !equalsObj(lastConnectedNetwork.getExtraInfo(), networkInfo.getExtraInfo()))
                 sameNetwork = false;
             else
                 sameNetwork = true;
-
             /* Same network, connection still 'established' */
             if (pendingDisconnect && sameNetwork) {
                 mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
@@ -224,19 +197,15 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
                 mManagement.networkChange(true);
             } else {
                 /* Different network or connection not established anymore */
-
                 if (screen == connectState.PENDINGDISCONNECT)
                     screen = connectState.DISCONNECTED;
-
                 if (shouldBeConnected()) {
                     mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
-
                     if (pendingDisconnect || !sameNetwork)
                         mManagement.networkChange(sameNetwork);
                     else
                         mManagement.resume();
                 }
-
                 lastNetwork = newnet;
                 lastConnectedNetwork = networkInfo;
             }
@@ -246,14 +215,10 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
             if (sendusr1) {
                 network = connectState.PENDINGDISCONNECT;
                 mDisconnectHandler.postDelayed(mDelayDisconnectRunnable, DISCONNECT_WAIT * 1000);
-
             }
         }
-
         lastStateMsg = netstatestring;
-
     }
-
 
     public boolean isUserPaused() {
         return userpause == connectState.DISCONNECTED;
@@ -278,9 +243,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements VpnStatus.
     }
 
     private NetworkInfo getCurrentNetworkInfo(Context context) {
-        ConnectivityManager conn = (ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return conn.getActiveNetworkInfo();
+        ConnectivityManager con = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return con != null ? con.getActiveNetworkInfo() : null;
     }
 }

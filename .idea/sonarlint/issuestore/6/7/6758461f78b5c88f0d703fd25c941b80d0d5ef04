@@ -1,0 +1,8 @@
+
+\squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8¡á—Ó·,
+Ksquid:S1066"/Merge this if statement with the enclosing one.(ƒÊáµ8¡á—Ó·,
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²· ¢ýÿÿÿÿ8¡á—Ó·,
+Rsquid:S2696"6Make the enclosing method "static" or remove this set.(Ÿ‚ü‚8¡á—Ó·,
+_squid:UselessImportCheck"1Remove this unused import 'android.widget.Toast'.(©›ïÍúÿÿÿÿ8¡á—Ó·,
+[squid:UselessImportCheck"2Remove this unused import 'android.os.Parcelable'.(õÃÀ­8¡á—Ó·,
+Xsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8¡á—Ó·,

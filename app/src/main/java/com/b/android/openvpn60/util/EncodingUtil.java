@@ -11,9 +11,12 @@ import java.util.logging.Logger;
  */
 
 public class EncodingUtil {
-
     private static final Logger LOGGER = Logger.getLogger(EncodingUtil.class.toString());
 
+
+    private EncodingUtil() {
+
+    }
 
     // Encode with android.util.Base64
     public static String encodeString(String clearText) {
@@ -26,7 +29,6 @@ public class EncodingUtil {
         return null;
     }
 
-
     // Decode with android.util.Base64
     public static String decodeString(String encodedText) {
         try {
@@ -36,5 +38,4 @@ public class EncodingUtil {
         }
         return null;
     }
-
 }

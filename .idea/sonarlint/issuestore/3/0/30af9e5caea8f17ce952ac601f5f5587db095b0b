@@ -1,0 +1,35 @@
+
+Osquid:UnusedPrivateMethod"-Remove this unused private "startVPN" method.(ª„‹m
+Isquid:S1068"4Remove this unused "isBytesDisplayed" private field.(¿ßåª
+Csquid:S1068"/Remove this unused "edtLocation" private field.(°«Ÿ7
+Jsquid:S1068"5Remove this unused "connectionChecker" private field.(×ÂÁ
+Hsquid:S1068".Remove this unused "lastStatus" private field.(…¤’”ûÿÿÿÿ
+Fsquid:S1068",Remove this unused "instance" private field.(—¥µ ùÿÿÿÿ
+Asquid:S1068",Remove this unused "receiver" private field.(¹™œ»
+rsquid:S3923"]This conditional operation returns the same value whether the condition is "true" or "false".(„²‘Ñ
+nsquid:S1450"YRemove the "vpnProfile" field and declare it as a local variable in the relevant methods.(ÃæÈ
+ksquid:S1450"VRemove the "edtUser" field and declare it as a local variable in the relevant methods.(¶Û¼
+nsquid:S1450"TRemove the "edtIp" field and declare it as a local variable in the relevant methods.(„ü±¾şÿÿÿÿ
+psquid:S1450"VRemove the "edtPort" field and declare it as a local variable in the relevant methods.(ÎªèŸúÿÿÿÿ
+ssquid:S1450"YRemove the "edtProfile" field and declare it as a local variable in the relevant methods.(–ø¡şüÿÿÿÿ
+osquid:S1450"ZRemove the "sharedPrefs" field and declare it as a local variable in the relevant methods.(àµ¸ö
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ù„¡”şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(–“Åıÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ˆ§ò®úÿÿÿÿ
+Ksquid:S2696"6Make the enclosing method "static" or remove this set.(ÀÍĞ¾
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(óÇ§†øÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(¥¢³Ûıÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(¢äıõùÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(”ÃÚêşÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ôˆ›¥ûÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ƒœ¡şøÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ôˆ›¥ûÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(ƒœ¡şøÿÿÿÿ
+Ysquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 66.(¬Éw
+Ysquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 66.(¬Éw
+Ysquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 66.(åÓ³
+Zsquid:HiddenFieldCheck":Rename "intent" which hides the field declared at line 66.(Ñß–ç
+–squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ğ¥Í
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(±ÛÈıøÿÿÿÿ
+<squid:S1185"(Remove this method to simply inherit it.(¹§ 
+bsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(¹ãğh

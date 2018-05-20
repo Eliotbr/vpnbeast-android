@@ -1,0 +1,8 @@
+
+‘"squid:ClassVariableVisibilityCheck"YMake handlerThread a static final constant or non-public and provide accessors if needed.(¶Ãü–ÿÿÿÿÿ8±Ù°Ó·,
+"squid:ClassVariableVisibilityCheck"ZMake serviceHandler a static final constant or non-public and provide accessors if needed.(Öß ›8±Ù°Ó·,
+”"squid:ClassVariableVisibilityCheck"aMake localBroadcastManager a static final constant or non-public and provide accessors if needed.(†¯œ¾8±Ù°Ó·,
+‹"squid:ClassVariableVisibilityCheck"SMake context a static final constant or non-public and provide accessors if needed.(±¹ï±úÿÿÿÿ8±Ù°Ó·,
+‡"squid:ClassVariableVisibilityCheck"UMake logHelper a static final constant or non-public and provide accessors if needed.(õ­à'8±Ù°Ó·,
+"squid:ClassVariableVisibilityCheck"ZMake responseIntent a static final constant or non-public and provide accessors if needed.(´ÂÉï8±Ù°Ó·,
+¢squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(—¥æşÿÿÿÿ8±Ù°Ó·,
