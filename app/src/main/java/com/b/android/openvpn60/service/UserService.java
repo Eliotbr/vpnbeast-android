@@ -104,7 +104,7 @@ public class UserService extends MainService {
         } catch (UnsupportedEncodingException a) {
             LOG_HELPER.logException(a);
         }
-        client.post(context, ServiceConstants.URL_REGISTER.toString(), entity, CONTENT_TYPE, new JsonHttpResponseHandler() {
+        client.post(context, ServiceConstants.URL_INSERT_USER.toString(), entity, CONTENT_TYPE, new JsonHttpResponseHandler() {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -152,7 +152,7 @@ public class UserService extends MainService {
         } catch (UnsupportedEncodingException a) {
             LOG_HELPER.logException(a);
         }
-        client.put(getApplicationContext(), ServiceConstants.URL_PUT.toString(), entity, "application/x-www-form-urlencoded",
+        client.put(getApplicationContext(), ServiceConstants.URL_UPDATE_LAST_LOGIN.toString(), entity, "application/x-www-form-urlencoded",
                 new JsonHttpResponseHandler() {
 
                     @Override

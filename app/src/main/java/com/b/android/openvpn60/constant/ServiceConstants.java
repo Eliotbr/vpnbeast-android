@@ -5,12 +5,12 @@ package com.b.android.openvpn60.constant;
  */
 
 public enum ServiceConstants {
-    URL_REGISTER("http://139.59.160.203:8080/rest/user-service/insert-user"),
-    URL_REGISTER_MEMBER("http://139.59.160.203:8080/rest/member-service/insert-member"),
-    URL_LOGIN("http://139.59.160.203:8080/rest/password-service/do-login"),
-    URL_PUT("http://139.59.160.203:8080/rest/user-service/update-user"),
-    URL_GET_PROFILES("http://139.59.160.203:8080/rest/server-service/get-all-servers"),
-    URL_CHECK_MEMBERS("http://139.59.160.203:8080/rest/member-service/members");
+    URL_INSERT_USER("http://139.59.160.203:8080/rest/user-controller/insert-user"),
+    URL_INSERT_MEMBER("http://139.59.160.203:8080/rest/member-controller/insert-member"),
+    URL_LOGIN("http://139.59.160.203:8080/rest/user-controller/do-login"),
+    URL_UPDATE_LAST_LOGIN("http://139.59.160.203:8080/rest/user-controller/update-last-login"),
+    URL_GET_PROFILES("http://139.59.160.203:8080/rest/server-controller/get-all-servers"),
+    URL_GET_MEMBER_BY_USERNAME("http://139.59.160.203:8080/rest/member-controller/members");
 
 
     private final String text;

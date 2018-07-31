@@ -1,14 +1,8 @@
 package com.b.android.openvpn60.service;
 
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.b.android.openvpn60.R;
@@ -87,7 +81,7 @@ public class MemberService extends MainService {
         } catch (UnsupportedEncodingException a) {
             LOG_HELPER.logException(a);
         }
-        client.post(getApplicationContext(), ServiceConstants.URL_REGISTER_MEMBER.toString(), entity,
+        client.post(getApplicationContext(), ServiceConstants.URL_INSERT_MEMBER.toString(), entity,
                 "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
 
                     @Override
@@ -141,7 +135,7 @@ public class MemberService extends MainService {
         } catch (UnsupportedEncodingException a) {
             LOG_HELPER.logException(a);
         }
-        client.post(getApplicationContext(), ServiceConstants.URL_CHECK_MEMBERS.toString(), entity,
+        client.post(getApplicationContext(), ServiceConstants.URL_GET_MEMBER_BY_USERNAME.toString(), entity,
                 "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
 
                     @Override
