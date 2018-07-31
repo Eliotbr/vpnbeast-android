@@ -59,3 +59,17 @@ q
 Aapp/src/main/java/com/b/android/openvpn60/core/OpenVPNThread.java,1/4/14f4f11edd6d2163e4ad9e5020885e4f8424bd78
 x
 Happ/src/main/java/com/b/android/openvpn60/activity/RegisterActivity.java,e/0/e00973fae4a07ca2c85ea4bad1102a200d92ff4d
+t
+Dapp/src/main/java/com/b/android/openvpn60/core/ConnectionStatus.java,4/2/422a67717a3d7912fb2cde06ab940ed2aca61ec8
+v
+Fapp/src/main/java/com/b/android/openvpn60/activity/ImportActivity.java,3/8/38fb609ee6c8eeeb77de88e0eb8849383cc00764
+u
+Eapp/src/main/java/com/b/android/openvpn60/activity/LoginActivity.java,4/0/407042f9bd33334878c49e411aebd0d33986df49
+~
+Napp/src/main/java/com/b/android/openvpn60/application/VpnBeastApplication.java,0/3/034625d99ff07e6fbc2ee5536e50e7a7227467ec
+t
+Dapp/src/main/java/com/b/android/openvpn60/adapter/CustomAdapter.java,2/f/2f8af3108e9bddf3e2ef89514fc42140f76043ba
+w
+Gapp/src/main/java/com/b/android/openvpn60/core/DeviceStateReceiver.java,2/7/27a24af7f463e48716d881ea6a2dde597a866ccd
+_
+/app/src/main/res/layout-hdpi/activity_login.xml,5/4/546e596f3544720bc54be6e9873b9c2510a3957e

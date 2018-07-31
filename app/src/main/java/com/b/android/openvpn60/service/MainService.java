@@ -14,14 +14,12 @@ import com.b.android.openvpn60.helper.LogHelper;
 
 
 public abstract class MainService extends Service {
-
+    public static LogHelper LOG_HELPER;
     public volatile HandlerThread handlerThread;
     public ServiceHandler serviceHandler;
     public LocalBroadcastManager localBroadcastManager;
     public Context context;
-    public LogHelper logHelper;
     public Intent responseIntent;
-
 
 
     // Define how the handler will process messages
@@ -36,12 +34,10 @@ public abstract class MainService extends Service {
         }
     }
 
-
     @Override
     public void onDestroy() {
         handlerThread.quit();
     }
-
 
     // Binding is another way to communicate between service and activity
     // Not needed here, local broadcasts will be used instead
@@ -49,7 +45,6 @@ public abstract class MainService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
-
 
     public void stopService() {
         localBroadcastManager.sendBroadcast(responseIntent);

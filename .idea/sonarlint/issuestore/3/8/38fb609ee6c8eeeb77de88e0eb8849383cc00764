@@ -1,0 +1,29 @@
+
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€ñ’å
+Xsquid:S2583"DChange this condition so that it does not always evaluate to "false"(…ëÜ=
+ssquid:UselessImportCheck"JRemove this unused import 'com.b.android.openvpn60.constant.AppConstants'.(ÎÔí‘8∏Ø–º∫,
+hsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(˛∏£ª˝ˇˇˇˇ
+`squid:S2184"FCast one of the operands of this multiplication operation to a "long".(´∞¡§˘ˇˇˇˇ
+rsquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(Ö·Ä˚ˇˇˇˇ
+Ysquid:S2583"DChange this condition so that it does not always evaluate to "false"(ç§‡ò
+rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(ﬁÖÒñ˚ˇˇˇˇ
+Jsquid:S1854"6Remove this useless assignment to local variable "is".(≠Í≈:
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(·øóøˇˇˇˇˇ
+Csquid:S1068".Remove this unused "intentMain" private field.(ΩéÔƒ
+Isquid:S1068"/Remove this unused "mImportTask" private field.(◊Ã´∞˚ˇˇˇˇ
+Usquid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(îëπÌ
+Dsquid:S2093"*Change this "try" to a try-with-resources.(°ª¢¸˘ˇˇˇˇ
+_squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÕƒÄ>
+;squid:S1481"'Remove this unused "is" local variable.(≠Í≈:
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ëÜÛ‰˙ˇˇˇˇ
+\squid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(⁄ˇ¬ü˚ˇˇˇˇ
+Xsquid:UselessImportCheck"6Remove this unused import 'java.io.InputStreamReader'.(„àŒ…
+Hsquid:S1172"3Remove this unused method parameter "possibleName".(–ŸÜã
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(·øóøˇˇˇˇˇ
+tsquid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(◊Ã´∞˚ˇˇˇˇ
+nsquid:S1450"YRemove the "intentMain" field and declare it as a local variable in the relevant methods.(ΩéÔƒ
+Dsquid:S1066"/Merge this if statement with the enclosing one.(ÄπøÔ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÔçΩﬂ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(´∞¡§˘ˇˇˇˇ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(»ˆ•ß
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¿µÆ„¸ˇˇˇˇ

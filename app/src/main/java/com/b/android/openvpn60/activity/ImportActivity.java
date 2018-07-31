@@ -43,11 +43,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ImportActivity extends AppCompatActivity {
-    private static final String RESULT_PROFILE = AppConstants.RESULT_PROFILE.toString();
-    private static final String USER_NAME = AppConstants.USER_NAME.toString();
-    private static final String USER_PASS = AppConstants.USER_PASS.toString();
-    private static final String USER_CHOICE = AppConstants.USER_CHOICE.toString();
-    private static final String CLASS_TAG = ImportActivity.class.toString();
     private static final int PERMISSION_REQUEST = 23621;
     transient public static final long MAX_EMBED_FILE_SIZE = 2048 * 1024; // 2048kB
     private boolean mBase64Encode;

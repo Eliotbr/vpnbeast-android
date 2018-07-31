@@ -3,6 +3,7 @@ package com.b.android.openvpn60.service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.HandlerThread;
+import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 import com.b.android.openvpn60.R;
@@ -20,19 +21,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
 
 public class ServerService extends MainService {
-
-    public static final String ACTION = "com.b.android.service.ServerService";
-    public static HashMap<String, VpnProfile> profileMap;
-    public static ArrayList<VpnProfile> profileList;
+    private Map<String, VpnProfile> profileMap;
+    private List<VpnProfile> profileList;
     private boolean isServerstaken = false;
     private Bundle bundle;
     private DbHelper dbHelper;
-
 
 
     public void onCreate() {
@@ -42,7 +42,7 @@ public class ServerService extends MainService {
         handlerThread.start();
         context = getApplicationContext();
         dbHelper = new DbHelper(context);
-        logHelper = LogHelper.getLogHelper(ServerService.class.getName());
+        LOG_HELPER = LogHelper.getLogHelper(ServerService.class.getName());
         bundle = new Bundle();
         profileMap = new HashMap<>();
         profileList = new ArrayList<>();
@@ -50,7 +50,6 @@ public class ServerService extends MainService {
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
-
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -67,10 +66,10 @@ public class ServerService extends MainService {
         return START_STICKY;
     }
 
-
     private void getProfileInfos() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ServiceConstants.URL_GET_PROFILES.toString(), null, new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 try {
@@ -90,15 +89,15 @@ public class ServerService extends MainService {
                             if (!profileList.isEmpty()) {
                                 //profile = profiles.get(0);
                             }
-                            bundle.putParcelableArrayList(AppConstants.VPN_PROFILES.toString(), profileList);
+                            bundle.putParcelableArrayList(AppConstants.VPN_PROFILES.toString(), (ArrayList<VpnProfile>) profileList);
                             responseIntent.putExtra(AppConstants.BUNDLE_VPN_PROFILES.toString(), bundle);
-                            logHelper.logInfo(getString(R.string.state_sorted_profiles));
-                            logHelper.logInfo("Talking with DbHelper...");
-                            dbHelper.insertProfileList(profileList);
+                            LOG_HELPER.logInfo(getString(R.string.state_sorted_profiles));
+                            LOG_HELPER.logInfo("Talking with DbHelper...");
+                            dbHelper.insertProfileList((ArrayList<VpnProfile>) profileList);
                         }
                     }
                 } catch (JSONException ex) {
-                    logHelper.logException(ex);
+                    LOG_HELPER.logException(ex);
                 }
                 stopService();
             }
@@ -106,22 +105,19 @@ public class ServerService extends MainService {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 if(statusCode == 404) {
-                    logHelper.logException(context.getString(R.string.err_server_404), throwable);
+                    LOG_HELPER.logException(context.getString(R.string.err_server_404), throwable);
                     responseIntent.putExtra("status", "errServer404");
                 } else if(statusCode == 500) {
-                    logHelper.logException(context.getString(R.string.err_server_500), throwable);
+                    LOG_HELPER.logException(context.getString(R.string.err_server_500), throwable);
                     responseIntent.putExtra("status", "errServer500");
                 } else {
-                    logHelper.logException(context.getString(R.string.err_server_else), throwable);
+                    LOG_HELPER.logException(context.getString(R.string.err_server_else), throwable);
                     responseIntent.putExtra("status", "errServerElse");
                 }
                 stopService();
             }
-
         });
-
     }
-
 
     private void saveProfile(VpnProfile profile) {
         Intent result = new Intent();
@@ -133,5 +129,4 @@ public class ServerService extends MainService {
         //setResult(Activity.RESULT_OK, result);
         //finish();
     }
-
 }

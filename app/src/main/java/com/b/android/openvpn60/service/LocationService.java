@@ -14,13 +14,9 @@ import com.b.android.openvpn60.helper.LogHelper;
 
 
 public class LocationService extends MainService implements LocationListener {
-
-    public static final String ACTION = "com.b.android.service.LocationService";
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-
-    private Context context;
     private boolean isGPSEnabled = false;
     private boolean isNetworkEnabled = false;
     private boolean canGetLocation = false;
@@ -33,11 +29,10 @@ public class LocationService extends MainService implements LocationListener {
         handlerThread = new HandlerThread("LocationService.HandlerThread");
         handlerThread.start();
         context = getApplicationContext();
-        logHelper = LogHelper.getLogHelper(LocationService.class.getName());
+        LOG_HELPER = LogHelper.getLogHelper(LocationService.class.getName());
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
-
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
@@ -54,14 +49,12 @@ public class LocationService extends MainService implements LocationListener {
         return START_STICKY;
     }
 
-
     @Override
     public void stopService() {
         localBroadcastManager.sendBroadcast(responseIntent);
         stopUsingGPS();
         stopSelf();
     }
-
 
     @SuppressLint("MissingPermission")
     public void getLocation() {
@@ -70,7 +63,7 @@ public class LocationService extends MainService implements LocationListener {
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!isGPSEnabled && !isNetworkEnabled) {
-                logHelper.logWarning("No Network Provider!");
+                LOG_HELPER.logWarning("No Network Provider!");
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
@@ -103,10 +96,9 @@ public class LocationService extends MainService implements LocationListener {
             }
             stopService();
         } catch (Exception e) {
-            logHelper.logException(e);
+            LOG_HELPER.logException(e);
         }
     }
-
 
     public void stopUsingGPS(){
         if(locationManager != null){
@@ -114,11 +106,9 @@ public class LocationService extends MainService implements LocationListener {
         }
     }
 
-
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
-
 
     @Override
     public void onLocationChanged(Location location) {

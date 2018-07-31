@@ -417,21 +417,21 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                         break;
 
-                    case "errServer404":
+                    case "err_server_404":
                         alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
                                 "\nServer returned HTTP 404 error code");
                         alertDialog.show();
                         progressBar.setVisibility(View.INVISIBLE);
                         break;
 
-                    case "errServer500":
+                    case "err_server_500":
                         alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
                                 "\nServer returned HTTP 500 error code");
                         alertDialog.show();
                         progressBar.setVisibility(View.INVISIBLE);
                         break;
 
-                    case "errServerElse":
+                    case "err_server_else":
                         alertDialog = ViewUtil.showErrorDialog(MainActivity.this,
                                 "\nServer returned an error code");
                         alertDialog.show();

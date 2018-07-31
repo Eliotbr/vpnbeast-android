@@ -36,22 +36,17 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class MemberService extends MainService {
 
-    public static final String ACTION = "com.b.android.service.MemberService";
-
-
-    // Fires when a service is first initialized
     public void onCreate() {
         super.onCreate();
         // An Android handler thread internally operates on a looper.
         handlerThread = new HandlerThread("MemberService.HandlerThread");
         handlerThread.start();
         context = getApplicationContext();
-        logHelper = LogHelper.getLogHelper(MemberService.class.getName());
+        LOG_HELPER = LogHelper.getLogHelper(MemberService.class.getName());
         // An Android service handler is a handler running on a specific background thread.
         serviceHandler = new ServiceHandler(handlerThread.getLooper());
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
-
 
     // Fires when a service is started up
     @Override
@@ -78,7 +73,6 @@ public class MemberService extends MainService {
         return START_STICKY;
     }
 
-
     public void insertMember(final String userName, final String firstName, final String lastName, final String email) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(8000);
@@ -91,7 +85,7 @@ public class MemberService extends MainService {
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
         } catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
+            LOG_HELPER.logException(a);
         }
         client.post(getApplicationContext(), ServiceConstants.URL_REGISTER_MEMBER.toString(), entity,
                 "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
@@ -105,22 +99,17 @@ public class MemberService extends MainService {
                                 member.setFirstName(firstName);
                                 member.setLastName(lastName);
                                 member.setEmail(email);
-                                logHelper.logInfo(context.getString(R.string.state_logged_in));
+                                LOG_HELPER.logInfo(context.getString(R.string.state_logged_in));
                                 responseIntent.putExtra("status", "success");
                                 responseIntent.putExtra(AppConstants.USER_NAME.toString(), userName);
                                 responseIntent.putExtra(AppConstants.FIRST_NAME.toString(), firstName);
                                 responseIntent.putExtra(AppConstants.LAST_NAME.toString(), lastName);
                                 responseIntent.putExtra(AppConstants.EMAIL.toString(), email);
-                                logHelper.logInfo("status = " + responseIntent.getStringExtra("status"));
-                                logHelper.logInfo("userName = " + userName);
-                                logHelper.logInfo("firstName = " + firstName);
-                                logHelper.logInfo("lastName = " + lastName);
-                                logHelper.logInfo("email = " + email);
                                 saveInfos(userName, firstName, lastName, email);
                             } else
                                 responseIntent.putExtra("status", "failure");
                         } catch (JSONException ex) {
-                            logHelper.logException(ex);
+                            LOG_HELPER.logException(ex);
                         }
                         stopService();
                     }
@@ -128,20 +117,19 @@ public class MemberService extends MainService {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         if(statusCode == 404) {
-                            logHelper.logException(context.getString(R.string.err_server_404), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_404), throwable);
                             responseIntent.putExtra("status", "errServer400");
                         } else if(statusCode == 500) {
-                            logHelper.logException(context.getString(R.string.err_server_500), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_500), throwable);
                             responseIntent.putExtra("status", "errServer500");
                         } else {
-                            logHelper.logException(context.getString(R.string.err_server_else), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_else), throwable);
                             responseIntent.putExtra("status", "errServerElse");
                         }
                         stopService();
                     }
                 });
     }
-
 
     private void checkMembership(String userName){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -150,25 +138,25 @@ public class MemberService extends MainService {
         HttpEntity entity = null;
         try {
             entity = new UrlEncodedFormEntity(nameValuePairs);
-        }
-        catch (UnsupportedEncodingException a) {
-            logHelper.logException(a);
+        } catch (UnsupportedEncodingException a) {
+            LOG_HELPER.logException(a);
         }
         client.post(getApplicationContext(), ServiceConstants.URL_CHECK_MEMBERS.toString(), entity,
                 "application/x-www-form-urlencoded", new JsonHttpResponseHandler() {
+
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             //if (response.length() != 0) {
                             if (response.isNull("memberStatus") || response.getInt("memberStatus") == 0) {
                                 responseIntent.putExtra("status", "failure");
-                                logHelper.logInfo(responseIntent.getAction() + " - " + "status = success");
+                                LOG_HELPER.logInfo(responseIntent.getAction() + " - " + "status = success");
                             } else if (response.getInt("memberStatus") == 1) {
                                 responseIntent.putExtra("status", "success");
-                                logHelper.logInfo(responseIntent.getAction() + " - " + "status = success");
+                                LOG_HELPER.logInfo(responseIntent.getAction() + " - " + "status = success");
                             }
                         } catch (JSONException ex) {
-                            logHelper.logException(ex);
+                            LOG_HELPER.logException(ex);
                         }
                         stopService();
                     }
@@ -176,20 +164,19 @@ public class MemberService extends MainService {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         if(statusCode == 404) {
-                            logHelper.logException(context.getString(R.string.err_server_404), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_404), throwable);
                             responseIntent.putExtra("status", "errServer404");
                         } else if(statusCode == 500) {
-                            logHelper.logException(context.getString(R.string.err_server_500), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_500), throwable);
                             responseIntent.putExtra("status", "errServer500");
                         } else {
-                            logHelper.logException(context.getString(R.string.err_server_else), throwable);
+                            LOG_HELPER.logException(context.getString(R.string.err_server_else), throwable);
                             responseIntent.putExtra("status", "errServerElse");
                         }
                         stopService();
                     }
                 });
     }
-
 
     private void saveInfos(String userName, String firstName, String lastName, String email) {
         SharedPreferences sharedPreferences = PreferencesUtil.getDefaultSharedPreferences(context);
@@ -202,5 +189,4 @@ public class MemberService extends MainService {
         editor.apply();
         editor.commit();
     }
-
 }

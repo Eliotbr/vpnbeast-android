@@ -1,11 +1,11 @@
 
-isquid:S1192"MDefine a constant instead of duplicating this literal "memberStatus" 3 times.(¯Þ¼ñ8¼Ú°Ó·,
-dsquid:S1192"HDefine a constant instead of duplicating this literal "status" 12 times.(âÉž³8¼Ú°Ó·,
 usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØýÙ€8¼Ú°Ó·,
 lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íª‹­øÿÿÿÿ8¼Ú°Ó·,
-]squid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è8¼Ú°Ó·,
 ]squid:UselessImportCheck"/Remove this unused import 'android.os.IBinder'.(Ñðôˆùÿÿÿÿ8¼Ú°Ó·,
-Xsquid:UselessImportCheck"/Remove this unused import 'android.os.Handler'.(ûÛ’¡8¼Ú°Ó·,
 Vsquid:UselessImportCheck".Remove this unused import 'android.os.Looper'.(âå8¼Ú°Ó·,
 ^squid:UselessImportCheck"0Remove this unused import 'android.app.Service'.(èœ—ÿúÿÿÿÿ8¼Ú°Ó·,
 ]squid:UselessImportCheck"/Remove this unused import 'android.os.Message'.(¤ªæéýÿÿÿÿ8¼Ú°Ó·,
+dsquid:S1192"HDefine a constant instead of duplicating this literal "status" 11 times.(âÉž³8¼Ú°Ó·,
+]squid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è8¼Ú°Ó·,
+isquid:S1192"MDefine a constant instead of duplicating this literal "memberStatus" 3 times.(¯Þ¼ñ8¼Ú°Ó·,
+Xsquid:UselessImportCheck"/Remove this unused import 'android.os.Handler'.(ûÛ’¡8¼Ú°Ó·,
