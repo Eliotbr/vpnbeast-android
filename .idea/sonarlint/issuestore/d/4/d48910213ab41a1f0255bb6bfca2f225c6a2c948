@@ -1,11 +1,6 @@
 
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8¼Ú°Ó·,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íª‹­øÿÿÿÿ8¼Ú°Ó·,
-]squid:UselessImportCheck"/Remove this unused import 'android.os.IBinder'.(Ñğôˆùÿÿÿÿ8¼Ú°Ó·,
-Vsquid:UselessImportCheck".Remove this unused import 'android.os.Looper'.(âå8¼Ú°Ó·,
-^squid:UselessImportCheck"0Remove this unused import 'android.app.Service'.(èœ—ÿúÿÿÿÿ8¼Ú°Ó·,
-]squid:UselessImportCheck"/Remove this unused import 'android.os.Message'.(¤ªæéıÿÿÿÿ8¼Ú°Ó·,
-dsquid:S1192"HDefine a constant instead of duplicating this literal "status" 11 times.(âÉ³8¼Ú°Ó·,
-]squid:UselessImportCheck"4Remove this unused import 'android.content.Context'.(©Ê‰è8¼Ú°Ó·,
-isquid:S1192"MDefine a constant instead of duplicating this literal "memberStatus" 3 times.(¯Ş¼ñ8¼Ú°Ó·,
-Xsquid:UselessImportCheck"/Remove this unused import 'android.os.Handler'.(ûÛ’¡8¼Ú°Ó·,
+lsquid:S1192‘"MDefine a constant instead of duplicating this literal "memberStatus" 3 times.(¯Ş¼ñ8 ØÀ•Ï,
+fsquid:S1192Z"HDefine a constant instead of duplicating this literal "status" 11 times.(âÉ³8 ØÀ•Ï,
+wsquid:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8 ØÀ•Ï,
+osquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íª‹­øÿÿÿÿ8 ØÀ•Ï,
+Tsquid:S2696'"6Make the enclosing method "static" or remove this set.(Ï”‘„8 ØÀ•Ï,

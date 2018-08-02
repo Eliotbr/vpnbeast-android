@@ -1,29 +1,29 @@
 
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Û–ÕŒ
-Xsquid:S2583"DChange this condition so that it does not always evaluate to "false"(É‘†=
-ssquid:UselessImportCheck"JRemove this unused import 'com.b.android.openvpn60.constant.AppConstants'.(ëï’Ô8¸¯Ð¼º,
-hsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(þ¸£»ýÿÿÿÿ
-`squid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ
+\squid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(ÚÿÂŸûÿÿÿÿ
 rsquid:S1450"XRemove the "btnSelect" field and declare it as a local variable in the relevant methods.(ð…á€ûÿÿÿÿ
-Ysquid:S2583"DChange this condition so that it does not always evaluate to "false"(¤à˜
-rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Þ…ñ–ûÿÿÿÿ
-Jsquid:S1854"6Remove this useless assignment to local variable "is".(­êÅ:
+Dsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
 esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ
+nsquid:S1450"YRemove the "intentMain" field and declare it as a local variable in the relevant methods.(½ŽïÄ
+Xsquid:S2583"DChange this condition so that it does not always evaluate to "false"(É‘†=
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘†óäúÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Û–ÕŒ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ï½ß
+ssquid:UselessImportCheck"JRemove this unused import 'com.b.android.openvpn60.constant.AppConstants'.(ëï’Ô8¸¯Ð¼º,
 Csquid:S1068".Remove this unused "intentMain" private field.(½ŽïÄ
 Isquid:S1068"/Remove this unused "mImportTask" private field.(×Ì«°ûÿÿÿÿ
-Usquid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(”‘¹í
-Dsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
 _squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÍÄ€>
+rsquid:S1450"XRemove the "btnSubmit" field and declare it as a local variable in the relevant methods.(Þ…ñ–ûÿÿÿÿ
 ;squid:S1481"'Remove this unused "is" local variable.(­êÅ:
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘†óäúÿÿÿÿ
-\squid:UnusedPrivateMethod"4Remove this unused private "displayKeyboard" method.(ÚÿÂŸûÿÿÿÿ
-Xsquid:UselessImportCheck"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ
-Hsquid:S1172"3Remove this unused method parameter "possibleName".(ÐÙ†‹
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(á¿—¿ÿÿÿÿÿ
-tsquid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(×Ì«°ûÿÿÿÿ
-nsquid:S1450"YRemove the "intentMain" field and declare it as a local variable in the relevant methods.(½ŽïÄ
 Dsquid:S1066"/Merge this if statement with the enclosing one.(€¹¿ï
-`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ï½ß
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ
 `squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Èö¥§
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Àµ®ãüÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«°Á¤ùÿÿÿÿ
+Jsquid:S1854"6Remove this useless assignment to local variable "is".(­êÅ:
+Hsquid:S1172"3Remove this unused method parameter "possibleName".(ÐÙ†‹
+hsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(þ¸£»ýÿÿÿÿ
+Xsquid:UselessImportCheck"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ
+Usquid:UnusedPrivateMethod"2Remove this unused private "closeKeyboard" method.(”‘¹í
+Ysquid:S2583"DChange this condition so that it does not always evaluate to "false"(¤à˜
+tsquid:S1450"ZRemove the "mImportTask" field and declare it as a local variable in the relevant methods.(×Ì«°ûÿÿÿÿ
+`squid:S2184"FCast one of the operands of this multiplication operation to a "long".(«°Á¤ùÿÿÿÿ

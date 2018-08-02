@@ -1,7 +1,7 @@
 
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ç¶œøüÿÿÿÿ8¾…éú·,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ë¯äŞûÿÿÿÿ8¾…éú·,
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8¾…éú·,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÄšÑùüÿÿÿÿ8¾…éú·,
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8¾…éú·,
-Rsquid:S2696"6Make the enclosing method "static" or remove this set.(ÅÍ8¾…éú·,
+wsquid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8³ÙÀ•Ï,
+xsquid:S2293“"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8³ÙÀ•Ï,
+nsquid:CommentedOutCodeLined"<This block of commented-out lines of code should be removed.(Ç¶œøüÿÿÿÿ8³ÙÀ•Ï,
+nsquid:CommentedOutCodeLineq"<This block of commented-out lines of code should be removed.(ÄšÑùüÿÿÿÿ8³ÙÀ•Ï,
+osquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(ë¯äŞûÿÿÿÿ8³ÙÀ•Ï,
+Usquid:S2696İ"6Make the enclosing method "static" or remove this set.(ÅÍ8³ÙÀ•Ï,
