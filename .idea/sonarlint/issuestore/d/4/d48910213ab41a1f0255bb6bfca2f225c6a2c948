@@ -1,6 +1,6 @@
 
+osquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íª‹­øÿÿÿÿ8 ØÀ•Ï,
 lsquid:S1192‘"MDefine a constant instead of duplicating this literal "memberStatus" 3 times.(¯Ş¼ñ8 ØÀ•Ï,
+Tsquid:S2696'"6Make the enclosing method "static" or remove this set.(Ï”‘„8 ØÀ•Ï,
 fsquid:S1192Z"HDefine a constant instead of duplicating this literal "status" 11 times.(âÉ³8 ØÀ•Ï,
 wsquid:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(ØıÙ€8 ØÀ•Ï,
-osquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(íª‹­øÿÿÿÿ8 ØÀ•Ï,
-Tsquid:S2696'"6Make the enclosing method "static" or remove this set.(Ï”‘„8 ØÀ•Ï,

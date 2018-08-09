@@ -5,12 +5,13 @@ package com.b.android.openvpn60.constant;
  */
 
 public enum ServiceConstants {
-    URL_INSERT_USER("http://139.59.160.203:8080/vpnbeast-service/user-controller/insert-user"),
-    URL_INSERT_MEMBER("http://139.59.160.203:8080/vpnbeast-service/member-controller/insert-member"),
-    URL_LOGIN("http://139.59.160.203:8080/vpnbeast-service/user-controller/do-login"),
-    URL_UPDATE_LAST_LOGIN("http://139.59.160.203:8080/vpnbeast-service/user-controller/update-last-login"),
-    URL_GET_PROFILES("http://139.59.160.203:8080/vpnbeast-service/server-controller/get-all-servers"),
-    URL_GET_MEMBER_BY_USERNAME("http://139.59.160.203:8080/vpnbeast-service/member-controller/members");
+
+    URL_LOGIN("http://139.59.160.203:7070/user-service/do-login"),
+    URL_INSERT_USER("http://139.59.160.203:7070/user-service/insert-user"),
+    URL_UPDATE_LAST_LOGIN("http://139.59.160.203:7070/user-service/update-last-login"),
+    URL_INSERT_MEMBER("http://139.59.160.203:7070/member-service/insert-member"),
+    URL_GET_MEMBER_BY_USERNAME("http://139.59.160.203:7070/member-service/members"),
+    URL_GET_PROFILES("http://139.59.160.203:7070/server-service/get-all-servers");
 
 
     private final String text;

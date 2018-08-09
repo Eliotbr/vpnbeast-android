@@ -73,3 +73,16 @@ w
 Gapp/src/main/java/com/b/android/openvpn60/core/DeviceStateReceiver.java,2/7/27a24af7f463e48716d881ea6a2dde597a866ccd
 _
 /app/src/main/res/layout-hdpi/activity_login.xml,5/4/546e596f3544720bc54be6e9873b9c2510a3957e
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+T
+$app/breakpad/scripts/travis-build.sh,6/6/6659b4469003e6fd9d3f94140f479ab26f208677
+D
+app/ovpn3/Android.mk,a/7/a781ff18954d1491aef15ee524df825faa54316b
+q
+Aapp/src/main/java/com/b/android/openvpn60/helper/EmailHelper.java,8/0/807c535396a0d52e4f8f31890bc141e56849ba82
+u
+Eapp/src/main/java/com/b/android/openvpn60/helper/VPNLaunchHelper.java,8/b/8b31d3ad78dac5ece83b14a8e475c2434d566327

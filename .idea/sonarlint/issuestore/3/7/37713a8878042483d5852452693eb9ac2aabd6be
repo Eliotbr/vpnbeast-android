@@ -1,5 +1,5 @@
 
-Vsquid:S1075"ARefactor your code to get this URI from a customizable parameter.(­ßÑ‡
-”%squid:RedundantThrowsDeclarationCheck"fRemove the declaration of thrown exception 'java.lang.SecurityException' which is a runtime exception.(Îüùm
-•%squid:RedundantThrowsDeclarationCheck"fRemove the declaration of thrown exception 'java.lang.SecurityException' which is a runtime exception.(²ßôÊ
-asquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(ÐßÇûúÿÿÿÿ
+—%squid:RedundantThrowsDeclarationCheckQ"fRemove the declaration of thrown exception 'java.lang.SecurityException' which is a runtime exception.(²ßôÊ
+Ysquid:S1075˜"ARefactor your code to get this URI from a customizable parameter.(­ßÑ‡
+dsquid:S00112°"FDefine and throw a dedicated exception instead of using a generic one.(ÐßÇûúÿÿÿÿ
+–%squid:RedundantThrowsDeclarationCheck9"fRemove the declaration of thrown exception 'java.lang.SecurityException' which is a runtime exception.(Îüùm
